@@ -1,65 +1,138 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+function PillButton({
+  href,
+  children,
+  variant = "primary",
+}: {
+  href: string;
+  children: React.ReactNode;
+  variant?: "primary" | "ghost";
+}) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <Link
+      href={href}
+      className={
+        variant === "primary" ? "ns-btn ns-btn-primary" : "ns-btn ns-btn-ghost"
+      }
+    >
+      {children}
+    </Link>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <div className="ns-page">
+      <section className="ns-hero">
+        <div className="ns-hero-inner">
+          <div className="ns-hero-copy">
+            <h1 className="ns-h1">NextScenes</h1>
+            <p className="ns-subtitle">
+              A safe, values-led place where stories are written with conscience,
+              refined by community, and enjoyed across generations.
+            </p>
+
+            <div className="ns-hero-cta">
+              <PillButton href="/how-it-works">How it works</PillButton>
+              <PillButton href="https://app.nextscenes.org" variant="ghost">
+                Enter the App
+              </PillButton>
+            </div>
+
+            <div className="ns-trust-strip">
+              <span>Guided feedback</span>
+              <span>Clubs and community</span>
+              <span>Mystery250 puzzles</span>
+              <span>Safety and values</span>
+            </div>
+          </div>
+
+          <div className="ns-hero-card">
+            <div className="ns-card">
+              <h2 className="ns-h2">What you can do here</h2>
+              <ul className="ns-list">
+                <li>Read stories by writers from around the world.</li>
+                <li>Write your own scenes and grow through feedback.</li>
+                <li>Join clubs for kids, teens, adults, and institutions.</li>
+                <li>Sharpen your mind with Mystery250.</li>
+              </ul>
+              <div className="ns-card-actions">
+                <Link className="ns-link" href="/mystery250">
+                  Explore Mystery250
+                </Link>
+                <Link className="ns-link" href="/safety">
+                  Safety and values
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="ns-section">
+        <h2 className="ns-h2">How NextScenes works</h2>
+        <div className="ns-grid-3">
+          <div className="ns-card">
+            <h3 className="ns-h3">Join</h3>
+            <p className="ns-p">
+              Create an account, choose your path, and enter a community that
+              takes storytelling seriously.
+            </p>
+          </div>
+          <div className="ns-card">
+            <h3 className="ns-h3">Write and read</h3>
+            <p className="ns-p">
+              Readers enjoy. Writers build scenes. Communities discuss. Stories
+              grow one good decision at a time.
+            </p>
+          </div>
+          <div className="ns-card">
+            <h3 className="ns-h3">Improve with feedback</h3>
+            <p className="ns-p">
+              Feedback is guided and practical. We raise craft, protect dignity,
+              and keep the platform wholesome.
+            </p>
+          </div>
         </div>
-      </main>
+
+        <div className="ns-section-cta">
+          <Link className="ns-btn ns-btn-primary" href="/how-it-works">
+            See the full process
+          </Link>
+        </div>
+      </section>
+
+      <section className="ns-section ns-section-alt">
+        <h2 className="ns-h2">Mystery250</h2>
+        <p className="ns-p">
+          Short mysteries that train attention, logic, and patience. From easy
+          puzzles for young minds to expert riddles for adults who enjoy a good
+          mental wrestling match.
+        </p>
+
+        <div className="ns-section-cta">
+          <Link className="ns-btn ns-btn-ghost" href="/mystery250">
+            Learn more
+          </Link>
+        </div>
+      </section>
+
+      <section className="ns-section">
+        <h2 className="ns-h2">For schools, clubs, and partners</h2>
+        <p className="ns-p">
+          NextScenes is built for individuals, but designed to serve communities:
+          classrooms, libraries, literacy programs, and cultural institutions.
+        </p>
+        <div className="ns-section-cta">
+          <Link className="ns-btn ns-btn-primary" href="/partners">
+            Partnership and institutions
+          </Link>
+          <Link className="ns-btn ns-btn-ghost" href="/contact">
+            Contact
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
