@@ -1,12 +1,7 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="ns-card">
       <h3 className="ns-h3">{title}</h3>
@@ -49,11 +44,11 @@ export default function PartnersPage() {
       <section className="ns-section ns-section-alt">
         <h2 className="ns-h2">NextScenes as an institutional platform</h2>
         <p className="ns-p" style={{ maxWidth: 980 }}>
-          NextScenes is designed to work with schools and universities, ministries
-          and educational authorities, cultural centers and libraries, NGOs and
-          youth organizations, foundations and development programs, and literary
-          and artistic institutions. Its structure, governance, and values make
-          it suitable for serious institutional collaboration.
+          NextScenes is designed to work with schools and universities,
+          ministries and educational authorities, cultural centers and libraries,
+          NGOs and youth organizations, foundations and development programs, and
+          literary and artistic institutions. Its structure, governance, and
+          values make it suitable for serious institutional collaboration.
         </p>
 
         <div className="ns-grid-3">

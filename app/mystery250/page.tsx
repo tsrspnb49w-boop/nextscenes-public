@@ -1,190 +1,109 @@
 import Link from "next/link";
-
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="ns-card">
-      <h3 className="ns-h3">{title}</h3>
-      <div className="ns-p" style={{ marginBottom: 0 }}>
-        {children}
-      </div>
-    </div>
-  );
-}
+import MediaGrid from "../../components/MediaGrid";
 
 export default function Mystery250Page() {
+  const items = [
+    { title: "Easy Mysteries", href: "/mystery250#easy", label: "Ages 8+", description: "Short, friendly puzzles that teach attention and logic." },
+    { title: "Medium Mysteries", href: "/mystery250#medium", label: "Teens & adults", description: "A little twistier. Perfect for learners and clubs." },
+    { title: "Hard Mysteries", href: "/mystery250#hard", label: "Thinkers", description: "Tougher riddles for serious reasoning and patience." },
+    { title: "Expert Mysteries", href: "/mystery250#expert", label: "Mental wrestling", description: "For the brave. The kind that makes you smile later." },
+    { title: "Family Night Packs", href: "/mystery250#family", label: "Together time", description: "A clean, fun way to bond across generations." },
+    { title: "Classroom Sets", href: "/mystery250#schools", label: "Schools", description: "Puzzle sets designed for learning, discussion, and fairness." },
+    { title: "Club Challenges", href: "/mystery250#clubs", label: "Clubs", description: "Monthly themes, shared leaderboards, and group pride." },
+    { title: "Regional Competitions", href: "/mystery250#competitions", label: "Coming online", description: "Friendly competitions that reward discipline, not noise." },
+  ];
+
   return (
     <div className="ns-page">
-      <section style={{ padding: "10px 0 8px" }}>
-        <h1 className="ns-h1">Mystery250</h1>
-        <p className="ns-subtitle" style={{ maxWidth: 980 }}>
-          Mystery250 is a quiet place inside NextScenes where people come to
-          think, reflect, and gently exercise the mind. It is not about speed.
-          It is not about points. It is not about showing off. It is about
-          attention, patience, and the pleasure of understanding.
+      <h1 className="ns-h1">Mystery250</h1>
+      <p className="ns-subtitle">
+        A calm place for sharp minds. Short mysteries that train attention,
+        logic, and patience. From young learners to retirees, everyone can take
+        something home.
+      </p>
+
+      <div className="ns-hero-cta">
+        <Link href="/how-it-works" className="ns-btn ns-btn-ghost">
+          How NextScenes works
+        </Link>
+        <a
+          href="https://app.nextscenes.org"
+          className="ns-btn ns-btn-primary"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Enter the App
+        </a>
+      </div>
+
+      <div className="ns-trust-strip">
+        <span>For kids, teens, adults</span>
+        <span>Designed for schools & clubs</span>
+        <span>Values-led puzzles</span>
+        <span>Solace without boredom</span>
+      </div>
+
+      <section className="ns-section ns-paper">
+        <h2 className="ns-h2">Featured paths</h2>
+        <p className="ns-p">
+          Mystery250 is not only entertainment. It is a training ground for
+          calm thinking. The world is noisy; this is where the mind learns to
+          stand straight.
         </p>
 
-        <div className="ns-hero-cta">
-          <a className="ns-btn ns-btn-primary" href="https://app.nextscenes.org">
-            Explore Mystery250
-          </a>
-          <Link className="ns-btn ns-btn-ghost" href="/about">
-            About NextScenes
-          </Link>
-        </div>
-
-        <div className="ns-trust-strip" style={{ marginTop: 10 }}>
-          <span>For all ages</span>
-          <span>No noise</span>
-          <span>No pressure</span>
-          <span>Just thinking</span>
-        </div>
+        <MediaGrid items={items} />
       </section>
 
-      <section className="ns-section ns-section-alt">
-        <h2 className="ns-h2">What is Mystery250?</h2>
-        <p className="ns-p" style={{ maxWidth: 980 }}>
-          Mystery250 is a collection of short mysteries, riddles, and logic
-          problems designed to train attention, reasoning, and patience. Some
-          are simple. Some are challenging. All are meant to be solved slowly
-          and thoughtfully.
+      <section className="ns-section ns-section-alt" id="competitions">
+        <h2 className="ns-h2">Clubs, activities, and competitions</h2>
+        <p className="ns-p">
+          Mystery250 will grow into organized activities: school sets, club
+          nights, themed challenges, and regional competitions. The aim is not
+          hype. The aim is culture: people thinking together, fairly, with joy.
         </p>
 
-        <div className="ns-grid-3">
-          <Card title="Not a game">
-            There are no leaderboards shouting at you. No pressure to perform.
-            You solve for your own satisfaction.
-          </Card>
-          <Card title="Not a test">
-            You are not being measured. You are being invited to think.
-          </Card>
-          <Card title="A daily mental walk">
-            Like a quiet walk in the evening, Mystery250 is a small, healthy
-            exercise for the mind.
-          </Card>
-        </div>
-      </section>
-
-      <section className="ns-section">
-        <h2 className="ns-h2">Who is it for?</h2>
-        <p className="ns-p" style={{ maxWidth: 980 }}>
-          Mystery250 is for everyone who enjoys thinking.
-        </p>
-
-        <div className="ns-grid-3">
-          <Card title="Children and students">
-            To learn to observe, reason, and not rush to answers.
-          </Card>
-          <Card title="Adults and working people">
-            A calm intellectual pause in a noisy day.
-          </Card>
-          <Card title="Retirees and lifelong learners">
-            A gentle way to keep the mind active and curious.
-          </Card>
-        </div>
-
-        <div className="ns-grid-3" style={{ marginTop: 14 }}>
-          <Card title="Writers">
-            To sharpen attention, logic, and narrative thinking.
-          </Card>
-          <Card title="Teachers and classrooms">
-            As small exercises in reasoning, discussion, and patience.
-          </Card>
-          <Card title="Anyone who likes quiet challenges">
-            You do not need to be a “puzzle person.” You only need curiosity.
-          </Card>
-        </div>
-      </section>
-
-      <section className="ns-section ns-section-alt">
-        <h2 className="ns-h2">Different levels, same spirit</h2>
-        <p className="ns-p" style={{ maxWidth: 980 }}>
-          Mystery250 contains mysteries of different difficulties, from very
-          accessible to quite challenging. The goal is not to separate people
-          into “smart” and “not smart,” but to offer everyone a place to think at
-          their own pace.
-        </p>
-
-        <div className="ns-grid-3">
-          <Card title="Easy">
-            For young minds and relaxed moments.
-          </Card>
-          <Card title="Medium">
-            For thoughtful daily exercise.
-          </Card>
-          <Card title="Hard and Expert">
-            For those who enjoy wrestling with ideas for a while.
-          </Card>
-        </div>
-      </section>
-
-      <section className="ns-section">
-        <h2 className="ns-h2">Why Mystery250 exists</h2>
-        <p className="ns-p" style={{ maxWidth: 980 }}>
-          We live in a world that rewards speed, noise, and constant reaction.
-          Mystery250 exists to protect a different rhythm: slow thinking,
-          careful reading, and patient reasoning.
-        </p>
-
-        <div className="ns-grid-3">
-          <Card title="To train attention">
-            Noticing small details is a skill that can be practiced.
-          </Card>
-          <Card title="To cultivate patience">
-            Some things are not meant to be solved instantly.
-          </Card>
-          <Card title="To give the mind rest">
-            Good thinking is not stress. It is a form of calm.
-          </Card>
-        </div>
-      </section>
-
-      <section className="ns-section ns-section-alt">
-        <h2 className="ns-h2">A place of solace</h2>
-        <div className="ns-card">
-          <p className="ns-p" style={{ marginBottom: 10 }}>
-            Mystery250 is not designed to excite you. It is designed to settle
-            you.
-          </p>
-          <p className="ns-p" style={{ marginBottom: 10 }}>
-            It is a quiet corner of the internet where you can sit with a
-            problem, think, maybe smile, and move on a little wiser.
-          </p>
-          <p className="ns-p" style={{ marginBottom: 0 }}>
-            In a loud world, it offers a small, dignified silence.
-          </p>
+        <div className="ns-grid-3" style={{ marginTop: 16 }}>
+          <div className="ns-card">
+            <div className="ns-h3">Club Nights</div>
+            <p className="ns-p">
+              Weekly or monthly puzzle sessions for community groups, libraries,
+              and writing clubs.
+            </p>
+          </div>
+          <div className="ns-card">
+            <div className="ns-h3">Schools</div>
+            <p className="ns-p">
+              Classroom sets that strengthen logic, reading, patience, and fair
+              discussion.
+            </p>
+          </div>
+          <div className="ns-card">
+            <div className="ns-h3">Regional competitions</div>
+            <p className="ns-p">
+              Friendly, values-led contests where discipline wins, not noise.
+            </p>
+          </div>
         </div>
       </section>
 
       <section className="ns-section ns-section-cta">
-        <h2 className="ns-h2">Try Mystery250</h2>
-        <p className="ns-p" style={{ maxWidth: 900 }}>
-          You do not need to be a writer. You do not need to compete. You only
-          need a few quiet minutes and a little curiosity.
+        <h2 className="ns-h2">A small promise</h2>
+        <p className="ns-p">
+          If you feel tired of loud spaces, Mystery250 is for you. It is a place
+          of solace that still makes you grow.
         </p>
-
-        <div className="ns-section-cta">
-          <a className="ns-btn ns-btn-primary" href="https://app.nextscenes.org">
-            Enter Mystery250
+        <div className="ns-hero-cta" style={{ justifyContent: "center" }}>
+          <a
+            href="https://app.nextscenes.org"
+            className="ns-btn ns-btn-primary"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Explore inside the App
           </a>
-          <Link className="ns-btn ns-btn-ghost" href="/how-it-works">
-            How NextScenes works
+          <Link href="/contact" className="ns-btn ns-btn-ghost">
+            Bring Mystery250 to a school or club
           </Link>
-        </div>
-      </section>
-
-      <section className="ns-section">
-        <h2 className="ns-h2">In one sentence</h2>
-        <div className="ns-card">
-          <p className="ns-p" style={{ marginBottom: 0 }}>
-            Mystery250 is a quiet, thoughtful place where anyone, at any age,
-            can enjoy the simple pleasure of thinking.
-          </p>
         </div>
       </section>
     </div>

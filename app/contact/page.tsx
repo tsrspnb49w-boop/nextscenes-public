@@ -1,12 +1,7 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="ns-card">
       <h3 className="ns-h3">{title}</h3>

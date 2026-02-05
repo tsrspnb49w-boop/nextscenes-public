@@ -1,3 +1,6 @@
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 function PillButton({
@@ -21,9 +24,155 @@ function PillButton({
   );
 }
 
+type Slide = {
+  image: string;
+  eyebrow: string;
+  title: string;
+  desc: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+type BandTile = {
+  icon: string;
+  title: string;
+  desc: string;
+  href: string;
+  cta: string;
+};
+
+type TodayCard = {
+  badge: string;
+  title: string;
+  desc: string;
+  meta: string;
+  href: string;
+  cta: string;
+};
+
 export default function HomePage() {
+  const slides: Slide[] = useMemo(
+    () => [
+      {
+        image:
+          "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "Stories that feel worth finishing",
+        title: "Read something clean, deep, and human",
+        desc: "Not noise. Not outrage. Real stories built with care, so readers can trust what they enter.",
+        ctaText: "About NextScenes",
+        ctaHref: "/about",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "Write with structure",
+        title: "Build scenes one good decision at a time",
+        desc: "Proposals, decisions, and canon stay visible, so collaboration stays honest and coherent.",
+        ctaText: "How it works",
+        ctaHref: "/how-it-works",
+      },
+      {
+        image:
+          "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "For curious minds",
+        title: "Mystery250 trains attention and patience",
+        desc: "Short mysteries and puzzles for kids, teens, and adults who enjoy thinking clearly.",
+        ctaText: "Explore Mystery250",
+        ctaHref: "/mystery250",
+      },
+    ],
+    []
+  );
+
+  const bandTiles: BandTile[] = useMemo(
+    () => [
+      {
+        icon: "🧒🏽",
+        title: "Kids Corner",
+        desc: "Gentle mysteries and guided storytelling that keeps curiosity clean and bright.",
+        href: "/clubs",
+        cta: "Explore Kids Clubs",
+      },
+      {
+        icon: "🧑🏽‍🎓",
+        title: "Teens and Young Writers",
+        desc: "Grow craft, build confidence, and learn discipline through guided feedback.",
+        href: "/how-it-works",
+        cta: "See the workflow",
+      },
+      {
+        icon: "✍🏽",
+        title: "Adults and Serious Writers",
+        desc: "Write long-form stories with continuity, accountability, and a community that respects authorship.",
+        href: "https://app.nextscenes.org",
+        cta: "Enter the App",
+      },
+      {
+        icon: "🏫",
+        title: "Schools and Institutions",
+        desc: "A structured creative tool for classrooms, libraries, literacy programs, and cultural groups.",
+        href: "/partners",
+        cta: "Partnerships",
+      },
+    ],
+    []
+  );
+
+  const todayCards: TodayCard[] = useMemo(
+    () => [
+      {
+        badge: "Story of the Week",
+        title: "A doorway into a living storyline",
+        desc: "A featured story that shows how NextScenes grows a book with clarity and responsibility.",
+        meta: "Updated weekly · Clean reading",
+        href: "/about",
+        cta: "See how stories grow",
+      },
+      {
+        badge: "Puzzle of the Week",
+        title: "Mystery250 Spotlight",
+        desc: "One short mystery to train attention, logic, and patience. Try it, then explore more.",
+        meta: "New every week · All ages",
+        href: "/mystery250",
+        cta: "Try this week’s puzzle",
+      },
+      {
+        badge: "Club Spotlight",
+        title: "A community worth joining",
+        desc: "Kids, teens, adults, and institutions. Clubs are where habits are formed and craft improves.",
+        meta: "Clubs for every level",
+        href: "/clubs",
+        cta: "Explore clubs",
+      },
+    ],
+    []
+  );
+
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const total = slides.length;
+  const active = slides[index];
+
+  useEffect(() => {
+    if (paused) return;
+    const t = window.setInterval(() => {
+      setIndex((i) => (i + 1) % total);
+    }, 5200);
+    return () => window.clearInterval(t);
+  }, [paused, total]);
+
+  function prev() {
+    setIndex((i) => (i - 1 + total) % total);
+  }
+
+  function next() {
+    setIndex((i) => (i + 1) % total);
+  }
+
   return (
     <div className="ns-page">
+      {/* HERO */}
       <section className="ns-hero">
         <div className="ns-hero-inner">
           <div className="ns-hero-copy">
@@ -46,30 +195,145 @@ export default function HomePage() {
               <span>Mystery250 puzzles</span>
               <span>Safety and values</span>
             </div>
+
+            <div className="ns-hero-mini">
+              <div className="ns-card">
+                <h2 className="ns-h2">What you can do here</h2>
+                <ul className="ns-list">
+                  <li>Read stories by writers from around the world.</li>
+                  <li>Write your own scenes and grow through feedback.</li>
+                  <li>Join clubs for kids, teens, adults, and institutions.</li>
+                  <li>Sharpen your mind with Mystery250.</li>
+                </ul>
+                <div className="ns-card-actions">
+                  <Link className="ns-link" href="/mystery250">
+                    Explore Mystery250
+                  </Link>
+                  <Link className="ns-link" href="/safety">
+                    Safety and values
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="ns-hero-card">
-            <div className="ns-card">
-              <h2 className="ns-h2">What you can do here</h2>
-              <ul className="ns-list">
-                <li>Read stories by writers from around the world.</li>
-                <li>Write your own scenes and grow through feedback.</li>
-                <li>Join clubs for kids, teens, adults, and institutions.</li>
-                <li>Sharpen your mind with Mystery250.</li>
-              </ul>
-              <div className="ns-card-actions">
-                <Link className="ns-link" href="/mystery250">
-                  Explore Mystery250
-                </Link>
-                <Link className="ns-link" href="/safety">
-                  Safety and values
-                </Link>
+          <div
+            className="ns-carousel"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+            aria-label="NextScenes hero carousel"
+          >
+            <div
+              className="ns-carousel-slide"
+              style={{ backgroundImage: `url(${active.image})` }}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${index + 1} of ${total}`}
+            >
+              <div className="ns-carousel-overlay" />
+              <div className="ns-carousel-content">
+                <div className="ns-carousel-eyebrow">{active.eyebrow}</div>
+                <div className="ns-carousel-title">{active.title}</div>
+                <div className="ns-carousel-desc">{active.desc}</div>
+
+                <div className="ns-carousel-cta">
+                  {active.ctaHref ? (
+                    <Link className="ns-btn ns-btn-primary" href={active.ctaHref}>
+                      {active.ctaText || "Learn more"}
+                    </Link>
+                  ) : null}
+                  <Link className="ns-btn ns-btn-ghost" href="https://app.nextscenes.org">
+                    Enter the App
+                  </Link>
+                </div>
               </div>
+
+              <button
+                type="button"
+                className="ns-carousel-arrow ns-carousel-arrow-left"
+                onClick={prev}
+                aria-label="Previous slide"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                className="ns-carousel-arrow ns-carousel-arrow-right"
+                onClick={next}
+                aria-label="Next slide"
+              >
+                ›
+              </button>
+
+              <div className="ns-carousel-dots" role="tablist" aria-label="Slide selector">
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={i === index ? "ns-dot ns-dot-active" : "ns-dot"}
+                    onClick={() => setIndex(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                    aria-current={i === index ? "true" : "false"}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="ns-carousel-hint">
+              {paused ? "Paused" : "Auto-playing"} · Hover to pause
             </div>
           </div>
         </div>
       </section>
 
+      {/* LIVELY BAND */}
+      <section className="ns-band" aria-label="Explore NextScenes areas">
+        <div className="ns-band-head">
+          <h2 className="ns-h2">Choose your path</h2>
+          <p className="ns-p" style={{ maxWidth: 820 }}>
+            NextScenes welcomes different ages and different goals. Pick a door,
+            and you will find something meaningful inside.
+          </p>
+        </div>
+
+        <div className="ns-band-grid">
+          {bandTiles.map((t) => (
+            <Link key={t.title} href={t.href} className="ns-band-tile">
+              <div className="ns-band-icon" aria-hidden="true">
+                {t.icon}
+              </div>
+              <div className="ns-band-title">{t.title}</div>
+              <div className="ns-band-desc">{t.desc}</div>
+              <div className="ns-band-cta">{t.cta} →</div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* WHAT'S HAPPENING TODAY */}
+      <section className="ns-today" aria-label="What’s happening today">
+        <div className="ns-today-head">
+          <h2 className="ns-h2">What’s happening today</h2>
+          <p className="ns-p" style={{ maxWidth: 900, marginBottom: 0 }}>
+            A small window into what’s alive on NextScenes. This is where a casual visitor
+            realizes the platform has a pulse.
+          </p>
+        </div>
+
+        <div className="ns-today-grid">
+          {todayCards.map((c) => (
+            <Link key={c.badge} href={c.href} className="ns-today-card">
+              <div className="ns-today-badge">{c.badge}</div>
+              <div className="ns-today-title">{c.title}</div>
+              <div className="ns-today-desc">{c.desc}</div>
+              <div className="ns-today-meta">{c.meta}</div>
+              <div className="ns-today-cta">{c.cta} →</div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* REST OF PAGE */}
       <section className="ns-section">
         <h2 className="ns-h2">How NextScenes works</h2>
         <div className="ns-grid-3">
@@ -133,6 +397,348 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* CSS kept local to avoid destabilizing globals.css */}
+      <style jsx global>{`
+        .ns-hero {
+          padding: 8px 0 2px;
+        }
+        .ns-hero-inner {
+          display: grid;
+          grid-template-columns: 1.05fr 0.95fr;
+          gap: 18px;
+          align-items: start;
+        }
+        .ns-hero-mini {
+          margin-top: 14px;
+        }
+        .ns-card-actions {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 10px;
+        }
+
+        /* CAROUSEL */
+        .ns-carousel {
+          width: 100%;
+        }
+
+        .ns-carousel-slide {
+          position: relative;
+          border-radius: var(--radius);
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.22);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+          min-height: 420px;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
+        .ns-carousel-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(8, 35, 20, 0.82) 0%,
+            rgba(8, 35, 20, 0.52) 52%,
+            rgba(8, 35, 20, 0.28) 100%
+          );
+        }
+
+        .ns-carousel-content {
+          position: relative;
+          z-index: 2;
+          padding: 18px 18px 16px;
+          max-width: 520px;
+          color: rgba(255, 255, 255, 0.94);
+        }
+
+        .ns-carousel-eyebrow {
+          display: inline-block;
+          font-weight: 900;
+          font-size: 12px;
+          letter-spacing: 0.6px;
+          text-transform: uppercase;
+          padding: 7px 10px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.12);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .ns-carousel-title {
+          margin-top: 10px;
+          font-weight: 950;
+          font-size: 24px;
+          line-height: 1.15;
+          letter-spacing: -0.2px;
+        }
+
+        .ns-carousel-desc {
+          margin-top: 10px;
+          font-size: 14px;
+          line-height: 1.5;
+          color: rgba(255, 255, 255, 0.86);
+        }
+
+        .ns-carousel-cta {
+          margin-top: 14px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .ns-carousel-arrow {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 3;
+          width: 40px;
+          height: 40px;
+          border-radius: 999px;
+          border: 1px solid rgba(255, 255, 255, 0.22);
+          background: rgba(0, 0, 0, 0.18);
+          color: #ffffff;
+          font-size: 22px;
+          font-weight: 900;
+          cursor: pointer;
+          display: grid;
+          place-items: center;
+          user-select: none;
+        }
+        .ns-carousel-arrow:hover {
+          background: rgba(255, 255, 255, 0.12);
+        }
+        .ns-carousel-arrow-left {
+          left: 12px;
+        }
+        .ns-carousel-arrow-right {
+          right: 12px;
+        }
+
+        .ns-carousel-dots {
+          position: absolute;
+          left: 16px;
+          right: 16px;
+          bottom: 14px;
+          z-index: 3;
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+        .ns-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 999px;
+          border: 1px solid rgba(255, 255, 255, 0.35);
+          background: rgba(255, 255, 255, 0.18);
+          cursor: pointer;
+        }
+        .ns-dot:hover {
+          background: rgba(255, 255, 255, 0.28);
+        }
+        .ns-dot-active {
+          width: 22px;
+          background: rgba(255, 255, 255, 0.82);
+          border-color: rgba(255, 255, 255, 0.82);
+        }
+
+        .ns-carousel-hint {
+          margin-top: 10px;
+          font-size: 12px;
+          color: rgba(15, 36, 24, 0.65);
+          text-align: right;
+        }
+
+        /* LIVELY BAND */
+        .ns-band {
+          margin-top: 18px;
+          padding: 16px;
+          border-radius: var(--radius);
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          background: linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.10),
+              rgba(255, 255, 255, 0.78)
+            ),
+            rgba(255, 255, 255, 0.7);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.06);
+        }
+
+        .ns-band-head {
+          padding: 4px 4px 10px;
+        }
+
+        .ns-band-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 12px;
+          margin-top: 6px;
+        }
+
+        .ns-band-tile {
+          display: block;
+          padding: 14px;
+          border-radius: 16px;
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          background: rgba(255, 255, 255, 0.86);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+          text-decoration: none;
+          transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+        }
+
+        .ns-band-tile:hover {
+          transform: translateY(-2px);
+          border-color: rgba(20, 138, 74, 0.30);
+          background: rgba(255, 255, 255, 0.94);
+          text-decoration: none;
+        }
+
+        .ns-band-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 999px;
+          display: grid;
+          place-items: center;
+          background: rgba(20, 138, 74, 0.10);
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          font-size: 20px;
+        }
+
+        .ns-band-title {
+          margin-top: 10px;
+          font-weight: 950;
+          color: rgba(15, 36, 24, 0.94);
+          letter-spacing: -0.2px;
+        }
+
+        .ns-band-desc {
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 1.45;
+          color: rgba(15, 36, 24, 0.74);
+        }
+
+        .ns-band-cta {
+          margin-top: 10px;
+          font-size: 13px;
+          font-weight: 900;
+          color: var(--accent2);
+        }
+
+        /* WHAT'S HAPPENING TODAY */
+        .ns-today {
+          margin-top: 18px;
+          padding: 16px;
+          border-radius: var(--radius);
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background: rgba(255, 255, 255, 0.82);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+        }
+
+        .ns-today-head {
+          padding: 4px 4px 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .ns-today-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px;
+          margin-top: 8px;
+        }
+
+        .ns-today-card {
+          display: block;
+          padding: 14px;
+          border-radius: 16px;
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          background: linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.08),
+              rgba(255, 255, 255, 0.92)
+            );
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+          text-decoration: none;
+          transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+        }
+
+        .ns-today-card:hover {
+          transform: translateY(-2px);
+          border-color: rgba(20, 138, 74, 0.30);
+          background: linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.10),
+              rgba(255, 255, 255, 0.96)
+            );
+          text-decoration: none;
+        }
+
+        .ns-today-badge {
+          display: inline-block;
+          padding: 6px 10px;
+          border-radius: 999px;
+          border: 1px solid rgba(20, 138, 74, 0.20);
+          background: rgba(20, 138, 74, 0.10);
+          color: rgba(15, 36, 24, 0.86);
+          font-size: 12px;
+          font-weight: 900;
+        }
+
+        .ns-today-title {
+          margin-top: 10px;
+          font-weight: 950;
+          color: rgba(15, 36, 24, 0.94);
+          letter-spacing: -0.2px;
+        }
+
+        .ns-today-desc {
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 1.45;
+          color: rgba(15, 36, 24, 0.74);
+        }
+
+        .ns-today-meta {
+          margin-top: 10px;
+          font-size: 12px;
+          color: rgba(15, 36, 24, 0.60);
+        }
+
+        .ns-today-cta {
+          margin-top: 10px;
+          font-size: 13px;
+          font-weight: 900;
+          color: var(--accent2);
+        }
+
+        @media (max-width: 980px) {
+          .ns-hero-inner {
+            grid-template-columns: 1fr;
+          }
+          .ns-carousel-slide {
+            min-height: 360px;
+          }
+          .ns-carousel-content {
+            max-width: 640px;
+          }
+          .ns-band-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+          .ns-today-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .ns-band-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
     </div>
   );
 }

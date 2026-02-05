@@ -6,7 +6,9 @@ export default function SiteFooter() {
       <div className="ns-footer-inner">
         <div>
           <div className="ns-footer-brand">NextScenes</div>
-          <div className="ns-footer-muted">Literary Entertainment with conscience.</div>
+          <div className="ns-footer-muted">
+            Literary Entertainment with conscience.
+          </div>
         </div>
 
         <div className="ns-footer-links">
@@ -16,7 +18,9 @@ export default function SiteFooter() {
           <Link href="/contact">Contact</Link>
         </div>
 
-        <div className="ns-footer-muted">© {new Date().getFullYear()} NextScenes</div>
+        <div className="ns-footer-muted">
+          © {new Date().getFullYear()} NextScenes
+        </div>
       </div>
     </footer>
   );

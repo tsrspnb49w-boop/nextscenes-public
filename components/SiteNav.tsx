@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
 const LINKS = [
   { href: "/about", label: "About" },
   { href: "/how-it-works", label: "How It Works" },
@@ -28,9 +30,14 @@ export default function SiteNav() {
         </nav>
 
         <div className="ns-nav-cta">
-          <Link className="ns-btn ns-btn-ghost" href="https://app.nextscenes.org">
+          <a
+            className="ns-btn ns-btn-ghost"
+            href={APP_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
             Enter the App
-          </Link>
+          </a>
         </div>
       </div>
     </header>

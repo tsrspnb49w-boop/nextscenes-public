@@ -1,12 +1,7 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="ns-card">
       <h3 className="ns-h3">{title}</h3>
@@ -33,7 +28,12 @@ export default function SafetyPage() {
           <Link className="ns-btn ns-btn-primary" href="/how-it-works">
             How it works
           </Link>
-          <a className="ns-btn ns-btn-ghost" href="https://app.nextscenes.org">
+          <a
+            className="ns-btn ns-btn-ghost"
+            href="https://app.nextscenes.org"
+            target="_blank"
+            rel="noreferrer"
+          >
             Enter the App
           </a>
         </div>

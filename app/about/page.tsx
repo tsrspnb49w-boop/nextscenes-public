@@ -1,12 +1,9 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
+function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div className="ns-card">
       <h3 className="ns-h3">{title}</h3>
@@ -21,18 +18,26 @@ function PillLink({
   href,
   children,
   variant = "ghost",
+  external = false,
 }: {
   href: string;
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: "primary" | "ghost";
+  external?: boolean;
 }) {
+  const cls =
+    variant === "primary" ? "ns-btn ns-btn-primary" : "ns-btn ns-btn-ghost";
+
+  if (external) {
+    return (
+      <a className={cls} href={href} target="_blank" rel="noreferrer">
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className={
-        variant === "primary" ? "ns-btn ns-btn-primary" : "ns-btn ns-btn-ghost"
-      }
-    >
+    <Link href={href} className={cls}>
       {children}
     </Link>
   );
@@ -43,17 +48,20 @@ export default function AboutPage() {
     <div className="ns-page">
       <section style={{ padding: "10px 0 8px" }}>
         <h1 className="ns-h1">About NextScenes</h1>
-        <p className="ns-subtitle" style={{ maxWidth: 820 }}>
-          NextScenes is a collaborative storytelling platform and cultural
-          project built to help people create serious, long-form stories together
-          in a structured, responsible, and meaningful way.
+        <p className="ns-subtitle" style={{ maxWidth: 900 }}>
+          NextScenes is a collaborative storytelling workspace and cultural
+          project for people who want to create serious, long-form stories
+          together, slowly and deliberately, with clear roles, visible decisions,
+          and responsibility for what becomes canon.
         </p>
 
         <div className="ns-hero-cta">
           <PillLink href="/how-it-works" variant="primary">
             How it works
           </PillLink>
-          <PillLink href="https://app.nextscenes.org">Enter the App</PillLink>
+          <PillLink href={APP_URL} external>
+            Enter the App
+          </PillLink>
         </div>
 
         <div className="ns-trust-strip" style={{ marginTop: 10 }}>
@@ -66,26 +74,28 @@ export default function AboutPage() {
 
       <section className="ns-section ns-section-alt">
         <h2 className="ns-h2">What is NextScenes?</h2>
-        <p className="ns-p" style={{ maxWidth: 950 }}>
+        <p className="ns-p" style={{ maxWidth: 980 }}>
           NextScenes is a storycraft workspace. A story is led by a writer, the
-          community contributes ideas and proposals, decisions are made
+          community contributes proposals and feedback, decisions are made
           consciously, and the story grows step by step into a coherent book.
+          Nothing becomes canon by accident.
         </p>
 
         <div className="ns-grid-3">
           <Card title="A writer leads a story">
             One writer sets direction, tone, standards, and continuity. The
-            writer remains accountable for coherence.
+            writer remains responsible for coherence, fairness, and the final
+            shape of the book.
           </Card>
 
           <Card title="A community contributes proposals">
-            Readers and contributors propose scenes, discuss options, and help
-            sharpen the best ideas without hijacking the story.
+            Readers and contributors propose scenes, discuss options, and sharpen
+            ideas. They support the story’s growth without hijacking authorship.
           </Card>
 
           <Card title="The story grows by decisions">
-            Each accepted scene is chosen deliberately. Nothing is “accidentally
-            canon.”
+            Each accepted scene is chosen deliberately and recorded clearly.
+            NextScenes preserves what was proposed, what became canon, and why.
           </Card>
         </div>
       </section>
@@ -93,11 +103,11 @@ export default function AboutPage() {
       <section className="ns-section">
         <h2 className="ns-h2">Why NextScenes exists</h2>
         <p className="ns-p" style={{ maxWidth: 980 }}>
-          Most collaborative writing spaces online suffer from the same habits:
+          Many collaborative writing spaces online fall into the same habits:
           chaos instead of structure, noise instead of direction, popularity
-          instead of judgment, speed instead of depth. NextScenes was built to
-          prove a different model, one where collaboration does not destroy
-          authorship, and community does not erase responsibility.
+          instead of judgment, speed instead of depth. NextScenes exists to prove
+          a different model, one where collaboration does not destroy authorship,
+          and community does not erase responsibility.
         </p>
 
         <div className="ns-grid-3">
@@ -108,11 +118,12 @@ export default function AboutPage() {
 
           <Card title="Discipline to imagination">
             Roles are clear, choices are deliberate, and the craft is respected.
+            Good stories do not grow well in disorder.
           </Card>
 
           <Card title="Meaning to digital creativity">
             The platform values depth, coherence, and cultural responsibility
-            over empty metrics.
+            over empty metrics and performative noise.
           </Card>
         </div>
       </section>
@@ -120,8 +131,8 @@ export default function AboutPage() {
       <section className="ns-section ns-section-alt">
         <h2 className="ns-h2">The core workflow</h2>
         <p className="ns-p" style={{ maxWidth: 980 }}>
-          At the heart of NextScenes is a simple workflow that preserves
-          authorship while welcoming collaboration.
+          At the heart of NextScenes is a simple workflow that protects
+          authorship while welcoming real collaboration.
         </p>
 
         <div className="ns-card" style={{ padding: 18 }}>
@@ -129,10 +140,10 @@ export default function AboutPage() {
             <li>A writer creates a storyline and sets direction.</li>
             <li>The writer opens a proposal round for the next scene.</li>
             <li>Readers and contributors propose scenes and discuss them.</li>
+            <li>The writer selects the next canon scene (or writes it directly).</li>
             <li>
-              The writer reviews proposals and selects the next canon scene.
+              The story continues step by step, with a clear record of decisions.
             </li>
-            <li>The story continues step by step, with accountability.</li>
           </ol>
           <p className="ns-p" style={{ marginTop: 12, marginBottom: 0 }}>
             Every accepted scene is a decision, not an accident.
@@ -149,23 +160,24 @@ export default function AboutPage() {
       <section className="ns-section">
         <h2 className="ns-h2">Who NextScenes is for</h2>
         <p className="ns-p" style={{ maxWidth: 980 }}>
-          NextScenes serves individuals and groups who want structured creative
-          work with clear roles, clear standards, and a safer community
-          environment.
+          NextScenes serves people who want structured creative work with clear
+          roles, clear standards, and a safer community environment.
         </p>
 
         <div className="ns-grid-3">
           <Card title="Writers">
-            For writers who want to build serious stories, but still value
-            thoughtful collaboration.
+            For writers who want to build serious stories, keep continuity, and
+            still welcome thoughtful collaboration on their terms.
           </Card>
           <Card title="Readers and contributors">
-            For readers who want to participate in the creative process, not
-            merely consume the final product.
+            For readers who want to participate in the creative process with
+            respect, and to learn how stories are built, not just consume the
+            final product.
           </Card>
           <Card title="Schools and institutions">
             For classrooms, clubs, youth programs, libraries, and cultural
-            institutions that want meaningful creative tools.
+            institutions that want meaningful creative tools with structure and
+            accountability.
           </Card>
         </div>
       </section>
@@ -182,8 +194,8 @@ export default function AboutPage() {
             One writer builds the story while readers follow and comment.
           </Card>
           <Card title="Collaborative Writing">
-            One writer leads. Others propose and discuss. The writer decides
-            canon.
+            One writer leads. Others propose and discuss. The writer decides what
+            becomes canon.
           </Card>
           <Card title="Group Writing (Open / Closed)">
             Communities write inside a shared structure, either publicly or in
@@ -195,9 +207,10 @@ export default function AboutPage() {
       <section className="ns-section">
         <h2 className="ns-h2">A platform with values</h2>
         <p className="ns-p" style={{ maxWidth: 980 }}>
-          NextScenes is built on a simple principle: <b>Imagination with conscience</b>.
-          Stories shape culture. Culture shapes people. Therefore, storytelling
-          platforms have responsibility.
+          NextScenes is built on a simple principle:{" "}
+          <b>Imagination with conscience</b>. Stories shape culture. Culture
+          shapes people. Therefore, storytelling platforms carry responsibility
+          for what they reward, normalize, and spread.
         </p>
 
         <div className="ns-grid-3">
@@ -211,7 +224,7 @@ export default function AboutPage() {
           </Card>
           <Card title="Institutional standards">
             NextScenes is designed to be trusted by schools, partners, and
-            communities that care about dignity and responsibility.
+            communities that care about dignity, fairness, and responsibility.
           </Card>
         </div>
 
@@ -235,7 +248,7 @@ export default function AboutPage() {
           <h3 className="ns-h3">In one sentence</h3>
           <p className="ns-p" style={{ marginBottom: 0 }}>
             NextScenes is where stories are not only written together, but built
-            together, carefully, consciously, and with responsibility.
+            together carefully, consciously, and with responsibility.
           </p>
         </div>
 
