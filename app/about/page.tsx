@@ -30,7 +30,7 @@ function PillLink({
 
   if (external) {
     return (
-      <a className={cls} href={href} target="_blank" rel="noreferrer">
+      <a className={cls} href={href}>
         {children}
       </a>
     );

@@ -32,9 +32,7 @@ export default function RootLayout({
                 <Link href="/mystery250">Mystery250</Link>
                 <Link href="/contact">Contact</Link>
 
-                <a href={APP_URL} target="_blank" rel="noreferrer">
-                  Enter App
-                </a>
+                <a href={APP_URL}>Enter App</a>
               </nav>
             </div>
           </header>

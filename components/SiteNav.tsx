@@ -30,12 +30,7 @@ export default function SiteNav() {
         </nav>
 
         <div className="ns-nav-cta">
-          <a
-            className="ns-btn ns-btn-ghost"
-            href={APP_URL}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="ns-btn ns-btn-ghost" href={APP_URL}>
             Enter the App
           </a>
         </div>
