@@ -21,6 +21,8 @@ export default function SiteNav() {
     { href: "/partners", en: "Partners", fr: "Partenaires" },
     { href: "/contact", en: "Contact", fr: "Contact" },
   ];
+<span className="ns-brand-badge">NS•FRTEST</span>
+
 
   return (
     <header className="ns-nav">
