@@ -28,14 +28,13 @@ export default function SafetyPage() {
           <Link className="ns-btn ns-btn-primary" href="/fr/how-it-works">
             Comment ça marche
           </Link>
-          <a
+
+          <Link
             className="ns-btn ns-btn-ghost"
             href="https://app.nextscenes.org"
-            target="_blank"
-            rel="noreferrer"
           >
             Entrer dans l’application
-          </a>
+          </Link>
         </div>
 
         <div className="ns-trust-strip" style={{ marginTop: 10 }}>

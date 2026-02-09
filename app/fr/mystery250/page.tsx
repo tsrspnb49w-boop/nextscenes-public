@@ -75,14 +75,13 @@ export default function FrMystery250Page() {
         <Link href="/fr/how-it-works" className="ns-btn ns-btn-ghost">
           Comment fonctionne NextScenes
         </Link>
-        <a
+
+        <Link
           href="https://app.nextscenes.org"
           className="ns-btn ns-btn-primary"
-          target="_blank"
-          rel="noreferrer"
         >
           Entrer dans l’App
-        </a>
+        </Link>
       </div>
 
       <div className="ns-trust-strip">
@@ -143,15 +142,15 @@ export default function FrMystery250Page() {
           Si vous êtes fatigué des espaces bruyants, Mystery250 est pour vous.
           Un lieu de calme qui vous aide à grandir.
         </p>
+
         <div className="ns-hero-cta" style={{ justifyContent: "center" }}>
-          <a
+          <Link
             href="https://app.nextscenes.org"
             className="ns-btn ns-btn-primary"
-            target="_blank"
-            rel="noreferrer"
           >
             Explorer dans l’App
-          </a>
+          </Link>
+
           <Link href="/fr/contact" className="ns-btn ns-btn-ghost">
             Proposer Mystery250 à une école ou un club
           </Link>

@@ -18,24 +18,15 @@ function PillLink({
   href,
   children,
   variant = "ghost",
-  external = false,
 }: {
   href: string;
   children: ReactNode;
   variant?: "primary" | "ghost";
-  external?: boolean;
 }) {
   const cls =
     variant === "primary" ? "ns-btn ns-btn-primary" : "ns-btn ns-btn-ghost";
 
-  if (external) {
-    return (
-      <a className={cls} href={href}>
-        {children}
-      </a>
-    );
-  }
-
+  // Use Next.js Link for BOTH internal and absolute URLs (same tab, consistent).
   return (
     <Link href={href} className={cls}>
       {children}
@@ -59,9 +50,9 @@ export default function AboutPage() {
           <PillLink href="/how-it-works" variant="primary">
             How it works
           </PillLink>
-          <PillLink href={APP_URL} external>
-            Enter the App
-          </PillLink>
+
+          {/* Same-tab */}
+          <PillLink href={APP_URL}>Enter the App</PillLink>
         </div>
 
         <div className="ns-trust-strip" style={{ marginTop: 10 }}>

@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL!;
+
 
 function normalizePath(p: string) {
   if (!p) return "/";
@@ -53,7 +54,11 @@ export default function SiteNav() {
   return (
     <header className="ns-topbar">
       <div className="ns-topbar-inner">
-        <Link href={isFR ? "/fr" : "/"} className="ns-brand" aria-label="NextScenes home">
+        <Link
+          href={isFR ? "/fr" : "/"}
+          className="ns-brand"
+          aria-label="NextScenes home"
+        >
           <img
             className="ns-brand-logo"
             src="/assets/nextscenes-logo.png"
@@ -64,7 +69,10 @@ export default function SiteNav() {
           <span className="ns-brand-text">NextScenes</span>
         </Link>
 
-        <nav className="ns-links" aria-label={isFR ? "Navigation principale" : "Main navigation"}>
+        <nav
+          className="ns-links"
+          aria-label={isFR ? "Navigation principale" : "Main navigation"}
+        >
           {PRIMARY.map((l) => (
             <Link
               key={l.href}
@@ -77,7 +85,11 @@ export default function SiteNav() {
 
           <details className="ns-more">
             <summary className="ns-navlink">{isFR ? "Plus" : "More"}</summary>
-            <div className="ns-more-menu" role="menu" aria-label={isFR ? "Plus de liens" : "More links"}>
+            <div
+              className="ns-more-menu"
+              role="menu"
+              aria-label={isFR ? "Plus de liens" : "More links"}
+            >
               {MORE.map((l) => (
                 <Link
                   key={l.href}
@@ -94,18 +106,25 @@ export default function SiteNav() {
 
         <div className="ns-topbar-right">
           <div className="ns-lang" aria-label="Language">
-            <Link className={`ns-lang-link ${!isFR ? "is-active" : ""}`} href={enHref}>
+            <Link
+              className={`ns-lang-link ${!isFR ? "is-active" : ""}`}
+              href={enHref}
+            >
               EN
             </Link>
             <span className="ns-lang-sep">/</span>
-            <Link className={`ns-lang-link ${isFR ? "is-active" : ""}`} href={frHref}>
+            <Link
+              className={`ns-lang-link ${isFR ? "is-active" : ""}`}
+              href={frHref}
+            >
               FR
             </Link>
           </div>
 
-          <a className="ns-btn ns-btn-ghost" href={APP_URL}>
+          {/* Same-tab, consistent behavior */}
+          <Link className="ns-btn ns-btn-ghost" href={APP_URL}>
             {isFR ? "Entrer dans l’App" : "Enter the App"}
-          </a>
+          </Link>
         </div>
       </div>
     </header>

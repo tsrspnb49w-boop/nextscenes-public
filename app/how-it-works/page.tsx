@@ -17,45 +17,95 @@ const ROLE_CARDS = [
     title: "Writers and Contributors",
     body:
       "Help the story grow by proposing scenes, discussing options, and offering feedback without rewriting the official book directly.",
-    points: ["Propose scenes", "Discuss and comment", "Vote or review where enabled", "Do not directly change canon"],
+    points: [
+      "Propose scenes",
+      "Discuss and comment",
+      "Vote or review where enabled",
+      "Do not directly change canon",
+    ],
   },
   {
     title: "Readers",
     body:
       "Follow the story, watch how decisions are made, and participate through comments. Some storylines may allow reader proposals.",
-    points: ["Read and follow stories", "Comment and discuss", "See decisions and notes", "May propose in some modes"],
+    points: [
+      "Read and follow stories",
+      "Comment and discuss",
+      "See decisions and notes",
+      "May propose in some modes",
+    ],
   },
   {
     title: "Admins and Moderators",
     body:
       "Protect the community by enforcing rules, handling abuse, and intervening when needed to keep the platform safe and fair.",
-    points: ["Enforce safety and values", "Support healthy communities", "Intervene when necessary", "Maintain platform rules"],
+    points: [
+      "Enforce safety and values",
+      "Support healthy communities",
+      "Intervene when necessary",
+      "Maintain platform rules",
+    ],
   },
 ];
 
 const LIFECYCLE_CARDS = [
-  { title: "1. Create a Storyline", body: "Start a book by choosing a forum, setting a title, and publishing the opening canon scene (or the opening setup)." },
-  { title: "2. Write Solo or Open Proposals", body: "Continue alone or invite contributions. The story owner decides when collaboration is useful." },
-  { title: "3. Proposal Round", body: "Contributors submit scene proposals. Discussion happens in public view, and voting may be enabled depending on the mode." },
-  { title: "4. Decision Note", body: "One scene becomes the next canon (selected or written by the story owner). A short Decision Note explains why." },
-  { title: "5. Repeat and Grow", body: "Canon expands step by step. Proposals open when needed. The process stays deliberate, readable, and accountable." },
+  {
+    title: "1. Create a Storyline",
+    body: "Start a book by choosing a forum, setting a title, and publishing the opening canon scene (or the opening setup).",
+  },
+  {
+    title: "2. Write Solo or Open Proposals",
+    body: "Continue alone or invite contributions. The story owner decides when collaboration is useful.",
+  },
+  {
+    title: "3. Proposal Round",
+    body: "Contributors submit scene proposals. Discussion happens in public view, and voting may be enabled depending on the mode.",
+  },
+  {
+    title: "4. Decision Note",
+    body: "One scene becomes the next canon (selected or written by the story owner). A short Decision Note explains why.",
+  },
+  {
+    title: "5. Repeat and Grow",
+    body: "Canon expands step by step. Proposals open when needed. The process stays deliberate, readable, and accountable.",
+  },
 ];
 
 const CANON_CARDS = [
-  { title: "Canon Scenes", body: "The official book. Canon is what readers come to trust.", points: ["Official story", "Not editable by contributors", "Forms the book"] },
+  {
+    title: "Canon Scenes",
+    body: "The official book. Canon is what readers come to trust.",
+    points: ["Official story", "Not editable by contributors", "Forms the book"],
+  },
   {
     title: "Proposal Scenes",
     body:
       "Suggestions that help the writer choose wisely and stay accountable. Proposals are preserved for learning and transparency.",
-    points: ["Ideas and alternatives", "Not part of the book unless approved", "Preserved for learning and transparency"],
+    points: [
+      "Ideas and alternatives",
+      "Not part of the book unless approved",
+      "Preserved for learning and transparency",
+    ],
   },
 ];
 
 const MODE_CARDS = [
-  { title: "Solo Writing", body: "One writer writes the full story. Readers can follow and comment." },
-  { title: "Collaborative Writing", body: "One writer leads. The community proposes scenes. The writer decides what becomes canon." },
-  { title: "Group Writing (Open)", body: "A community writes together inside a shared structure and clear rules." },
-  { title: "Group Writing (Closed)", body: "A private invited group writes together, useful for classrooms, clubs, and private circles." },
+  {
+    title: "Solo Writing",
+    body: "One writer writes the full story. Readers can follow and comment.",
+  },
+  {
+    title: "Collaborative Writing",
+    body: "One writer leads. The community proposes scenes. The writer decides what becomes canon.",
+  },
+  {
+    title: "Group Writing (Open)",
+    body: "A community writes together inside a shared structure and clear rules.",
+  },
+  {
+    title: "Group Writing (Closed)",
+    body: "A private invited group writes together, useful for classrooms, clubs, and private circles.",
+  },
 ];
 
 export default function HowItWorksPage() {
@@ -187,14 +237,10 @@ export default function HowItWorksPage() {
         <Link href="/about" className="ns-btn ns-btn-secondary">
           About NextScenes
         </Link>
-        <a
-          href="https://app.nextscenes.org"
-          className="ns-btn ns-btn-primary"
-          target="_blank"
-          rel="noreferrer"
-        >
+
+        <Link href="https://app.nextscenes.org" className="ns-btn ns-btn-primary">
           Enter the App
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -237,14 +237,10 @@ export default function HowItWorksPage() {
         <Link href="/fr/about" className="ns-btn ns-btn-secondary">
           À propos de NextScenes
         </Link>
-        <a
-          href="https://app.nextscenes.org"
-          className="ns-btn ns-btn-primary"
-          target="_blank"
-          rel="noreferrer"
-        >
+
+        <Link href="https://app.nextscenes.org" className="ns-btn ns-btn-primary">
           Entrer dans l’application
-        </a>
+        </Link>
       </div>
     </div>
   );

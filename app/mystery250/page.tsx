@@ -26,14 +26,13 @@ export default function Mystery250Page() {
         <Link href="/how-it-works" className="ns-btn ns-btn-ghost">
           How NextScenes works
         </Link>
-        <a
+
+        <Link
           href="https://app.nextscenes.org"
           className="ns-btn ns-btn-primary"
-          target="_blank"
-          rel="noreferrer"
         >
           Enter the App
-        </a>
+        </Link>
       </div>
 
       <div className="ns-trust-strip">
@@ -92,15 +91,15 @@ export default function Mystery250Page() {
           If you feel tired of loud spaces, Mystery250 is for you. It is a place
           of solace that still makes you grow.
         </p>
+
         <div className="ns-hero-cta" style={{ justifyContent: "center" }}>
-          <a
+          <Link
             href="https://app.nextscenes.org"
             className="ns-btn ns-btn-primary"
-            target="_blank"
-            rel="noreferrer"
           >
             Explore inside the App
-          </a>
+          </Link>
+
           <Link href="/contact" className="ns-btn ns-btn-ghost">
             Bring Mystery250 to a school or club
           </Link>
