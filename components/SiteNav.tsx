@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL!;
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 
 function normalizePath(p: string) {
@@ -122,9 +123,10 @@ export default function SiteNav() {
           </div>
 
           {/* Same-tab, consistent behavior */}
-          <Link className="ns-btn ns-btn-ghost" href={APP_URL}>
+          <a className="ns-btn ns-btn-ghost" href={APP_URL}>
             {isFR ? "Entrer dans l’App" : "Enter the App"}
-          </Link>
+          </a>
+
         </div>
       </div>
     </header>
