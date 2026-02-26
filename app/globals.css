@@ -1,12 +1,12 @@
 /* ===============================
    NextScenes Global Style System
-   Build: 2026-01-20 (Public Site Cohesion Pass v1.2)
+   Build: 2026-02-26 (Public Site Cohesion Pass v1.3 — CLEAN / FIXED)
    Mood: Calm, modern, culturally neutral, unmistakably NextScenes
    Notes:
-   - Green topbar + pill nav + pill buttons
-   - Compact typography to reduce scrolling
-   - Backward-compatible grid classes
-   - Button + brand hover clarity (no inherited link hover colors)
+   - ONE topbar system only (duplicates removed)
+   - Public nav tuned closer to App site (mint borders, calmer pills, flatter active, brand pill)
+   - Backward-compatible classes kept (.ns-nav a etc.)
+   - Topbar links never underline (global link hover stays for body content)
    =============================== */
 
 /* Reset */
@@ -56,6 +56,13 @@ img, video { max-width: 100%; height: auto; display: block; }
 
   /* Focus */
   --focus: rgba(31, 182, 106, 0.35);
+
+  /* App-like mint border token */
+  --mint-border: rgba(187, 247, 208, 0.55);
+  --mint-border-strong: rgba(187, 247, 208, 0.92);
+  --pill-quiet: rgba(255, 255, 255, 0.08);
+  --pill-quiet-hover: rgba(255, 255, 255, 0.12);
+  --pill-active: rgba(6, 95, 70, 0.78);
 }
 
 /* Base */
@@ -70,10 +77,7 @@ body {
   line-height: var(--lh);
 }
 
-/* ===============================
-   Links (DEFAULT)
-   Important: button links opt out below.
-   =============================== */
+/* Links (DEFAULT) */
 a { color: var(--accent2); text-decoration: none; }
 a:hover { color: var(--accent); text-decoration: underline; }
 
@@ -86,7 +90,7 @@ a:hover { color: var(--accent); text-decoration: underline; }
 main { flex: 1; }
 
 /* ===============================
-   Top Navigation (GREEN + PILL)
+   Top Navigation (PUBLIC — APP-LIKE)  ✅ SINGLE SOURCE OF TRUTH
    =============================== */
 
 .ns-topbar {
@@ -108,34 +112,75 @@ main { flex: 1; }
   gap: 14px;
 }
 
-/* Brand is now a Link: lock its color + give it a subtle hover signal */
+@media (max-width: 920px) {
+  .ns-topbar-inner { flex-wrap: wrap; }
+}
+
+/* Never underline inside topbar (keeps global link hover elsewhere) */
+.ns-topbar a,
+.ns-topbar a:hover,
+.ns-topbar a:focus,
+.ns-topbar a:active {
+  text-decoration: none;
+}
+
+/* Brand pill (closer to app site) */
 .ns-brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-weight: 900;
-  letter-spacing: 0.2px;
-  color: rgba(255,255,255,0.96);
+
+  padding: 8px 12px;
+  border-radius: 999px;
+
+  border: 1px solid var(--mint-border);
+  background: var(--pill-quiet);
+
   white-space: nowrap;
-  text-decoration: none;
-  transition: transform 140ms ease, filter 140ms ease;
+  color: rgba(255,255,255,0.96);
+
+  font-weight: 800;
+  letter-spacing: 0.1px;
+
+  transition: transform 140ms ease, filter 140ms ease, background 140ms ease, border-color 140ms ease;
 }
 
 .ns-brand:hover {
-  text-decoration: none;
-  color: rgba(255,255,255,0.96);
+  color: rgba(255,255,255,0.98);
+  border-color: rgba(187, 247, 208, 0.85);
+  background: var(--pill-quiet-hover);
   transform: translateY(-1px);
-  filter: brightness(1.06);
+  filter: brightness(1.04);
 }
 
-.ns-brand:visited {
+.ns-brand:visited { color: rgba(255,255,255,0.96); }
+.ns-brand::before { content: none; display: none; }
+
+.ns-brand-logo {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(236, 253, 245, 0.92);
+  border: 1px solid var(--mint-border);
+}
+
+.ns-brand-text {
   color: rgba(255,255,255,0.96);
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
-.ns-brand::before {
-  content: none; display: none;
+/* Nav row (used by SiteNav component) */
+.ns-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
+/* Backward compatibility: old nav wrapper still looks correct if used elsewhere */
 .ns-nav {
   display: flex;
   align-items: center;
@@ -144,38 +189,192 @@ main { flex: 1; }
   justify-content: center;
 }
 
+/* Public nav pill (quiet like app) */
+.ns-navlink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+  border-radius: 999px;
+
+  border: 1px solid var(--mint-border);
+  background: var(--pill-quiet);
+
+  color: rgba(255,255,255,0.90);
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+
+  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
+}
+
+.ns-navlink:hover {
+  color: #ffffff;
+  border-color: rgba(187, 247, 208, 0.85);
+  background: var(--pill-quiet-hover);
+  transform: translateY(-1px);
+}
+
+/* Active: flatter/darker like app */
+.ns-navlink.is-active,
+.ns-navlink[aria-current="page"] {
+  color: #ffffff;
+  border-color: var(--mint-border-strong);
+  background: var(--pill-active);
+}
+
+/* If some pages still use .ns-nav a */
 .ns-nav a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 9px 14px;
+
+  padding: 8px 14px;
   border-radius: 999px;
+
+  border: 1px solid var(--mint-border);
+  background: var(--pill-quiet);
+
+  color: rgba(255,255,255,0.90);
+
   font-size: 13px;
   font-weight: 700;
-  color: rgba(255,255,255,0.90);
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(0,0,0,0.06);
-  text-decoration: none;
+  line-height: 1;
+
   transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
 }
 
 .ns-nav a:hover {
   color: #ffffff;
-  border-color: rgba(255,255,255,0.32);
-  background: rgba(255,255,255,0.10);
-  text-decoration: none;
+  border-color: rgba(187, 247, 208, 0.85);
+  background: var(--pill-quiet-hover);
   transform: translateY(-1px);
 }
 
 .ns-nav a[aria-current="page"] {
-  background: rgba(255,255,255,0.18);
-  border-color: rgba(255,255,255,0.30);
+  color: #ffffff;
+  border-color: var(--mint-border-strong);
+  background: var(--pill-active);
+}
+
+/* Right side */
+.ns-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 860px) {
+  .ns-links { flex-wrap: wrap; justify-content: center; }
+  .ns-topbar-right { flex-wrap: wrap; justify-content: flex-end; }
+}
+
+/* More dropdown */
+.ns-more {
+  position: relative;
+  display: inline-block;
+}
+
+.ns-more > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.ns-more > summary::-webkit-details-marker { display: none; }
+
+.ns-more-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  min-width: 210px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
+  padding: 8px;
+  z-index: 50;
+}
+
+.ns-more-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.ns-more-item:hover {
+  background: rgba(236, 253, 245, 0.92);
+}
+
+/* Language toggle (quiet like app) */
+.ns-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  border: 1px solid var(--mint-border);
+  background: var(--pill-quiet);
+}
+
+.ns-lang-sep {
+  color: rgba(255,255,255,0.85);
+  font-weight: 800;
+}
+
+.ns-lang-link {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.90);
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  line-height: 1;
+
+  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.ns-lang-link:hover {
+  border-color: rgba(187, 247, 208, 0.70);
+  background: var(--pill-quiet-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.ns-lang-link.is-active {
+  border-color: var(--mint-border-strong);
+  background: var(--pill-active);
   color: #ffffff;
 }
 
-/* Responsive topbar wrap */
-@media (max-width: 920px) {
-  .ns-topbar-inner { flex-wrap: wrap; }
+/* Make "Enter the App" behave like app’s light pill */
+.ns-topbar .ns-btn-ghost {
+  background: rgba(236, 253, 245, 0.92);
+  border-color: var(--mint-border-strong);
+  color: rgba(15, 36, 24, 0.92);
+  font-weight: 800;
+}
+
+.ns-topbar .ns-btn-ghost:hover {
+  background: rgba(236, 253, 245, 0.98);
+  border-color: rgba(187, 247, 208, 0.98);
+  color: rgba(15, 36, 24, 0.92);
+}
+
+/* Focus ring */
+.ns-btn-primary:focus-visible,
+.ns-btn-secondary:focus-visible,
+.ns-btn-ghost:focus-visible,
+.ns-nav a:focus-visible,
+.ns-navlink:focus-visible,
+.ns-brand:focus-visible,
+.ns-lang-link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
 /* ===============================
@@ -288,7 +487,6 @@ main { flex: 1; }
 
 /* ===============================
    Buttons (TRUE PILL)
-   Key rule: buttons must NOT inherit default link hover color.
    =============================== */
 
 .ns-btn,
@@ -312,7 +510,6 @@ main { flex: 1; }
   transition: transform 140ms ease, filter 140ms ease, background 140ms ease, border-color 140ms ease;
 }
 
-/* Ensure nested icon/text inherits button color */
 .ns-btn *,
 .ns-btn-primary *,
 .ns-btn-secondary *,
@@ -332,8 +529,7 @@ main { flex: 1; }
 .ns-btn-primary:hover {
   transform: translateY(-1px);
   filter: brightness(0.98);
-  color: #ffffff; /* lock */
-  text-decoration: none;
+  color: #ffffff;
 }
 
 /* Secondary */
@@ -348,11 +544,10 @@ main { flex: 1; }
   background: rgba(255,255,255,0.92);
   border-color: rgba(20, 138, 74, 0.42);
   transform: translateY(-1px);
-  color: #0f2418; /* lock */
-  text-decoration: none;
+  color: #0f2418;
 }
 
-/* Ghost */
+/* Ghost (global). Topbar overrides above keep "Enter the App" light. */
 .ns-btn-ghost {
   background: var(--btn-ghost-bg);
   color: rgba(15, 36, 24, 0.92);
@@ -363,17 +558,15 @@ main { flex: 1; }
   background: rgba(255,255,255,0.92);
   border-color: rgba(20, 138, 74, 0.40);
   transform: translateY(-1px);
-  color: rgba(15, 36, 24, 0.92); /* lock */
-  text-decoration: none;
+  color: rgba(15, 36, 24, 0.92);
 }
 
 /* Button links opt out of default link hover behavior */
 a.ns-btn,
 a.ns-btn-primary,
 a.ns-btn-secondary,
-a.ns-btn-ghost {
-  text-decoration: none;
-}
+a.ns-btn-ghost { text-decoration: none; }
+
 a.ns-btn:hover,
 a.ns-btn-primary:hover,
 a.ns-btn-secondary:hover,
@@ -382,32 +575,18 @@ a.ns-btn-ghost:hover {
   color: inherit;
 }
 
-/* Belt + suspenders: ensure global a:hover NEVER overrides button text */
+/* Belt + suspenders */
 a.ns-btn-primary:hover,
 a.ns-btn-primary:focus,
-a.ns-btn-primary:active {
-  color: #ffffff !important;
-}
+a.ns-btn-primary:active { color: #ffffff !important; }
+
 a.ns-btn-secondary:hover,
 a.ns-btn-secondary:focus,
-a.ns-btn-secondary:active {
-  color: #0f2418 !important;
-}
+a.ns-btn-secondary:active { color: #0f2418 !important; }
+
 a.ns-btn-ghost:hover,
 a.ns-btn-ghost:focus,
-a.ns-btn-ghost:active {
-  color: rgba(15, 36, 24, 0.92) !important;
-}
-
-/* Accessible focus ring */
-.ns-btn-primary:focus-visible,
-.ns-btn-secondary:focus-visible,
-.ns-btn-ghost:focus-visible,
-.ns-nav a:focus-visible,
-.ns-brand:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
+a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
 
 /* Hero CTA row */
 .ns-hero-cta {
@@ -484,7 +663,6 @@ a.ns-btn-ghost:active {
 .ns-media-card:hover {
   border-color: rgba(20,138,74,0.32);
   transform: translateY(-1px);
-  text-decoration: none;
 }
 
 .ns-media-thumb {
@@ -608,377 +786,4 @@ a.ns-btn-ghost:active {
   padding: 14px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.05);
   margin: 12px 0;
-}
-/* ---------- Public Site: Topbar layout helpers ---------- */
-.ns-topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.ns-topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* ---------- More dropdown ---------- */
-.ns-more {
-  position: relative;
-  display: inline-block;
-}
-
-.ns-more > summary {
-  list-style: none;
-  cursor: pointer;
-}
-
-.ns-more > summary::-webkit-details-marker {
-  display: none;
-}
-
-.ns-more-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 10px);
-  min-width: 200px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 118, 110, 0.18);
-  border-radius: 14px;
-  box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
-  padding: 8px;
-  z-index: 50;
-}
-
-.ns-more-item {
-  display: block;
-  padding: 10px 12px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: #0f172a;
-  font-weight: 700;
-}
-
-.ns-more-item:hover {
-  background: rgba(236, 253, 245, 0.92);
-}
-
-/* ---------- Public Site: Footer spacing ---------- */
-.ns-footer-inner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.ns-footer-links {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.ns-footer-links a {
-  white-space: nowrap;
-}
-
-.ns-footer-social {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-@media (max-width: 860px) {
-  .ns-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .ns-topbar-right {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .ns-footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .ns-footer-social {
-    justify-content: flex-start;
-  }
-}
-/* Footer layout */
-.ns-footer {
-  margin-top: 28px;
-}
-
-.ns-footer-inner {
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.ns-footer-left {
-  min-width: 240px;
-  max-width: 520px;
-}
-
-.ns-footer-brandrow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
-}
-
-.ns-footer-logo {
-  display: block;
-  border-radius: 8px;
-}
-
-.ns-footer-brand {
-  font-weight: 900;
-  letter-spacing: 0.02em;
-}
-
-.ns-footer-meta {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  opacity: 0.85;
-}
-
-.ns-footer-links,
-.ns-footer-social {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.ns-footer-link {
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-@media (max-width: 860px) {
-  .ns-footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-/* =========================
-   Public Site: Top bar polish
-   ========================= */
-
-.ns-topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.ns-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-
-.ns-brand-logo {
-  display: block;
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  background: rgba(236, 253, 245, 0.92);
-  border: 1px solid rgba(187, 247, 208, 0.55);
-}
-
-.ns-brand-text {
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  color: #ecfdf5;
-}
-
-.ns-topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Make top buttons visible again */
-.ns-navlink {
-  display: inline-flex;
-  align-items: center;
-  line-height: 1;
-  text-decoration: none;
-
-  padding: 10px 14px;
-  border-radius: 999px;
-
-  border: 1px solid rgba(187, 247, 208, 0.55);
-  background: rgba(255, 255, 255, 0.14);
-  color: #ecfdf5;
-  font-weight: 900;
-
-  transition: background 0.16s ease, border-color 0.16s ease, transform 0.06s ease;
-}
-
-.ns-navlink:hover {
-  border-color: rgba(187, 247, 208, 0.95);
-  background: rgba(22, 163, 74, 0.28);
-  transform: translateY(-1px);
-}
-
-.ns-navlink.is-active {
-  border-color: rgba(187, 247, 208, 0.98);
-  background: rgba(6, 95, 70, 0.92);
-  color: #ffffff;
-}
-
-
-/* More dropdown */
-.ns-more {
-  position: relative;
-  display: inline-block;
-}
-
-.ns-more > summary {
-  list-style: none;
-  cursor: pointer;
-}
-
-.ns-more > summary::-webkit-details-marker {
-  display: none;
-}
-
-.ns-more-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 10px);
-  min-width: 210px;
-  background: #ffffff;
-  border: 1px solid rgba(15, 118, 110, 0.18);
-  border-radius: 14px;
-  box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
-  padding: 8px;
-  z-index: 50;
-}
-
-.ns-more-item {
-  display: block;
-  padding: 10px 12px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: #0f172a;
-  font-weight: 800;
-}
-
-.ns-more-item:hover {
-  background: rgba(236, 253, 245, 0.92);
-}
-
-/* =========================
-   Public Site: Footer formatting
-   ========================= */
-
-.ns-footer-inner {
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
-
-.ns-footer-left {
-  min-width: 260px;
-  max-width: 560px;
-}
-
-.ns-footer-brand {
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  margin-bottom: 4px;
-}
-
-.ns-footer-meta {
-  margin-top: 8px;
-  font-size: 0.86rem;
-  opacity: 0.85;
-}
-
-.ns-footer-links,
-.ns-footer-social {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.ns-footer-link {
-  white-space: nowrap;
-  text-decoration: none;
-  font-weight: 800;
-}
-
-@media (max-width: 900px) {
-  .ns-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .ns-topbar-right {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .ns-footer-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-/* ===== Language toggle: make EN/FR visible ===== */
-
-.ns-lang {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(187, 247, 208, 0.45);
-  background: rgba(255, 255, 255, 0.10);
-}
-
-.ns-lang-sep {
-  color: rgba(236, 253, 245, 0.85);
-  font-weight: 900;
-}
-
-.ns-lang-link {
-  text-decoration: none;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  color: rgba(236, 253, 245, 0.92);
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  line-height: 1;
-}
-
-.ns-lang-link:hover {
-  border-color: rgba(187, 247, 208, 0.75);
-  background: rgba(22, 163, 74, 0.22);
-  color: #ffffff;
-}
-
-.ns-lang-link.is-active {
-  border-color: rgba(187, 247, 208, 0.95);
-  background: rgba(6, 95, 70, 0.92);
-  color: #ffffff;
 }
