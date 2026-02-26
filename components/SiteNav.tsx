@@ -273,7 +273,7 @@ export default function SiteNav() {
           {/* App entry */}
 
           <a
-            href={APP_URL}
+            href={isFR ? "/fr/enter" : "/enter"}
             className="ns-btn ns-btn-ghost"
             rel="noopener noreferrer"
             onClick={closeMore}
