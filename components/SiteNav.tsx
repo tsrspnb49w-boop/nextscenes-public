@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
 
 /* ===============================
    Path helpers
@@ -33,6 +33,21 @@ function addFrPrefix(pathname: string) {
 
 type AuthHint = "unknown" | "authed" | "guest";
 
+function isLikelyAuthedPayload(data: any) {
+  if (!data || typeof data !== "object") return false;
+  if (data.ok === true) return true;
+
+  if (data.user && typeof data.user === "object") {
+    if (data.user._id || data.user.id || data.user.email || data.user.username) return true;
+  }
+
+  if (data.me && typeof data.me === "object") {
+    if (data.me._id || data.me.id || data.me.email || data.me.username) return true;
+  }
+
+  return false;
+}
+
 export default function SiteNav() {
   const pathname = usePathname() || "/";
 
@@ -41,10 +56,6 @@ export default function SiteNav() {
 
   const enHref = stripFrPrefix(pathname);
   const frHref = addFrPrefix(pathname);
-
-  /* ===============================
-     Links
-     =============================== */
 
   const PRIMARY = useMemo(
     () => [
@@ -71,11 +82,10 @@ export default function SiteNav() {
   }
 
   /* ===============================
-     More dropdown state
+     More dropdown
      =============================== */
 
   const [moreOpen, setMoreOpen] = useState(false);
-
   const moreWrapRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -87,107 +97,23 @@ export default function SiteNav() {
     setMoreOpen((v) => !v);
   }
 
-  /* ===============================
-     Auth awareness (best-effort)
-     - If app cookies are shared across subdomains, this will detect login.
-     - If not, it quietly falls back to "Enter the App".
-     =============================== */
-
-  const [authHint, setAuthHint] = useState<AuthHint>("unknown");
-
-  useEffect(() => {
-    let alive = true;
-    const ctrl = new AbortController();
-
-    async function check() {
-      try {
-        // Try a lightweight endpoint on the app that returns 200 when logged in.
-        // If your app uses a different endpoint, adjust this string only.
-        const res = await fetch(`${APP_URL}/api/profile`, {
-          method: "GET",
-          credentials: "include",
-          cache: "no-store",
-          signal: ctrl.signal,
-          headers: { Accept: "application/json" },
-        });
-
-        if (!alive) return;
-
-        if (res.ok) {
-          setAuthHint("authed");
-          return;
-        }
-
-        // 401/403 means "guest" (not logged in)
-        if (res.status === 401 || res.status === 403) {
-          setAuthHint("guest");
-          return;
-        }
-
-        // Anything else: treat as guest (safe default)
-        setAuthHint("guest");
-      } catch {
-        if (!alive) return;
-        setAuthHint("guest");
-      }
-    }
-
-    // Run once on mount, then settle.
-    check();
-
-    return () => {
-      alive = false;
-      ctrl.abort();
-    };
-  }, []);
-
-  const appCtaText = useMemo(() => {
-    // While unknown, keep the stable label to avoid UI jitter.
-    if (authHint !== "authed") return isFR ? "Entrer dans l’App" : "Enter the App";
-    return isFR ? "Continuer dans l’App" : "Continue in the App";
-  }, [authHint, isFR]);
-
-  const appCtaAria = useMemo(() => {
-    if (authHint !== "authed") return isFR ? "Entrer dans l’application" : "Enter the application";
-    return isFR ? "Continuer dans l’application" : "Continue in the application";
-  }, [authHint, isFR]);
-
-  /* ===============================
-     Close on route change
-     =============================== */
-
   useEffect(() => {
     setMoreOpen(false);
   }, [pathname]);
-
-  /* ===============================
-     Close on Escape
-     =============================== */
 
   useEffect(() => {
     if (!moreOpen) return;
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
-
       e.preventDefault();
       setMoreOpen(false);
-
-      requestAnimationFrame(() => {
-        moreButtonRef.current?.focus();
-      });
+      requestAnimationFrame(() => moreButtonRef.current?.focus());
     }
 
     window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-    };
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [moreOpen]);
-
-  /* ===============================
-     Close on outside click
-     =============================== */
 
   useEffect(() => {
     if (!moreOpen) return;
@@ -195,27 +121,95 @@ export default function SiteNav() {
     function onPointerDown(e: PointerEvent) {
       const wrap = moreWrapRef.current;
       if (!wrap) return;
-
-      if (!wrap.contains(e.target as Node)) {
-        setMoreOpen(false);
-      }
+      if (!wrap.contains(e.target as Node)) setMoreOpen(false);
     }
 
     window.addEventListener("pointerdown", onPointerDown);
-
-    return () => {
-      window.removeEventListener("pointerdown", onPointerDown);
-    };
+    return () => window.removeEventListener("pointerdown", onPointerDown);
   }, [moreOpen]);
 
   /* ===============================
-     Render
+     Auth awareness (best-effort)
      =============================== */
+
+  const [authHint, setAuthHint] = useState<AuthHint>("unknown");
+
+  const checkAuth = useCallback(async () => {
+    const ctrl = new AbortController();
+    const t = window.setTimeout(() => ctrl.abort(), 2500);
+
+    try {
+      // ✅ Correct endpoint: JSON-only auth probe
+      const res = await fetch(`${APP_URL}/api/auth/me`, {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store",
+        signal: ctrl.signal,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.status === 401 || res.status === 403) {
+        setAuthHint("guest");
+        return;
+      }
+
+      const ct = (res.headers.get("content-type") || "").toLowerCase();
+      if (!ct.includes("application/json")) {
+        setAuthHint("guest");
+        return;
+      }
+
+      const data = await res.json().catch(() => null);
+      setAuthHint(isLikelyAuthedPayload(data) ? "authed" : "guest");
+    } catch {
+      setAuthHint("guest");
+    } finally {
+      window.clearTimeout(t);
+      ctrl.abort();
+    }
+  }, [APP_URL]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
+  useEffect(() => {
+    function onFocus() {
+      checkAuth();
+    }
+    function onVis() {
+      if (document.visibilityState === "visible") checkAuth();
+    }
+
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVis);
+
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, [checkAuth]);
+
+  const appCtaText = useMemo(() => {
+    if (authHint === "unknown") return isFR ? "Vérification…" : "Checking…";
+    if (authHint !== "authed") return isFR ? "Entrer dans l’App" : "Enter the App";
+    return isFR ? "Continuer dans l’App" : "Continue in the App";
+  }, [authHint, isFR]);
+
+  const appCtaAria = useMemo(() => {
+    if (authHint === "unknown") return isFR ? "Vérification de session" : "Checking session";
+    if (authHint !== "authed") return isFR ? "Entrer dans l’application" : "Enter the application";
+    return isFR ? "Continuer dans l’application" : "Continue in the application";
+  }, [authHint, isFR]);
+
+  const appCtaHref = useMemo(() => {
+    if (authHint === "authed") return `${APP_URL}/storylines`;
+    return isFR ? "/fr/enter" : "/enter";
+  }, [authHint, isFR]);
 
   return (
     <header className="ns-topbar">
       <div className="ns-topbar-inner">
-        {/* Brand */}
         <Link
           href={isFR ? "/fr" : "/"}
           className="ns-brand"
@@ -232,7 +226,6 @@ export default function SiteNav() {
           <span className="ns-brand-text">NextScenes</span>
         </Link>
 
-        {/* Primary nav */}
         <nav className="ns-links" aria-label={isFR ? "Navigation principale" : "Main navigation"}>
           {PRIMARY.map((l) => (
             <Link
@@ -246,7 +239,6 @@ export default function SiteNav() {
             </Link>
           ))}
 
-          {/* More dropdown */}
           <div className="ns-more" ref={moreWrapRef}>
             <button
               ref={moreButtonRef}
@@ -283,9 +275,7 @@ export default function SiteNav() {
           </div>
         </nav>
 
-        {/* Right side */}
         <div className="ns-topbar-right">
-          {/* Language */}
           <div className="ns-lang" aria-label="Language">
             <Link
               href={enHref}
@@ -294,9 +284,7 @@ export default function SiteNav() {
             >
               EN
             </Link>
-
             <span className="ns-lang-sep">/</span>
-
             <Link
               href={frHref}
               className={`ns-lang-link ${isFR ? "is-active" : ""}`}
@@ -306,9 +294,8 @@ export default function SiteNav() {
             </Link>
           </div>
 
-          {/* App entry (server-side redirect already working) */}
           <a
-            href={isFR ? "/fr/enter" : "/enter"}
+            href={appCtaHref}
             className="ns-btn ns-btn-ghost"
             aria-label={appCtaAria}
             onClick={closeMore}

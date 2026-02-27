@@ -167,8 +167,8 @@ main { flex: 1; }
 
 .ns-brand-text {
   color: rgba(255,255,255,0.96);
-  font-weight: 800;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 /* Nav row (used by SiteNav component) */
@@ -204,7 +204,7 @@ main { flex: 1; }
   color: rgba(255,255,255,0.90);
 
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
 
   transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
