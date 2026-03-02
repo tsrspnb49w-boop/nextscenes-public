@@ -82,20 +82,15 @@ export default function SiteNav() {
   }
 
   /* ===============================
-     More dropdown
+     More dropdown (reliable close)
      =============================== */
 
   const [moreOpen, setMoreOpen] = useState(false);
   const moreWrapRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
 
-  function closeMore() {
-    setMoreOpen(false);
-  }
-
-  function toggleMore() {
-    setMoreOpen((v) => !v);
-  }
+  const closeMore = useCallback(() => setMoreOpen(false), []);
+  const toggleMore = useCallback(() => setMoreOpen((v) => !v), []);
 
   useEffect(() => {
     setMoreOpen(false);
@@ -118,14 +113,21 @@ export default function SiteNav() {
   useEffect(() => {
     if (!moreOpen) return;
 
-    function onPointerDown(e: PointerEvent) {
+    // Use capture + mousedown/touchstart for maximum reliability.
+    function onOutside(e: Event) {
       const wrap = moreWrapRef.current;
       if (!wrap) return;
-      if (!wrap.contains(e.target as Node)) setMoreOpen(false);
+      const target = e.target as Node | null;
+      if (!target) return;
+      if (!wrap.contains(target)) setMoreOpen(false);
     }
 
-    window.addEventListener("pointerdown", onPointerDown);
-    return () => window.removeEventListener("pointerdown", onPointerDown);
+    window.addEventListener("mousedown", onOutside, true);
+    window.addEventListener("touchstart", onOutside, true);
+    return () => {
+      window.removeEventListener("mousedown", onOutside, true);
+      window.removeEventListener("touchstart", onOutside, true);
+    };
   }, [moreOpen]);
 
   /* ===============================
@@ -139,7 +141,6 @@ export default function SiteNav() {
     const t = window.setTimeout(() => ctrl.abort(), 2500);
 
     try {
-      // ✅ Correct endpoint: JSON-only auth probe
       const res = await fetch(`${APP_URL}/api/auth/me`, {
         method: "GET",
         credentials: "include",
@@ -167,7 +168,7 @@ export default function SiteNav() {
       window.clearTimeout(t);
       ctrl.abort();
     }
-  }, [APP_URL]);
+  }, []);
 
   useEffect(() => {
     checkAuth();
@@ -210,12 +211,7 @@ export default function SiteNav() {
   return (
     <header className="ns-topbar">
       <div className="ns-topbar-inner">
-        <Link
-          href={isFR ? "/fr" : "/"}
-          className="ns-brand"
-          aria-label="NextScenes home"
-          onClick={closeMore}
-        >
+        <Link href={isFR ? "/fr" : "/"} className="ns-brand" aria-label="NextScenes home" onClick={closeMore}>
           <img
             src="/assets/nextscenes-logo.png"
             alt="NextScenes"
@@ -277,29 +273,16 @@ export default function SiteNav() {
 
         <div className="ns-topbar-right">
           <div className="ns-lang" aria-label="Language">
-            <Link
-              href={enHref}
-              className={`ns-lang-link ${!isFR ? "is-active" : ""}`}
-              onClick={closeMore}
-            >
+            <Link href={enHref} className={`ns-lang-link ${!isFR ? "is-active" : ""}`} onClick={closeMore}>
               EN
             </Link>
             <span className="ns-lang-sep">/</span>
-            <Link
-              href={frHref}
-              className={`ns-lang-link ${isFR ? "is-active" : ""}`}
-              onClick={closeMore}
-            >
+            <Link href={frHref} className={`ns-lang-link ${isFR ? "is-active" : ""}`} onClick={closeMore}>
               FR
             </Link>
           </div>
 
-          <a
-            href={appCtaHref}
-            className="ns-btn ns-btn-ghost"
-            aria-label={appCtaAria}
-            onClick={closeMore}
-          >
+          <a href={appCtaHref} className="ns-btn ns-btn-ghost" aria-label={appCtaAria} onClick={closeMore}>
             {appCtaText}
           </a>
         </div>

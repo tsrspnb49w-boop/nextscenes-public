@@ -1,4 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 const ROLE_CARDS = [
   {
@@ -75,7 +81,11 @@ const CANON_CARDS = [
   {
     title: "Scènes canon",
     body: "Le livre officiel. Le canon est ce à quoi les lecteurs font confiance.",
-    points: ["Histoire officielle", "Non modifiable par les contributeurs", "Constitue le livre"],
+    points: [
+      "Histoire officielle",
+      "Non modifiable par les contributeurs",
+      "Constitue le livre",
+    ],
   },
   {
     title: "Scènes proposées",
@@ -90,25 +100,106 @@ const CANON_CARDS = [
 ];
 
 const MODE_CARDS = [
-  { title: "Écriture en solo", body: "Un seul auteur écrit toute l’histoire. Les lecteurs peuvent suivre et commenter." },
+  {
+    title: "Écriture en solo",
+    body:
+      "Un seul auteur écrit toute l’histoire. Les lecteurs peuvent suivre et commenter.",
+  },
   {
     title: "Écriture collaborative",
-    body: "Un auteur dirige. La communauté propose des scènes. L’auteur décide ce qui devient canon.",
+    body:
+      "Un auteur dirige. Des contributeurs peuvent proposer des scènes depuis n’importe quel pays. L’auteur décide ce qui devient canon.",
   },
   {
     title: "Écriture de groupe (ouverte)",
-    body: "Une communauté écrit ensemble dans une structure partagée et des règles claires.",
+    body:
+      "Une communauté écrit ensemble dans une structure partagée et des règles claires.",
   },
   {
     title: "Écriture de groupe (fermée)",
-    body: "Un groupe privé sur invitation écrit ensemble, utile pour les classes, clubs et cercles privés.",
+    body:
+      "Un groupe privé sur invitation écrit ensemble, utile pour les classes, clubs et cercles privés.",
   },
 ];
 
+const SIMPLE_PATH = [
+  {
+    title: "🌐 1. Visitez le site public",
+    body:
+      "Explorez NextScenes sur le site public. Quand vous êtes prêt à écrire, cliquez sur « Entrer dans l’application ».",
+  },
+  {
+    title: "👤 2. Créez votre compte",
+    body:
+      "Inscrivez-vous avec votre nom, votre email et votre mot de passe. Votre espace personnel est créé.",
+  },
+  {
+    title: "📚 3. Créez votre histoire dans Story Hub",
+    body:
+      "Allez dans Story Hub et cliquez sur « Créer une Storyline ». Ajoutez un titre, une description et choisissez un mode d’écriture.",
+  },
+  {
+    title: "✍️ 4. Développez votre histoire dans WriterStudio",
+    body:
+      "Ouvrez votre storyline, allez dans WriterStudio, écrivez vos scènes et sauvegardez votre travail.",
+  },
+  {
+    title: "🌍 5. Collaborez de partout",
+    body:
+      "Les contributeurs peuvent participer depuis n’importe quelle ville ou pays, à condition d’avoir accès à Internet.",
+  },
+  {
+    title: "💾 6. Votre travail reste sauvegardé",
+    body:
+      "Revenez quand vous voulez pour continuer. Vos histoires restent stockées en sécurité dans votre compte.",
+  },
+];
+
+function ImgBlock({
+  src,
+  alt,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  return (
+    <div style={{ margin: "14px 0 18px" }}>
+      <Image
+        src={src}
+        alt={alt}
+        width={1600}
+        height={900}
+        priority={priority}
+        style={{
+          width: "100%",
+          height: "auto",
+          borderRadius: 10,
+          display: "block",
+        }}
+      />
+    </div>
+  );
+}
+
 export default function HowItWorksPage() {
+  const pathname = usePathname();
+  const isFR = pathname?.startsWith("/fr");
+
+  const aboutHref = isFR ? "/fr/about" : "/about";
+  const contactHref = isFR ? "/fr/contact" : "/contact";
+
   return (
     <div className="ns-page ns-compact">
       <h1 className="ns-h1">Comment NextScenes fonctionne</h1>
+
+      {/* HERO IMAGE */}
+      <ImgBlock
+        src="/images/hero-writing-desk.webp"
+        alt="Un espace calme pour écrire sur NextScenes"
+        priority
+      />
 
       <p className="ns-p">
         NextScenes construit les histoires étape par étape, avec leadership,
@@ -120,9 +211,121 @@ export default function HowItWorksPage() {
 
       <div className="ns-callout">
         <p className="ns-p" style={{ marginBottom: 0 }}>
-          NextScenes transforme la narration d’une ruée de foule en un processus
-          guidé, avec mémoire, responsabilité et artisanat.
+          Orientation rapide : <strong>Story Hub crée les histoires.</strong>{" "}
+          <strong>WriterStudio développe les histoires.</strong>
         </p>
+      </div>
+
+      <h2 className="ns-h2">Site public et application</h2>
+      <div className="ns-grid-3">
+        <div className="ns-card">
+          <h3 className="ns-h3">Site public</h3>
+          <p className="ns-p">
+            Le site public sert à découvrir et comprendre la plateforme. Vous y
+            trouvez les explications, les pages d’aide, et le contact.
+          </p>
+          <ul className="ns-list">
+            <li>Découvrir et comprendre</li>
+            <li>Lire les modes d’écriture</li>
+            <li>Trouver l’aide et le contact</li>
+          </ul>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">Application (App)</h3>
+          <p className="ns-p">
+            L’application est l’endroit où l’écriture commence. C’est votre
+            espace personnel.
+          </p>
+          <ul className="ns-list">
+            <li>Créer des storylines dans Story Hub</li>
+            <li>Développer l’histoire dans WriterStudio</li>
+            <li>Écrire seul ou collaborer</li>
+          </ul>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">Commencer</h3>
+          <p className="ns-p">
+            Si vous voulez écrire maintenant, entrez dans l’application. Sinon,
+            continuez la lecture pour comprendre le modèle.
+          </p>
+          <div className="ns-actions" style={{ justifyContent: "flex-start" }}>
+            <Link href={APP_URL} className="ns-btn ns-btn-primary">
+              Entrer dans l’application
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <h2 className="ns-h2">Les deux endroits principaux</h2>
+      <div className="ns-grid-3">
+        <div className="ns-card">
+          <h3 className="ns-h3">Story Hub</h3>
+
+          {/* STORY HUB IMAGE */}
+          <ImgBlock
+            src="/images/story-hub.webp"
+            alt="Story Hub : écran de création d’une storyline"
+          />
+
+          <p className="ns-p">
+            <strong>Créer votre histoire.</strong> Story Hub est l’endroit où
+            les histoires naissent. Créez une storyline, définissez le titre et
+            la description, puis choisissez un mode d’écriture.
+          </p>
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            <strong>Story Hub crée.</strong>
+          </p>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">WriterStudio</h3>
+
+          {/* WRITER STUDIO IMAGE */}
+          <ImgBlock
+            src="/images/writer-studio.webp"
+            alt="WriterStudio : écran d’écriture et de développement"
+          />
+
+          <p className="ns-p">
+            <strong>Développer votre histoire.</strong> WriterStudio est
+            l’endroit où votre œuvre grandit. Écrivez des scènes et construisez
+            le livre dans le temps.
+          </p>
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            <strong>WriterStudio développe.</strong>
+          </p>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">Ce que vous pouvez écrire</h3>
+          <p className="ns-p">
+            Romans, manuels scolaires, scénarios, musique, projets de
+            communautés. NextScenes soutient une écriture sérieuse et structurée.
+          </p>
+
+          {/* GLOBAL COLLAB IMAGE */}
+          <ImgBlock
+            src="/images/global-collaboration.webp"
+            alt="Collaboration mondiale : des contributeurs partout dans le monde"
+          />
+
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            Des contributeurs peuvent participer depuis n’importe où, avec
+            Internet.
+          </p>
+        </div>
+      </div>
+
+      <h2 className="ns-h2">Le chemin simple</h2>
+      <div className="ns-grid-3">
+        {SIMPLE_PATH.map((c) => (
+          <div key={c.title} className="ns-card">
+            <h3 className="ns-h3">{c.title}</h3>
+            <p className="ns-p">{c.body}</p>
+          </div>
+        ))}
       </div>
 
       <h2 className="ns-h2">Les rôles principaux</h2>
@@ -170,6 +373,13 @@ export default function HowItWorksPage() {
       </div>
 
       <h2 className="ns-h2">Modes d’écriture</h2>
+
+      {/* WRITING MODES IMAGE */}
+      <ImgBlock
+        src="/images/writing-modes-global.webp"
+        alt="Modes d’écriture NextScenes : solo, collaboratif, groupe accès limité, groupe accès restreint"
+      />
+
       <div className="ns-grid-3">
         {MODE_CARDS.map((c) => (
           <div key={c.title} className="ns-card">
@@ -190,7 +400,9 @@ export default function HowItWorksPage() {
           </p>
         </div>
         <div className="ns-card">
-          <h3 className="ns-h3">Une découverte qui garde les communautés vivantes</h3>
+          <h3 className="ns-h3">
+            Une découverte qui garde les communautés vivantes
+          </h3>
           <p className="ns-p">
             L’activité récente et les storylines tendances aident les lecteurs à
             trouver des œuvres vivantes et aident les auteurs à attirer
@@ -200,8 +412,8 @@ export default function HowItWorksPage() {
         <div className="ns-card">
           <h3 className="ns-h3">Historique des décisions</h3>
           <p className="ns-p">
-            NextScenes conserve ce qui a été proposé, ce qui est devenu canon,
-            et la Note de décision expliquant pourquoi. Cet historique protège
+            NextScenes conserve ce qui a été proposé, ce qui est devenu canon, et
+            la Note de décision expliquant pourquoi. Cet historique protège
             l’équité, l’apprentissage et la confiance.
           </p>
         </div>
@@ -219,26 +431,46 @@ export default function HowItWorksPage() {
         <div className="ns-card">
           <h3 className="ns-h3">Équité et responsabilité</h3>
           <p className="ns-p">
-            Quand les décisions sont visibles, la collaboration reste honnête.
-            Les gens peuvent apprendre du dossier au lieu de tourner en rond.
+            Quand les décisions sont visibles, la collaboration reste honnête. Les
+            gens peuvent apprendre du dossier au lieu de tourner en rond.
           </p>
         </div>
         <div className="ns-card">
           <h3 className="ns-h3">Sécurité et discipline</h3>
           <p className="ns-p">
-            Des règles claires réduisent le sabotage, récompensent l’artisanat
-            et aident les communautés à rester respectueuses même quand les avis
+            Des règles claires réduisent le sabotage, récompensent l’artisanat et
+            aident les communautés à rester respectueuses même quand les avis
             diffèrent.
           </p>
         </div>
       </div>
 
+      <h2 className="ns-h2">Besoin d’aide</h2>
+      <div className="ns-grid-3">
+        <div className="ns-card">
+          <h3 className="ns-h3">Contactez NextScenes</h3>
+          <p className="ns-p">
+            Si vous avez des questions, besoin d’aide, ou si vous voulez signaler
+            un problème, contactez-nous à tout moment.
+          </p>
+          <ul className="ns-list">
+            <li>Utilisez la page Contact sur le site public</li>
+            <li>Expliquez ce que vous avez essayé et ce que vous attendiez</li>
+            <li>Nous répondrons dès que possible</li>
+          </ul>
+        </div>
+      </div>
+
       <div className="ns-actions">
-        <Link href="/fr/about" className="ns-btn ns-btn-secondary">
+        <Link href={aboutHref} className="ns-btn ns-btn-secondary">
           À propos de NextScenes
         </Link>
 
-        <Link href="https://app.nextscenes.org" className="ns-btn ns-btn-primary">
+        <Link href={contactHref} className="ns-btn ns-btn-secondary">
+          Contact
+        </Link>
+
+        <Link href={APP_URL} className="ns-btn ns-btn-primary">
           Entrer dans l’application
         </Link>
       </div>

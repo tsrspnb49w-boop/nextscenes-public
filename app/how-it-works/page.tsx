@@ -1,4 +1,10 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 const ROLE_CARDS = [
   {
@@ -96,22 +102,99 @@ const MODE_CARDS = [
   },
   {
     title: "Collaborative Writing",
-    body: "One writer leads. The community proposes scenes. The writer decides what becomes canon.",
+    body:
+      "One writer leads. Contributors can propose scenes from anywhere in the world. The writer decides what becomes canon.",
   },
   {
     title: "Group Writing (Open)",
-    body: "A community writes together inside a shared structure and clear rules.",
+    body:
+      "A community writes together inside a shared structure and clear rules.",
   },
   {
     title: "Group Writing (Closed)",
-    body: "A private invited group writes together, useful for classrooms, clubs, and private circles.",
+    body:
+      "A private invited group writes together, useful for classrooms, clubs, and private circles.",
   },
 ];
 
+const SIMPLE_PATH = [
+  {
+    title: "🌐 1. Visit the Public Site",
+    body:
+      "Explore NextScenes on the public website. When you are ready to write, click “Enter the App.”",
+  },
+  {
+    title: "👤 2. Create Your Account",
+    body:
+      "Sign up with your name, email, and password. Your personal writing space is created.",
+  },
+  {
+    title: "📚 3. Create Your Story in Story Hub",
+    body:
+      "Go to Story Hub and click “Create Storyline.” Add a title, description, and choose a writing mode.",
+  },
+  {
+    title: "✍️ 4. Develop Your Story in WriterStudio",
+    body:
+      "Open your storyline, go to WriterStudio, write your scenes, and save your work.",
+  },
+  {
+    title: "🌍 5. Collaborate from Anywhere",
+    body:
+      "Contributors can participate from any city or country, as long as they have internet access.",
+  },
+  {
+    title: "💾 6. Your Work Stays Saved",
+    body:
+      "Return anytime to continue. Your stories remain safely stored in your account.",
+  },
+];
+
+function ImgBlock({
+  src,
+  alt,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  return (
+    <div style={{ margin: "14px 0 18px" }}>
+      <Image
+        src={src}
+        alt={alt}
+        width={1600}
+        height={900}
+        priority={priority}
+        style={{
+          width: "100%",
+          height: "auto",
+          borderRadius: 10,
+          display: "block",
+        }}
+      />
+    </div>
+  );
+}
+
 export default function HowItWorksPage() {
+  const pathname = usePathname();
+  const isFR = pathname?.startsWith("/fr");
+
+  const aboutHref = isFR ? "/fr/about" : "/about";
+  const contactHref = isFR ? "/fr/contact" : "/contact";
+
   return (
     <div className="ns-page ns-compact">
       <h1 className="ns-h1">How NextScenes Works</h1>
+
+      {/* HERO IMAGE */}
+      <ImgBlock
+        src="/images/hero-writing-desk.webp"
+        alt="A calm writing desk for NextScenes"
+        priority
+      />
 
       <p className="ns-p">
         NextScenes builds stories step by step with leadership, rules, and
@@ -122,9 +205,120 @@ export default function HowItWorksPage() {
 
       <div className="ns-callout">
         <p className="ns-p" style={{ marginBottom: 0 }}>
-          NextScenes turns storytelling from a crowd stampede into a guided
-          process with memory, accountability, and craft.
+          Quick orientation: <strong>Story Hub creates stories.</strong>{" "}
+          <strong>WriterStudio develops stories.</strong>
         </p>
+      </div>
+
+      <h2 className="ns-h2">Public Site vs App Site</h2>
+      <div className="ns-grid-3">
+        <div className="ns-card">
+          <h3 className="ns-h3">Public Site</h3>
+          <p className="ns-p">
+            The public site is for learning and exploring. It explains what
+            NextScenes is and how it works.
+          </p>
+          <ul className="ns-list">
+            <li>Explore and understand</li>
+            <li>Read about writing modes</li>
+            <li>Find help and contact</li>
+          </ul>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">App Site</h3>
+          <p className="ns-p">
+            The app site is where writing begins. This is your personal writing
+            space.
+          </p>
+          <ul className="ns-list">
+            <li>Create storylines in Story Hub</li>
+            <li>Develop your story in WriterStudio</li>
+            <li>Write alone or collaborate</li>
+          </ul>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">Start here</h3>
+          <p className="ns-p">
+            If you want to write now, enter the app. If you need guidance first,
+            continue reading this page.
+          </p>
+          <div className="ns-actions" style={{ justifyContent: "flex-start" }}>
+            <Link href={APP_URL} className="ns-btn ns-btn-primary">
+              Enter the App
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <h2 className="ns-h2">The Two Main Places</h2>
+      <div className="ns-grid-3">
+        <div className="ns-card">
+          <h3 className="ns-h3">Story Hub</h3>
+
+          {/* STORY HUB IMAGE */}
+          <ImgBlock
+            src="/images/story-hub.webp"
+            alt="Story Hub: create a storyline and choose a writing mode"
+          />
+
+          <p className="ns-p">
+            <strong>Create your story.</strong> Story Hub is where stories are
+            born. Create a storyline, set the title and description, and choose
+            a writing mode.
+          </p>
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            <strong>Story Hub creates.</strong>
+          </p>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">WriterStudio</h3>
+
+          {/* WRITER STUDIO IMAGE */}
+          <ImgBlock
+            src="/images/writer-studio.webp"
+            alt="WriterStudio: writing and developing scenes"
+          />
+
+          <p className="ns-p">
+            <strong>Develop your story.</strong> WriterStudio is where your work
+            grows. Write scenes, build momentum, and shape your book over time.
+          </p>
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            <strong>WriterStudio develops.</strong>
+          </p>
+        </div>
+
+        <div className="ns-card">
+          <h3 className="ns-h3">What you can write</h3>
+          <p className="ns-p">
+            You can write novels, textbooks, movie scripts, music, and community
+            projects. NextScenes supports serious writing in a structured way.
+          </p>
+
+          {/* GLOBAL COLLAB IMAGE */}
+          <ImgBlock
+            src="/images/global-collaboration.webp"
+            alt="Global collaboration: contributors anywhere in the world"
+          />
+
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            Contributors can join from anywhere in the world with internet
+            access.
+          </p>
+        </div>
+      </div>
+
+      <h2 className="ns-h2">The Simple Path</h2>
+      <div className="ns-grid-3">
+        {SIMPLE_PATH.map((c) => (
+          <div key={c.title} className="ns-card">
+            <h3 className="ns-h3">{c.title}</h3>
+            <p className="ns-p">{c.body}</p>
+          </div>
+        ))}
       </div>
 
       <h2 className="ns-h2">The Main Roles</h2>
@@ -172,6 +366,13 @@ export default function HowItWorksPage() {
       </div>
 
       <h2 className="ns-h2">Writing Modes</h2>
+
+      {/* WRITING MODES IMAGE */}
+      <ImgBlock
+        src="/images/writing-modes-global.webp"
+        alt="NextScenes writing modes: solo, collaborative, group limited access, group restricted access"
+      />
+
       <div className="ns-grid-3">
         {MODE_CARDS.map((c) => (
           <div key={c.title} className="ns-card">
@@ -202,8 +403,8 @@ export default function HowItWorksPage() {
           <h3 className="ns-h3">Decision History</h3>
           <p className="ns-p">
             NextScenes preserves what was proposed, what became canon, and the
-            Decision Note explaining why. That record protects fairness, learning,
-            and trust.
+            Decision Note explaining why. That record protects fairness,
+            learning, and trust.
           </p>
         </div>
       </div>
@@ -233,12 +434,32 @@ export default function HowItWorksPage() {
         </div>
       </div>
 
+      <h2 className="ns-h2">Need Help?</h2>
+      <div className="ns-grid-3">
+        <div className="ns-card">
+          <h3 className="ns-h3">Contact NextScenes</h3>
+          <p className="ns-p">
+            If you have questions, need guidance, or want to report an issue,
+            contact us anytime.
+          </p>
+          <ul className="ns-list">
+            <li>Use the Contact page on the public site</li>
+            <li>Explain what you tried and what you expected</li>
+            <li>We will respond as soon as possible</li>
+          </ul>
+        </div>
+      </div>
+
       <div className="ns-actions">
-        <Link href="/about" className="ns-btn ns-btn-secondary">
+        <Link href={aboutHref} className="ns-btn ns-btn-secondary">
           About NextScenes
         </Link>
 
-        <Link href="https://app.nextscenes.org" className="ns-btn ns-btn-primary">
+        <Link href={contactHref} className="ns-btn ns-btn-secondary">
+          Contact NextScenes
+        </Link>
+
+        <Link href={APP_URL} className="ns-btn ns-btn-primary">
           Enter the App
         </Link>
       </div>
