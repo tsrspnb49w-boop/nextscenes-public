@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 function PillButton({
@@ -48,6 +48,12 @@ type TodayCard = {
   meta: string;
   href: string;
   cta: string;
+};
+
+type FlowStep = {
+  image: string;
+  title: string;
+  desc: string;
 };
 
 export default function FrHomePage() {
@@ -148,6 +154,27 @@ export default function FrHomePage() {
     []
   );
 
+  const flowSteps: FlowStep[] = useMemo(
+    () => [
+      {
+        image: "/images/story-hub.jpg",
+        title: "Story Hub",
+        desc: "Découvrez des histoires, organisez votre étagère, et entrez avec confiance.",
+      },
+      {
+        image: "/images/select-story.jpg",
+        title: "Choisir votre histoire",
+        desc: "Ouvrez une intrigue et entrez exactement là où l’écriture commence.",
+      },
+      {
+        image: "/images/writer-studio.jpg",
+        title: "Writer Studio",
+        desc: "Écrivez avec structure. Voyez clairement les propositions, décisions et le canon.",
+      },
+    ],
+    []
+  );
+
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -169,6 +196,50 @@ export default function FrHomePage() {
   function next() {
     setIndex((i) => (i + 1) % total);
   }
+
+  // Cinematic reveal for the flow section (no libraries)
+  const flowRef = useRef<HTMLElement | null>(null);
+  const [flowInView, setFlowInView] = useState(false);
+
+  useEffect(() => {
+    const el = flowRef.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const hit = entries.some((e) => e.isIntersecting);
+        if (hit) {
+          setFlowInView(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.18 }
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Lightbox (click-to-enlarge) for flow images
+  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!zoomedImage) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setZoomedImage(null);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [zoomedImage]);
 
   return (
     <div className="ns-page">
@@ -203,7 +274,10 @@ export default function FrHomePage() {
                 <ul className="ns-list">
                   <li>Lire des histoires d’auteurs du monde entier.</li>
                   <li>Écrire vos scènes et grandir grâce au retour.</li>
-                  <li>Rejoindre des clubs pour enfants, ados, adultes et institutions.</li>
+                  <li>
+                    Rejoindre des clubs pour enfants, ados, adultes et
+                    institutions.
+                  </li>
                   <li>Aiguiser l’esprit avec Mystery250.</li>
                 </ul>
                 <div className="ns-card-actions">
@@ -266,7 +340,11 @@ export default function FrHomePage() {
                 ›
               </button>
 
-              <div className="ns-carousel-dots" role="tablist" aria-label="Sélecteur de diapositives">
+              <div
+                className="ns-carousel-dots"
+                role="tablist"
+                aria-label="Sélecteur de diapositives"
+              >
                 {slides.map((_, i) => (
                   <button
                     key={i}
@@ -368,6 +446,59 @@ export default function FrHomePage() {
         </div>
       </section>
 
+      {/* NEW: FROM STORY HUB TO WRITER STUDIO (FR) */}
+      <section
+        ref={(n) => {
+          flowRef.current = n;
+        }}
+        className={flowInView ? "ns-flow ns-flow-in" : "ns-flow"}
+        aria-label="Du Story Hub au Writer Studio"
+      >
+        <div className="ns-flow-head">
+          <h2 className="ns-h2">Du Story Hub au Writer Studio</h2>
+          <p className="ns-p" style={{ maxWidth: 920, marginBottom: 0 }}>
+            Un chemin fluide, de la découverte à la création. Pas de devinettes, pas de confusion,
+            juste un parcours clair.
+          </p>
+        </div>
+
+        <div className="ns-flow-row">
+          {flowSteps.map((s, i) => (
+            <React.Fragment key={s.title}>
+              <div className="ns-flow-card" style={{ transitionDelay: `${i * 140}ms` }}>
+                <div
+                  className="ns-flow-shot"
+                  style={{ backgroundImage: `url(${s.image})` }}
+                  role="img"
+                  aria-label={s.title}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!zoomedImage) setZoomedImage(s.image);
+                  }}
+                />
+                <div className="ns-flow-title">{s.title}</div>
+                <div className="ns-flow-desc">{s.desc}</div>
+              </div>
+
+              {i < flowSteps.length - 1 ? (
+                <div className="ns-flow-arrow" aria-hidden="true">
+                  →
+                </div>
+              ) : null}
+            </React.Fragment>
+          ))}
+        </div>
+
+        <div className="ns-flow-cta">
+          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org">
+            Entrer dans l’App
+          </Link>
+          <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
+            Apprendre le processus
+          </Link>
+        </div>
+      </section>
+
       <section className="ns-section ns-section-alt">
         <h2 className="ns-h2">Mystery250</h2>
         <p className="ns-p">
@@ -398,6 +529,27 @@ export default function FrHomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Lightbox Modal */}
+      {zoomedImage ? (
+        <div
+          className="ns-lightbox"
+          onClick={(e) => {
+            e.stopPropagation();
+            setZoomedImage(null);
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Visionneuse d’image"
+        >
+          <img
+            className="ns-lightbox-img"
+            src={zoomedImage}
+            alt="Capture d’écran agrandie"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      ) : null}
 
       {/* CSS kept local to avoid destabilizing globals.css */}
       <style jsx global>{`
@@ -716,6 +868,147 @@ export default function FrHomePage() {
           color: var(--accent2);
         }
 
+        /* FLOW SECTION (THIS WAS THE MISSING BLOCK) */
+        .ns-flow {
+          margin-top: 18px;
+          padding: 16px;
+          border-radius: var(--radius);
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background: linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.06),
+              rgba(255, 255, 255, 0.90)
+            ),
+            rgba(255, 255, 255, 0.86);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+        }
+
+        .ns-flow-head {
+          padding: 4px 4px 10px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .ns-flow-row {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr auto 1fr;
+          gap: 12px;
+          align-items: center;
+          margin-top: 10px;
+        }
+
+        .ns-flow-card {
+          border-radius: 16px;
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          background: rgba(255, 255, 255, 0.92);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+          padding: 12px;
+          text-decoration: none;
+
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease;
+        }
+
+        .ns-flow-in .ns-flow-card {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .ns-flow-shot {
+          width: 100%;
+          height: 170px;
+          border-radius: 12px;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          cursor: zoom-in;
+        }
+
+        .ns-flow-title {
+          margin-top: 10px;
+          font-weight: 950;
+          color: rgba(15, 36, 24, 0.94);
+          letter-spacing: -0.2px;
+        }
+
+        .ns-flow-desc {
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 1.45;
+          color: rgba(15, 36, 24, 0.74);
+        }
+
+        .ns-flow-arrow {
+          font-size: 18px;
+          font-weight: 950;
+          color: rgba(15, 36, 24, 0.55);
+          user-select: none;
+
+          opacity: 0;
+          transform: translateY(6px);
+          transition: opacity 520ms ease, transform 520ms ease;
+        }
+
+        .ns-flow-in .ns-flow-arrow {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .ns-flow-cta {
+          margin-top: 12px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          padding: 0 4px;
+        }
+
+        /* LIGHTBOX */
+        .ns-lightbox {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          background: rgba(0, 0, 0, 0.82);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 18px;
+          animation: nsFadeIn 160ms ease;
+          cursor: zoom-out;
+        }
+
+        .ns-lightbox-img {
+          max-width: 92vw;
+          max-height: 92vh;
+          border-radius: 12px;
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+          animation: nsZoomIn 160ms ease;
+          background: rgba(255, 255, 255, 0.02);
+          cursor: default;
+        }
+
+        @keyframes nsFadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes nsZoomIn {
+          from {
+            transform: scale(0.96);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
         @media (max-width: 980px) {
           .ns-hero-inner {
             grid-template-columns: 1fr;
@@ -731,6 +1024,16 @@ export default function FrHomePage() {
           }
           .ns-today-grid {
             grid-template-columns: 1fr;
+          }
+
+          .ns-flow-row {
+            grid-template-columns: 1fr;
+          }
+          .ns-flow-arrow {
+            display: none;
+          }
+          .ns-flow-shot {
+            height: 190px;
           }
         }
 
