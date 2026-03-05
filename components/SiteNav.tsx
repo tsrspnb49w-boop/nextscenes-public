@@ -4,10 +4,7 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(
-  /\/+$/,
-  ""
-);
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
 
 /* ===============================
    Path helpers
@@ -239,8 +236,10 @@ export default function SiteNav() {
 
   const langLabel = isFR ? "Langue" : "Lang";
 
+  const menuOpen = moreOpen || langOpen;
+
   return (
-    <header className="ns-topbar">
+    <header className={`ns-topbar ${menuOpen ? "is-menu-open" : ""}`}>
       <div className="ns-topbar-inner">
         <Link
           href={isFR ? "/fr" : "/"}
