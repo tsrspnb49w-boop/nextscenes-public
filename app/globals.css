@@ -1,10 +1,11 @@
 /* ===============================
    NextScenes Global Style System
-   Build: 2026-02-28 (Public Site Topbar Calm Pass v1.4)
+   Build: 2026-03-06 (Public Site Topbar Calm Pass v1.5 — Lang dropdown + open highlights)
    Mood: Calm, modern, culturally neutral, unmistakably NextScenes
    Notes:
    - Dropdown closes reliably (handled in component)
    - Topbar font weights calmed to match App feel
+   - "More" and "Lang" highlight when open
    =============================== */
 
 /* Reset */
@@ -101,7 +102,7 @@ main { flex: 1; }
 }
 
 @media (max-width: 920px) {
-  .ns-topbar-inner { flex-wrap: wrap; }
+  .ns-topbar-inner { flex-wrap: wrap; padding: 10px 14px; }
 }
 
 /* Never underline inside topbar */
@@ -127,7 +128,6 @@ main { flex: 1; }
   white-space: nowrap;
   color: rgba(255,255,255,0.96);
 
-  /* Calm it down */
   font-weight: 600;
   letter-spacing: 0.1px;
 
@@ -156,7 +156,7 @@ main { flex: 1; }
 
 .ns-brand-text {
   color: rgba(255,255,255,0.96);
-  font-weight: 500; /* calmer than 400+heavy parent */
+  font-weight: 500;
   letter-spacing: 0.01em;
 }
 
@@ -228,7 +228,7 @@ main { flex: 1; }
   color: rgba(255,255,255,0.90);
 
   font-size: 13px;
-  font-weight: 500; /* was 700 */
+  font-weight: 500;
   line-height: 1;
 
   transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
@@ -251,18 +251,30 @@ main { flex: 1; }
 .ns-topbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 @media (max-width: 860px) {
   .ns-links { flex-wrap: wrap; justify-content: center; }
-  .ns-topbar-right { flex-wrap: wrap; justify-content: flex-end; }
+  .ns-topbar-right { justify-content: center; }
 }
+
+/* ===============================
+   Dropdowns
+   =============================== */
 
 /* More dropdown */
 .ns-more {
   position: relative;
   display: inline-block;
+}
+
+.ns-more-trigger.is-open {
+  color: #ffffff;
+  border-color: var(--mint-border-strong);
+  background: var(--pill-active);
 }
 
 .ns-more-menu {
@@ -283,54 +295,95 @@ main { flex: 1; }
   padding: 10px 12px;
   border-radius: 12px;
   color: #0f172a;
-  font-weight: 600; /* was 700 */
+  font-weight: 600;
 }
 
 .ns-more-item:hover {
   background: rgba(236, 253, 245, 0.92);
 }
 
-/* Language toggle */
-.ns-lang {
+/* Lang dropdown (new) */
+.ns-langdrop {
+  position: relative;
+  display: inline-block;
+}
+
+.ns-lang-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
+  justify-content: center;
+  padding: 8px 14px;
   border-radius: 999px;
-
   border: 1px solid var(--mint-border);
   background: var(--pill-quiet);
-}
-
-.ns-lang-sep {
-  color: rgba(255,255,255,0.85);
-  font-weight: 700; /* slightly calmer */
-}
-
-.ns-lang-link {
-  font-weight: 600; /* was 700 */
-  letter-spacing: 0.02em;
   color: rgba(255,255,255,0.90);
-
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1;
-
-  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease;
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
 }
 
-.ns-lang-link:hover {
-  border-color: rgba(187, 247, 208, 0.70);
-  background: var(--pill-quiet-hover);
+.ns-lang-trigger:hover {
   color: #ffffff;
+  border-color: rgba(187, 247, 208, 0.85);
+  background: var(--pill-quiet-hover);
   transform: translateY(-1px);
 }
 
-.ns-lang-link.is-active {
+.ns-lang-trigger.is-open {
+  color: #ffffff;
   border-color: var(--mint-border-strong);
   background: var(--pill-active);
-  color: #ffffff;
+}
+
+/* Stack items normally (French under English) */
+.ns-lang-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  min-width: 210px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 118, 110, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
+  padding: 8px;
+  z-index: 50;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ns-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 12px;
+
+  color: #0f172a;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.ns-lang-item:hover {
+  background: rgba(236, 253, 245, 0.92);
+}
+
+.ns-lang-item.is-active {
+  background: rgba(236, 253, 245, 0.92);
+  border: 1px solid rgba(15, 118, 110, 0.14);
+}
+
+/* Helps emoji flags sit cleanly */
+.ns-lang-item .flag {
+  display: inline-block;
+  width: 1.4em;
+  text-align: center;
+  transform: translateY(0.5px);
 }
 
 /* Make "Enter the App" behave like app’s light pill */
@@ -338,7 +391,7 @@ main { flex: 1; }
   background: rgba(236, 253, 245, 0.92);
   border-color: var(--mint-border-strong);
   color: rgba(15, 36, 24, 0.92);
-  font-weight: 700; /* was 800 */
+  font-weight: 700;
 }
 
 .ns-topbar .ns-btn-ghost:hover {
@@ -354,7 +407,8 @@ main { flex: 1; }
 .ns-nav a:focus-visible,
 .ns-navlink:focus-visible,
 .ns-brand:focus-visible,
-.ns-lang-link:focus-visible {
+.ns-more-trigger:focus-visible,
+.ns-lang-trigger:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
@@ -477,7 +531,7 @@ main { flex: 1; }
   padding: 10px 16px;
   border-radius: 999px;
   font-size: 13px;
-  font-weight: 700; /* calmer global */
+  font-weight: 700;
   border: 1px solid transparent;
   cursor: pointer;
   line-height: 1;
@@ -745,6 +799,7 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   box-shadow: 0 8px 18px rgba(0,0,0,0.05);
   margin: 12px 0;
 }
+
 /* ===============================
    How-It-Works images (Next/Image)
    Calm + App-like framing

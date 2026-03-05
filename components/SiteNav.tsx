@@ -82,53 +82,79 @@ export default function SiteNav() {
   }
 
   /* ===============================
-     More dropdown (reliable close)
+     Dropdowns (reliable close)
      =============================== */
 
   const [moreOpen, setMoreOpen] = useState(false);
   const moreWrapRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
 
-  const closeMore = useCallback(() => setMoreOpen(false), []);
-  const toggleMore = useCallback(() => setMoreOpen((v) => !v), []);
+  const [langOpen, setLangOpen] = useState(false);
+  const langWrapRef = useRef<HTMLDivElement>(null);
+  const langButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
+  const closeAllMenus = useCallback(() => {
     setMoreOpen(false);
-  }, [pathname]);
+    setLangOpen(false);
+  }, []);
+
+  const toggleMore = useCallback(() => {
+    setLangOpen(false);
+    setMoreOpen((v) => !v);
+  }, []);
+
+  const toggleLang = useCallback(() => {
+    setMoreOpen(false);
+    setLangOpen((v) => !v);
+  }, []);
 
   useEffect(() => {
-    if (!moreOpen) return;
+    closeAllMenus();
+  }, [pathname, closeAllMenus]);
+
+  useEffect(() => {
+    if (!moreOpen && !langOpen) return;
 
     function onKeyDown(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
       e.preventDefault();
-      setMoreOpen(false);
-      requestAnimationFrame(() => moreButtonRef.current?.focus());
+
+      const wasMore = moreOpen;
+      const wasLang = langOpen;
+
+      closeAllMenus();
+
+      requestAnimationFrame(() => {
+        if (wasMore) moreButtonRef.current?.focus();
+        else if (wasLang) langButtonRef.current?.focus();
+      });
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [moreOpen]);
+  }, [moreOpen, langOpen, closeAllMenus]);
 
   useEffect(() => {
-    if (!moreOpen) return;
+    if (!moreOpen && !langOpen) return;
 
-    // Use capture + mousedown/touchstart for maximum reliability.
     function onOutside(e: Event) {
-      const wrap = moreWrapRef.current;
-      if (!wrap) return;
       const target = e.target as Node | null;
       if (!target) return;
-      if (!wrap.contains(target)) setMoreOpen(false);
+
+      const inMore = !!moreWrapRef.current?.contains(target);
+      const inLang = !!langWrapRef.current?.contains(target);
+
+      if (!inMore && !inLang) closeAllMenus();
     }
 
     window.addEventListener("mousedown", onOutside, true);
     window.addEventListener("touchstart", onOutside, true);
+
     return () => {
       window.removeEventListener("mousedown", onOutside, true);
       window.removeEventListener("touchstart", onOutside, true);
     };
-  }, [moreOpen]);
+  }, [moreOpen, langOpen, closeAllMenus]);
 
   /* ===============================
      Auth awareness (best-effort)
@@ -208,10 +234,12 @@ export default function SiteNav() {
     return isFR ? "/fr/enter" : "/enter";
   }, [authHint, isFR]);
 
+  const langLabel = isFR ? "Langue" : "Lang";
+
   return (
     <header className="ns-topbar">
       <div className="ns-topbar-inner">
-        <Link href={isFR ? "/fr" : "/"} className="ns-brand" aria-label="NextScenes home" onClick={closeMore}>
+        <Link href={isFR ? "/fr" : "/"} className="ns-brand" aria-label="NextScenes home" onClick={closeAllMenus}>
           <img
             src="/assets/nextscenes-logo.png"
             alt="NextScenes"
@@ -229,7 +257,7 @@ export default function SiteNav() {
               href={`${base}${l.href}`}
               className={`ns-navlink ${isActive(l.href) ? "is-active" : ""}`}
               aria-current={isActive(l.href) ? "page" : undefined}
-              onClick={closeMore}
+              onClick={closeAllMenus}
             >
               {isFR ? l.fr : l.en}
             </Link>
@@ -261,7 +289,7 @@ export default function SiteNav() {
                     href={`${base}${l.href}`}
                     className="ns-more-item"
                     role="menuitem"
-                    onClick={closeMore}
+                    onClick={closeAllMenus}
                   >
                     {isFR ? l.fr : l.en}
                   </Link>
@@ -272,17 +300,51 @@ export default function SiteNav() {
         </nav>
 
         <div className="ns-topbar-right">
-          <div className="ns-lang" aria-label="Language">
-            <Link href={enHref} className={`ns-lang-link ${!isFR ? "is-active" : ""}`} onClick={closeMore}>
-              EN
-            </Link>
-            <span className="ns-lang-sep">/</span>
-            <Link href={frHref} className={`ns-lang-link ${isFR ? "is-active" : ""}`} onClick={closeMore}>
-              FR
-            </Link>
+          <div className="ns-langdrop" ref={langWrapRef}>
+            <button
+              ref={langButtonRef}
+              type="button"
+              className={`ns-lang-trigger ${langOpen ? "is-open" : ""}`}
+              aria-haspopup="menu"
+              aria-expanded={langOpen}
+              aria-controls="ns-lang-menu"
+              onClick={toggleLang}
+            >
+              {langLabel}
+            </button>
+
+            {langOpen && (
+              <div id="ns-lang-menu" className="ns-lang-menu" role="menu" aria-label={isFR ? "Langue" : "Language"}>
+                <Link
+                  href={enHref}
+                  className={`ns-lang-item ${!isFR ? "is-active" : ""}`}
+                  role="menuitem"
+                  onClick={closeAllMenus}
+                >
+                  <span className="flag" aria-hidden="true">
+                    🇬🇧
+                  </span>
+                  <span>{isFR ? "Anglais" : "English"}</span>
+                  <span style={{ marginLeft: "auto", opacity: !isFR ? 1 : 0 }}>{!isFR ? "✓" : ""}</span>
+                </Link>
+
+                <Link
+                  href={frHref}
+                  className={`ns-lang-item ${isFR ? "is-active" : ""}`}
+                  role="menuitem"
+                  onClick={closeAllMenus}
+                >
+                  <span className="flag" aria-hidden="true">
+                    🇫🇷
+                  </span>
+                  <span>{isFR ? "Français" : "French"}</span>
+                  <span style={{ marginLeft: "auto", opacity: isFR ? 1 : 0 }}>{isFR ? "✓" : ""}</span>
+                </Link>
+              </div>
+            )}
           </div>
 
-          <a href={appCtaHref} className="ns-btn ns-btn-ghost" aria-label={appCtaAria} onClick={closeMore}>
+          <a href={appCtaHref} className="ns-btn ns-btn-ghost" aria-label={appCtaAria} onClick={closeAllMenus}>
             {appCtaText}
           </a>
         </div>
