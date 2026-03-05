@@ -4,7 +4,10 @@ import React, { useEffect, useMemo, useRef, useState, useCallback } from "react"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(
+  /\/+$/,
+  ""
+);
 
 /* ===============================
    Path helpers
@@ -239,7 +242,12 @@ export default function SiteNav() {
   return (
     <header className="ns-topbar">
       <div className="ns-topbar-inner">
-        <Link href={isFR ? "/fr" : "/"} className="ns-brand" aria-label="NextScenes home" onClick={closeAllMenus}>
+        <Link
+          href={isFR ? "/fr" : "/"}
+          className="ns-brand"
+          aria-label="NextScenes home"
+          onClick={closeAllMenus}
+        >
           <img
             src="/assets/nextscenes-logo.png"
             alt="NextScenes"
@@ -314,7 +322,12 @@ export default function SiteNav() {
             </button>
 
             {langOpen && (
-              <div id="ns-lang-menu" className="ns-lang-menu" role="menu" aria-label={isFR ? "Langue" : "Language"}>
+              <div
+                id="ns-lang-menu"
+                className="ns-lang-menu"
+                role="menu"
+                aria-label={isFR ? "Langue" : "Language"}
+              >
                 <Link
                   href={enHref}
                   className={`ns-lang-item ${!isFR ? "is-active" : ""}`}
@@ -324,8 +337,8 @@ export default function SiteNav() {
                   <span className="flag" aria-hidden="true">
                     🇬🇧
                   </span>
-                  <span>{isFR ? "Anglais" : "English"}</span>
-                  <span style={{ marginLeft: "auto", opacity: !isFR ? 1 : 0 }}>{!isFR ? "✓" : ""}</span>
+                  <span className="ns-lang-text">{isFR ? "Anglais" : "English"}</span>
+                  <span className="ns-lang-check">{!isFR ? "✓" : ""}</span>
                 </Link>
 
                 <Link
@@ -337,14 +350,19 @@ export default function SiteNav() {
                   <span className="flag" aria-hidden="true">
                     🇫🇷
                   </span>
-                  <span>{isFR ? "Français" : "French"}</span>
-                  <span style={{ marginLeft: "auto", opacity: isFR ? 1 : 0 }}>{isFR ? "✓" : ""}</span>
+                  <span className="ns-lang-text">{isFR ? "Français" : "French"}</span>
+                  <span className="ns-lang-check">{isFR ? "✓" : ""}</span>
                 </Link>
               </div>
             )}
           </div>
 
-          <a href={appCtaHref} className="ns-btn ns-btn-ghost" aria-label={appCtaAria} onClick={closeAllMenus}>
+          <a
+            href={appCtaHref}
+            className="ns-btn ns-btn-ghost"
+            aria-label={appCtaAria}
+            onClick={closeAllMenus}
+          >
             {appCtaText}
           </a>
         </div>

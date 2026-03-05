@@ -1,11 +1,11 @@
 /* ===============================
    NextScenes Global Style System
-   Build: 2026-03-06 (Public Site Topbar Calm Pass v1.5 — Lang dropdown + open highlights)
+   Build: 2026-03-06 (Public Site Topbar Mobile Fix v1.6 — aligned rows + safe dropdown)
    Mood: Calm, modern, culturally neutral, unmistakably NextScenes
    Notes:
-   - Dropdown closes reliably (handled in component)
-   - Topbar font weights calmed to match App feel
-   - "More" and "Lang" highlight when open
+   - Mobile topbar rows align cleanly (no awkward wrap)
+   - Nav row becomes horizontal scroll on small screens (keeps pills readable)
+   - Lang / More dropdowns clamp to viewport on mobile (languages always visible)
    =============================== */
 
 /* Reset */
@@ -85,7 +85,7 @@ main { flex: 1; }
 .ns-topbar {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 200;
   background: var(--topbar-bg);
   border-bottom: 1px solid var(--topbar-border);
   box-shadow: 0 10px 24px rgba(0,0,0,0.14);
@@ -99,10 +99,6 @@ main { flex: 1; }
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-}
-
-@media (max-width: 920px) {
-  .ns-topbar-inner { flex-wrap: wrap; padding: 10px 14px; }
 }
 
 /* Never underline inside topbar */
@@ -256,11 +252,6 @@ main { flex: 1; }
   justify-content: flex-end;
 }
 
-@media (max-width: 860px) {
-  .ns-links { flex-wrap: wrap; justify-content: center; }
-  .ns-topbar-right { justify-content: center; }
-}
-
 /* ===============================
    Dropdowns
    =============================== */
@@ -287,7 +278,7 @@ main { flex: 1; }
   border-radius: 14px;
   box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
   padding: 8px;
-  z-index: 50;
+  z-index: 500;
 }
 
 .ns-more-item {
@@ -302,7 +293,7 @@ main { flex: 1; }
   background: rgba(236, 253, 245, 0.92);
 }
 
-/* Lang dropdown (new) */
+/* Lang dropdown */
 .ns-langdrop {
   position: relative;
   display: inline-block;
@@ -337,7 +328,6 @@ main { flex: 1; }
   background: var(--pill-active);
 }
 
-/* Stack items normally (French under English) */
 .ns-lang-menu {
   position: absolute;
   right: 0;
@@ -348,11 +338,13 @@ main { flex: 1; }
   border-radius: 14px;
   box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
   padding: 8px;
-  z-index: 50;
+  z-index: 500;
 
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  max-width: calc(100vw - 24px);
 }
 
 .ns-lang-item {
@@ -367,6 +359,8 @@ main { flex: 1; }
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
+
+  min-width: 0;
 }
 
 .ns-lang-item:hover {
@@ -378,13 +372,15 @@ main { flex: 1; }
   border: 1px solid rgba(15, 118, 110, 0.14);
 }
 
-/* Helps emoji flags sit cleanly */
 .ns-lang-item .flag {
   display: inline-block;
   width: 1.4em;
   text-align: center;
   transform: translateY(0.5px);
 }
+
+.ns-lang-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ns-lang-check { margin-left: auto; opacity: 0.92; }
 
 /* Make "Enter the App" behave like app’s light pill */
 .ns-topbar .ns-btn-ghost {
@@ -411,6 +407,64 @@ main { flex: 1; }
 .ns-lang-trigger:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
+}
+
+/* ===============================
+   Mobile topbar alignment + safe dropdowns
+   =============================== */
+
+@media (max-width: 920px) {
+  .ns-topbar-inner {
+    flex-wrap: wrap;
+    padding: 10px 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ns-topbar-inner {
+    padding: 10px 12px;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .ns-brand {
+    order: 1;
+    flex: 1 1 auto;
+  }
+
+  .ns-topbar-right {
+    order: 2;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .ns-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+  }
+
+  .ns-links::-webkit-scrollbar { height: 0; }
+  .ns-navlink { flex: 0 0 auto; }
+
+  .ns-more-menu,
+  .ns-lang-menu {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: calc(env(safe-area-inset-top) + 72px);
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    max-height: calc(100vh - 110px);
+    overflow: auto;
+  }
 }
 
 /* ===============================
@@ -805,9 +859,7 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
    Calm + App-like framing
    =============================== */
 
-.ns-imgblock {
-  margin: 14px 0 18px;
-}
+.ns-imgblock { margin: 14px 0 18px; }
 
 .ns-imgframe {
   overflow: hidden;
@@ -817,14 +869,8 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   box-shadow: 0 10px 24px rgba(0,0,0,0.06);
 }
 
-/* Next.js <Image> renders an actual <img>, we style it cleanly */
-.ns-imgframe img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+.ns-imgframe img { width: 100%; height: auto; display: block; }
 
-/* Optional: hero should feel slightly more “hero” */
 .ns-imgframe.is-hero {
   box-shadow: 0 14px 34px rgba(0,0,0,0.08);
   border-color: rgba(20, 138, 74, 0.20);
