@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 function PillButton({
@@ -34,7 +35,8 @@ type Slide = {
 };
 
 type BandTile = {
-  icon: string;
+  image: string;
+  imageAlt: string;
   title: string;
   desc: string;
   href: string;
@@ -64,7 +66,7 @@ export default function FrHomePage() {
           "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70",
         eyebrow: "Des histoires qui méritent d’être terminées",
         title: "Lire quelque chose de clair, profond et humain",
-        desc: "Pas du bruit. Pas d’outrage. Des histoires construites avec soin, pour que le lecteur puisse faire confiance à ce qu’il ouvre.",
+        desc: "Pas de bruit. Pas d’outrage. Des histoires construites avec soin, pour que le lecteur puisse faire confiance à ce qu’il ouvre.",
         ctaText: "À propos de NextScenes",
         ctaHref: "/fr/about",
       },
@@ -81,8 +83,8 @@ export default function FrHomePage() {
         image:
           "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1600&q=70",
         eyebrow: "Pour les esprits curieux",
-        title: "Mystery250 entraîne l’attention et la patience",
-        desc: "De courtes énigmes pour enfants, ados et adultes qui aiment réfléchir clairement.",
+        title: "Mystery250 pour l’attention et la patience",
+        desc: "De courtes énigmes pour enfants, adolescents et adultes qui aiment réfléchir clairement.",
         ctaText: "Explorer Mystery250",
         ctaHref: "/fr/mystery250",
       },
@@ -93,28 +95,33 @@ export default function FrHomePage() {
   const bandTiles: BandTile[] = useMemo(
     () => [
       {
-        icon: "🧒🏽",
+        image: "/images/kids-corner.webp",
+        imageAlt: "Enfants dans un cadre calme de lecture et de narration",
         title: "Coin des enfants",
-        desc: "Des mystères doux et une narration guidée qui garde la curiosité propre et lumineuse.",
+        desc: "Des mystères doux et une narration guidée qui gardent la curiosité propre et lumineuse.",
         href: "/fr/clubs",
         cta: "Découvrir les clubs enfants",
       },
       {
-        icon: "🧑🏽‍🎓",
+        image: "/images/teens-writers.webp",
+        imageAlt: "Adolescents écrivant ensemble dans un cadre de bibliothèque studieux",
         title: "Ados et jeunes auteurs",
         desc: "Développer le style, gagner en confiance, apprendre la discipline grâce à un retour guidé.",
         href: "/fr/how-it-works",
         cta: "Voir le processus",
       },
       {
-        icon: "✍🏽",
+        image: "/images/adult-writers.webp",
+        imageAlt: "Adultes écrivant sérieusement dans une atmosphère de bibliothèque chaleureuse",
         title: "Adultes et écrivains sérieux",
         desc: "Écrire des histoires longues avec continuité, responsabilité et une communauté qui respecte l’auteur.",
         href: "https://app.nextscenes.org",
-        cta: "Entrer dans l’App",
+        cta: "Entrer dans la plateforme",
       },
       {
-        icon: "🏫",
+        image: "/images/schools-institutions.webp",
+        imageAlt:
+          "Cadre multiracial de classe et de bibliothèque pour écoles et institutions",
         title: "Écoles et institutions",
         desc: "Un outil créatif structuré pour les classes, bibliothèques, programmes de lecture et groupes culturels.",
         href: "/fr/partners",
@@ -197,7 +204,6 @@ export default function FrHomePage() {
     setIndex((i) => (i + 1) % total);
   }
 
-  // Cinematic reveal for the flow section (no libraries)
   const flowRef = useRef<HTMLElement | null>(null);
   const [flowInView, setFlowInView] = useState(false);
 
@@ -220,7 +226,6 @@ export default function FrHomePage() {
     return () => obs.disconnect();
   }, []);
 
-  // Lightbox (click-to-enlarge) for flow images
   const [zoomedImage, setZoomedImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -243,50 +248,57 @@ export default function FrHomePage() {
 
   return (
     <div className="ns-page">
-      {/* HERO */}
       <section className="ns-hero">
         <div className="ns-hero-inner">
           <div className="ns-hero-copy">
-            <h1 className="ns-h1">NextScenes</h1>
-            <p className="ns-subtitle">
-              Un espace sûr, guidé par des valeurs, où les histoires s’écrivent
-              avec conscience, se raffinent en communauté, et se lisent à travers
-              les générations.
-            </p>
+            <div className="ns-hero-copy-inner">
+              <h1 className="ns-h1 ns-hero-title">NextScenes</h1>
 
-            <div className="ns-hero-cta">
-              <PillButton href="/fr/how-it-works">Comment ça marche</PillButton>
-              <PillButton href="https://app.nextscenes.org" variant="ghost">
-                Entrer dans l’App
-              </PillButton>
-            </div>
+              <p className="ns-hero-lead">
+                Des histoires qui grandissent par l’imagination et la responsabilité.
+              </p>
 
-            <div className="ns-trust-strip">
-              <span>Retour guidé</span>
-              <span>Clubs et communauté</span>
-              <span>Énigmes Mystery250</span>
-              <span>Sécurité et valeurs</span>
-            </div>
+              <p className="ns-subtitle ns-hero-subtitle">
+                Un lieu où l’on découvre et met en valeur les talents créatifs, où
+                les histoires se raffinent en communauté, et où les lecteurs explorent
+                des œuvres à travers les cultures et les générations.
+              </p>
 
-            <div className="ns-hero-mini">
-              <div className="ns-card">
-                <h2 className="ns-h2">Ce que vous pouvez faire ici</h2>
-                <ul className="ns-list">
-                  <li>Lire des histoires d’auteurs du monde entier.</li>
-                  <li>Écrire vos scènes et grandir grâce au retour.</li>
-                  <li>
-                    Rejoindre des clubs pour enfants, ados, adultes et
-                    institutions.
-                  </li>
-                  <li>Aiguiser l’esprit avec Mystery250.</li>
-                </ul>
-                <div className="ns-card-actions">
-                  <Link className="ns-link" href="/fr/mystery250">
-                    Explorer Mystery250
-                  </Link>
-                  <Link className="ns-link" href="/fr/safety">
-                    Sécurité et valeurs
-                  </Link>
+              <div className="ns-hero-cta">
+                <PillButton href="/fr/how-it-works">Comment ça marche</PillButton>
+                <PillButton href="https://app.nextscenes.org" variant="ghost">
+                  Entrer dans la plateforme
+                </PillButton>
+              </div>
+
+              <div className="ns-hero-note">
+                Découvrir des voix. Construire des histoires. Partager l’imagination avec le monde.
+              </div>
+
+              <div className="ns-trust-strip">
+                <span>Retour guidé</span>
+                <span>Clubs et communauté</span>
+                <span>Énigmes Mystery250</span>
+                <span>Sécurité et valeurs</span>
+              </div>
+
+              <div className="ns-hero-mini">
+                <div className="ns-card ns-hero-mini-card">
+                  <h2 className="ns-h2">Ce que vous pouvez faire ici</h2>
+                  <ul className="ns-list">
+                    <li>Lire des histoires écrites à travers les cultures et les générations.</li>
+                    <li>Écrire des scènes et voir les histoires grandir grâce à un retour réfléchi.</li>
+                    <li>Rejoindre des clubs où lecture, écriture et raisonnement prennent racine.</li>
+                    <li>Aiguiser l’esprit avec Mystery250.</li>
+                  </ul>
+                  <div className="ns-card-actions">
+                    <Link className="ns-link" href="/fr/mystery250">
+                      Explorer Mystery250
+                    </Link>
+                    <Link className="ns-link" href="/fr/safety">
+                      Sécurité et valeurs
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -296,7 +308,7 @@ export default function FrHomePage() {
             className="ns-carousel"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
-            aria-label="Carrousel de la section héro"
+            aria-label="Carrousel principal NextScenes"
           >
             <div
               className="ns-carousel-slide"
@@ -318,7 +330,7 @@ export default function FrHomePage() {
                     </Link>
                   ) : null}
                   <Link className="ns-btn ns-btn-ghost" href="https://app.nextscenes.org">
-                    Entrer dans l’App
+                    Entrer dans la plateforme
                   </Link>
                 </div>
               </div>
@@ -365,21 +377,28 @@ export default function FrHomePage() {
         </div>
       </section>
 
-      {/* LIVELY BAND */}
       <section className="ns-band" aria-label="Explorer les espaces NextScenes">
         <div className="ns-band-head">
           <h2 className="ns-h2">Choisissez votre chemin</h2>
           <p className="ns-p" style={{ maxWidth: 820 }}>
-            NextScenes accueille différents âges et différents objectifs.
-            Choisissez une porte, et vous trouverez quelque chose de solide à l’intérieur.
+            NextScenes accueille différents âges et différents objectifs. Choisissez
+            une porte, et vous trouverez quelque chose de solide à l’intérieur.
           </p>
         </div>
 
         <div className="ns-band-grid">
           {bandTiles.map((t) => (
             <Link key={t.title} href={t.href} className="ns-band-tile">
-              <div className="ns-band-icon" aria-hidden="true">
-                {t.icon}
+              <div className="ns-band-image">
+                <Image
+                  src={t.image}
+                  alt={t.imageAlt}
+                  width={800}
+                  height={520}
+                  className="ns-band-img"
+                  sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 25vw"
+                  priority={t.title === "Coin des enfants"}
+                />
               </div>
               <div className="ns-band-title">{t.title}</div>
               <div className="ns-band-desc">{t.desc}</div>
@@ -389,13 +408,12 @@ export default function FrHomePage() {
         </div>
       </section>
 
-      {/* WHAT'S HAPPENING TODAY */}
-      <section className="ns-today" aria-label="Ce qui se passe aujourd’hui">
+      <section className="ns-today" aria-label="À l’intérieur de NextScenes">
         <div className="ns-today-head">
-          <h2 className="ns-h2">Ce qui se passe aujourd’hui</h2>
-          <p className="ns-p" style={{ maxWidth: 900, marginBottom: 0 }}>
+          <h2 className="ns-h2">À l’intérieur de NextScenes</h2>
+          <p className="ns-p ns-section-intro" style={{ maxWidth: 900, marginBottom: 0 }}>
             Une petite fenêtre sur ce qui vit sur NextScenes. C’est ici qu’un visiteur
-            comprend que la plateforme a un rythme, une vraie présence.
+            comprend que la plateforme a un rythme et une vraie présence.
           </p>
         </div>
 
@@ -412,25 +430,24 @@ export default function FrHomePage() {
         </div>
       </section>
 
-      {/* REST OF PAGE */}
-      <section className="ns-section">
+      <section className="ns-section ns-section-process">
         <h2 className="ns-h2">Comment fonctionne NextScenes</h2>
         <div className="ns-grid-3">
-          <div className="ns-card">
+          <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Rejoindre</h3>
             <p className="ns-p">
               Créez un compte, choisissez votre voie, et entrez dans une communauté
               qui prend la narration au sérieux.
             </p>
           </div>
-          <div className="ns-card">
+          <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Écrire et lire</h3>
             <p className="ns-p">
-              Les lecteurs lisent. Les auteurs construisent des scènes. Les communautés discutent.
-              Les histoires grandissent, une bonne décision à la fois.
+              Les lecteurs lisent. Les auteurs construisent des scènes. Les communautés
+              discutent. Les histoires grandissent, une bonne décision à la fois.
             </p>
           </div>
-          <div className="ns-card">
+          <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Progresser avec le retour</h3>
             <p className="ns-p">
               Le retour est guidé et pratique. On élève le métier, on protège la dignité,
@@ -439,50 +456,53 @@ export default function FrHomePage() {
           </div>
         </div>
 
-        <div className="ns-section-cta">
+        <div className="ns-section-cta ns-process-cta">
           <Link className="ns-btn ns-btn-primary" href="/fr/how-it-works">
             Voir le processus complet
           </Link>
         </div>
       </section>
 
-      {/* NEW: FROM STORY HUB TO WRITER STUDIO (FR) */}
       <section
         ref={(n) => {
           flowRef.current = n;
         }}
         className={flowInView ? "ns-flow ns-flow-in" : "ns-flow"}
-        aria-label="Du Story Hub au Writer Studio"
+        aria-label="Comment les histoires évoluent sur NextScenes"
       >
         <div className="ns-flow-head">
-          <h2 className="ns-h2">Du Story Hub au Writer Studio</h2>
-          <p className="ns-p" style={{ maxWidth: 920, marginBottom: 0 }}>
-            Un chemin fluide, de la découverte à la création. Pas de devinettes, pas de confusion,
-            juste un parcours clair.
+          <h2 className="ns-h2">Comment les histoires évoluent sur NextScenes</h2>
+          <p className="ns-p ns-section-intro" style={{ maxWidth: 920, marginBottom: 0 }}>
+            Un chemin fluide, de la découverte à la création. Pas de devinettes,
+            pas de confusion, juste un parcours clair vers une écriture sérieuse.
           </p>
         </div>
 
         <div className="ns-flow-row">
           {flowSteps.map((s, i) => (
             <React.Fragment key={s.title}>
-              <div className="ns-flow-card" style={{ transitionDelay: `${i * 140}ms` }}>
-                <div
-                  className="ns-flow-shot"
-                  style={{ backgroundImage: `url(${s.image})` }}
-                  role="img"
-                  aria-label={s.title}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (!zoomedImage) setZoomedImage(s.image);
-                  }}
-                />
-                <div className="ns-flow-title">{s.title}</div>
-                <div className="ns-flow-desc">{s.desc}</div>
+              <div className="ns-flow-item-wrap">
+                <div className="ns-flow-step-badge">Étape {i + 1}</div>
+                <div className="ns-flow-card" style={{ transitionDelay: `${i * 140}ms` }}>
+                  <div
+                    className="ns-flow-shot"
+                    style={{ backgroundImage: `url(${s.image})` }}
+                    role="img"
+                    aria-label={s.title}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!zoomedImage) setZoomedImage(s.image);
+                    }}
+                  />
+                  <div className="ns-flow-title">{s.title}</div>
+                  <div className="ns-flow-desc">{s.desc}</div>
+                </div>
               </div>
 
               {i < flowSteps.length - 1 ? (
                 <div className="ns-flow-arrow" aria-hidden="true">
-                  →
+                  <span className="ns-flow-arrow-line" />
+                  <span className="ns-flow-arrow-glyph">→</span>
                 </div>
               ) : null}
             </React.Fragment>
@@ -491,7 +511,7 @@ export default function FrHomePage() {
 
         <div className="ns-flow-cta">
           <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org">
-            Entrer dans l’App
+            Entrer dans la plateforme
           </Link>
           <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
             Apprendre le processus
@@ -499,38 +519,68 @@ export default function FrHomePage() {
         </div>
       </section>
 
-      <section className="ns-section ns-section-alt">
-        <h2 className="ns-h2">Mystery250</h2>
-        <p className="ns-p">
-          Des mystères courts qui entraînent l’attention, la logique et la patience.
-          Des énigmes simples pour les jeunes esprits, jusqu’aux défis pour adultes
-          qui aiment une vraie lutte intellectuelle.
-        </p>
+      <section className="ns-section ns-mystery-section">
+        <div className="ns-mystery-inner">
+          <div className="ns-mystery-copy">
+            <div className="ns-mystery-kicker">Pour les esprits curieux</div>
+            <h2 className="ns-h2">Mystery250</h2>
+            <p className="ns-p">
+              Des mystères courts qui entraînent l’attention, la logique et la patience.
+              Des énigmes simples pour les jeunes esprits, jusqu’aux défis pour adultes
+              qui aiment une vraie lutte intellectuelle.
+            </p>
 
-        <div className="ns-section-cta">
-          <Link className="ns-btn ns-btn-ghost" href="/fr/mystery250">
-            En savoir plus
-          </Link>
+            <div className="ns-mystery-points">
+              <span>Tous âges</span>
+              <span>Rythme hebdomadaire</span>
+              <span>Discipline logique et lecture</span>
+            </div>
+
+            <div className="ns-section-cta ns-mystery-cta">
+              <Link className="ns-btn ns-btn-primary" href="/fr/mystery250">
+                Explorer Mystery250
+              </Link>
+              <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
+                Voir sa place dans la plateforme
+              </Link>
+            </div>
+          </div>
+
+          <div className="ns-mystery-panel" aria-hidden="true">
+            <div className="ns-mystery-panel-card">
+              <div className="ns-mystery-badge">Énigme de la semaine</div>
+              <div className="ns-mystery-panel-title">Attention. Logique. Patience.</div>
+              <div className="ns-mystery-panel-desc">
+                Un exercice calme de l’esprit pour lecteurs, auteurs, élèves et institutions.
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="ns-section">
-        <h2 className="ns-h2">Pour les écoles, clubs et partenaires</h2>
-        <p className="ns-p">
-          NextScenes est conçu pour les individus, mais pensé pour servir les communautés :
-          classes, bibliothèques, programmes de lecture et institutions culturelles.
-        </p>
-        <div className="ns-section-cta">
-          <Link className="ns-btn ns-btn-primary" href="/fr/partners">
-            Partenariats et institutions
-          </Link>
-          <Link className="ns-btn ns-btn-ghost" href="/fr/contact">
-            Contact
-          </Link>
+      <section className="ns-section ns-partners-section">
+        <div className="ns-partners-shell">
+          <div className="ns-partners-copy">
+            <div className="ns-partners-kicker">Usage institutionnel</div>
+            <h2 className="ns-h2">Pour les écoles, clubs et partenaires</h2>
+            <p className="ns-p">
+              NextScenes est conçu pour les individus, mais pensé pour servir les
+              communautés : classes, bibliothèques, programmes de lecture et
+              institutions culturelles.
+            </p>
+          </div>
+
+          <div className="ns-section-cta ns-partners-cta">
+            <Link className="ns-btn ns-btn-primary" href="/fr/partners">
+              Partenariats et institutions
+            </Link>
+            <Link className="ns-btn ns-btn-ghost" href="/fr/contact">
+              Contact
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Lightbox Modal */}
       {zoomedImage ? (
         <div
           className="ns-lightbox"
@@ -551,20 +601,83 @@ export default function FrHomePage() {
         </div>
       ) : null}
 
-      {/* CSS kept local to avoid destabilizing globals.css */}
       <style jsx global>{`
         .ns-hero {
-          padding: 8px 0 2px;
+          padding: 10px 0 6px;
+          position: relative;
         }
+
+        .ns-hero::after {
+          content: "";
+          display: block;
+          margin-top: 20px;
+          height: 28px;
+          border-radius: 18px;
+          background: linear-gradient(
+            180deg,
+            rgba(15, 23, 42, 0) 0%,
+            rgba(15, 23, 42, 0.03) 100%
+          );
+          pointer-events: none;
+        }
+
         .ns-hero-inner {
           display: grid;
           grid-template-columns: 1.05fr 0.95fr;
-          gap: 18px;
+          gap: 24px;
           align-items: start;
         }
-        .ns-hero-mini {
-          margin-top: 14px;
+
+        .ns-hero-copy-inner {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
         }
+
+        .ns-hero-title {
+          margin-bottom: 0;
+        }
+
+        .ns-hero-lead {
+          margin: 0;
+          font-size: clamp(1.18rem, 1rem + 0.6vw, 1.6rem);
+          line-height: 1.2;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+          color: rgba(15, 36, 24, 0.96);
+          max-width: 720px;
+        }
+
+        .ns-hero-subtitle {
+          max-width: 780px;
+          margin: 0;
+        }
+
+        .ns-hero-cta {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 2px;
+        }
+
+        .ns-hero-note {
+          font-size: 13px;
+          line-height: 1.45;
+          font-weight: 800;
+          color: rgba(15, 36, 24, 0.68);
+          margin-top: -2px;
+        }
+
+        .ns-hero-mini {
+          margin-top: 4px;
+        }
+
+        .ns-hero-mini-card {
+          background: rgba(255, 255, 255, 0.84);
+          border: 1px solid rgba(20, 138, 74, 0.12);
+          box-shadow: 0 12px 28px rgba(15, 23, 42, 0.05);
+        }
+
         .ns-card-actions {
           display: flex;
           gap: 12px;
@@ -572,7 +685,6 @@ export default function FrHomePage() {
           margin-top: 10px;
         }
 
-        /* CAROUSEL */
         .ns-carousel {
           width: 100%;
         }
@@ -592,20 +704,34 @@ export default function FrHomePage() {
         .ns-carousel-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            90deg,
-            rgba(8, 35, 20, 0.82) 0%,
-            rgba(8, 35, 20, 0.52) 52%,
-            rgba(8, 35, 20, 0.28) 100%
-          );
+          background:
+            linear-gradient(
+              180deg,
+              rgba(8, 35, 20, 0.10) 0%,
+              rgba(8, 35, 20, 0.22) 42%,
+              rgba(8, 35, 20, 0.52) 100%
+            ),
+            linear-gradient(
+              90deg,
+              rgba(8, 35, 20, 0.84) 0%,
+              rgba(8, 35, 20, 0.56) 52%,
+              rgba(8, 35, 20, 0.24) 100%
+            );
         }
 
         .ns-carousel-content {
-          position: relative;
+          position: absolute;
+          bottom: 28px;
+          left: 28px;
           z-index: 2;
-          padding: 18px 18px 16px;
+          padding: 18px 20px 18px;
           max-width: 520px;
           color: rgba(255, 255, 255, 0.94);
+          border-radius: 18px;
+          background: rgba(8, 35, 20, 0.26);
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+          backdrop-filter: blur(4px);
         }
 
         .ns-carousel-eyebrow {
@@ -623,9 +749,10 @@ export default function FrHomePage() {
         .ns-carousel-title {
           margin-top: 10px;
           font-weight: 950;
-          font-size: 24px;
-          line-height: 1.15;
+          font-size: 26px;
+          line-height: 1.18;
           letter-spacing: -0.2px;
+          max-width: 13ch;
         }
 
         .ns-carousel-desc {
@@ -660,12 +787,15 @@ export default function FrHomePage() {
           place-items: center;
           user-select: none;
         }
+
         .ns-carousel-arrow:hover {
           background: rgba(255, 255, 255, 0.12);
         }
+
         .ns-carousel-arrow-left {
           left: 12px;
         }
+
         .ns-carousel-arrow-right {
           right: 12px;
         }
@@ -680,6 +810,7 @@ export default function FrHomePage() {
           gap: 8px;
           align-items: center;
         }
+
         .ns-dot {
           width: 10px;
           height: 10px;
@@ -688,9 +819,11 @@ export default function FrHomePage() {
           background: rgba(255, 255, 255, 0.18);
           cursor: pointer;
         }
+
         .ns-dot:hover {
           background: rgba(255, 255, 255, 0.28);
         }
+
         .ns-dot-active {
           width: 22px;
           background: rgba(255, 255, 255, 0.82);
@@ -704,15 +837,14 @@ export default function FrHomePage() {
           text-align: right;
         }
 
-        /* LIVELY BAND */
         .ns-band {
-          margin-top: 18px;
-          padding: 16px;
+          margin-top: 28px;
+          padding: 18px;
           border-radius: var(--radius);
           border: 1px solid rgba(20, 138, 74, 0.16);
           background: linear-gradient(
               180deg,
-              rgba(31, 182, 106, 0.10),
+              rgba(31, 182, 106, 0.1),
               rgba(255, 255, 255, 0.78)
             ),
             rgba(255, 255, 255, 0.7);
@@ -720,14 +852,14 @@ export default function FrHomePage() {
         }
 
         .ns-band-head {
-          padding: 4px 4px 10px;
+          padding: 4px 4px 12px;
         }
 
         .ns-band-grid {
           display: grid;
           grid-template-columns: repeat(4, minmax(0, 1fr));
           gap: 12px;
-          margin-top: 6px;
+          margin-top: 8px;
         }
 
         .ns-band-tile {
@@ -743,24 +875,33 @@ export default function FrHomePage() {
 
         .ns-band-tile:hover {
           transform: translateY(-2px);
-          border-color: rgba(20, 138, 74, 0.30);
+          border-color: rgba(20, 138, 74, 0.3);
           background: rgba(255, 255, 255, 0.94);
           text-decoration: none;
         }
 
-        .ns-band-icon {
-          width: 44px;
-          height: 44px;
-          border-radius: 999px;
-          display: grid;
-          place-items: center;
-          background: rgba(20, 138, 74, 0.10);
-          border: 1px solid rgba(20, 138, 74, 0.16);
-          font-size: 20px;
+        .ns-band-image {
+          width: 100%;
+          height: 160px;
+          min-height: 160px;
+          border-radius: 12px;
+          overflow: hidden;
+          margin-bottom: 12px;
+          border: 1px solid rgba(0, 0, 0, 0.06);
+          background: rgba(255, 255, 255, 0.5);
+          isolation: isolate;
+        }
+
+        .ns-band-img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
 
         .ns-band-title {
-          margin-top: 10px;
+          margin-top: 2px;
           font-weight: 950;
           color: rgba(15, 36, 24, 0.94);
           letter-spacing: -0.2px;
@@ -780,9 +921,8 @@ export default function FrHomePage() {
           color: var(--accent2);
         }
 
-        /* WHAT'S HAPPENING TODAY */
         .ns-today {
-          margin-top: 18px;
+          margin-top: 22px;
           padding: 16px;
           border-radius: var(--radius);
           border: 1px solid rgba(20, 138, 74, 0.14);
@@ -791,10 +931,14 @@ export default function FrHomePage() {
         }
 
         .ns-today-head {
-          padding: 4px 4px 10px;
+          padding: 4px 4px 8px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
+        }
+
+        .ns-section-intro {
+          color: rgba(15, 36, 24, 0.76);
         }
 
         .ns-today-grid {
@@ -806,14 +950,14 @@ export default function FrHomePage() {
 
         .ns-today-card {
           display: block;
-          padding: 14px;
+          padding: 14px 14px 13px;
           border-radius: 16px;
           border: 1px solid rgba(20, 138, 74, 0.16);
           background: linear-gradient(
-              180deg,
-              rgba(31, 182, 106, 0.08),
-              rgba(255, 255, 255, 0.92)
-            );
+            180deg,
+            rgba(31, 182, 106, 0.08),
+            rgba(255, 255, 255, 0.92)
+          );
           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
           text-decoration: none;
           transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
@@ -821,12 +965,12 @@ export default function FrHomePage() {
 
         .ns-today-card:hover {
           transform: translateY(-2px);
-          border-color: rgba(20, 138, 74, 0.30);
+          border-color: rgba(20, 138, 74, 0.3);
           background: linear-gradient(
-              180deg,
-              rgba(31, 182, 106, 0.10),
-              rgba(255, 255, 255, 0.96)
-            );
+            180deg,
+            rgba(31, 182, 106, 0.1),
+            rgba(255, 255, 255, 0.96)
+          );
           text-decoration: none;
         }
 
@@ -834,8 +978,8 @@ export default function FrHomePage() {
           display: inline-block;
           padding: 6px 10px;
           border-radius: 999px;
-          border: 1px solid rgba(20, 138, 74, 0.20);
-          background: rgba(20, 138, 74, 0.10);
+          border: 1px solid rgba(20, 138, 74, 0.2);
+          background: rgba(20, 138, 74, 0.1);
           color: rgba(15, 36, 24, 0.86);
           font-size: 12px;
           font-weight: 900;
@@ -846,19 +990,20 @@ export default function FrHomePage() {
           font-weight: 950;
           color: rgba(15, 36, 24, 0.94);
           letter-spacing: -0.2px;
+          line-height: 1.2;
         }
 
         .ns-today-desc {
           margin-top: 6px;
           font-size: 13px;
-          line-height: 1.45;
+          line-height: 1.42;
           color: rgba(15, 36, 24, 0.74);
         }
 
         .ns-today-meta {
-          margin-top: 10px;
+          margin-top: 8px;
           font-size: 12px;
-          color: rgba(15, 36, 24, 0.60);
+          color: rgba(15, 36, 24, 0.6);
         }
 
         .ns-today-cta {
@@ -868,47 +1013,86 @@ export default function FrHomePage() {
           color: var(--accent2);
         }
 
-        /* FLOW SECTION (THIS WAS THE MISSING BLOCK) */
-        .ns-flow {
+        .ns-section-process {
           margin-top: 18px;
-          padding: 16px;
+        }
+
+        .ns-process-card {
+          padding-bottom: 12px;
+        }
+
+        .ns-process-cta {
+          margin-top: 10px;
+          padding: 16px 18px;
+          border-radius: 20px;
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background: rgba(255, 255, 255, 0.82);
+          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        .ns-flow {
+          margin-top: 22px;
+          padding: 18px;
           border-radius: var(--radius);
           border: 1px solid rgba(20, 138, 74, 0.14);
           background: linear-gradient(
               180deg,
               rgba(31, 182, 106, 0.06),
-              rgba(255, 255, 255, 0.90)
+              rgba(255, 255, 255, 0.9)
             ),
             rgba(255, 255, 255, 0.86);
           box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
         }
 
         .ns-flow-head {
-          padding: 4px 4px 10px;
+          padding: 4px 4px 8px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 4px;
         }
 
         .ns-flow-row {
           display: grid;
           grid-template-columns: 1fr auto 1fr auto 1fr;
           gap: 12px;
-          align-items: center;
+          align-items: start;
           margin-top: 10px;
+        }
+
+        .ns-flow-item-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .ns-flow-step-badge {
+          display: inline-flex;
+          align-self: flex-start;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: rgba(20, 138, 74, 0.1);
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          font-size: 12px;
+          font-weight: 900;
+          color: rgba(15, 36, 24, 0.8);
+          letter-spacing: 0.3px;
         }
 
         .ns-flow-card {
           border-radius: 16px;
-          border: 1px solid rgba(20, 138, 74, 0.16);
-          background: rgba(255, 255, 255, 0.92);
+          border: 1px solid rgba(20, 138, 74, 0.12);
+          background: rgba(255, 255, 255, 0.94);
           box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
           padding: 12px;
           text-decoration: none;
-
           opacity: 0;
           transform: translateY(10px);
-          transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease;
+          transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease, box-shadow 160ms ease;
+        }
+
+        .ns-flow-card:hover {
+          border-color: rgba(20, 138, 74, 0.22);
+          box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
         }
 
         .ns-flow-in .ns-flow-card {
@@ -942,14 +1126,30 @@ export default function FrHomePage() {
         }
 
         .ns-flow-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          min-width: 28px;
+          padding-top: 132px;
           font-size: 18px;
           font-weight: 950;
-          color: rgba(15, 36, 24, 0.55);
+          color: rgba(15, 36, 24, 0.58);
           user-select: none;
-
           opacity: 0;
           transform: translateY(6px);
           transition: opacity 520ms ease, transform 520ms ease;
+        }
+
+        .ns-flow-arrow-line {
+          display: block;
+          width: 16px;
+          height: 1px;
+          background: rgba(15, 36, 24, 0.26);
+        }
+
+        .ns-flow-arrow-glyph {
+          line-height: 1;
         }
 
         .ns-flow-in .ns-flow-arrow {
@@ -958,14 +1158,162 @@ export default function FrHomePage() {
         }
 
         .ns-flow-cta {
-          margin-top: 12px;
+          margin-top: 14px;
           display: flex;
           gap: 10px;
           flex-wrap: wrap;
           padding: 0 4px;
         }
 
-        /* LIGHTBOX */
+        .ns-mystery-section {
+          margin-top: 22px;
+          padding: 18px;
+          border-radius: var(--radius);
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background: linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.07),
+              rgba(255, 255, 255, 0.9)
+            ),
+            rgba(255, 255, 255, 0.86);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+        }
+
+        .ns-mystery-inner {
+          display: grid;
+          grid-template-columns: 1.05fr 0.95fr;
+          gap: 18px;
+          align-items: stretch;
+        }
+
+        .ns-mystery-kicker,
+        .ns-partners-kicker {
+          display: inline-block;
+          margin-bottom: 8px;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: rgba(20, 138, 74, 0.1);
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          font-size: 12px;
+          font-weight: 900;
+          color: rgba(15, 36, 24, 0.82);
+          text-transform: uppercase;
+          letter-spacing: 0.4px;
+        }
+
+        .ns-mystery-points {
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          margin-top: 12px;
+        }
+
+        .ns-mystery-points span {
+          display: inline-flex;
+          align-items: center;
+          padding: 7px 10px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.8);
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          font-size: 12px;
+          font-weight: 800;
+          color: rgba(15, 36, 24, 0.72);
+        }
+
+        .ns-mystery-cta {
+          margin-top: 14px;
+          justify-content: flex-start;
+        }
+
+        .ns-mystery-panel {
+          display: flex;
+          align-items: stretch;
+        }
+
+        .ns-mystery-panel-card {
+          width: 100%;
+          min-height: 100%;
+          border-radius: 22px;
+          padding: 22px;
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background:
+            linear-gradient(
+              180deg,
+              rgba(8, 35, 20, 0.04),
+              rgba(8, 35, 20, 0.12)
+            ),
+            linear-gradient(
+              135deg,
+              rgba(31, 182, 106, 0.14),
+              rgba(255, 255, 255, 0.88)
+            );
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .ns-mystery-badge {
+          display: inline-block;
+          align-self: flex-start;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.7);
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          font-size: 12px;
+          font-weight: 900;
+          color: rgba(15, 36, 24, 0.78);
+        }
+
+        .ns-mystery-panel-title {
+          margin-top: 16px;
+          font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.8rem);
+          line-height: 1.12;
+          font-weight: 950;
+          letter-spacing: -0.02em;
+          color: rgba(15, 36, 24, 0.94);
+          max-width: 12ch;
+        }
+
+        .ns-mystery-panel-desc {
+          margin-top: 10px;
+          max-width: 34ch;
+          font-size: 14px;
+          line-height: 1.5;
+          color: rgba(15, 36, 24, 0.72);
+        }
+
+        .ns-partners-section {
+          margin-top: 22px;
+        }
+
+        .ns-partners-shell {
+          border-radius: 24px;
+          padding: 20px 22px;
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          background:
+            linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.06),
+              rgba(255, 255, 255, 0.9)
+            ),
+            rgba(255, 255, 255, 0.86);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+        }
+
+        .ns-partners-copy .ns-p {
+          max-width: 900px;
+        }
+
+        .ns-partners-cta {
+          margin-top: 14px;
+          padding: 14px 16px;
+          border-radius: 18px;
+          border: 1px solid rgba(20, 138, 74, 0.12);
+          background: rgba(255, 255, 255, 0.82);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
         .ns-lightbox {
           position: fixed;
           inset: 0;
@@ -1010,18 +1358,27 @@ export default function FrHomePage() {
         }
 
         @media (max-width: 980px) {
-          .ns-hero-inner {
+          .ns-hero-inner,
+          .ns-mystery-inner {
             grid-template-columns: 1fr;
           }
+
+          .ns-hero-copy-inner {
+            gap: 12px;
+          }
+
           .ns-carousel-slide {
             min-height: 360px;
           }
+
           .ns-carousel-content {
             max-width: 640px;
           }
+
           .ns-band-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
+
           .ns-today-grid {
             grid-template-columns: 1fr;
           }
@@ -1029,9 +1386,11 @@ export default function FrHomePage() {
           .ns-flow-row {
             grid-template-columns: 1fr;
           }
+
           .ns-flow-arrow {
             display: none;
           }
+
           .ns-flow-shot {
             height: 190px;
           }
@@ -1040,6 +1399,37 @@ export default function FrHomePage() {
         @media (max-width: 560px) {
           .ns-band-grid {
             grid-template-columns: 1fr;
+          }
+
+          .ns-hero::after {
+            height: 18px;
+            margin-top: 14px;
+          }
+
+          .ns-hero-lead {
+            font-size: 1.12rem;
+          }
+
+          .ns-band-image {
+            height: 180px;
+            min-height: 180px;
+          }
+
+          .ns-carousel-content {
+            left: 16px;
+            right: 16px;
+            bottom: 20px;
+            max-width: none;
+            padding: 16px;
+          }
+
+          .ns-carousel-title {
+            font-size: 23px;
+          }
+
+          .ns-mystery-panel-card,
+          .ns-partners-shell {
+            padding: 18px;
           }
         }
       `}</style>
