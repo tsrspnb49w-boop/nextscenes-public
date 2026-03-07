@@ -115,19 +115,14 @@ main { flex: 1; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-
   padding: 8px 12px;
   border-radius: 999px;
-
   border: 1px solid var(--mint-border);
   background: var(--pill-quiet);
-
   white-space: nowrap;
   color: rgba(255,255,255,0.96);
-
   font-weight: 600;
   letter-spacing: 0.1px;
-
   transition: transform 140ms ease, filter 140ms ease, background 140ms ease, border-color 140ms ease;
 }
 
@@ -180,19 +175,14 @@ main { flex: 1; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 8px 14px;
   border-radius: 999px;
-
   border: 1px solid var(--mint-border);
   background: var(--pill-quiet);
-
   color: rgba(255,255,255,0.90);
-
   font-size: 13px;
   font-weight: 500;
   line-height: 1;
-
   transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
 }
 
@@ -215,19 +205,14 @@ main { flex: 1; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   padding: 8px 14px;
   border-radius: 999px;
-
   border: 1px solid var(--mint-border);
   background: var(--pill-quiet);
-
   color: rgba(255,255,255,0.90);
-
   font-size: 13px;
   font-weight: 500;
   line-height: 1;
-
   transition: background 140ms ease, border-color 140ms ease, transform 140ms ease, filter 140ms ease;
 }
 
@@ -257,7 +242,6 @@ main { flex: 1; }
    Dropdowns
    =============================== */
 
-/* More dropdown */
 .ns-more {
   position: relative;
   display: inline-block;
@@ -280,7 +264,6 @@ main { flex: 1; }
   box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
   padding: 8px;
   z-index: 500;
-
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -344,11 +327,9 @@ main { flex: 1; }
   box-shadow: 0 18px 40px rgba(2, 44, 34, 0.18);
   padding: 8px;
   z-index: 500;
-
   display: flex;
   flex-direction: column;
   gap: 6px;
-
   max-width: calc(100vw - 24px);
 }
 
@@ -356,15 +337,12 @@ main { flex: 1; }
   display: flex;
   align-items: center;
   gap: 10px;
-
   padding: 10px 12px;
   border-radius: 12px;
-
   color: #0f172a;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
-
   min-width: 0;
 }
 
@@ -448,11 +426,9 @@ main { flex: 1; }
     order: 3;
     width: 100%;
     justify-content: flex-start;
-
     flex-wrap: nowrap;
     overflow-x: auto;
     overflow-y: hidden;
-
     -webkit-overflow-scrolling: touch;
     padding-bottom: 6px;
   }
@@ -460,8 +436,6 @@ main { flex: 1; }
   .ns-links::-webkit-scrollbar { height: 0; }
   .ns-navlink { flex: 0 0 auto; }
 
-  /* iOS Safari fix:
-     When a dropdown is open, allow overflow so the menu isn't clipped by the scroller. */
   .ns-topbar.is-menu-open .ns-links {
     overflow: visible;
   }
@@ -887,4 +861,278 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
 .ns-imgframe.is-hero {
   box-shadow: 0 14px 34px rgba(0,0,0,0.08);
   border-color: rgba(20, 138, 74, 0.20);
+}
+
+/* ===============================
+   Mystery250
+   Build: 2026-03-07 (Public Site Mystery250 Calm Identity v3 — final balance pass)
+   Notes:
+   - Hero image softened and reduced slightly in dominance
+   - Cards tightened to feel more disciplined
+   - Cards are presentation cards for now, not fake anchor links
+   =============================== */
+
+.ns-m250-page {
+  background:
+    linear-gradient(180deg, #eef7f1 0%, #f4faf6 34%, #f7fbf9 100%);
+}
+
+.ns-m250-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(300px, 0.86fr);
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.ns-m250-hero-copy {
+  max-width: 680px;
+}
+
+.ns-m250-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #edf6f0;
+  border: 1px solid rgba(20, 138, 74, 0.12);
+  color: #2a513d;
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+
+.ns-m250-hero-title {
+  margin-bottom: 10px;
+  letter-spacing: -0.03em;
+}
+
+.ns-m250-hero-subtitle {
+  max-width: 780px;
+  color: rgba(16, 37, 28, 0.76);
+  margin-bottom: 16px;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ns-m250-trust-strip {
+  margin-top: 18px;
+  row-gap: 10px;
+}
+
+.ns-m250-hero-visual {
+  min-height: 290px;
+  max-height: 390px;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(20, 138, 74, 0.12);
+  box-shadow: 0 12px 28px rgba(16, 37, 28, 0.045);
+  position: relative;
+  background:
+    radial-gradient(circle at top right, rgba(53, 138, 90, 0.08), transparent 32%),
+    radial-gradient(circle at bottom left, rgba(26, 78, 52, 0.06), transparent 30%),
+    linear-gradient(145deg, rgba(235,246,239,0.98) 0%, rgba(247,251,249,0.98) 100%);
+}
+
+.ns-m250-hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.04),
+    rgba(15,36,24,0.04)
+  );
+  pointer-events: none;
+}
+
+.ns-m250-hero-image {
+  width: 100%;
+  height: 100%;
+  min-height: 290px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.96) contrast(0.98);
+}
+
+.ns-m250-panel {
+  border-radius: 24px;
+  padding: 24px;
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.ns-m250-panel.is-alt {
+  background:
+    linear-gradient(180deg, rgba(31, 182, 106, 0.08), transparent 70%),
+    rgba(255,255,255,0.84);
+}
+
+.ns-m250-section-title {
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.ns-m250-section-intro {
+  max-width: 1100px;
+  color: rgba(16, 37, 28, 0.82);
+  margin-bottom: 20px;
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.ns-m250-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ns-m250-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 214px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(20, 138, 74, 0.12);
+  background:
+    linear-gradient(180deg, rgba(31, 182, 106, 0.05), transparent 60%),
+    var(--panel);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.045);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 140ms ease;
+}
+
+.ns-m250-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(20, 138, 74, 0.20);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.055);
+}
+
+.ns-m250-card.is-compact {
+  min-height: 200px;
+}
+
+.ns-m250-card-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.ns-m250-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #edf6f0;
+  border: 1px solid rgba(20, 138, 74, 0.10);
+  font-size: 19px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.ns-m250-card-title {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: #173427;
+  max-width: 15ch;
+}
+
+.ns-m250-card.is-compact .ns-m250-card-title {
+  font-size: 1.08rem;
+}
+
+.ns-m250-card-text {
+  margin: 10px 0 0 0;
+  font-size: 0.96rem;
+  line-height: 1.48;
+  color: rgba(16, 37, 28, 0.76);
+  max-width: 30ch;
+}
+
+.ns-m250-card-bottom {
+  margin-top: 16px;
+}
+
+.ns-m250-card-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 33px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 138, 74, 0.12);
+  background: #edf6f0;
+  color: #264636;
+  font-weight: 700;
+  font-size: 0.91rem;
+}
+
+.ns-m250-promise {
+  border-radius: 24px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background:
+    linear-gradient(180deg, rgba(31, 182, 106, 0.08), transparent 70%),
+    rgba(255,255,255,0.84);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.ns-m250-promise-text {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 1100px) {
+  .ns-m250-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ns-m250-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-m250-hero-copy {
+    max-width: none;
+  }
+
+  .ns-m250-hero-visual {
+    max-height: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .ns-m250-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-m250-panel,
+  .ns-m250-promise {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .ns-m250-hero {
+    gap: 16px;
+  }
+
+  .ns-m250-hero-visual {
+    min-height: 250px;
+    border-radius: 22px;
+  }
+
+  .ns-m250-hero-image {
+    min-height: 250px;
+  }
+
+  .ns-m250-card,
+  .ns-m250-card.is-compact {
+    min-height: 0;
+  }
 }

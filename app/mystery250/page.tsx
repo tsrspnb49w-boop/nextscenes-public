@@ -1,102 +1,194 @@
 import Link from "next/link";
-import MediaGrid from "../../components/MediaGrid";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
+type MysteryCardItem = {
+  icon: string;
+  title: string;
+  label: string;
+  description: string;
+};
+
+function MysteryCard({
+  item,
+  compact = false,
+}: {
+  item: MysteryCardItem;
+  compact?: boolean;
+}) {
+  return (
+    <article className={`ns-m250-card${compact ? " is-compact" : ""}`}>
+      <div className="ns-m250-card-top">
+        <div className="ns-m250-card-icon" aria-hidden="true">
+          <span>{item.icon}</span>
+        </div>
+
+        <h3 className="ns-m250-card-title">{item.title}</h3>
+
+        <p className="ns-m250-card-text">{item.description}</p>
+      </div>
+
+      <div className="ns-m250-card-bottom">
+        <span className="ns-m250-card-tag">{item.label}</span>
+      </div>
+    </article>
+  );
+}
+
+function SectionShell({
+  title,
+  intro,
+  id,
+  children,
+  alt = false,
+}: {
+  title: string;
+  intro: string;
+  id?: string;
+  children: React.ReactNode;
+  alt?: boolean;
+}) {
+  return (
+    <section
+      id={id}
+      className={`ns-section ns-m250-panel${alt ? " is-alt" : ""}`}
+    >
+      <h2 className="ns-h2 ns-m250-section-title">{title}</h2>
+      <p className="ns-p ns-m250-section-intro">{intro}</p>
+      {children}
+    </section>
+  );
+}
 
 export default function Mystery250Page() {
-  const items = [
-    { title: "Easy Mysteries", href: "/mystery250#easy", label: "Ages 8+", description: "Short, friendly puzzles that teach attention and logic." },
-    { title: "Medium Mysteries", href: "/mystery250#medium", label: "Teens & adults", description: "A little twistier. Perfect for learners and clubs." },
-    { title: "Hard Mysteries", href: "/mystery250#hard", label: "Thinkers", description: "Tougher riddles for serious reasoning and patience." },
-    { title: "Expert Mysteries", href: "/mystery250#expert", label: "Mental wrestling", description: "For the brave. The kind that makes you smile later." },
-    { title: "Family Night Packs", href: "/mystery250#family", label: "Together time", description: "A clean, fun way to bond across generations." },
-    { title: "Classroom Sets", href: "/mystery250#schools", label: "Schools", description: "Puzzle sets designed for learning, discussion, and fairness." },
-    { title: "Club Challenges", href: "/mystery250#clubs", label: "Clubs", description: "Monthly themes, shared leaderboards, and group pride." },
-    { title: "Regional Competitions", href: "/mystery250#competitions", label: "Coming online", description: "Friendly competitions that reward discipline, not noise." },
+  const levels: MysteryCardItem[] = [
+    {
+      icon: "🔎",
+      title: "Easy Mysteries",
+      label: "Ages 8+",
+      description: "Short, friendly puzzles that teach attention and logic.",
+    },
+    {
+      icon: "🧩",
+      title: "Medium Mysteries",
+      label: "Teens & adults",
+      description: "A little twistier. Perfect for learners and clubs.",
+    },
+    {
+      icon: "🧠",
+      title: "Hard Mysteries",
+      label: "Thinkers",
+      description: "Tougher riddles for serious reasoning and patience.",
+    },
+    {
+      icon: "♟",
+      title: "Expert Mysteries",
+      label: "Mental wrestling",
+      description: "For the brave. The kind that makes you smile later.",
+    },
+  ];
+
+  const activities: MysteryCardItem[] = [
+    {
+      icon: "🏠",
+      title: "Family Night Packs",
+      label: "Together time",
+      description: "A clean, fun way to bond across generations.",
+    },
+    {
+      icon: "🏫",
+      title: "Classroom Sets",
+      label: "Schools",
+      description: "Puzzle sets designed for learning, discussion, and fairness.",
+    },
+    {
+      icon: "🌙",
+      title: "Club Challenges",
+      label: "Clubs",
+      description: "Monthly themes, shared leaderboards, and group pride.",
+    },
+    {
+      icon: "🏆",
+      title: "Regional Competitions",
+      label: "Coming online",
+      description: "Friendly competitions that reward discipline, not noise.",
+    },
   ];
 
   return (
-    <div className="ns-page">
-      <h1 className="ns-h1">Mystery250</h1>
-      <p className="ns-subtitle">
-        A calm place for sharp minds. Short mysteries that train attention,
-        logic, and patience. From young learners to retirees, everyone can take
-        something home.
-      </p>
+    <div className="ns-page ns-m250-page">
+      <section className="ns-m250-hero">
+        <div className="ns-m250-hero-copy">
+          <div className="ns-m250-eyebrow">A calm place for sharp minds</div>
 
-      <div className="ns-hero-cta">
-        <Link href="/how-it-works" className="ns-btn ns-btn-ghost">
-          How NextScenes works
-        </Link>
+          <h1 className="ns-h1 ns-m250-hero-title">Mystery250</h1>
 
-        <Link
-          href="https://app.nextscenes.org"
-          className="ns-btn ns-btn-primary"
-        >
-          Enter the App
-        </Link>
-      </div>
+          <p className="ns-subtitle ns-m250-hero-subtitle">
+            Short mysteries that train attention, logic, and patience. From
+            young learners to retirees, everyone can take something home.
+          </p>
 
-      <div className="ns-trust-strip">
-        <span>For kids, teens, adults</span>
-        <span>Designed for schools & clubs</span>
-        <span>Values-led puzzles</span>
-        <span>Solace without boredom</span>
-      </div>
+          <div className="ns-hero-cta">
+            <Link href="/how-it-works" className="ns-btn ns-btn-ghost">
+              How NextScenes works
+            </Link>
 
-      <section className="ns-section ns-paper">
-        <h2 className="ns-h2">Featured paths</h2>
-        <p className="ns-p">
-          Mystery250 is not only entertainment. It is a training ground for
-          calm thinking. The world is noisy; this is where the mind learns to
-          stand straight.
-        </p>
-
-        <MediaGrid items={items} />
-      </section>
-
-      <section className="ns-section ns-section-alt" id="competitions">
-        <h2 className="ns-h2">Clubs, activities, and competitions</h2>
-        <p className="ns-p">
-          Mystery250 will grow into organized activities: school sets, club
-          nights, themed challenges, and regional competitions. The aim is not
-          hype. The aim is culture: people thinking together, fairly, with joy.
-        </p>
-
-        <div className="ns-grid-3" style={{ marginTop: 16 }}>
-          <div className="ns-card">
-            <div className="ns-h3">Club Nights</div>
-            <p className="ns-p">
-              Weekly or monthly puzzle sessions for community groups, libraries,
-              and writing clubs.
-            </p>
+            <Link href={APP_URL} className="ns-btn ns-btn-primary">
+              Enter the App
+            </Link>
           </div>
-          <div className="ns-card">
-            <div className="ns-h3">Schools</div>
-            <p className="ns-p">
-              Classroom sets that strengthen logic, reading, patience, and fair
-              discussion.
-            </p>
+
+          <div className="ns-trust-strip ns-m250-trust-strip">
+            <span>For kids, teens, adults</span>
+            <span>Designed for schools & clubs</span>
+            <span>Values-led puzzles</span>
+            <span>Solace without boredom</span>
           </div>
-          <div className="ns-card">
-            <div className="ns-h3">Regional competitions</div>
-            <p className="ns-p">
-              Friendly, values-led contests where discipline wins, not noise.
-            </p>
-          </div>
+        </div>
+
+        <div className="ns-m250-hero-visual" aria-hidden="true">
+          <img
+            src="/images/mystery250-hero.webp"
+            alt=""
+            className="ns-m250-hero-image"
+          />
         </div>
       </section>
 
-      <section className="ns-section ns-section-cta">
+      <SectionShell
+        title="Levels of Mystery"
+        intro="Mystery250 is not only entertainment. It is a training ground for calm thinking. The world is noisy. This is where the mind learns to stand straight."
+      >
+        <div className="ns-m250-grid ns-m250-grid-levels">
+          {levels.map((item) => (
+            <MysteryCard key={item.title} item={item} compact />
+          ))}
+        </div>
+      </SectionShell>
+
+      <SectionShell
+        id="competitions"
+        alt
+        title="Clubs, activities, and competitions"
+        intro="Mystery250 will grow into organized activities: school sets, club nights, themed challenges, and regional competitions. The aim is not hype. The aim is culture: people thinking together, fairly, with joy."
+      >
+        <div className="ns-m250-grid">
+          {activities.map((item) => (
+            <MysteryCard key={item.title} item={item} />
+          ))}
+        </div>
+      </SectionShell>
+
+      <section className="ns-section ns-section-cta ns-m250-promise">
         <h2 className="ns-h2">A small promise</h2>
-        <p className="ns-p">
+
+        <p className="ns-p ns-m250-promise-text">
           If you feel tired of loud spaces, Mystery250 is for you. It is a place
           of solace that still makes you grow.
         </p>
 
         <div className="ns-hero-cta" style={{ justifyContent: "center" }}>
-          <Link
-            href="https://app.nextscenes.org"
-            className="ns-btn ns-btn-primary"
-          >
+          <Link href={APP_URL} className="ns-btn ns-btn-primary">
             Explore inside the App
           </Link>
 
