@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TryMystery from "../../components/TryMystery";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
@@ -165,6 +166,8 @@ export default function Mystery250Page() {
           ))}
         </div>
       </SectionShell>
+
+      <TryMystery lang="en" />
 
       <SectionShell
         id="competitions"

@@ -1,5 +1,5 @@
-// app/fr/mystery250/page.tsx
 import Link from "next/link";
+import TryMystery from "../../../components/TryMystery";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
@@ -128,7 +128,9 @@ export default function FrMystery250Page() {
     <div className="ns-page ns-m250-page">
       <section className="ns-m250-hero">
         <div className="ns-m250-hero-copy">
-          <div className="ns-m250-eyebrow">Un espace calme pour les esprits vifs</div>
+          <div className="ns-m250-eyebrow">
+            Un espace calme pour les esprits vifs
+          </div>
 
           <h1 className="ns-h1 ns-m250-hero-title">Mystery250</h1>
 
@@ -175,6 +177,8 @@ export default function FrMystery250Page() {
           ))}
         </div>
       </SectionShell>
+
+      <TryMystery lang="fr" />
 
       <SectionShell
         id="competitions"
