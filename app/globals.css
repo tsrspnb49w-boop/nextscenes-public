@@ -1270,3 +1270,38 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
     font-size: 1rem;
   }
 }
+.ns-btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: inherit;
+}
+
+.ns-btn-secondary:hover {
+  background: rgba(0,0,0,0.05);
+}
+.ns-m250-try-meta {
+  margin-top: 0.35rem;
+}
+
+.ns-m250-try-kicker {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 0.45rem;
+  padding: 0.26rem 0.7rem;
+  border: 1px solid rgba(16, 24, 20, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(16, 24, 20, 0.7);
+}
+
+.ns-m250-try-title {
+  margin: 0;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  line-height: 1.18;
+  font-weight: 800;
+  color: #13251d;
+}

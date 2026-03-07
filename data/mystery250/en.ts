@@ -1,0 +1,58 @@
+import type { MysteryPuzzle } from "./types";
+
+export const mysteryPuzzlesEn: MysteryPuzzle[] = [
+  {
+    id: "m250-001",
+    slug: "vanishing-necklace",
+    title: "The Vanishing Necklace",
+    setup:
+      "At a family dinner, a valuable necklace disappears from the hostess's bedroom. The room was locked when the guests arrived. Only four people had entered the house before the theft was discovered: the maid, the gardener, the hostess, and her sister. No window was broken, and nothing else was missing.",
+    clues: [
+      "The hostess wore the necklace earlier that evening.",
+      "The maid says she cleaned the bedroom in the afternoon.",
+      "The gardener says he never entered the house.",
+      "The sister says the hostess was nervous all evening.",
+    ],
+    answer: "The necklace was never stolen. The hostess hid it herself.",
+    explanation:
+      "There are no signs of forced entry, nothing else is missing, and the hostess had access and a motive to create drama or hide a financial problem. The clues point away from an outside thief and back to the person controlling the story.",
+    difficulty: "easy",
+    active: true,
+  },
+  {
+    id: "m250-002",
+    slug: "midnight-visitor",
+    title: "The Midnight Visitor",
+    setup:
+      "A man claims he heard footsteps outside his room at midnight. In the morning, he is found unconscious, and the drawer where he kept a document is empty. The servant says no one entered the house during the night, and the front door was bolted from inside.",
+    clues: [
+      "It rained heavily that night.",
+      "There were no muddy footprints in the hallway.",
+      "The window of the man's room was slightly open.",
+      "The missing document was useless to strangers but important to his business partner.",
+    ],
+    answer: "The business partner was already inside the house before nightfall.",
+    explanation:
+      "The lack of muddy footprints suggests the thief did not come in from outside during the rain. The business partner had reason to want the document and could have hidden in the house or remained there unnoticed until midnight.",
+    difficulty: "medium",
+    active: true,
+  },
+  {
+    id: "m250-003",
+    slug: "silent-clock",
+    title: "The Silent Clock",
+    setup:
+      "A wealthy collector is found dead in his study. The grandfather clock in the room stopped at 8:15. His nephew says he visited at exactly 8:30 and found the door locked. The housekeeper says dinner was served at 7:45 and the collector was alive then.",
+    clues: [
+      "The clock was old but normally reliable.",
+      "The study window was locked from inside.",
+      "A broken glass lay near the desk.",
+      "The nephew stood to inherit a large sum.",
+    ],
+    answer: "The stopped clock was staged to mislead the time of death.",
+    explanation:
+      "A stopped clock is too convenient as evidence. The killer likely tampered with it after the death to create a false timeline. That makes the apparent time of 8:15 suspicious rather than trustworthy.",
+    difficulty: "medium",
+    active: true,
+  },
+];

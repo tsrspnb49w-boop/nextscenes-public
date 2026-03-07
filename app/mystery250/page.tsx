@@ -1,5 +1,9 @@
 import Link from "next/link";
 import TryMystery from "../../components/TryMystery";
+import { mysteryPuzzlesEn } from "@/data/mystery250/en";
+import { getActivePuzzles } from "@/lib/mystery250/getActivePuzzles";
+import { getUtcDaySeed } from "@/lib/mystery250/dateSeed";
+import { selectPuzzle } from "@/lib/mystery250/selectPuzzle";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
@@ -62,6 +66,10 @@ function SectionShell({
 }
 
 export default function Mystery250Page() {
+  const puzzles = getActivePuzzles(mysteryPuzzlesEn);
+  const daySeed = getUtcDaySeed();
+  const initialPuzzle = selectPuzzle(puzzles, "daily", daySeed);
+
   const levels: MysteryCardItem[] = [
     {
       icon: "🔎",
@@ -167,7 +175,11 @@ export default function Mystery250Page() {
         </div>
       </SectionShell>
 
-      <TryMystery lang="en" />
+      <TryMystery
+        lang="en"
+        initialPuzzle={initialPuzzle}
+        puzzles={puzzles}
+      />
 
       <SectionShell
         id="competitions"

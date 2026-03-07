@@ -2,73 +2,112 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import type { MysteryPuzzle } from "@/data/mystery250/types";
+import { selectAnotherPuzzle } from "@/lib/mystery250/selectPuzzle";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 type Lang = "en" | "fr";
 
-export default function TryMystery({ lang = "en" }: { lang?: Lang }) {
+type TryMysteryProps = {
+  lang?: Lang;
+  initialPuzzle: MysteryPuzzle | null;
+  puzzles: MysteryPuzzle[];
+};
+
+export default function TryMystery({
+  lang = "en",
+  initialPuzzle,
+  puzzles,
+}: TryMysteryProps) {
+  const [currentPuzzle, setCurrentPuzzle] = useState<MysteryPuzzle | null>(
+    initialPuzzle
+  );
   const [showSolution, setShowSolution] = useState(false);
 
-  const t =
+  const ui =
     lang === "fr"
       ? {
           title: "Essayez un mystère",
-          intro:
-            "Une montre en argent disparaît à la gare de Banjala. Seules trois personnes se trouvaient près de la salle des bagages.",
-          amadou:
-            'Amadou dit : « Claire n’était pas près de la salle des bagages. »',
-          claire:
-            'Claire dit : « Jules est entré dans la salle des bagages avant la disparition de la montre. »',
-          jules: 'Jules dit : « Amadou ment. »',
-          rule:
-            "Le superviseur sait qu’une seule déclaration est vraie, et que la personne qui dit la vérité n’est pas la voleuse.",
-          question: "Qui a volé la montre ?",
+          featureLabel: "Mystère du jour",
           reveal: "Voir le raisonnement",
-          p1: "Supposons que Jules dise la vérité. Alors Amadou ment, ce qui signifie que Claire était bien près de la salle des bagages.",
-          p2: "Claire affirme alors que Jules est entré dans la salle avant la disparition. Mais si Jules est la seule personne honnête, Claire ment.",
-          p3: "Jules n’est donc pas entré dans la salle au bon moment. Il ne reste alors qu’une seule personne avec accès possible.",
-          p4: "Claire a volé la montre.",
+          hide: "Masquer le raisonnement",
+          tryAnother: "Essayer un autre mystère",
+          clues: "Indices",
+          caseQuestion: "Question du cas",
+          culpritQuestion: "Qui est le coupable ?",
+          solutionTitle: "Raisonnement",
+          noPuzzle: "Aucun mystère n’est disponible pour le moment.",
           cta: "Découvrir d'autres mystères dans l’App",
         }
       : {
           title: "Try a Mystery",
-          intro:
-            "A silver watch disappears at the Banjala railway station. Only three people were near the luggage room.",
-          amadou:
-            'Amadou says: “Claire was nowhere near the luggage room.”',
-          claire:
-            'Claire says: “Jules entered the luggage room before the watch disappeared.”',
-          jules: 'Jules says: “Amadou is lying.”',
-          rule:
-            "The supervisor knows that only one statement is true, and the truthful person is not the thief.",
-          question: "Who stole the watch?",
+          featureLabel: "Mystery of the Day",
           reveal: "Reveal the reasoning",
-          p1: "Suppose Jules is telling the truth. Then Amadou is lying, which means Claire really was near the luggage room.",
-          p2: "Claire says Jules entered the room before the theft. But if Jules is the only truthful one, Claire must be lying.",
-          p3: "So Jules did not enter at the relevant moment. That leaves only one person with possible access.",
-          p4: "Claire stole the watch.",
+          hide: "Hide the reasoning",
+          tryAnother: "Try Another Mystery",
+          clues: "Clues",
+          caseQuestion: "Case Question",
+          culpritQuestion: "Who is the culprit?",
+          solutionTitle: "Reasoning",
+          noPuzzle: "No mystery is available right now.",
           cta: "Explore more mysteries inside the App",
         };
+
+  function handleTryAnother() {
+    const nextPuzzle = selectAnotherPuzzle(puzzles, currentPuzzle?.id);
+
+    if (!nextPuzzle) return;
+
+    setCurrentPuzzle(nextPuzzle);
+    setShowSolution(false);
+  }
+
+  if (!currentPuzzle) {
+    return (
+      <section className="ns-section ns-m250-panel ns-m250-try">
+        <div className="ns-m250-try-head">
+          <h2 className="ns-h2 ns-m250-section-title">{ui.title}</h2>
+          <p className="ns-p ns-m250-section-intro ns-m250-try-intro">
+            {ui.noPuzzle}
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="ns-section ns-m250-panel ns-m250-try">
       <div className="ns-m250-try-head">
-        <h2 className="ns-h2 ns-m250-section-title">{t.title}</h2>
-        <p className="ns-p ns-m250-section-intro ns-m250-try-intro">
-          {t.intro}
-        </p>
+        <h2 className="ns-h2 ns-m250-section-title">{ui.title}</h2>
+
+        <div className="ns-m250-try-meta">
+          <div className="ns-m250-try-kicker">{ui.featureLabel}</div>
+          <h3 className="ns-h3 ns-m250-try-title">{currentPuzzle.title}</h3>
+        </div>
       </div>
 
       <div className="ns-m250-try-case">
-        <p className="ns-p ns-m250-try-line">{t.amadou}</p>
-        <p className="ns-p ns-m250-try-line">{t.claire}</p>
-        <p className="ns-p ns-m250-try-line">{t.jules}</p>
+        <p className="ns-p ns-m250-try-line">{currentPuzzle.setup}</p>
 
-        <p className="ns-p ns-m250-try-rule">{t.rule}</p>
+        {Array.isArray(currentPuzzle.clues) && currentPuzzle.clues.length > 0 ? (
+          <>
+            <p className="ns-p ns-m250-try-rule">
+              <strong>{ui.clues}</strong>
+            </p>
+            {currentPuzzle.clues.map((clue, index) => (
+              <p
+                key={`${currentPuzzle.id}-clue-${index}`}
+                className="ns-p ns-m250-try-line"
+              >
+                {clue}
+              </p>
+            ))}
+          </>
+        ) : null}
 
         <p className="ns-p ns-m250-try-question">
-          <strong>{t.question}</strong>
+          <strong>{ui.caseQuestion}:</strong> {ui.culpritQuestion}
         </p>
       </div>
 
@@ -79,23 +118,52 @@ export default function TryMystery({ lang = "en" }: { lang?: Lang }) {
             className="ns-btn ns-btn-primary"
             onClick={() => setShowSolution(true)}
           >
-            {t.reveal}
+            {ui.reveal}
           </button>
+
+          {puzzles.length > 1 ? (
+            <button
+              type="button"
+              className="ns-btn ns-btn-secondary"
+              onClick={handleTryAnother}
+            >
+              {ui.tryAnother}
+            </button>
+          ) : null}
         </div>
       ) : (
         <div className="ns-m250-try-solution-wrap">
           <div className="ns-callout ns-m250-try-solution">
-            <p className="ns-p">{t.p1}</p>
-            <p className="ns-p">{t.p2}</p>
-            <p className="ns-p">{t.p3}</p>
             <p className="ns-p">
-              <strong>{t.p4}</strong>
+              <strong>{ui.solutionTitle}</strong>
+            </p>
+            <p className="ns-p">{currentPuzzle.explanation}</p>
+            <p className="ns-p">
+              <strong>{currentPuzzle.answer}</strong>
             </p>
           </div>
 
           <div className="ns-hero-cta ns-m250-try-actions">
+            <button
+              type="button"
+              className="ns-btn ns-btn-secondary"
+              onClick={() => setShowSolution(false)}
+            >
+              {ui.hide}
+            </button>
+
+            {puzzles.length > 1 ? (
+              <button
+                type="button"
+                className="ns-btn ns-btn-secondary"
+                onClick={handleTryAnother}
+              >
+                {ui.tryAnother}
+              </button>
+            ) : null}
+
             <Link href={APP_URL} className="ns-btn ns-btn-primary">
-              {t.cta}
+              {ui.cta}
             </Link>
           </div>
         </div>
