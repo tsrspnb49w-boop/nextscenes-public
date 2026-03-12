@@ -4,10 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const SOCIAL = {
-  facebook: "https://www.facebook.com/",
-  x: "https://x.com/",
-  instagram: "https://www.instagram.com/",
-  youtube: "https://www.youtube.com/",
+  facebook: "https://www.facebook.com/nextscenes",
+  youtube: "https://www.youtube.com/@NextScenesOfficial",
+  x: "",
+  instagram: "",
 };
 
 function normalizePath(p: string) {
@@ -60,38 +60,53 @@ export default function SiteFooter() {
         >
           <div className="ns-footer-heading">{isFR ? "Communauté" : "Community"}</div>
           <div className="ns-footer-links">
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.facebook}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Facebook
-            </a>
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.x}
-              target="_blank"
-              rel="noreferrer"
-            >
-              X
-            </a>
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.instagram}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Instagram
-            </a>
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.youtube}
-              target="_blank"
-              rel="noreferrer"
-            >
-              YouTube
-            </a>
+            {SOCIAL.facebook && (
+              <a
+                className="ns-footer-link"
+                href={SOCIAL.facebook}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="NextScenes on Facebook"
+              >
+                Facebook
+              </a>
+            )}
+
+            {SOCIAL.x && (
+              <a
+                className="ns-footer-link"
+                href={SOCIAL.x}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="NextScenes on X"
+              >
+                X
+              </a>
+            )}
+
+            {SOCIAL.instagram && (
+              <a
+                className="ns-footer-link"
+                href={SOCIAL.instagram}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="NextScenes on Instagram"
+              >
+                Instagram
+              </a>
+            )}
+
+            {SOCIAL.youtube && (
+              <a
+                className="ns-footer-link"
+                href={SOCIAL.youtube}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="NextScenes on YouTube"
+              >
+                YouTube
+              </a>
+            )}
           </div>
         </div>
       </div>
