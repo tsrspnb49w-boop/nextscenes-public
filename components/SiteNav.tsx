@@ -81,10 +81,6 @@ export default function SiteNav() {
     return pathname === full || pathname.startsWith(`${full}/`);
   }
 
-  /* ===============================
-     Dropdowns (reliable close)
-     =============================== */
-
   const [moreOpen, setMoreOpen] = useState(false);
   const moreWrapRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
@@ -155,10 +151,6 @@ export default function SiteNav() {
       window.removeEventListener("touchstart", onOutside, true);
     };
   }, [moreOpen, langOpen, closeAllMenus]);
-
-  /* ===============================
-     Auth awareness (best-effort)
-     =============================== */
 
   const [authHint, setAuthHint] = useState<AuthHint>("unknown");
 
@@ -235,7 +227,6 @@ export default function SiteNav() {
   }, [authHint, isFR]);
 
   const langLabel = isFR ? "Langue" : "Lang";
-
   const menuOpen = moreOpen || langOpen;
 
   return (
@@ -248,13 +239,10 @@ export default function SiteNav() {
           onClick={closeAllMenus}
         >
           <img
-            src="/assets/nextscenes-logo.png"
+            src="/nextscenes-logo.png"
             alt="NextScenes"
-            width={30}
-            height={30}
             className="ns-brand-logo"
           />
-          <span className="ns-brand-text">NextScenes</span>
         </Link>
 
         <nav className="ns-links" aria-label={isFR ? "Navigation principale" : "Main navigation"}>

@@ -148,22 +148,10 @@ main { flex: 1; }
 }
 
 .ns-brand-logo {
-  height: 42px !important;
-  width: auto !important;
-  max-width: none !important;
+  height: 32px;
+  width: auto;
+  max-width: none;
   display: block;
-}
-
-.ns-brand-logo {
-  height: 44px !important;
-  width: auto !important;
-}
-
-.ns-brand-text {
-  color: rgba(255,255,255,0.97);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  line-height: 1;
 }
 
 /* Nav row */
@@ -423,19 +411,16 @@ main { flex: 1; }
     gap: 10px;
     align-items: flex-start;
   }
-.ns-brand-logo {
-  width: 130px;
-  height: 32px;
-}
-.ns-brand {
-  padding-left: 4px;
-}
-.ns-brand-text {
-  font-size: 15px;
-}
+
   .ns-brand {
     order: 1;
     flex: 1 1 auto;
+    padding-left: 4px;
+  }
+
+  .ns-brand-logo {
+    height: 30px;
+    width: auto;
   }
 
   .ns-topbar-right {
@@ -578,14 +563,6 @@ main { flex: 1; }
 
 @media (max-width: 640px) {
   .ns-grid-3 { grid-template-columns: 1fr; }
-}
-.ns-brand-logo {
-  width: 24px;
-  height: 36px !important;
-}
-
-.ns-brand-text {
-  font-size: 15px;
 }
 /* ===============================
    Buttons (TRUE PILL)
@@ -737,14 +714,6 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
 }
 @media (max-width: 640px) {
   .ns-media-grid { grid-template-columns: 1fr; }
-}
-.ns-brand-logo {
-  width: 24px;
-  height: 24px;
-}
-
-.ns-brand-text {
-  font-size: 15px;
 }
 .ns-media-card {
   display: block;
@@ -1148,15 +1117,7 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   .ns-m250-grid {
     grid-template-columns: 1fr;
   }
-}
-.ns-brand-logo {
-  width: 24px;
-  height: 24px;
-}
 
-.ns-brand-text {
-  font-size: 15px;
-}
   .ns-m250-panel,
   .ns-m250-promise {
     padding: 18px;
@@ -1180,6 +1141,7 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   .ns-m250-card.is-compact {
     min-height: 0;
   }
+}
 
 /* ===============================
    Mystery250 — Try a Mystery block
@@ -1304,14 +1266,7 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   .ns-m250-try {
     border-radius: 18px;
   }
-.ns-brand-logo {
-  width: 24px;
-  height: 24px;
-}
 
-.ns-brand-text {
-  font-size: 15px;
-}
   .ns-m250-try-case,
   .ns-m250-try-solution {
     padding: 16px;
