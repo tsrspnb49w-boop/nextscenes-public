@@ -15,18 +15,35 @@ function Card({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-console.log("NEXT_PUBLIC_API_URL =", process.env.NEXT_PUBLIC_API_URL);
-
-
 function s(v: unknown) {
   return typeof v === "string" ? v.trim() : "";
 }
 
+function getApiBase() {
+  const fromEnv = s(process.env.NEXT_PUBLIC_API_URL);
+  if (fromEnv) return fromEnv.replace(/\/+$/, "");
+
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname.toLowerCase();
+
+    if (
+      host === "nextscenes.org" ||
+      host === "www.nextscenes.org" ||
+      host.endsWith(".nextscenes.org")
+    ) {
+      return "https://app.nextscenes.org";
+    }
+
+    if (host === "localhost" || host === "127.0.0.1") {
+      return "http://localhost:4000";
+    }
+  }
+
+  return "https://app.nextscenes.org";
+}
+
 export default function FrContactPage() {
-  const API_URL = useMemo(() => {
-    const fromEnv = s(process.env.NEXT_PUBLIC_API_URL);
-    return fromEnv || "https://api.nextscenes.org";
-  }, []);
+  const API_URL = useMemo(() => getApiBase(), []);
 
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -103,10 +120,14 @@ export default function FrContactPage() {
     }
 
     setLoading(true);
+
     try {
       const res = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           name: payload.name,
           email: payload.email,
@@ -118,8 +139,20 @@ export default function FrContactPage() {
 
       const data = await res.json().catch(() => ({} as any));
 
-      if (!res.ok || !data?.ok) {
-        setErr(data?.error || "Nous n’avons pas pu envoyer votre message. Veuillez réessayer.");
+      if (!res.ok) {
+        if (res.status === 429) {
+          setErr("Trop de messages ont été envoyés récemment. Veuillez patienter un peu avant de réessayer.");
+        } else if (res.status === 404) {
+          setErr("Le service de contact n’est pas disponible pour le moment. Veuillez réessayer dans un instant.");
+        } else {
+          setErr(data?.error || data?.message || "Nous n’avons pas pu envoyer votre message. Veuillez réessayer.");
+        }
+        setLoading(false);
+        return;
+      }
+
+      if (!data?.ok) {
+        setErr(data?.error || data?.message || "Nous n’avons pas pu envoyer votre message. Veuillez réessayer.");
         setLoading(false);
         return;
       }
@@ -128,7 +161,7 @@ export default function FrContactPage() {
       form.reset();
       setLoading(false);
       scrollToForm();
-    } catch (e2) {
+    } catch {
       setErr("Erreur réseau. Veuillez réessayer.");
       setLoading(false);
     }

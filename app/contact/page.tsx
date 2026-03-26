@@ -19,11 +19,31 @@ function s(v: unknown) {
   return typeof v === "string" ? v.trim() : "";
 }
 
+function getApiBase() {
+  const fromEnv = s(process.env.NEXT_PUBLIC_API_URL);
+  if (fromEnv) return fromEnv.replace(/\/+$/, "");
+
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname.toLowerCase();
+
+    if (
+      host === "nextscenes.org" ||
+      host === "www.nextscenes.org" ||
+      host.endsWith(".nextscenes.org")
+    ) {
+      return "https://app.nextscenes.org";
+    }
+
+    if (host === "localhost" || host === "127.0.0.1") {
+      return "http://localhost:4000";
+    }
+  }
+
+  return "https://app.nextscenes.org";
+}
+
 export default function ContactPage() {
-  const API_URL = useMemo(() => {
-    const fromEnv = s(process.env.NEXT_PUBLIC_API_URL);
-    return fromEnv || "https://api.nextscenes.org";
-  }, []);
+  const API_URL = useMemo(() => getApiBase(), []);
 
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
@@ -95,14 +115,19 @@ export default function ContactPage() {
     if (payload.honey) {
       setSent(true);
       form.reset();
+      scrollToForm();
       return;
     }
 
     setLoading(true);
+
     try {
       const res = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           name: payload.name,
           email: payload.email,
@@ -114,8 +139,20 @@ export default function ContactPage() {
 
       const data = await res.json().catch(() => ({} as any));
 
-      if (!res.ok || !data?.ok) {
-        setErr(data?.error || "We could not send your message. Please try again.");
+      if (!res.ok) {
+        if (res.status === 429) {
+          setErr("Too many messages were sent recently. Please wait a little and try again.");
+        } else if (res.status === 404) {
+          setErr("Contact service is not available right now. Please try again shortly.");
+        } else {
+          setErr(data?.error || data?.message || "We could not send your message. Please try again.");
+        }
+        setLoading(false);
+        return;
+      }
+
+      if (!data?.ok) {
+        setErr(data?.error || data?.message || "We could not send your message. Please try again.");
         setLoading(false);
         return;
       }
@@ -123,10 +160,8 @@ export default function ContactPage() {
       setSent(true);
       form.reset();
       setLoading(false);
-
-      // bring them back to the form area (success message)
       scrollToForm();
-    } catch (e2) {
+    } catch {
       setErr("Network error. Please try again.");
       setLoading(false);
     }
