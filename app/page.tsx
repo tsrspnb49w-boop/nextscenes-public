@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { HOME_FEATURES } from "@/app/lib/homeFeatures";
 
 function PillButton({
   href,
@@ -132,34 +133,34 @@ export default function HomePage() {
   );
 
   const todayCards: TodayCard[] = useMemo(
-    () => [
-      {
-        badge: "Story of the Week",
-        title: "A doorway into a living storyline",
-        desc: "A featured story that shows how NextScenes grows a book with clarity and responsibility.",
-        meta: "Updated weekly · Clean reading",
-        href: "/about",
-        cta: "See how stories grow",
-      },
-      {
-        badge: "Puzzle of the Week",
-        title: "Mystery250 Spotlight",
-        desc: "One short mystery to train attention, logic, and patience. Try it, then explore more.",
-        meta: "New every week · All ages",
-        href: "/mystery250",
-        cta: "Try this week’s puzzle",
-      },
-      {
-        badge: "Club Spotlight",
-        title: "A community worth joining",
-        desc: "Kids, teens, adults, and institutions. Clubs are where habits are formed and craft improves.",
-        meta: "Clubs for every level",
-        href: "/clubs",
-        cta: "Explore clubs",
-      },
-    ],
-    []
-  );
+  () => [
+    {
+      badge: HOME_FEATURES.storyOfTheWeek.label,
+      title: HOME_FEATURES.storyOfTheWeek.title,
+      desc: HOME_FEATURES.storyOfTheWeek.description,
+      meta: HOME_FEATURES.storyOfTheWeek.meta,
+      href: HOME_FEATURES.storyOfTheWeek.href,
+      cta: HOME_FEATURES.storyOfTheWeek.cta,
+    },
+    {
+      badge: HOME_FEATURES.puzzleOfTheWeek.label,
+      title: HOME_FEATURES.puzzleOfTheWeek.title,
+      desc: HOME_FEATURES.puzzleOfTheWeek.description,
+      meta: HOME_FEATURES.puzzleOfTheWeek.meta,
+      href: HOME_FEATURES.puzzleOfTheWeek.href,
+      cta: HOME_FEATURES.puzzleOfTheWeek.cta,
+    },
+    {
+      badge: HOME_FEATURES.clubSpotlight.label,
+      title: HOME_FEATURES.clubSpotlight.title,
+      desc: HOME_FEATURES.clubSpotlight.description,
+      meta: HOME_FEATURES.clubSpotlight.meta,
+      href: HOME_FEATURES.clubSpotlight.href,
+      cta: HOME_FEATURES.clubSpotlight.cta,
+    },
+  ],
+  []
+);
 
   const flowSteps: FlowStep[] = useMemo(
     () => [
