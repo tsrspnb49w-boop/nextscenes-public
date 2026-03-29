@@ -9,7 +9,7 @@ export const HOME_FEATURES = {
       "A featured story that shows how NextScenes grows a book with clarity and responsibility.",
     meta: "Updated weekly · Clean reading",
     cta: "Read the story",
-    href: "https://app.nextscenes.org/reader-view?storyId=6999926ee47ac5ae3b58dca4",
+    href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
   },
 
   puzzleOfTheWeek: {
