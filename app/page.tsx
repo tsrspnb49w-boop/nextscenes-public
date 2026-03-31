@@ -414,17 +414,28 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="ns-today-grid">
-          {todayCards.map((c) => (
-            <Link key={c.badge} href={c.href} className="ns-today-card">
-              <div className="ns-today-badge">{c.badge}</div>
-              <div className="ns-today-title">{c.title}</div>
-              <div className="ns-today-desc">{c.desc}</div>
-              <div className="ns-today-meta">{c.meta}</div>
-              <div className="ns-today-cta">{c.cta} →</div>
-            </Link>
-          ))}
+       <div className="ns-today-grid">
+  {todayCards.map((c, i) => {
+    const isStory = i === 0;
+
+    return (
+      <Link
+        key={c.badge}
+        href={c.href}
+        className={isStory ? "ns-today-card ns-today-card-featured" : "ns-today-card"}
+      >
+        <div className="ns-today-badge">{c.badge}</div>
+        <div className="ns-today-title">{c.title}</div>
+        <div className="ns-today-desc">{c.desc}</div>
+        <div className="ns-today-meta">{c.meta}</div>
+
+        <div className={isStory ? "ns-today-cta ns-today-cta-featured" : "ns-today-cta"}>
+          {c.cta} →
         </div>
+      </Link>
+    );
+  })}
+</div>
       </section>
 
       <section className="ns-section ns-section-process">
@@ -959,54 +970,97 @@ export default function HomePage() {
         }
 
         .ns-today-card:hover {
-          transform: translateY(-2px);
-          border-color: rgba(20, 138, 74, 0.3);
-          background: linear-gradient(
-            180deg,
-            rgba(31, 182, 106, 0.1),
-            rgba(255, 255, 255, 0.96)
-          );
-          text-decoration: none;
-        }
+  transform: translateY(-2px);
+  border-color: rgba(20, 138, 74, 0.3);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.1),
+    rgba(255, 255, 255, 0.96)
+  );
+  text-decoration: none;
+}
 
-        .ns-today-badge {
-          display: inline-block;
-          padding: 6px 10px;
-          border-radius: 999px;
-          border: 1px solid rgba(20, 138, 74, 0.2);
-          background: rgba(20, 138, 74, 0.1);
-          color: rgba(15, 36, 24, 0.86);
-          font-size: 12px;
-          font-weight: 900;
-        }
+.ns-today-card-featured {
+  border-color: rgba(20, 138, 74, 0.22);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.12),
+    rgba(255, 255, 255, 0.97)
+  );
+  box-shadow: 0 12px 26px rgba(15, 36, 24, 0.06);
+}
 
-        .ns-today-title {
-          margin-top: 10px;
-          font-weight: 950;
-          color: rgba(15, 36, 24, 0.94);
-          letter-spacing: -0.2px;
-          line-height: 1.2;
-        }
+.ns-today-card-featured:hover {
+  transform: translateY(-3px);
+  border-color: rgba(20, 138, 74, 0.34);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.15),
+    rgba(255, 255, 255, 0.99)
+  );
+  box-shadow: 0 16px 30px rgba(15, 36, 24, 0.08);
+}
 
-        .ns-today-desc {
-          margin-top: 6px;
-          font-size: 13px;
-          line-height: 1.42;
-          color: rgba(15, 36, 24, 0.74);
-        }
+.ns-today-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 138, 74, 0.2);
+  background: rgba(20, 138, 74, 0.1);
+  color: rgba(15, 36, 24, 0.86);
+  font-size: 12px;
+  font-weight: 900;
+}
 
-        .ns-today-meta {
-          margin-top: 8px;
-          font-size: 12px;
-          color: rgba(15, 36, 24, 0.6);
-        }
+.ns-today-title {
+  margin-top: 10px;
+  font-weight: 950;
+  color: rgba(15, 36, 24, 0.94);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
 
-        .ns-today-cta {
-          margin-top: 10px;
-          font-size: 13px;
-          font-weight: 900;
-          color: var(--accent2);
-        }
+.ns-today-desc {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.42;
+  color: rgba(15, 36, 24, 0.74);
+}
+
+.ns-today-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(15, 36, 24, 0.6);
+}
+
+.ns-today-cta {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--accent2);
+}
+
+.ns-today-cta-featured {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 138, 74, 0.22);
+  background: rgba(20, 138, 74, 0.1);
+  color: rgba(15, 36, 24, 0.96);
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: -0.1px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.ns-today-card-featured:hover .ns-today-cta-featured {
+  background: rgba(20, 138, 74, 0.14);
+  border-color: rgba(20, 138, 74, 0.3);
+}
 
         .ns-section-process {
           margin-top: 18px;

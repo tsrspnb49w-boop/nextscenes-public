@@ -1312,3 +1312,25 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   font-weight: 800;
   color: #13251d;
 }
+@keyframes nsCardBreath {
+  0% {
+    transform: translateY(0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+  }
+  50% {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.08);
+  }
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+  }
+}
+.ns-today-card-live {
+  border-color: rgba(20, 138, 74, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.14),
+    rgba(255, 255, 255, 0.96)
+  );
+}

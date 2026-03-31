@@ -1,14 +1,14 @@
-// Build: home-features-config-v1
+// Build: home-features-config-v2
 // Purpose: Central control for homepage "Inside NextScenes" section
 
 export const HOME_FEATURES = {
   storyOfTheWeek: {
     label: "Story of the Week",
-    title: "A doorway into a living storyline",
-    description:
-      "A featured story that shows how NextScenes grows a book with clarity and responsibility.",
-    meta: "Updated weekly · Clean reading",
-    cta: "Read the story",
+    title: "The story is already moving. You are late.",
+description:
+  "Someone has already written the last line you haven’t seen. The next turn is waiting. Enter now and read what is unfolding before it changes again.",
+meta: "Live now · Still unfolding",
+cta: "Enter the Story",
     href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
   },
 

@@ -134,13 +134,14 @@ export default function FrHomePage() {
   const todayCards: TodayCard[] = useMemo(
     () => [
       {
-        badge: "Histoire de la semaine",
-        title: "Une porte vers une intrigue vivante",
-        desc: "Une histoire mise en avant qui montre comment NextScenes fait grandir un livre avec clarté et responsabilité.",
-        meta: "Mis à jour chaque semaine · Lecture propre",
-        href: "/fr/about",
-        cta: "Voir comment une histoire grandit",
-      },
+  badge: "Histoire de la semaine",
+  title: "L’histoire a déjà commencé. Vous arrivez après.",
+  desc:
+    "Quelqu’un a déjà écrit une ligne que vous n’avez pas encore lue. La suite attend. Entrez maintenant… pendant que l’histoire est encore en train de se faire.",
+  meta: "En cours · Lecture en direct",
+  href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+  cta: "Entrer dans l’histoire",
+},
       {
         badge: "Énigme de la semaine",
         title: "Mystery250 à l’honneur",
@@ -418,16 +419,26 @@ export default function FrHomePage() {
         </div>
 
         <div className="ns-today-grid">
-          {todayCards.map((c) => (
-            <Link key={c.badge} href={c.href} className="ns-today-card">
-              <div className="ns-today-badge">{c.badge}</div>
-              <div className="ns-today-title">{c.title}</div>
-              <div className="ns-today-desc">{c.desc}</div>
-              <div className="ns-today-meta">{c.meta}</div>
-              <div className="ns-today-cta">{c.cta} →</div>
-            </Link>
-          ))}
+  {todayCards.map((c, i) => {
+    const isStory = i === 0;
+
+    return (
+      <Link
+        key={c.badge}
+        href={c.href}
+        className={isStory ? "ns-today-card ns-today-card-featured" : "ns-today-card"}
+      >
+        <div className="ns-today-badge">{c.badge}</div>
+        <div className="ns-today-title">{c.title}</div>
+        <div className="ns-today-desc">{c.desc}</div>
+        <div className="ns-today-meta">{c.meta}</div>
+        <div className={isStory ? "ns-today-cta ns-today-cta-featured" : "ns-today-cta"}>
+          {c.cta} →
         </div>
+      </Link>
+    );
+  })}
+</div>
       </section>
 
       <section className="ns-section ns-section-process">
@@ -949,152 +960,197 @@ export default function FrHomePage() {
         }
 
         .ns-today-card {
-          display: block;
-          padding: 14px 14px 13px;
-          border-radius: 16px;
-          border: 1px solid rgba(20, 138, 74, 0.16);
-          background: linear-gradient(
-            180deg,
-            rgba(31, 182, 106, 0.08),
-            rgba(255, 255, 255, 0.92)
-          );
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-          text-decoration: none;
-          transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
-        }
+  display: block;
+  padding: 14px 14px 13px;
+  border-radius: 16px;
+  border: 1px solid rgba(20, 138, 74, 0.16);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.08),
+    rgba(255, 255, 255, 0.92)
+  );
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+
+  /* subtle pulse */
+  animation: nsCardBreath 4.5s ease-in-out infinite;
+}
 
         .ns-today-card:hover {
-          transform: translateY(-2px);
-          border-color: rgba(20, 138, 74, 0.3);
-          background: linear-gradient(
-            180deg,
-            rgba(31, 182, 106, 0.1),
-            rgba(255, 255, 255, 0.96)
-          );
-          text-decoration: none;
-        }
+  transform: translateY(-2px);
+  border-color: rgba(20, 138, 74, 0.3);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.1),
+    rgba(255, 255, 255, 0.96)
+  );
+  text-decoration: none;
+}
 
-        .ns-today-badge {
-          display: inline-block;
-          padding: 6px 10px;
-          border-radius: 999px;
-          border: 1px solid rgba(20, 138, 74, 0.2);
-          background: rgba(20, 138, 74, 0.1);
-          color: rgba(15, 36, 24, 0.86);
-          font-size: 12px;
-          font-weight: 900;
-        }
+.ns-today-card-featured {
+  border-color: rgba(20, 138, 74, 0.22);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.12),
+    rgba(255, 255, 255, 0.97)
+  );
+  box-shadow: 0 12px 26px rgba(15, 36, 24, 0.06);
+}
 
-        .ns-today-title {
-          margin-top: 10px;
-          font-weight: 950;
-          color: rgba(15, 36, 24, 0.94);
-          letter-spacing: -0.2px;
-          line-height: 1.2;
-        }
+.ns-today-card-featured:hover {
+  transform: translateY(-3px);
+  border-color: rgba(20, 138, 74, 0.34);
+  background: linear-gradient(
+    180deg,
+    rgba(31, 182, 106, 0.15),
+    rgba(255, 255, 255, 0.99)
+  );
+  box-shadow: 0 16px 30px rgba(15, 36, 24, 0.08);
+}
 
-        .ns-today-desc {
-          margin-top: 6px;
-          font-size: 13px;
-          line-height: 1.42;
-          color: rgba(15, 36, 24, 0.74);
-        }
+.ns-today-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 138, 74, 0.2);
+  background: rgba(20, 138, 74, 0.1);
+  color: rgba(15, 36, 24, 0.86);
+  font-size: 12px;
+  font-weight: 900;
+}
 
-        .ns-today-meta {
-          margin-top: 8px;
-          font-size: 12px;
-          color: rgba(15, 36, 24, 0.6);
-        }
+.ns-today-title {
+  margin-top: 10px;
+  font-weight: 950;
+  color: rgba(15, 36, 24, 0.94);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
 
-        .ns-today-cta {
-          margin-top: 10px;
-          font-size: 13px;
-          font-weight: 900;
-          color: var(--accent2);
-        }
+.ns-today-desc {
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.42;
+  color: rgba(15, 36, 24, 0.74);
+}
 
-        .ns-section-process {
-          margin-top: 18px;
-        }
+.ns-today-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(15, 36, 24, 0.6);
+}
 
-        .ns-process-card {
-          padding-bottom: 12px;
-        }
+.ns-today-cta {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--accent2);
+}
 
-        .ns-process-cta {
-          margin-top: 10px;
-          padding: 16px 18px;
-          border-radius: 20px;
-          border: 1px solid rgba(20, 138, 74, 0.14);
-          background: rgba(255, 255, 255, 0.82);
-          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
-        }
+.ns-today-cta-featured {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 138, 74, 0.22);
+  background: rgba(20, 138, 74, 0.1);
+  color: rgba(15, 36, 24, 0.96);
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: -0.1px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
 
-        .ns-flow {
-          margin-top: 22px;
-          padding: 18px;
-          border-radius: var(--radius);
-          border: 1px solid rgba(20, 138, 74, 0.14);
-          background: linear-gradient(
-              180deg,
-              rgba(31, 182, 106, 0.06),
-              rgba(255, 255, 255, 0.9)
-            ),
-            rgba(255, 255, 255, 0.86);
-          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-        }
+.ns-today-card-featured:hover .ns-today-cta-featured {
+  background: rgba(20, 138, 74, 0.14);
+  border-color: rgba(20, 138, 74, 0.3);
+}
 
-        .ns-flow-head {
-          padding: 4px 4px 8px;
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-        }
+.ns-section-process {
+  margin-top: 18px;
+}
 
-        .ns-flow-row {
-          display: grid;
-          grid-template-columns: 1fr auto 1fr auto 1fr;
-          gap: 12px;
-          align-items: start;
-          margin-top: 10px;
-        }
+.ns-process-card {
+  padding-bottom: 12px;
+}
 
-        .ns-flow-item-wrap {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
+.ns-process-cta {
+  margin-top: 10px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+}
 
-        .ns-flow-step-badge {
-          display: inline-flex;
-          align-self: flex-start;
-          padding: 6px 10px;
-          border-radius: 999px;
-          background: rgba(20, 138, 74, 0.1);
-          border: 1px solid rgba(20, 138, 74, 0.16);
-          font-size: 12px;
-          font-weight: 900;
-          color: rgba(15, 36, 24, 0.8);
-          letter-spacing: 0.3px;
-        }
+.ns-flow {
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background: linear-gradient(
+      180deg,
+      rgba(31, 182, 106, 0.06),
+      rgba(255, 255, 255, 0.9)
+    ),
+    rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+}
 
-        .ns-flow-card {
-          border-radius: 16px;
-          border: 1px solid rgba(20, 138, 74, 0.12);
-          background: rgba(255, 255, 255, 0.94);
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-          padding: 12px;
-          text-decoration: none;
-          opacity: 0;
-          transform: translateY(10px);
-          transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease, box-shadow 160ms ease;
-        }
+.ns-flow-head {
+  padding: 4px 4px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 
-        .ns-flow-card:hover {
-          border-color: rgba(20, 138, 74, 0.22);
-          box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
-        }
+.ns-flow-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 12px;
+  align-items: start;
+  margin-top: 10px;
+}
 
+.ns-flow-item-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ns-flow-step-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(20, 138, 74, 0.1);
+  border: 1px solid rgba(20, 138, 74, 0.16);
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.8);
+  letter-spacing: 0.3px;
+}
+
+.ns-flow-card {
+  border-radius: 16px;
+  border: 1px solid rgba(20, 138, 74, 0.12);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+  padding: 12px;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.ns-flow-card:hover {
+  border-color: rgba(20, 138, 74, 0.22);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
+}
         .ns-flow-in .ns-flow-card {
           opacity: 1;
           transform: translateY(0);
