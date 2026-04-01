@@ -1,22 +1,22 @@
-// Build: home-features-config-v2
+// Build: home-features-config-v3
 // Purpose: Central control for homepage "Inside NextScenes" section
 
 export const HOME_FEATURES = {
   storyOfTheWeek: {
     label: "Story of the Week",
-    title: "The story is already moving. You are late.",
-description:
-  "Someone has already written the last line you haven’t seen. The next turn is waiting. Enter now and read what is unfolding before it changes again.",
-meta: "Live now · Still unfolding",
-cta: "Enter the Story",
+    title: "The story is already moving",
+    description:
+      "Someone has already written something you have not seen. Enter now and read what unfolds next.",
+    meta: "Live now · Still unfolding",
+    cta: "Enter the Story",
     href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
   },
 
   puzzleOfTheWeek: {
     label: "Puzzle of the Week",
-    title: "Mystery250 Spotlight",
+    title: "A puzzle worth solving",
     description:
-      "One short mystery to train attention, logic, and patience. Try it, then explore more.",
+      "Train your mind with one short mystery. Start now, then explore more.",
     meta: "New every week · All ages",
     cta: "Try this week’s puzzle",
     href: "/mystery250",
@@ -24,9 +24,9 @@ cta: "Enter the Story",
 
   clubSpotlight: {
     label: "Club Spotlight",
-    title: "A community worth joining",
+    title: "A community that builds seriously",
     description:
-      "Kids, teens, adults, and institutions. Clubs are where habits are formed and craft improves.",
+      "Writers, readers, and thinkers growing together through practice, discussion, and discipline.",
     meta: "Clubs for every level",
     cta: "Explore clubs",
     href: "/clubs",

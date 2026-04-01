@@ -64,30 +64,30 @@ export default function HomePage() {
     () => [
       {
         image:
-          "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70",
-        eyebrow: "Stories that feel worth finishing",
-        title: "Read something clean, deep, and human",
-        desc: "Not noise. Not outrage. Real stories built with care, so readers can trust what they enter.",
-        ctaText: "About NextScenes",
-        ctaHref: "/about",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "The story is already moving",
+        title: "Continue where another writer stopped",
+        desc: "Read what has already been written, then carry the story forward with care and structure.",
+        ctaText: "Explore Stories",
+        ctaHref: "https://app.nextscenes.org/storylines",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=70",
-        eyebrow: "Write with structure",
-        title: "Build scenes one good decision at a time",
-        desc: "Proposals, decisions, and canon stay visible, so collaboration stays honest and coherent.",
-        ctaText: "How it works",
-        ctaHref: "/how-it-works",
+          "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "Read something worth your time",
+        title: "Stories that feel clean, deep, and human",
+        desc: "Not noise. Not outrage. Real stories built with thought, so readers can trust what they enter.",
+        ctaText: "Explore Stories",
+        ctaHref: "https://app.nextscenes.org/storylines",
       },
       {
         image:
           "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1600&q=70",
-        eyebrow: "For curious minds",
-        title: "Mystery250 for attentive and patient minds",
-        desc: "Short mysteries and puzzles for kids, teens, and adults who enjoy thinking clearly.",
-        ctaText: "Explore Mystery250",
-        ctaHref: "/mystery250",
+        eyebrow: "Write with structure",
+        title: "Build the next scene one clear decision at a time",
+        desc: "Proposals, decisions, and canon stay visible, so collaboration remains honest and coherent.",
+        ctaText: "Start Writing",
+        ctaHref: "https://app.nextscenes.org",
       },
     ],
     []
@@ -99,23 +99,23 @@ export default function HomePage() {
         image: "/images/kids-corner.webp",
         imageAlt: "Children in a calm reading and storytelling setting",
         title: "Kids Corner",
-        desc: "Gentle mysteries and guided storytelling that keeps curiosity clean and bright.",
+        desc: "Simple stories and guided creativity for curious young minds.",
         href: "/clubs",
-        cta: "Explore Kids Clubs",
+        cta: "Explore Kids",
       },
       {
         image: "/images/teens-writers.webp",
         imageAlt: "Teenagers writing together in a thoughtful library setting",
         title: "Teens and Young Writers",
-        desc: "Grow craft, build confidence, and learn discipline through guided feedback.",
+        desc: "Build skill, learn structure, and grow confidence through guided practice.",
         href: "/how-it-works",
-        cta: "See the workflow",
+        cta: "Start Learning",
       },
       {
         image: "/images/adult-writers.webp",
         imageAlt: "Adult writers working seriously in a warm library environment",
         title: "Adults and Serious Writers",
-        desc: "Write long-form stories with continuity, accountability, and a community that respects authorship.",
+        desc: "Write with continuity, discipline, and a community that respects authorship.",
         href: "https://app.nextscenes.org",
         cta: "Enter the Platform",
       },
@@ -124,7 +124,7 @@ export default function HomePage() {
         imageAlt:
           "Multiracial classroom and library learning environment for schools and institutions",
         title: "Schools and Institutions",
-        desc: "A structured creative tool for classrooms, libraries, literacy programs, and cultural groups.",
+        desc: "Structured storytelling for classrooms, libraries, literacy programs, and cultural groups.",
         href: "/partners",
         cta: "Partnerships",
       },
@@ -133,51 +133,51 @@ export default function HomePage() {
   );
 
   const todayCards: TodayCard[] = useMemo(
-  () => [
-    {
-      badge: HOME_FEATURES.storyOfTheWeek.label,
-      title: HOME_FEATURES.storyOfTheWeek.title,
-      desc: HOME_FEATURES.storyOfTheWeek.description,
-      meta: HOME_FEATURES.storyOfTheWeek.meta,
-      href: HOME_FEATURES.storyOfTheWeek.href,
-      cta: HOME_FEATURES.storyOfTheWeek.cta,
-    },
-    {
-      badge: HOME_FEATURES.puzzleOfTheWeek.label,
-      title: HOME_FEATURES.puzzleOfTheWeek.title,
-      desc: HOME_FEATURES.puzzleOfTheWeek.description,
-      meta: HOME_FEATURES.puzzleOfTheWeek.meta,
-      href: HOME_FEATURES.puzzleOfTheWeek.href,
-      cta: HOME_FEATURES.puzzleOfTheWeek.cta,
-    },
-    {
-      badge: HOME_FEATURES.clubSpotlight.label,
-      title: HOME_FEATURES.clubSpotlight.title,
-      desc: HOME_FEATURES.clubSpotlight.description,
-      meta: HOME_FEATURES.clubSpotlight.meta,
-      href: HOME_FEATURES.clubSpotlight.href,
-      cta: HOME_FEATURES.clubSpotlight.cta,
-    },
-  ],
-  []
-);
+    () => [
+      {
+        badge: HOME_FEATURES.storyOfTheWeek.label,
+        title: HOME_FEATURES.storyOfTheWeek.title,
+        desc: HOME_FEATURES.storyOfTheWeek.description,
+        meta: HOME_FEATURES.storyOfTheWeek.meta,
+        href: HOME_FEATURES.storyOfTheWeek.href,
+        cta: HOME_FEATURES.storyOfTheWeek.cta,
+      },
+      {
+        badge: HOME_FEATURES.puzzleOfTheWeek.label,
+        title: HOME_FEATURES.puzzleOfTheWeek.title,
+        desc: HOME_FEATURES.puzzleOfTheWeek.description,
+        meta: HOME_FEATURES.puzzleOfTheWeek.meta,
+        href: HOME_FEATURES.puzzleOfTheWeek.href,
+        cta: HOME_FEATURES.puzzleOfTheWeek.cta,
+      },
+      {
+        badge: HOME_FEATURES.clubSpotlight.label,
+        title: HOME_FEATURES.clubSpotlight.title,
+        desc: HOME_FEATURES.clubSpotlight.description,
+        meta: HOME_FEATURES.clubSpotlight.meta,
+        href: HOME_FEATURES.clubSpotlight.href,
+        cta: HOME_FEATURES.clubSpotlight.cta,
+      },
+    ],
+    []
+  );
 
   const flowSteps: FlowStep[] = useMemo(
     () => [
       {
         image: "/images/story-hub.jpg",
-        title: "Story Hub",
-        desc: "Discover stories, organize your shelf, and enter with confidence.",
+        title: "Find a story",
+        desc: "Browse storylines, open one, and step inside without confusion.",
       },
       {
         image: "/images/select-story.jpg",
-        title: "Select your story",
-        desc: "Open a storyline and step into the exact place where writing begins.",
+        title: "Read or continue",
+        desc: "Catch the thread, then continue where the last writer stopped.",
       },
       {
         image: "/images/writer-studio.jpg",
-        title: "Writer Studio",
-        desc: "Write with structure. See proposals, decisions, and canon clearly.",
+        title: "Build with structure",
+        desc: "Write clearly, track decisions, and keep canon visible.",
       },
     ],
     []
@@ -253,51 +253,55 @@ export default function HomePage() {
         <div className="ns-hero-inner">
           <div className="ns-hero-copy">
             <div className="ns-hero-copy-inner">
-              <h1 className="ns-h1 ns-hero-title">NextScenes</h1>
+              <h1 className="ns-h1 ns-hero-title">
+                Enter a story. Continue it. Or start your own.
+              </h1>
 
               <p className="ns-hero-lead">
-                Stories that grow through imagination and responsibility.
+                Stories are already unfolding on NextScenes.
               </p>
 
               <p className="ns-subtitle ns-hero-subtitle">
-                A place where people discover and showcase creative talent, stories
-                are refined by community, and readers explore work across cultures
-                and generations.
+                Read what others have written, pick up where they stopped, or write
+                the next scene in a place built for serious storytelling.
               </p>
 
               <div className="ns-hero-cta">
-                <PillButton href="/how-it-works">How it works</PillButton>
-                <PillButton href="https://app.nextscenes.org" variant="ghost">
-                  Enter the Platform
+                <PillButton href="https://app.nextscenes.org/storylines">
+                  Explore Stories
+                </PillButton>
+                <PillButton href="/how-it-works" variant="ghost">
+                  How it works
                 </PillButton>
               </div>
 
               <div className="ns-hero-note">
-                Discover voices. Build stories. Share imagination with the world.
+                No noise. No confusion. Just stories that move, and people who build
+                them carefully.
               </div>
 
               <div className="ns-trust-strip">
-                <span>Guided feedback</span>
-                <span>Clubs and community</span>
-                <span>Mystery250 puzzles</span>
-                <span>Safety and values</span>
+                <span>Read what is already unfolding</span>
+                <span>Continue a living story</span>
+                <span>Write with structure</span>
+                <span>Guided feedback and values</span>
               </div>
 
               <div className="ns-hero-mini">
                 <div className="ns-card ns-hero-mini-card">
-                  <h2 className="ns-h2">What you can do here</h2>
+                  <h2 className="ns-h2">Start here</h2>
                   <ul className="ns-list">
-                    <li>Read stories written across cultures and generations.</li>
-                    <li>Write scenes and watch stories grow through thoughtful feedback.</li>
-                    <li>Join clubs where reading, writing, and reasoning take root.</li>
-                    <li>Sharpen your mind with Mystery250 puzzles.</li>
+                    <li>Read a story already in motion.</li>
+                    <li>Continue where another writer stopped.</li>
+                    <li>Write your own scene and shape what comes next.</li>
+                    <li>Join a community that builds stories with care.</li>
                   </ul>
                   <div className="ns-card-actions">
-                    <Link className="ns-link" href="/mystery250">
-                      Explore Mystery250
+                    <Link className="ns-link" href="https://app.nextscenes.org/storylines">
+                      Explore Stories
                     </Link>
-                    <Link className="ns-link" href="/safety">
-                      Safety and values
+                    <Link className="ns-link" href="/mystery250">
+                      Try Mystery250
                     </Link>
                   </div>
                 </div>
@@ -330,8 +334,8 @@ export default function HomePage() {
                       {active.ctaText || "Learn more"}
                     </Link>
                   ) : null}
-                  <Link className="ns-btn ns-btn-ghost" href="https://app.nextscenes.org">
-                    Enter the Platform
+                  <Link className="ns-btn ns-btn-ghost" href="/how-it-works">
+                    How it works
                   </Link>
                 </div>
               </div>
@@ -378,8 +382,7 @@ export default function HomePage() {
         <div className="ns-band-head">
           <h2 className="ns-h2">Choose your path</h2>
           <p className="ns-p" style={{ maxWidth: 820 }}>
-            NextScenes welcomes different ages and different goals. Pick a door,
-            and you will find something meaningful inside.
+            Start where you feel most at home.
           </p>
         </div>
 
@@ -407,65 +410,66 @@ export default function HomePage() {
 
       <section className="ns-today" aria-label="Inside NextScenes">
         <div className="ns-today-head">
-          <h2 className="ns-h2">Inside NextScenes</h2>
+          <h2 className="ns-h2">Step inside</h2>
           <p className="ns-p ns-section-intro" style={{ maxWidth: 900, marginBottom: 0 }}>
-            A small window into what is alive on NextScenes. This is where a visitor
-            realizes the platform has a pulse.
+            See what is happening right now.
           </p>
         </div>
 
-       <div className="ns-today-grid">
-  {todayCards.map((c, i) => {
-    const isStory = i === 0;
+        <div className="ns-today-grid">
+          {todayCards.map((c, i) => {
+            const isStory = i === 0;
 
-    return (
-      <Link
-        key={c.badge}
-        href={c.href}
-        className={isStory ? "ns-today-card ns-today-card-featured" : "ns-today-card"}
-      >
-        <div className="ns-today-badge">{c.badge}</div>
-        <div className="ns-today-title">{c.title}</div>
-        <div className="ns-today-desc">{c.desc}</div>
-        <div className="ns-today-meta">{c.meta}</div>
+            return (
+              <Link
+                key={c.badge}
+                href={c.href}
+                className={isStory ? "ns-today-card ns-today-card-featured" : "ns-today-card"}
+              >
+                <div className="ns-today-badge">{c.badge}</div>
+                <div className="ns-today-title">{c.title}</div>
+                <div className="ns-today-desc">{c.desc}</div>
+                <div className="ns-today-meta">{c.meta}</div>
 
-        <div className={isStory ? "ns-today-cta ns-today-cta-featured" : "ns-today-cta"}>
-          {c.cta} →
+                <div className={isStory ? "ns-today-cta ns-today-cta-featured" : "ns-today-cta"}>
+                  {c.cta} →
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </Link>
-    );
-  })}
-</div>
       </section>
 
       <section className="ns-section ns-section-process">
-        <h2 className="ns-h2">How NextScenes works</h2>
+        <h2 className="ns-h2">How it works</h2>
         <div className="ns-grid-3">
           <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Join</h3>
             <p className="ns-p">
-              Create an account, choose your path, and enter a community that
+              Create an account, choose your path, and step into a platform that
               takes storytelling seriously.
             </p>
           </div>
           <div className="ns-card ns-process-card">
-            <h3 className="ns-h3">Write and read</h3>
+            <h3 className="ns-h3">Read or continue</h3>
             <p className="ns-p">
-              Readers enjoy. Writers build scenes. Communities discuss. Stories
-              grow one good decision at a time.
+              Browse stories, open one, and continue where the last writer stopped.
             </p>
           </div>
           <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Improve with feedback</h3>
             <p className="ns-p">
-              Feedback is guided and practical. We raise craft, protect dignity,
-              and keep the platform wholesome.
+              Build with guided feedback, visible decisions, and a culture that
+              values craft and dignity.
             </p>
           </div>
         </div>
 
         <div className="ns-section-cta ns-process-cta">
-          <Link className="ns-btn ns-btn-primary" href="/how-it-works">
+          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org/storylines">
+            Explore Stories
+          </Link>
+          <Link className="ns-btn ns-btn-ghost" href="/how-it-works">
             See the full process
           </Link>
         </div>
@@ -481,8 +485,7 @@ export default function HomePage() {
         <div className="ns-flow-head">
           <h2 className="ns-h2">How stories grow on NextScenes</h2>
           <p className="ns-p ns-section-intro" style={{ maxWidth: 920, marginBottom: 0 }}>
-            A seamless path from discovery to creation. No guessing, no confusion,
-            just a clean flow from story selection to serious writing.
+            A simple path. No confusion.
           </p>
         </div>
 
@@ -518,8 +521,8 @@ export default function HomePage() {
         </div>
 
         <div className="ns-flow-cta">
-          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org">
-            Enter the Platform
+          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org/storylines">
+            Explore Stories
           </Link>
           <Link className="ns-btn ns-btn-ghost" href="/how-it-works">
             Learn the workflow
@@ -531,11 +534,9 @@ export default function HomePage() {
         <div className="ns-mystery-inner">
           <div className="ns-mystery-copy">
             <div className="ns-mystery-kicker">For curious minds</div>
-            <h2 className="ns-h2">Mystery250</h2>
+            <h2 className="ns-h2">Sharpen your mind</h2>
             <p className="ns-p">
-              Short mysteries that train attention, logic, and patience. From easy
-              puzzles for young minds to expert riddles for adults who enjoy a good
-              mental wrestling match.
+              Short mysteries. Clear thinking. Immediate challenge.
             </p>
 
             <div className="ns-mystery-points">
@@ -546,10 +547,10 @@ export default function HomePage() {
 
             <div className="ns-section-cta ns-mystery-cta">
               <Link className="ns-btn ns-btn-primary" href="/mystery250">
-                Explore Mystery250
+                Try this week’s puzzle
               </Link>
-              <Link className="ns-btn ns-btn-ghost" href="/how-it-works">
-                See how it fits the platform
+              <Link className="ns-btn ns-btn-ghost" href="/mystery250">
+                Explore Mystery250
               </Link>
             </div>
           </div>
@@ -570,16 +571,16 @@ export default function HomePage() {
         <div className="ns-partners-shell">
           <div className="ns-partners-copy">
             <div className="ns-partners-kicker">Institutional use</div>
-            <h2 className="ns-h2">For schools, clubs, and partners</h2>
+            <h2 className="ns-h2">For schools and partners</h2>
             <p className="ns-p">
-              NextScenes is built for individuals, but designed to serve communities:
-              classrooms, libraries, literacy programs, and cultural institutions.
+              NextScenes supports classrooms, clubs, and institutions that take
+              storytelling seriously.
             </p>
           </div>
 
           <div className="ns-section-cta ns-partners-cta">
             <Link className="ns-btn ns-btn-primary" href="/partners">
-              Partnership and institutions
+              Partnerships and institutions
             </Link>
             <Link className="ns-btn ns-btn-ghost" href="/contact">
               Contact
@@ -642,6 +643,7 @@ export default function HomePage() {
 
         .ns-hero-title {
           margin-bottom: 0;
+          max-width: 12ch;
         }
 
         .ns-hero-lead {
@@ -970,97 +972,97 @@ export default function HomePage() {
         }
 
         .ns-today-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(20, 138, 74, 0.3);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.1),
-    rgba(255, 255, 255, 0.96)
-  );
-  text-decoration: none;
-}
+          transform: translateY(-2px);
+          border-color: rgba(20, 138, 74, 0.3);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.1),
+            rgba(255, 255, 255, 0.96)
+          );
+          text-decoration: none;
+        }
 
-.ns-today-card-featured {
-  border-color: rgba(20, 138, 74, 0.22);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.12),
-    rgba(255, 255, 255, 0.97)
-  );
-  box-shadow: 0 12px 26px rgba(15, 36, 24, 0.06);
-}
+        .ns-today-card-featured {
+          border-color: rgba(20, 138, 74, 0.22);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.12),
+            rgba(255, 255, 255, 0.97)
+          );
+          box-shadow: 0 12px 26px rgba(15, 36, 24, 0.06);
+        }
 
-.ns-today-card-featured:hover {
-  transform: translateY(-3px);
-  border-color: rgba(20, 138, 74, 0.34);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.15),
-    rgba(255, 255, 255, 0.99)
-  );
-  box-shadow: 0 16px 30px rgba(15, 36, 24, 0.08);
-}
+        .ns-today-card-featured:hover {
+          transform: translateY(-3px);
+          border-color: rgba(20, 138, 74, 0.34);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.15),
+            rgba(255, 255, 255, 0.99)
+          );
+          box-shadow: 0 16px 30px rgba(15, 36, 24, 0.08);
+        }
 
-.ns-today-badge {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 138, 74, 0.2);
-  background: rgba(20, 138, 74, 0.1);
-  color: rgba(15, 36, 24, 0.86);
-  font-size: 12px;
-  font-weight: 900;
-}
+        .ns-today-badge {
+          display: inline-block;
+          padding: 6px 10px;
+          border-radius: 999px;
+          border: 1px solid rgba(20, 138, 74, 0.2);
+          background: rgba(20, 138, 74, 0.1);
+          color: rgba(15, 36, 24, 0.86);
+          font-size: 12px;
+          font-weight: 900;
+        }
 
-.ns-today-title {
-  margin-top: 10px;
-  font-weight: 950;
-  color: rgba(15, 36, 24, 0.94);
-  letter-spacing: -0.2px;
-  line-height: 1.2;
-}
+        .ns-today-title {
+          margin-top: 10px;
+          font-weight: 950;
+          color: rgba(15, 36, 24, 0.94);
+          letter-spacing: -0.2px;
+          line-height: 1.2;
+        }
 
-.ns-today-desc {
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.42;
-  color: rgba(15, 36, 24, 0.74);
-}
+        .ns-today-desc {
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 1.42;
+          color: rgba(15, 36, 24, 0.74);
+        }
 
-.ns-today-meta {
-  margin-top: 8px;
-  font-size: 12px;
-  color: rgba(15, 36, 24, 0.6);
-}
+        .ns-today-meta {
+          margin-top: 8px;
+          font-size: 12px;
+          color: rgba(15, 36, 24, 0.6);
+        }
 
-.ns-today-cta {
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 900;
-  color: var(--accent2);
-}
+        .ns-today-cta {
+          margin-top: 10px;
+          font-size: 13px;
+          font-weight: 900;
+          color: var(--accent2);
+        }
 
-.ns-today-cta-featured {
-  margin-top: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  width: fit-content;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 138, 74, 0.22);
-  background: rgba(20, 138, 74, 0.1);
-  color: rgba(15, 36, 24, 0.96);
-  font-size: 14px;
-  font-weight: 950;
-  letter-spacing: -0.1px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
+        .ns-today-cta-featured {
+          margin-top: 14px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          width: fit-content;
+          padding: 10px 14px;
+          border-radius: 999px;
+          border: 1px solid rgba(20, 138, 74, 0.22);
+          background: rgba(20, 138, 74, 0.1);
+          color: rgba(15, 36, 24, 0.96);
+          font-size: 14px;
+          font-weight: 950;
+          letter-spacing: -0.1px;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
 
-.ns-today-card-featured:hover .ns-today-cta-featured {
-  background: rgba(20, 138, 74, 0.14);
-  border-color: rgba(20, 138, 74, 0.3);
-}
+        .ns-today-card-featured:hover .ns-today-cta-featured {
+          background: rgba(20, 138, 74, 0.14);
+          border-color: rgba(20, 138, 74, 0.3);
+        }
 
         .ns-section-process {
           margin-top: 18px;
@@ -1077,6 +1079,9 @@ export default function HomePage() {
           border: 1px solid rgba(20, 138, 74, 0.14);
           background: rgba(255, 255, 255, 0.82);
           box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
         }
 
         .ns-flow {

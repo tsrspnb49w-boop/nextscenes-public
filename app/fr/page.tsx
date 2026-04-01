@@ -63,30 +63,30 @@ export default function FrHomePage() {
     () => [
       {
         image:
-          "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70",
-        eyebrow: "Des histoires qui méritent d’être terminées",
-        title: "Lire quelque chose de clair, profond et humain",
-        desc: "Pas de bruit. Pas d’outrage. Des histoires construites avec soin, pour que le lecteur puisse faire confiance à ce qu’il ouvre.",
-        ctaText: "À propos de NextScenes",
-        ctaHref: "/fr/about",
+          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "L’histoire est déjà en marche",
+        title: "Continuez là où un autre auteur s’est arrêté",
+        desc: "Lisez ce qui a déjà été écrit, puis faites avancer l’histoire avec soin et structure.",
+        ctaText: "Explorer les histoires",
+        ctaHref: "https://app.nextscenes.org/storylines",
       },
       {
         image:
-          "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1600&q=70",
-        eyebrow: "Écrire avec structure",
-        title: "Construire scène après scène, avec rigueur",
-        desc: "Propositions, décisions et canon restent visibles, pour une collaboration honnête, cohérente et responsable.",
-        ctaText: "Comment ça marche",
-        ctaHref: "/fr/how-it-works",
+          "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=70",
+        eyebrow: "Lire quelque chose qui en vaut la peine",
+        title: "Des histoires claires, profondes et humaines",
+        desc: "Pas de bruit. Pas d’outrage. De vraies histoires construites avec réflexion, pour que le lecteur puisse faire confiance à ce qu’il ouvre.",
+        ctaText: "Explorer les histoires",
+        ctaHref: "https://app.nextscenes.org/storylines",
       },
       {
         image:
           "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=1600&q=70",
-        eyebrow: "Pour les esprits curieux",
-        title: "Mystery250 pour l’attention et la patience",
-        desc: "De courtes énigmes pour enfants, adolescents et adultes qui aiment réfléchir clairement.",
-        ctaText: "Explorer Mystery250",
-        ctaHref: "/fr/mystery250",
+        eyebrow: "Écrire avec structure",
+        title: "Construire la scène suivante avec des décisions claires",
+        desc: "Les propositions, les décisions et le canon restent visibles, pour une collaboration honnête et cohérente.",
+        ctaText: "Commencer à écrire",
+        ctaHref: "https://app.nextscenes.org",
       },
     ],
     []
@@ -98,23 +98,23 @@ export default function FrHomePage() {
         image: "/images/kids-corner.webp",
         imageAlt: "Enfants dans un cadre calme de lecture et de narration",
         title: "Coin des enfants",
-        desc: "Des mystères doux et une narration guidée qui gardent la curiosité propre et lumineuse.",
+        desc: "Des histoires simples et une créativité guidée pour de jeunes esprits curieux.",
         href: "/fr/clubs",
-        cta: "Découvrir les clubs enfants",
+        cta: "Explorer les enfants",
       },
       {
         image: "/images/teens-writers.webp",
         imageAlt: "Adolescents écrivant ensemble dans un cadre de bibliothèque studieux",
         title: "Ados et jeunes auteurs",
-        desc: "Développer le style, gagner en confiance, apprendre la discipline grâce à un retour guidé.",
+        desc: "Développer les compétences, apprendre la structure et gagner en confiance par une pratique guidée.",
         href: "/fr/how-it-works",
-        cta: "Voir le processus",
+        cta: "Commencer à apprendre",
       },
       {
         image: "/images/adult-writers.webp",
         imageAlt: "Adultes écrivant sérieusement dans une atmosphère de bibliothèque chaleureuse",
         title: "Adultes et écrivains sérieux",
-        desc: "Écrire des histoires longues avec continuité, responsabilité et une communauté qui respecte l’auteur.",
+        desc: "Écrire avec continuité, discipline et une communauté qui respecte l’auteur.",
         href: "https://app.nextscenes.org",
         cta: "Entrer dans la plateforme",
       },
@@ -123,7 +123,7 @@ export default function FrHomePage() {
         imageAlt:
           "Cadre multiracial de classe et de bibliothèque pour écoles et institutions",
         title: "Écoles et institutions",
-        desc: "Un outil créatif structuré pour les classes, bibliothèques, programmes de lecture et groupes culturels.",
+        desc: "Une narration structurée pour les classes, bibliothèques, programmes de lecture et groupes culturels.",
         href: "/fr/partners",
         cta: "Partenariats",
       },
@@ -134,26 +134,25 @@ export default function FrHomePage() {
   const todayCards: TodayCard[] = useMemo(
     () => [
       {
-  badge: "Histoire de la semaine",
-  title: "L’histoire a déjà commencé. Vous arrivez après.",
-  desc:
-    "Quelqu’un a déjà écrit une ligne que vous n’avez pas encore lue. La suite attend. Entrez maintenant… pendant que l’histoire est encore en train de se faire.",
-  meta: "En cours · Lecture en direct",
-  href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
-  cta: "Entrer dans l’histoire",
-},
+        badge: "Histoire de la semaine",
+        title: "L’histoire est déjà en marche",
+        desc: "Quelqu’un a déjà écrit quelque chose que vous n’avez pas encore lu. Entrez maintenant et voyez ce qui se déroule.",
+        meta: "En cours · Toujours en mouvement",
+        href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+        cta: "Entrer dans l’histoire",
+      },
       {
         badge: "Énigme de la semaine",
-        title: "Mystery250 à l’honneur",
-        desc: "Une énigme courte pour exercer l’attention, la logique et la patience. Essayez-la, puis explorez la suite.",
-        meta: "Nouveau chaque semaine · Tous âges",
+        title: "Une énigme qui mérite d’être résolue",
+        desc: "Exercez votre esprit avec une énigme courte. Commencez maintenant, puis allez plus loin.",
+        meta: "Nouvelle chaque semaine · Tous âges",
         href: "/fr/mystery250",
         cta: "Essayer l’énigme de la semaine",
       },
       {
         badge: "Club à l’honneur",
-        title: "Une communauté qui vaut le détour",
-        desc: "Enfants, ados, adultes et institutions. Les clubs forment les habitudes et renforcent le métier.",
+        title: "Une communauté qui construit sérieusement",
+        desc: "Des lecteurs, des auteurs et des esprits curieux qui grandissent ensemble par la pratique, l’échange et la discipline.",
         meta: "Clubs pour tous les niveaux",
         href: "/fr/clubs",
         cta: "Découvrir les clubs",
@@ -166,18 +165,18 @@ export default function FrHomePage() {
     () => [
       {
         image: "/images/story-hub.jpg",
-        title: "Story Hub",
-        desc: "Découvrez des histoires, organisez votre étagère, et entrez avec confiance.",
+        title: "Trouver une histoire",
+        desc: "Parcourez les intrigues, ouvrez-en une, et entrez sans confusion.",
       },
       {
         image: "/images/select-story.jpg",
-        title: "Choisir votre histoire",
-        desc: "Ouvrez une intrigue et entrez exactement là où l’écriture commence.",
+        title: "Lire ou continuer",
+        desc: "Saisissez le fil, puis continuez là où le dernier auteur s’est arrêté.",
       },
       {
         image: "/images/writer-studio.jpg",
-        title: "Writer Studio",
-        desc: "Écrivez avec structure. Voyez clairement les propositions, décisions et le canon.",
+        title: "Construire avec structure",
+        desc: "Écrivez clairement, suivez les décisions, et gardez le canon visible.",
       },
     ],
     []
@@ -253,51 +252,56 @@ export default function FrHomePage() {
         <div className="ns-hero-inner">
           <div className="ns-hero-copy">
             <div className="ns-hero-copy-inner">
-              <h1 className="ns-h1 ns-hero-title">NextScenes</h1>
+              <h1 className="ns-h1 ns-hero-title">
+                Entrez dans une histoire. Continuez-la. Ou commencez la vôtre.
+              </h1>
 
               <p className="ns-hero-lead">
-                Des histoires qui grandissent par l’imagination et la responsabilité.
+                Des histoires sont déjà en train de se déployer sur NextScenes.
               </p>
 
               <p className="ns-subtitle ns-hero-subtitle">
-                Un lieu où l’on découvre et met en valeur les talents créatifs, où
-                les histoires se raffinent en communauté, et où les lecteurs explorent
-                des œuvres à travers les cultures et les générations.
+                Lisez ce que d’autres ont écrit, reprenez là où ils se sont arrêtés,
+                ou écrivez la scène suivante dans un espace conçu pour une narration
+                sérieuse.
               </p>
 
               <div className="ns-hero-cta">
-                <PillButton href="/fr/how-it-works">Comment ça marche</PillButton>
-                <PillButton href="https://app.nextscenes.org" variant="ghost">
-                  Entrer dans la plateforme
+                <PillButton href="https://app.nextscenes.org/storylines">
+                  Explorer les histoires
+                </PillButton>
+                <PillButton href="/fr/how-it-works" variant="ghost">
+                  Comment ça marche
                 </PillButton>
               </div>
 
               <div className="ns-hero-note">
-                Découvrir des voix. Construire des histoires. Partager l’imagination avec le monde.
+                Pas de bruit. Pas de confusion. Seulement des histoires en mouvement,
+                et des personnes qui les construisent avec soin.
               </div>
 
               <div className="ns-trust-strip">
-                <span>Retour guidé</span>
-                <span>Clubs et communauté</span>
-                <span>Énigmes Mystery250</span>
-                <span>Sécurité et valeurs</span>
+                <span>Lire ce qui est déjà en cours</span>
+                <span>Continuer une histoire vivante</span>
+                <span>Écrire avec structure</span>
+                <span>Retour guidé et valeurs</span>
               </div>
 
               <div className="ns-hero-mini">
                 <div className="ns-card ns-hero-mini-card">
-                  <h2 className="ns-h2">Ce que vous pouvez faire ici</h2>
+                  <h2 className="ns-h2">Commencez ici</h2>
                   <ul className="ns-list">
-                    <li>Lire des histoires écrites à travers les cultures et les générations.</li>
-                    <li>Écrire des scènes et voir les histoires grandir grâce à un retour réfléchi.</li>
-                    <li>Rejoindre des clubs où lecture, écriture et raisonnement prennent racine.</li>
-                    <li>Aiguiser l’esprit avec Mystery250.</li>
+                    <li>Lisez une histoire déjà en mouvement.</li>
+                    <li>Continuez là où un autre auteur s’est arrêté.</li>
+                    <li>Écrivez votre propre scène et façonnez la suite.</li>
+                    <li>Rejoignez une communauté qui construit les histoires avec soin.</li>
                   </ul>
                   <div className="ns-card-actions">
-                    <Link className="ns-link" href="/fr/mystery250">
-                      Explorer Mystery250
+                    <Link className="ns-link" href="https://app.nextscenes.org/storylines">
+                      Explorer les histoires
                     </Link>
-                    <Link className="ns-link" href="/fr/safety">
-                      Sécurité et valeurs
+                    <Link className="ns-link" href="/fr/mystery250">
+                      Essayer Mystery250
                     </Link>
                   </div>
                 </div>
@@ -330,8 +334,8 @@ export default function FrHomePage() {
                       {active.ctaText || "En savoir plus"}
                     </Link>
                   ) : null}
-                  <Link className="ns-btn ns-btn-ghost" href="https://app.nextscenes.org">
-                    Entrer dans la plateforme
+                  <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
+                    Comment ça marche
                   </Link>
                 </div>
               </div>
@@ -382,8 +386,7 @@ export default function FrHomePage() {
         <div className="ns-band-head">
           <h2 className="ns-h2">Choisissez votre chemin</h2>
           <p className="ns-p" style={{ maxWidth: 820 }}>
-            NextScenes accueille différents âges et différents objectifs. Choisissez
-            une porte, et vous trouverez quelque chose de solide à l’intérieur.
+            Commencez là où vous vous sentez le plus à votre place.
           </p>
         </div>
 
@@ -411,64 +414,66 @@ export default function FrHomePage() {
 
       <section className="ns-today" aria-label="À l’intérieur de NextScenes">
         <div className="ns-today-head">
-          <h2 className="ns-h2">À l’intérieur de NextScenes</h2>
+          <h2 className="ns-h2">Entrez et voyez</h2>
           <p className="ns-p ns-section-intro" style={{ maxWidth: 900, marginBottom: 0 }}>
-            Une petite fenêtre sur ce qui vit sur NextScenes. C’est ici qu’un visiteur
-            comprend que la plateforme a un rythme et une vraie présence.
+            Regardez ce qui se passe en ce moment.
           </p>
         </div>
 
         <div className="ns-today-grid">
-  {todayCards.map((c, i) => {
-    const isStory = i === 0;
+          {todayCards.map((c, i) => {
+            const isStory = i === 0;
 
-    return (
-      <Link
-        key={c.badge}
-        href={c.href}
-        className={isStory ? "ns-today-card ns-today-card-featured" : "ns-today-card"}
-      >
-        <div className="ns-today-badge">{c.badge}</div>
-        <div className="ns-today-title">{c.title}</div>
-        <div className="ns-today-desc">{c.desc}</div>
-        <div className="ns-today-meta">{c.meta}</div>
-        <div className={isStory ? "ns-today-cta ns-today-cta-featured" : "ns-today-cta"}>
-          {c.cta} →
+            return (
+              <Link
+                key={c.badge}
+                href={c.href}
+                className={isStory ? "ns-today-card ns-today-card-featured" : "ns-today-card"}
+              >
+                <div className="ns-today-badge">{c.badge}</div>
+                <div className="ns-today-title">{c.title}</div>
+                <div className="ns-today-desc">{c.desc}</div>
+                <div className="ns-today-meta">{c.meta}</div>
+                <div className={isStory ? "ns-today-cta ns-today-cta-featured" : "ns-today-cta"}>
+                  {c.cta} →
+                </div>
+              </Link>
+            );
+          })}
         </div>
-      </Link>
-    );
-  })}
-</div>
       </section>
 
       <section className="ns-section ns-section-process">
-        <h2 className="ns-h2">Comment fonctionne NextScenes</h2>
+        <h2 className="ns-h2">Comment ça marche</h2>
         <div className="ns-grid-3">
           <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Rejoindre</h3>
             <p className="ns-p">
-              Créez un compte, choisissez votre voie, et entrez dans une communauté
+              Créez un compte, choisissez votre voie, et entrez dans une plateforme
               qui prend la narration au sérieux.
             </p>
           </div>
           <div className="ns-card ns-process-card">
-            <h3 className="ns-h3">Écrire et lire</h3>
+            <h3 className="ns-h3">Lire ou continuer</h3>
             <p className="ns-p">
-              Les lecteurs lisent. Les auteurs construisent des scènes. Les communautés
-              discutent. Les histoires grandissent, une bonne décision à la fois.
+              Parcourez les histoires, ouvrez-en une, et continuez là où le dernier
+              auteur s’est arrêté.
             </p>
           </div>
           <div className="ns-card ns-process-card">
             <h3 className="ns-h3">Progresser avec le retour</h3>
             <p className="ns-p">
-              Le retour est guidé et pratique. On élève le métier, on protège la dignité,
-              et on garde la plateforme saine.
+              Construisez avec un retour guidé, des décisions visibles et une culture
+              qui valorise le métier et la dignité.
             </p>
           </div>
         </div>
 
         <div className="ns-section-cta ns-process-cta">
-          <Link className="ns-btn ns-btn-primary" href="/fr/how-it-works">
+          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org/storylines">
+            Explorer les histoires
+          </Link>
+          <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
             Voir le processus complet
           </Link>
         </div>
@@ -484,8 +489,7 @@ export default function FrHomePage() {
         <div className="ns-flow-head">
           <h2 className="ns-h2">Comment les histoires évoluent sur NextScenes</h2>
           <p className="ns-p ns-section-intro" style={{ maxWidth: 920, marginBottom: 0 }}>
-            Un chemin fluide, de la découverte à la création. Pas de devinettes,
-            pas de confusion, juste un parcours clair vers une écriture sérieuse.
+            Un chemin simple. Sans confusion.
           </p>
         </div>
 
@@ -521,8 +525,8 @@ export default function FrHomePage() {
         </div>
 
         <div className="ns-flow-cta">
-          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org">
-            Entrer dans la plateforme
+          <Link className="ns-btn ns-btn-primary" href="https://app.nextscenes.org/storylines">
+            Explorer les histoires
           </Link>
           <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
             Apprendre le processus
@@ -534,25 +538,23 @@ export default function FrHomePage() {
         <div className="ns-mystery-inner">
           <div className="ns-mystery-copy">
             <div className="ns-mystery-kicker">Pour les esprits curieux</div>
-            <h2 className="ns-h2">Mystery250</h2>
+            <h2 className="ns-h2">Aiguisez votre esprit</h2>
             <p className="ns-p">
-              Des mystères courts qui entraînent l’attention, la logique et la patience.
-              Des énigmes simples pour les jeunes esprits, jusqu’aux défis pour adultes
-              qui aiment une vraie lutte intellectuelle.
+              Des énigmes courtes. Une pensée claire. Un défi immédiat.
             </p>
 
             <div className="ns-mystery-points">
               <span>Tous âges</span>
               <span>Rythme hebdomadaire</span>
-              <span>Discipline logique et lecture</span>
+              <span>Logique et discipline de lecture</span>
             </div>
 
             <div className="ns-section-cta ns-mystery-cta">
               <Link className="ns-btn ns-btn-primary" href="/fr/mystery250">
-                Explorer Mystery250
+                Essayer l’énigme de la semaine
               </Link>
-              <Link className="ns-btn ns-btn-ghost" href="/fr/how-it-works">
-                Voir sa place dans la plateforme
+              <Link className="ns-btn ns-btn-ghost" href="/fr/mystery250">
+                Explorer Mystery250
               </Link>
             </div>
           </div>
@@ -573,11 +575,10 @@ export default function FrHomePage() {
         <div className="ns-partners-shell">
           <div className="ns-partners-copy">
             <div className="ns-partners-kicker">Usage institutionnel</div>
-            <h2 className="ns-h2">Pour les écoles, clubs et partenaires</h2>
+            <h2 className="ns-h2">Pour les écoles et les partenaires</h2>
             <p className="ns-p">
-              NextScenes est conçu pour les individus, mais pensé pour servir les
-              communautés : classes, bibliothèques, programmes de lecture et
-              institutions culturelles.
+              NextScenes accompagne les classes, les clubs et les institutions qui
+              prennent la narration au sérieux.
             </p>
           </div>
 
@@ -647,6 +648,7 @@ export default function FrHomePage() {
 
         .ns-hero-title {
           margin-bottom: 0;
+          max-width: 12ch;
         }
 
         .ns-hero-lead {
@@ -960,197 +962,199 @@ export default function FrHomePage() {
         }
 
         .ns-today-card {
-  display: block;
-  padding: 14px 14px 13px;
-  border-radius: 16px;
-  border: 1px solid rgba(20, 138, 74, 0.16);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.08),
-    rgba(255, 255, 255, 0.92)
-  );
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-  text-decoration: none;
-  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
-
-  /* subtle pulse */
-  animation: nsCardBreath 4.5s ease-in-out infinite;
-}
+          display: block;
+          padding: 14px 14px 13px;
+          border-radius: 16px;
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.08),
+            rgba(255, 255, 255, 0.92)
+          );
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+          text-decoration: none;
+          transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+          animation: nsCardBreath 4.5s ease-in-out infinite;
+        }
 
         .ns-today-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(20, 138, 74, 0.3);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.1),
-    rgba(255, 255, 255, 0.96)
-  );
-  text-decoration: none;
-}
+          transform: translateY(-2px);
+          border-color: rgba(20, 138, 74, 0.3);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.1),
+            rgba(255, 255, 255, 0.96)
+          );
+          text-decoration: none;
+        }
 
-.ns-today-card-featured {
-  border-color: rgba(20, 138, 74, 0.22);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.12),
-    rgba(255, 255, 255, 0.97)
-  );
-  box-shadow: 0 12px 26px rgba(15, 36, 24, 0.06);
-}
+        .ns-today-card-featured {
+          border-color: rgba(20, 138, 74, 0.22);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.12),
+            rgba(255, 255, 255, 0.97)
+          );
+          box-shadow: 0 12px 26px rgba(15, 36, 24, 0.06);
+        }
 
-.ns-today-card-featured:hover {
-  transform: translateY(-3px);
-  border-color: rgba(20, 138, 74, 0.34);
-  background: linear-gradient(
-    180deg,
-    rgba(31, 182, 106, 0.15),
-    rgba(255, 255, 255, 0.99)
-  );
-  box-shadow: 0 16px 30px rgba(15, 36, 24, 0.08);
-}
+        .ns-today-card-featured:hover {
+          transform: translateY(-3px);
+          border-color: rgba(20, 138, 74, 0.34);
+          background: linear-gradient(
+            180deg,
+            rgba(31, 182, 106, 0.15),
+            rgba(255, 255, 255, 0.99)
+          );
+          box-shadow: 0 16px 30px rgba(15, 36, 24, 0.08);
+        }
 
-.ns-today-badge {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 138, 74, 0.2);
-  background: rgba(20, 138, 74, 0.1);
-  color: rgba(15, 36, 24, 0.86);
-  font-size: 12px;
-  font-weight: 900;
-}
+        .ns-today-badge {
+          display: inline-block;
+          padding: 6px 10px;
+          border-radius: 999px;
+          border: 1px solid rgba(20, 138, 74, 0.2);
+          background: rgba(20, 138, 74, 0.1);
+          color: rgba(15, 36, 24, 0.86);
+          font-size: 12px;
+          font-weight: 900;
+        }
 
-.ns-today-title {
-  margin-top: 10px;
-  font-weight: 950;
-  color: rgba(15, 36, 24, 0.94);
-  letter-spacing: -0.2px;
-  line-height: 1.2;
-}
+        .ns-today-title {
+          margin-top: 10px;
+          font-weight: 950;
+          color: rgba(15, 36, 24, 0.94);
+          letter-spacing: -0.2px;
+          line-height: 1.2;
+        }
 
-.ns-today-desc {
-  margin-top: 6px;
-  font-size: 13px;
-  line-height: 1.42;
-  color: rgba(15, 36, 24, 0.74);
-}
+        .ns-today-desc {
+          margin-top: 6px;
+          font-size: 13px;
+          line-height: 1.42;
+          color: rgba(15, 36, 24, 0.74);
+        }
 
-.ns-today-meta {
-  margin-top: 8px;
-  font-size: 12px;
-  color: rgba(15, 36, 24, 0.6);
-}
+        .ns-today-meta {
+          margin-top: 8px;
+          font-size: 12px;
+          color: rgba(15, 36, 24, 0.6);
+        }
 
-.ns-today-cta {
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 900;
-  color: var(--accent2);
-}
+        .ns-today-cta {
+          margin-top: 10px;
+          font-size: 13px;
+          font-weight: 900;
+          color: var(--accent2);
+        }
 
-.ns-today-cta-featured {
-  margin-top: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  width: fit-content;
-  padding: 10px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 138, 74, 0.22);
-  background: rgba(20, 138, 74, 0.1);
-  color: rgba(15, 36, 24, 0.96);
-  font-size: 14px;
-  font-weight: 950;
-  letter-spacing: -0.1px;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
+        .ns-today-cta-featured {
+          margin-top: 14px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          width: fit-content;
+          padding: 10px 14px;
+          border-radius: 999px;
+          border: 1px solid rgba(20, 138, 74, 0.22);
+          background: rgba(20, 138, 74, 0.1);
+          color: rgba(15, 36, 24, 0.96);
+          font-size: 14px;
+          font-weight: 950;
+          letter-spacing: -0.1px;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
 
-.ns-today-card-featured:hover .ns-today-cta-featured {
-  background: rgba(20, 138, 74, 0.14);
-  border-color: rgba(20, 138, 74, 0.3);
-}
+        .ns-today-card-featured:hover .ns-today-cta-featured {
+          background: rgba(20, 138, 74, 0.14);
+          border-color: rgba(20, 138, 74, 0.3);
+        }
 
-.ns-section-process {
-  margin-top: 18px;
-}
+        .ns-section-process {
+          margin-top: 18px;
+        }
 
-.ns-process-card {
-  padding-bottom: 12px;
-}
+        .ns-process-card {
+          padding-bottom: 12px;
+        }
 
-.ns-process-cta {
-  margin-top: 10px;
-  padding: 16px 18px;
-  border-radius: 20px;
-  border: 1px solid rgba(20, 138, 74, 0.14);
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
-}
+        .ns-process-cta {
+          margin-top: 10px;
+          padding: 16px 18px;
+          border-radius: 20px;
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background: rgba(255, 255, 255, 0.82);
+          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
 
-.ns-flow {
-  margin-top: 22px;
-  padding: 18px;
-  border-radius: var(--radius);
-  border: 1px solid rgba(20, 138, 74, 0.14);
-  background: linear-gradient(
-      180deg,
-      rgba(31, 182, 106, 0.06),
-      rgba(255, 255, 255, 0.9)
-    ),
-    rgba(255, 255, 255, 0.86);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
-}
+        .ns-flow {
+          margin-top: 22px;
+          padding: 18px;
+          border-radius: var(--radius);
+          border: 1px solid rgba(20, 138, 74, 0.14);
+          background: linear-gradient(
+              180deg,
+              rgba(31, 182, 106, 0.06),
+              rgba(255, 255, 255, 0.9)
+            ),
+            rgba(255, 255, 255, 0.86);
+          box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
+        }
 
-.ns-flow-head {
-  padding: 4px 4px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+        .ns-flow-head {
+          padding: 4px 4px 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
 
-.ns-flow-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr auto 1fr;
-  gap: 12px;
-  align-items: start;
-  margin-top: 10px;
-}
+        .ns-flow-row {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr auto 1fr;
+          gap: 12px;
+          align-items: start;
+          margin-top: 10px;
+        }
 
-.ns-flow-item-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+        .ns-flow-item-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
 
-.ns-flow-step-badge {
-  display: inline-flex;
-  align-self: flex-start;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(20, 138, 74, 0.1);
-  border: 1px solid rgba(20, 138, 74, 0.16);
-  font-size: 12px;
-  font-weight: 900;
-  color: rgba(15, 36, 24, 0.8);
-  letter-spacing: 0.3px;
-}
+        .ns-flow-step-badge {
+          display: inline-flex;
+          align-self: flex-start;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: rgba(20, 138, 74, 0.1);
+          border: 1px solid rgba(20, 138, 74, 0.16);
+          font-size: 12px;
+          font-weight: 900;
+          color: rgba(15, 36, 24, 0.8);
+          letter-spacing: 0.3px;
+        }
 
-.ns-flow-card {
-  border-radius: 16px;
-  border: 1px solid rgba(20, 138, 74, 0.12);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
-  padding: 12px;
-  text-decoration: none;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease, box-shadow 160ms ease;
-}
+        .ns-flow-card {
+          border-radius: 16px;
+          border: 1px solid rgba(20, 138, 74, 0.12);
+          background: rgba(255, 255, 255, 0.94);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+          padding: 12px;
+          text-decoration: none;
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity 520ms ease, transform 520ms ease, border-color 160ms ease, box-shadow 160ms ease;
+        }
 
-.ns-flow-card:hover {
-  border-color: rgba(20, 138, 74, 0.22);
-  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
-}
+        .ns-flow-card:hover {
+          border-color: rgba(20, 138, 74, 0.22);
+          box-shadow: 0 12px 22px rgba(0, 0, 0, 0.06);
+        }
+
         .ns-flow-in .ns-flow-card {
           opacity: 1;
           transform: translateY(0);
