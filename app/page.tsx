@@ -378,36 +378,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="ns-band" aria-label="Explore NextScenes areas">
-        <div className="ns-band-head">
-          <h2 className="ns-h2">Choose your path</h2>
-          <p className="ns-p" style={{ maxWidth: 820 }}>
-            Start where you feel most at home.
-          </p>
-        </div>
-
-        <div className="ns-band-grid">
-          {bandTiles.map((t) => (
-            <Link key={t.title} href={t.href} className="ns-band-tile">
-              <div className="ns-band-image">
-                <Image
-                  src={t.image}
-                  alt={t.imageAlt}
-                  width={800}
-                  height={520}
-                  className="ns-band-img"
-                  sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 25vw"
-                  priority={t.title === "Kids Corner"}
-                />
-              </div>
-              <div className="ns-band-title">{t.title}</div>
-              <div className="ns-band-desc">{t.desc}</div>
-              <div className="ns-band-cta">{t.cta} →</div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
       <section className="ns-today" aria-label="Inside NextScenes">
         <div className="ns-today-head">
           <h2 className="ns-h2">Step inside</h2>
@@ -437,6 +407,36 @@ export default function HomePage() {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+      <section className="ns-band" aria-label="Explore NextScenes areas">
+        <div className="ns-band-head">
+          <h2 className="ns-h2">Choose your path</h2>
+          <p className="ns-p" style={{ maxWidth: 820 }}>
+            Start where you feel most at home.
+          </p>
+        </div>
+
+        <div className="ns-band-grid">
+          {bandTiles.map((t) => (
+            <Link key={t.title} href={t.href} className="ns-band-tile">
+              <div className="ns-band-image">
+                <Image
+                  src={t.image}
+                  alt={t.imageAlt}
+                  width={800}
+                  height={520}
+                  className="ns-band-img"
+                  sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 25vw"
+                  priority={t.title === "Kids Corner"}
+                />
+              </div>
+              <div className="ns-band-title">{t.title}</div>
+              <div className="ns-band-desc">{t.desc}</div>
+              <div className="ns-band-cta">{t.cta} →</div>
+            </Link>
+          ))}
         </div>
       </section>
 
