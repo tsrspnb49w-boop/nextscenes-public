@@ -138,7 +138,7 @@ export default function FrHomePage() {
         title: "L’histoire est déjà en marche",
         desc: "Quelqu’un a déjà écrit quelque chose que vous n’avez pas encore lu. Entrez maintenant et voyez ce qui se déroule.",
         meta: "En cours · Toujours en mouvement",
-        href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+        href: "https://app.nextscenes.org/reader-view?storyId=69ce4f164e09c9116875119e",
         cta: "Entrer dans l’histoire",
       },
       {
