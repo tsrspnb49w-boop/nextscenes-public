@@ -779,6 +779,16 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   font-weight: 700;
 }
 
+.ns-book-cover {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.ns-book-cover-img {
+  object-fit: cover;
+}
+
 /* Footer */
 .ns-footer {
   margin-top: 54px;
@@ -1333,4 +1343,616 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
     rgba(31, 182, 106, 0.14),
     rgba(255, 255, 255, 0.96)
   );
+}
+/* ===============================
+   HOMEPAGE — STABLE HERO (OPTION A)
+   =============================== */
+
+.ns-hero {
+  margin-top: 6px;
+}
+
+.ns-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.ns-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ns-hero-title {
+  max-width: 14ch;
+}
+
+.ns-hero-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #e6efe9;
+}
+
+.ns-hero-image {
+  object-fit: cover;
+}
+
+/* BOOK OF THE WEEK */
+
+.ns-book-week {
+  margin-top: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(20,138,74,0.16);
+  background: rgba(255,255,255,0.85);
+}
+
+.ns-book-week-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(15,36,24,0.6);
+  text-transform: uppercase;
+}
+
+.ns-book-week-title {
+  margin-top: 6px;
+  font-weight: 900;
+  color: rgba(15,36,24,0.95);
+}
+
+.ns-book-week-desc {
+  margin-top: 6px;
+  font-size: 14px;
+  color: rgba(15,36,24,0.75);
+}
+
+.ns-book-week-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 900;
+  color: var(--accent2);
+}
+
+/* LIVE SECTION */
+
+.ns-live-now {
+  margin-top: 32px;
+}
+
+.ns-live-now-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.ns-live-card {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(20,138,74,0.14);
+  background: rgba(255,255,255,0.9);
+  text-decoration: none;
+}
+
+.ns-live-badge {
+  font-size: 12px;
+  font-weight: 900;
+  color: #fff;
+  background: #c0392b;
+  padding: 4px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.ns-live-title {
+  margin-top: 8px;
+  font-weight: 900;
+}
+
+.ns-live-desc {
+  margin-top: 6px;
+  font-size: 13px;
+  color: rgba(15,36,24,0.7);
+}
+
+/* MOBILE */
+
+@media (max-width: 980px) {
+  .ns-hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-hero-image-wrap {
+    height: 300px;
+  }
+
+  .ns-live-now-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ===============================
+   Homepage — Hero / Book of the Week / Featured shelf / Live cards
+   Build: 2026-04-05 (Homepage stability pass v1)
+   =============================== */
+
+.ns-home-hero {
+  padding: 14px 0 10px;
+}
+
+.ns-home-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.96fr);
+  gap: 34px;
+  align-items: center;
+}
+
+.ns-home-hero-copy {
+  min-width: 0;
+}
+
+.ns-home-hero-title {
+  margin: 0 0 14px 0;
+  max-width: 11ch;
+  font-size: clamp(2.5rem, 2rem + 2vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+.ns-home-hero-subtitle {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: rgba(15, 36, 24, 0.72);
+}
+
+.ns-home-hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.ns-home-book-week {
+  margin-top: 30px;
+  max-width: 630px;
+  padding: 22px 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.94)),
+    rgba(255,255,255,0.9);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.045);
+}
+
+.ns-home-book-week-label {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(15, 36, 24, 0.56);
+}
+
+.ns-home-book-week-title {
+  margin: 0 0 10px 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.96);
+}
+
+.ns-home-book-week-desc {
+  margin: 0 0 14px 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(15, 36, 24, 0.72);
+}
+
+.ns-home-book-week-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--accent2);
+  text-decoration: none;
+}
+
+.ns-home-book-week-link:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.ns-home-hero-image-wrap {
+  position: relative;
+  min-height: 0;
+}
+
+.ns-home-hero-image-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 28px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background: #e9efe9;
+  box-shadow: 0 16px 34px rgba(0,0,0,0.08);
+}
+
+.ns-home-hero-image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.ns-home-featured {
+  margin-top: 28px;
+}
+
+.ns-home-featured-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.ns-home-featured-intro {
+  max-width: 760px;
+  color: rgba(15, 36, 24, 0.76);
+}
+
+.ns-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.ns-featured-grid > * {
+  min-width: 0;
+}
+
+.ns-book-card {
+  display: block;
+  min-width: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ns-book-card:hover {
+  text-decoration: none;
+}
+
+.ns-book-cover-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.ns-book-cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+
+  background: linear-gradient(180deg, #f4f6f5 0%, #e8ecea 100%);
+
+  /* refined container shadow */
+  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ns-book-cover-img {
+  object-fit: contain;
+  object-position: center;
+
+  /* balanced spacing */
+  width: 90%;
+  height: 90%;
+
+  /* depth — THIS is the key upgrade */
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.25));
+
+  display: block;
+}
+
+/* subtle interaction — optional but recommended */
+.ns-book-card:hover .ns-book-cover-img {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+}
+
+.ns-book-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+
+  color: #fff;
+
+  box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+}
+
+/* refined badge tones */
+.ns-book-badge.is-featured {
+  background: #7b1e2b;
+}
+
+.ns-book-badge.is-new {
+  background: #b7791f;
+}
+
+.ns-book-badge.is-now-reading {
+  background: #2b6de0;
+}
+
+.ns-book-badge.is-live {
+  background: #d65a45;
+}
+
+.ns-book-badge.is-new {
+  background: #b7791f;
+}
+
+.ns-book-badge.is-now-reading {
+  background: #2563eb;
+}
+
+.ns-book-badge.is-live {
+  background: #dc5a43;
+}
+
+.ns-book-meta {
+  margin-top: 12px;
+}
+
+.ns-book-title {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.26;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.96);
+}
+
+.ns-book-author {
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(15, 36, 24, 0.64);
+}
+
+.ns-book-hook {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(15, 36, 24, 0.75);
+}
+
+.ns-book-cta {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--accent2);
+}
+
+.ns-home-live {
+  margin-top: 34px;
+}
+
+.ns-home-live-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ns-home-live-card {
+  display: block;
+  padding: 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background: rgba(255,255,255,0.84);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.04);
+  text-decoration: none;
+  color: inherit;
+}
+
+.ns-home-live-card:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.ns-home-live-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 900;
+  color: #fff;
+}
+
+.ns-home-live-badge.is-puzzle {
+  background: #c94632;
+}
+
+.ns-home-live-badge.is-club {
+  background: #c94632;
+}
+
+.ns-home-live-title {
+  margin-top: 14px;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.96);
+}
+
+.ns-home-live-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(15, 36, 24, 0.7);
+}
+
+@media (max-width: 1180px) {
+  .ns-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 980px) {
+  .ns-home-hero-inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ns-home-hero-title,
+  .ns-home-hero-subtitle,
+  .ns-home-book-week {
+    max-width: none;
+  }
+
+  .ns-home-live-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .ns-home-hero {
+    padding-top: 8px;
+  }
+
+  .ns-home-hero-title {
+    font-size: clamp(2.1rem, 1.7rem + 4vw, 2.9rem);
+  }
+
+  .ns-home-book-week {
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+
+  .ns-home-hero-image-frame {
+    border-radius: 22px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .ns-featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-live-card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+}
+.ns-book-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+}
+
+.ns-book-badge.is-featured {
+  background: #7a2230;
+}
+
+.ns-book-badge.is-new {
+  background: #b7791f;
+}
+
+.ns-book-badge.is-now-reading {
+  background: #2b6de0;
+}
+
+.ns-book-badge.is-live {
+  background: #d65a45;
+}
+
+.ns-home-month-pick {
+  margin-top: 30px;
+}
+
+.ns-home-month-pick-card {
+  padding: 24px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.96)),
+    rgba(255,255,255,0.92);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.045);
+  max-width: 860px;
+}
+
+.ns-home-month-pick-label {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: rgba(15, 36, 24, 0.56);
+}
+
+.ns-home-month-pick-title {
+  margin: 0 0 8px 0;
+  font-size: 1.45rem;
+  line-height: 1.2;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.96);
+}
+
+.ns-home-month-pick-author {
+  margin-bottom: 12px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: rgba(15, 36, 24, 0.66);
+}
+
+.ns-home-month-pick-desc {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(15, 36, 24, 0.78);
+  max-width: 64ch;
+}
+
+.ns-home-month-pick-note {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: rgba(15, 36, 24, 0.62);
+  max-width: 64ch;
 }

@@ -1,34 +1,71 @@
-// Build: home-features-config-v3
-// Purpose: Central control for homepage "Inside NextScenes" section
+// app/lib/homeFeatures.ts
+// Build: home-features-config-v6
+// Purpose: Central control for homepage feature blocks
 
 export const HOME_FEATURES = {
-  storyOfTheWeek: {
-    label: "Story of the Week",
-    title: "The story is already moving",
-    description:
-      "Someone has already written something you have not seen. Enter now and read what unfolds next.",
-    meta: "Live now · Still unfolding",
-    cta: "Enter the Story",
-    href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+  en: {
+    bookOfTheWeek: {
+      label: "Book of the Week",
+      title: "A Living Storyline",
+      author: "NextScenes Writers",
+      description:
+        "A book still unfolding, where each new scene carries visible continuity and consequence.",
+      meta: "Live now · Still unfolding",
+      cta: "Enter storyline",
+      href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+    },
+
+    puzzleOfTheWeek: {
+      label: "Puzzle of the Week",
+      title: "A puzzle worth solving",
+      description:
+        "A short mystery to sharpen the mind without clutter or noise.",
+      meta: "New every week · All ages",
+      cta: "Try this week’s puzzle",
+      href: "/mystery250",
+    },
+
+    clubSpotlight: {
+      label: "Club Spotlight",
+      title: "A community that builds seriously",
+      description:
+        "Writers, readers, and thinkers growing through practice, discussion, and disciplined creation.",
+      meta: "Clubs for every level",
+      cta: "Explore clubs",
+      href: "/clubs",
+    },
   },
 
-  puzzleOfTheWeek: {
-    label: "Puzzle of the Week",
-    title: "A puzzle worth solving",
-    description:
-      "Train your mind with one short mystery. Start now, then explore more.",
-    meta: "New every week · All ages",
-    cta: "Try this week’s puzzle",
-    href: "/mystery250",
-  },
+  fr: {
+    bookOfTheWeek: {
+      label: "Livre de la semaine",
+      title: "Une histoire vivante",
+      author: "Les auteurs de NextScenes",
+      description:
+        "Un livre encore en train de se déployer, où chaque nouvelle scène porte une continuité visible et ses conséquences.",
+      meta: "En cours · Toujours en évolution",
+      cta: "Entrer dans le récit",
+      href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+    },
 
-  clubSpotlight: {
-    label: "Club Spotlight",
-    title: "A community that builds seriously",
-    description:
-      "Writers, readers, and thinkers growing together through practice, discussion, and discipline.",
-    meta: "Clubs for every level",
-    cta: "Explore clubs",
-    href: "/clubs",
+    puzzleOfTheWeek: {
+      label: "Énigme de la semaine",
+      title: "Une énigme qui mérite d’être résolue",
+      description:
+        "Un mystère court pour aiguiser l’esprit, sans bruit ni distraction.",
+      meta: "Nouveau chaque semaine · Tous âges",
+      cta: "Essayez l’énigme de la semaine",
+      href: "/mystery250",
+    },
+
+    clubSpotlight: {
+      label: "Club à l’honneur",
+      title: "Une communauté qui construit avec rigueur",
+      description:
+        "Des écrivains, lecteurs et penseurs qui progressent par la pratique, l’échange et une création disciplinée.",
+      meta: "Des clubs pour tous les niveaux",
+      cta: "Découvrir les clubs",
+      href: "/clubs",
+    },
   },
 } as const;
