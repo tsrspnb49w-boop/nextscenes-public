@@ -1956,3 +1956,21 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   color: rgba(15, 36, 24, 0.62);
   max-width: 64ch;
 }
+/* Reduce featured story cover size safely */
+.ns-story-card img {
+  max-width: 75%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+/* Fix cover size properly */
+.ns-book-cover {
+  width: 75%;
+  margin: 0 auto;
+}
+
+img.ns-book-cover-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
