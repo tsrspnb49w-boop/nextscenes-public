@@ -1963,9 +1963,19 @@ a.ns-btn-ghost:active { color: rgba(15, 36, 24, 0.92) !important; }
   display: block;
   margin: 0 auto;
 }
-/* Fix cover size properly */
+
+
+img.ns-book-cover-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* Reduce cover size without leaving white frame */
 .ns-book-cover {
-  width: 75%;
+  transform: scale(0.75);
+  transform-origin: top center;
+  background: transparent;
+  padding: 0;
   margin: 0 auto;
 }
 
@@ -1973,4 +1983,8 @@ img.ns-book-cover-img {
   width: 100%;
   height: auto;
   display: block;
+}
+
+div.ns-book-badge {
+  top: 6px;
 }
