@@ -89,6 +89,27 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="ns-home-audio-guide">
+        <div className="ns-home-audio-card">
+          <div className="ns-home-audio-kicker">Commencer</div>
+
+          <h2 className="ns-home-audio-title">
+            Comment utiliser NextScenes
+          </h2>
+
+          <p className="ns-home-audio-desc">
+            Écoutez un court guide pour comprendre comment explorer le site,
+            lire les histoires, entrer dans l’application et participer comme
+            lecteur ou auteur.
+          </p>
+
+          <audio controls preload="none" className="ns-home-audio-player">
+            <source src="/audio/how-it-works-fr.mp3" type="audio/mpeg" />
+            Votre navigateur ne prend pas en charge l’élément audio.
+          </audio>
+        </div>
+      </section>
+
       <section className="ns-home-featured">
         <div className="ns-home-featured-head">
           <h2 className="ns-h2">Histoires à découvrir</h2>
