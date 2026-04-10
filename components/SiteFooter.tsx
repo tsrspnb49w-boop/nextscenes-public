@@ -26,40 +26,69 @@ export default function SiteFooter() {
         <div className="ns-footer-brandblock">
           <div className="ns-footer-brand">NextScenes®</div>
           <div className="ns-footer-tagline">
-            {isFR ? "L’imagination avec conscience." : "Imagination with conscience."}
-          </div>
-          <div className="ns-footer-meta">
-            © {new Date().getFullYear()} NextScenes.{" "}
             {isFR
-              ? "Une plateforme culturelle et éducative de narration."
-              : "A cultural and educational storytelling platform."}
+              ? "L’imagination avec conscience."
+              : "Imagination with conscience."}
+          </div>
+          <div className="ns-footer-description">
+            {isFR
+              ? "Plateforme collaborative de narration pour écrivains, écoles et communautés créatives."
+              : "Collaborative storytelling platform for writers, schools, and creative communities."}
           </div>
         </div>
 
         <nav
           className="ns-footer-navgroup"
-          aria-label={isFR ? "Liens de bas de page" : "Footer links"}
+          aria-label={isFR ? "Explorer NextScenes" : "Explore NextScenes"}
         >
-          <div className="ns-footer-heading">{isFR ? "Informations" : "Information"}</div>
-          <div className="ns-footer-links">
+          <div className="ns-footer-heading">
+            {isFR ? "Explorer" : "Explore"}
+          </div>
+          <div className="ns-footer-links ns-footer-links-stack">
+            <Link href={`${base}/storylines`} className="ns-footer-link">
+              {isFR ? "Histoires" : "Storylines"}
+            </Link>
             <Link href={`${base}/faq`} className="ns-footer-link">
               FAQ
             </Link>
+            <Link href={`${base}/mystery250`} className="ns-footer-link">
+              Mystery250
+            </Link>
+          </div>
+        </nav>
+
+        <nav
+          className="ns-footer-navgroup"
+          aria-label={isFR ? "Plateforme et politique" : "Platform and policy"}
+        >
+          <div className="ns-footer-heading">
+            {isFR ? "Plateforme" : "Platform"}
+          </div>
+          <div className="ns-footer-links ns-footer-links-stack">
             <Link href={`${base}/terms`} className="ns-footer-link">
               {isFR ? "Conditions d’utilisation" : "Terms of Service"}
             </Link>
             <Link href={`${base}/privacy`} className="ns-footer-link">
               {isFR ? "Politique de confidentialité" : "Privacy Policy"}
             </Link>
+            <Link href={`${base}/contact`} className="ns-footer-link">
+              {isFR ? "Contact" : "Contact"}
+            </Link>
           </div>
         </nav>
 
         <div
           className="ns-footer-navgroup"
-          aria-label={isFR ? "Liens sociaux" : "Social links"}
+          aria-label={
+            isFR
+              ? "Communauté et réseaux sociaux"
+              : "Community and social links"
+          }
         >
-          <div className="ns-footer-heading">{isFR ? "Communauté" : "Community"}</div>
-          <div className="ns-footer-links">
+          <div className="ns-footer-heading">
+            {isFR ? "Communauté" : "Community"}
+          </div>
+          <div className="ns-footer-links ns-footer-links-stack">
             {SOCIAL.facebook && (
               <a
                 className="ns-footer-link"
@@ -69,6 +98,18 @@ export default function SiteFooter() {
                 aria-label="NextScenes on Facebook"
               >
                 Facebook
+              </a>
+            )}
+
+            {SOCIAL.youtube && (
+              <a
+                className="ns-footer-link"
+                href={SOCIAL.youtube}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="NextScenes on YouTube"
+              >
+                YouTube
               </a>
             )}
 
@@ -95,49 +136,46 @@ export default function SiteFooter() {
                 Instagram
               </a>
             )}
-
-            {SOCIAL.youtube && (
-              <a
-                className="ns-footer-link"
-                href={SOCIAL.youtube}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="NextScenes on YouTube"
-              >
-                YouTube
-              </a>
-            )}
           </div>
+        </div>
+      </div>
+
+      <div className="ns-footer-bottom">
+        <div className="ns-footer-bottom-inner">
+          © {new Date().getFullYear()} NextScenes.{" "}
+          {isFR ? "Tous droits réservés." : "All rights reserved."}
         </div>
       </div>
 
       <style jsx global>{`
         .ns-footer {
-          margin-top: 26px;
-          padding: 22px 0 10px;
+          margin-top: 40px;
+          padding: 36px 0 0;
           border-top: 1px solid rgba(20, 138, 74, 0.12);
-          background: linear-gradient(
+          background:
+            linear-gradient(
               180deg,
               rgba(31, 182, 106, 0.03),
               rgba(255, 255, 255, 0)
             ),
-            transparent;
+            #f8fafc;
         }
 
         .ns-footer-inner {
           width: min(1100px, calc(100% - 32px));
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 1.2fr 0.9fr 0.9fr;
+          grid-template-columns: 1.35fr 0.8fr 0.8fr 0.8fr;
           gap: 28px;
           align-items: start;
-          padding: 0 4px;
+          padding: 0 4px 24px;
         }
 
         .ns-footer-brandblock {
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 10px;
+          max-width: 42ch;
         }
 
         .ns-footer-brand {
@@ -148,15 +186,15 @@ export default function SiteFooter() {
         }
 
         .ns-footer-tagline {
-          font-size: 0.94rem;
-          font-weight: 700;
-          color: rgba(15, 36, 24, 0.7);
+          font-size: 0.96rem;
+          font-weight: 800;
+          color: rgba(15, 36, 24, 0.85);
         }
 
-        .ns-footer-meta {
-          max-width: 42ch;
-          font-size: 0.86rem;
-          line-height: 1.5;
+        .ns-footer-description {
+          font-size: 0.9rem;
+          line-height: 1.6;
+          font-weight: 400;
           color: rgba(15, 36, 24, 0.62);
         }
 
@@ -168,10 +206,10 @@ export default function SiteFooter() {
 
         .ns-footer-heading {
           font-size: 0.82rem;
-          font-weight: 900;
-          letter-spacing: 0.04em;
+          font-weight: 800;
+          letter-spacing: 0.05em;
           text-transform: uppercase;
-          color: rgba(15, 36, 24, 0.64);
+          color: rgba(15, 36, 24, 0.7);
         }
 
         .ns-footer-links {
@@ -181,11 +219,18 @@ export default function SiteFooter() {
           align-items: center;
         }
 
+        .ns-footer-links-stack {
+          display: grid;
+          gap: 8px;
+          align-items: start;
+        }
+
         .ns-footer-link {
           text-decoration: none;
           font-size: 0.92rem;
           font-weight: 700;
-          color: rgba(15, 36, 24, 0.8);
+          letter-spacing: 0.01em;
+          color: rgba(15, 36, 24, 0.82);
           transition: color 140ms ease, opacity 140ms ease;
         }
 
@@ -195,10 +240,38 @@ export default function SiteFooter() {
           text-decoration: none;
         }
 
-        @media (max-width: 900px) {
+        .ns-footer-bottom {
+          border-top: 1px solid rgba(20, 138, 74, 0.08);
+          padding: 16px 0 20px;
+        }
+
+        .ns-footer-bottom-inner {
+          width: min(1100px, calc(100% - 32px));
+          margin: 0 auto;
+          padding: 0 4px;
+          text-align: center;
+          font-size: 0.84rem;
+          line-height: 1.5;
+          color: rgba(15, 36, 24, 0.56);
+        }
+
+        @media (max-width: 980px) {
+          .ns-footer-inner {
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+          }
+        }
+
+        @media (max-width: 720px) {
+          .ns-footer {
+            margin-top: 28px;
+            padding-top: 22px;
+          }
+
           .ns-footer-inner {
             grid-template-columns: 1fr;
             gap: 20px;
+            padding-bottom: 20px;
           }
 
           .ns-footer-links {
