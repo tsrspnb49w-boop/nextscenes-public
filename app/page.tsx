@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
@@ -38,14 +36,19 @@ export default function HomePage() {
       <section className="ns-home-hero">
         <div className="ns-home-hero-inner">
           <div className="ns-home-hero-copy">
+
+            {/* ✅ INTRO (clean, styled via CSS) */}
+            <p className="ns-home-hero-intro">
+              NextScenes is a creative writing platform where you can read stories,
+              write your own, and invite others to contribute to them.
+            </p>
+
+            {/* ✅ TITLE (calmer, still strong) */}
             <h1 className="ns-home-hero-title">
               Enter a story that is already alive
             </h1>
 
-            <p className="ns-home-hero-subtitle">
-              Read a story in progress. Continue it. Or start your own.
-            </p>
-
+            {/* CTA */}
             <div className="ns-home-hero-cta">
               <PillButton href={bookOfTheWeek.href}>Start Reading</PillButton>
               <PillButton href="https://app.nextscenes.org" variant="ghost">
@@ -53,6 +56,7 @@ export default function HomePage() {
               </PillButton>
             </div>
 
+            {/* BOOK OF THE WEEK */}
             <div className="ns-home-book-week">
               <div className="ns-home-book-week-label">Book of the Week</div>
 
@@ -69,6 +73,7 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* HERO IMAGE */}
           <div className="ns-home-hero-image-wrap">
             <div className="ns-home-hero-image-frame">
               <Image
@@ -84,6 +89,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* AUDIO GUIDE */}
       <section className="ns-home-audio-guide">
         <div className="ns-home-audio-card">
           <div className="ns-home-audio-kicker">Start Here</div>
@@ -97,11 +103,11 @@ export default function HomePage() {
 
           <audio controls preload="none" className="ns-home-audio-player">
             <source src="/audio/how-it-works-en.mp3" type="audio/mpeg" />
-            Your browser does not support the audio element.
           </audio>
         </div>
       </section>
 
+      {/* FEATURED */}
       <section className="ns-home-featured">
         <div className="ns-home-featured-head">
           <h2 className="ns-h2">Featured stories</h2>
@@ -114,12 +120,10 @@ export default function HomePage() {
         <FeaturedStoriesShelf stories={FEATURED_STORIES} authorLabel="By" />
       </section>
 
+      {/* LIVE */}
       <section className="ns-home-live">
         <div className="ns-home-live-grid">
-          <Link
-            href={homeFeatures.puzzleOfTheWeek.href}
-            className="ns-home-live-card"
-          >
+          <Link href={homeFeatures.puzzleOfTheWeek.href} className="ns-home-live-card">
             <div className="ns-home-live-badge is-puzzle">Puzzle</div>
             <div className="ns-home-live-title">
               {homeFeatures.puzzleOfTheWeek.title}
@@ -129,10 +133,7 @@ export default function HomePage() {
             </div>
           </Link>
 
-          <Link
-            href={homeFeatures.clubSpotlight.href}
-            className="ns-home-live-card"
-          >
+          <Link href={homeFeatures.clubSpotlight.href} className="ns-home-live-card">
             <div className="ns-home-live-badge is-club">Club</div>
             <div className="ns-home-live-title">
               {homeFeatures.clubSpotlight.title}
@@ -144,6 +145,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* MONTH PICK */}
       <section className="ns-home-month-pick">
         <div className="ns-home-month-pick-card">
           <div className="ns-home-month-pick-label">Book of the Month</div>
@@ -155,17 +157,12 @@ export default function HomePage() {
           </div>
 
           <p className="ns-home-month-pick-desc">
-            A sweeping, intimate novel of love, war, class, and fracture. A
-            serious book with fire in its bones.
-          </p>
-
-          <p className="ns-home-month-pick-note">
-            This monthly shelf brings one distinguished work into view, not to
-            crowd the page, but to deepen its literary atmosphere.
+            A sweeping, intimate novel of love, war, class, and fracture.
           </p>
         </div>
       </section>
 
+      {/* MYSTERY */}
       <section className="ns-mystery-section">
         <div className="ns-mystery-shell">
           <div>

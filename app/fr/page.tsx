@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
@@ -38,13 +36,15 @@ export default function HomePage() {
       <section className="ns-home-hero">
         <div className="ns-home-hero-inner">
           <div className="ns-home-hero-copy">
+            <p className="ns-home-hero-intro">
+              NextScenes est une plateforme d’écriture créative où vous pouvez
+              lire des histoires, écrire les vôtres et inviter d’autres à y
+              contribuer.
+            </p>
+
             <h1 className="ns-home-hero-title">
               Entrez dans une histoire déjà vivante
             </h1>
-
-            <p className="ns-home-hero-subtitle">
-              Lisez une histoire en cours. Poursuivez-la. Ou commencez la vôtre.
-            </p>
 
             <div className="ns-home-hero-cta">
               <PillButton href={bookOfTheWeek.href}>
@@ -102,7 +102,6 @@ export default function HomePage() {
 
           <audio controls preload="none" className="ns-home-audio-player">
             <source src="/audio/how-it-works-fr.mp3" type="audio/mpeg" />
-            Votre navigateur ne prend pas en charge l’élément audio.
           </audio>
         </div>
       </section>
@@ -161,13 +160,7 @@ export default function HomePage() {
 
           <p className="ns-home-month-pick-desc">
             Un roman ample et intime sur l’amour, la guerre, les classes
-            sociales et les fractures humaines. Une œuvre grave, traversée par
-            une intensité brûlante.
-          </p>
-
-          <p className="ns-home-month-pick-note">
-            Chaque mois, une œuvre choisie avec soin, non pour remplir
-            l’espace, mais pour enrichir l’atmosphère littéraire.
+            sociales et les fractures humaines.
           </p>
         </div>
       </section>
