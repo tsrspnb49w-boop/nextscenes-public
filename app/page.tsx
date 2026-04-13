@@ -31,6 +31,7 @@ function PillButton({
 
 export default function HomePage() {
   const homeFeatures = HOME_FEATURES.en;
+  const bookOfTheWeek = homeFeatures.bookOfTheWeek;
 
   return (
     <div className="ns-page">
@@ -42,13 +43,11 @@ export default function HomePage() {
             </h1>
 
             <p className="ns-home-hero-subtitle">
-              Read what others have begun. Continue it. Or start your own.
+              Read a story in progress. Continue it. Or start your own.
             </p>
 
             <div className="ns-home-hero-cta">
-              <PillButton href="https://app.nextscenes.org/storylines">
-                Start Reading
-              </PillButton>
+              <PillButton href={bookOfTheWeek.href}>Start Reading</PillButton>
               <PillButton href="https://app.nextscenes.org" variant="ghost">
                 Start Writing
               </PillButton>
@@ -64,10 +63,7 @@ export default function HomePage() {
                 of home.
               </p>
 
-              <Link
-                href="https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c"
-                className="ns-home-book-week-link"
-              >
+              <Link href={bookOfTheWeek.href} className="ns-home-book-week-link">
                 Open book →
               </Link>
             </div>
@@ -164,7 +160,7 @@ export default function HomePage() {
           </p>
 
           <p className="ns-home-month-pick-note">
-            This monthly shelf brings one distinguished work into view — not to
+            This monthly shelf brings one distinguished work into view, not to
             crowd the page, but to deepen its literary atmosphere.
           </p>
         </div>

@@ -31,6 +31,7 @@ function PillButton({
 
 export default function HomePage() {
   const homeFeatures = HOME_FEATURES.fr;
+  const bookOfTheWeek = homeFeatures.bookOfTheWeek;
 
   return (
     <div className="ns-page">
@@ -42,12 +43,11 @@ export default function HomePage() {
             </h1>
 
             <p className="ns-home-hero-subtitle">
-              Lisez ce que d’autres ont commencé. Poursuivez-le. Ou commencez le
-              vôtre.
+              Lisez une histoire en cours. Poursuivez-la. Ou commencez la vôtre.
             </p>
 
             <div className="ns-home-hero-cta">
-              <PillButton href="https://app.nextscenes.org/storylines">
+              <PillButton href={bookOfTheWeek.href}>
                 Commencer à lire
               </PillButton>
               <PillButton href="https://app.nextscenes.org" variant="ghost">
@@ -65,10 +65,7 @@ export default function HomePage() {
                 l’appel obstiné du foyer.
               </p>
 
-              <Link
-                href="https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c"
-                className="ns-home-book-week-link"
-              >
+              <Link href={bookOfTheWeek.href} className="ns-home-book-week-link">
                 Ouvrir le livre →
               </Link>
             </div>
@@ -169,7 +166,7 @@ export default function HomePage() {
           </p>
 
           <p className="ns-home-month-pick-note">
-            Chaque mois, une œuvre choisie avec soin — non pour remplir
+            Chaque mois, une œuvre choisie avec soin, non pour remplir
             l’espace, mais pour enrichir l’atmosphère littéraire.
           </p>
         </div>
