@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
+
 const SOCIAL = {
   facebook: "https://www.facebook.com/nextscenes",
   youtube: "https://www.youtube.com/@NextScenesOfficial",
@@ -45,9 +47,9 @@ export default function SiteFooter() {
             {isFR ? "Explorer" : "Explore"}
           </div>
           <div className="ns-footer-links ns-footer-links-stack">
-            <Link href={`${base}/storylines`} className="ns-footer-link">
+            <a href={`${APP_URL}/storylines`} className="ns-footer-link">
               {isFR ? "Histoires" : "Storylines"}
-            </Link>
+            </a>
             <Link href={`${base}/faq`} className="ns-footer-link">
               FAQ
             </Link>
