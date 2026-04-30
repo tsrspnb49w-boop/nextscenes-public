@@ -27,15 +27,41 @@ function addFrPrefix(pathname: string) {
   return p.startsWith("/fr") ? p : `/fr${p}`;
 }
 
+const FR_TO_EN_PATH: Record<string, string> = {
+  "/fr/auteurs": "/writers",
+  "/fr/droits-des-auteurs": "/writer-rights",
+  "/fr/politique-contributeurs": "/contributor-policy",
+  "/fr/publication-partage-benefices": "/publication-benefit-sharing",
+  "/fr/conditions-simples": "/plain-language-terms",
+};
+
+const EN_TO_FR_PATH: Record<string, string> = {
+  "/writers": "/fr/auteurs",
+  "/writer-rights": "/fr/droits-des-auteurs",
+  "/contributor-policy": "/fr/politique-contributeurs",
+  "/publication-benefit-sharing": "/fr/publication-partage-benefices",
+  "/plain-language-terms": "/fr/conditions-simples",
+};
+
+function mapKnownPath(pathname: string, map: Record<string, string>) {
+  const p = normalizePath(pathname);
+  for (const [from, to] of Object.entries(map)) {
+    if (p === from || p.startsWith(`${from}/`)) return p.replace(from, to);
+  }
+  return "";
+}
+
 function toEnglishPath(pathname: string) {
   const p = normalizePath(pathname);
-  if (p === "/fr/auteurs" || p.startsWith("/fr/auteurs/")) return p.replace("/fr/auteurs", "/writers");
+  const mapped = mapKnownPath(p, FR_TO_EN_PATH);
+  if (mapped) return mapped;
   return stripFrPrefix(p);
 }
 
 function toFrenchPath(pathname: string) {
   const p = normalizePath(pathname);
-  if (p === "/writers" || p.startsWith("/writers/")) return p.replace("/writers", "/fr/auteurs");
+  const mapped = mapKnownPath(p, EN_TO_FR_PATH);
+  if (mapped) return mapped;
   return addFrPrefix(p);
 }
 

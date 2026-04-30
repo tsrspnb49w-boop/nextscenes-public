@@ -22,6 +22,10 @@ export default function SiteFooter() {
   const isFR = pathname === "/fr" || pathname.startsWith("/fr/");
   const base = isFR ? "/fr" : "";
   const writersHref = isFR ? "/fr/auteurs" : "/writers";
+  const writerRightsHref = isFR ? "/fr/droits-des-auteurs" : "/writer-rights";
+  const contributorPolicyHref = isFR ? "/fr/politique-contributeurs" : "/contributor-policy";
+  const benefitSharingHref = isFR ? "/fr/publication-partage-benefices" : "/publication-benefit-sharing";
+  const plainTermsHref = isFR ? "/fr/conditions-simples" : "/plain-language-terms";
 
   return (
     <footer className="ns-footer" role="contentinfo">
@@ -76,6 +80,18 @@ export default function SiteFooter() {
             </Link>
             <Link href={`${base}/privacy`} className="ns-footer-link">
               {isFR ? "Politique de confidentialité" : "Privacy Policy"}
+            </Link>
+            <Link href={writerRightsHref} className="ns-footer-link">
+              {isFR ? "Droits des auteurs" : "Writer Rights"}
+            </Link>
+            <Link href={contributorPolicyHref} className="ns-footer-link">
+              {isFR ? "Politique des contributeurs" : "Contributor Policy"}
+            </Link>
+            <Link href={benefitSharingHref} className="ns-footer-link">
+              {isFR ? "Publication et partage" : "Benefit Sharing"}
+            </Link>
+            <Link href={plainTermsHref} className="ns-footer-link">
+              {isFR ? "Conditions simples" : "Plain-Language Terms"}
             </Link>
             <Link href={`${base}/contact`} className="ns-footer-link">
               {isFR ? "Contact" : "Contact"}
