@@ -27,6 +27,18 @@ function addFrPrefix(pathname: string) {
   return p.startsWith("/fr") ? p : `/fr${p}`;
 }
 
+function toEnglishPath(pathname: string) {
+  const p = normalizePath(pathname);
+  if (p === "/fr/auteurs" || p.startsWith("/fr/auteurs/")) return p.replace("/fr/auteurs", "/writers");
+  return stripFrPrefix(p);
+}
+
+function toFrenchPath(pathname: string) {
+  const p = normalizePath(pathname);
+  if (p === "/writers" || p.startsWith("/writers/")) return p.replace("/writers", "/fr/auteurs");
+  return addFrPrefix(p);
+}
+
 /* ===============================
    Component
    =============================== */
@@ -54,12 +66,13 @@ export default function SiteNav() {
   const isFR = pathname === "/fr" || pathname.startsWith("/fr/");
   const base = isFR ? "/fr" : "";
 
-  const enHref = stripFrPrefix(pathname);
-  const frHref = addFrPrefix(pathname);
+  const enHref = toEnglishPath(pathname);
+  const frHref = toFrenchPath(pathname);
 
   const PRIMARY = useMemo(
     () => [
       { href: "/about", en: "About", fr: "À propos" },
+      { href: "/writers", frHref: "/auteurs", en: "For Writers", fr: "Pour les auteurs" },
       { href: "/how-it-works", en: "How it works", fr: "Comment ça marche" },
       { href: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", en: "Mystery250", fr: "Mystery250" },
@@ -77,8 +90,7 @@ export default function SiteNav() {
   );
 
   function isActive(href: string) {
-    const full = `${base}${href}`;
-    return pathname === full || pathname.startsWith(`${full}/`);
+    return pathname === href || pathname.startsWith(`${href}/`);
   }
 
   const [moreOpen, setMoreOpen] = useState(false);
@@ -246,17 +258,20 @@ export default function SiteNav() {
         </Link>
 
         <nav className="ns-links" aria-label={isFR ? "Navigation principale" : "Main navigation"}>
-          {PRIMARY.map((l) => (
-            <Link
-              key={l.href}
-              href={`${base}${l.href}`}
-              className={`ns-navlink ${isActive(l.href) ? "is-active" : ""}`}
-              aria-current={isActive(l.href) ? "page" : undefined}
-              onClick={closeAllMenus}
-            >
-              {isFR ? l.fr : l.en}
-            </Link>
-          ))}
+          {PRIMARY.map((l) => {
+            const href = `${base}${isFR && "frHref" in l ? l.frHref : l.href}`;
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={`ns-navlink ${isActive(href) ? "is-active" : ""}`}
+                aria-current={isActive(href) ? "page" : undefined}
+                onClick={closeAllMenus}
+              >
+                {isFR ? l.fr : l.en}
+              </Link>
+            );
+          })}
 
           <div className="ns-more" ref={moreWrapRef}>
             <button

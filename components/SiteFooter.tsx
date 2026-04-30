@@ -21,6 +21,7 @@ export default function SiteFooter() {
   const pathname = normalizePath(usePathname() || "/");
   const isFR = pathname === "/fr" || pathname.startsWith("/fr/");
   const base = isFR ? "/fr" : "";
+  const writersHref = isFR ? "/fr/auteurs" : "/writers";
 
   return (
     <footer className="ns-footer" role="contentinfo">
@@ -50,6 +51,9 @@ export default function SiteFooter() {
             <a href={`${APP_URL}/storylines`} className="ns-footer-link">
               {isFR ? "Histoires" : "Storylines"}
             </a>
+            <Link href={writersHref} className="ns-footer-link">
+              {isFR ? "Pour les auteurs" : "For Writers"}
+            </Link>
             <Link href={`${base}/faq`} className="ns-footer-link">
               FAQ
             </Link>
@@ -144,7 +148,7 @@ export default function SiteFooter() {
 
       <div className="ns-footer-bottom">
         <div className="ns-footer-bottom-inner">
-          © {new Date().getFullYear()} NextScenes.{" "}
+          © {new Date().getFullYear()} NextScenes. {" "}
           {isFR ? "Tous droits réservés." : "All rights reserved."}
         </div>
       </div>
