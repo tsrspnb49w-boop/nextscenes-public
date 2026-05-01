@@ -22,6 +22,9 @@ export default function SiteFooter() {
   const isFR = pathname === "/fr" || pathname.startsWith("/fr/");
   const base = isFR ? "/fr" : "";
   const writersHref = isFR ? "/fr/auteurs" : "/writers";
+  const foundingWritersHref = isFR
+    ? "/fr/pilote-auteurs-fondateurs"
+    : "/founding-writers-pilot";
   const writerRightsHref = isFR ? "/fr/droits-des-auteurs" : "/writer-rights";
   const contributorPolicyHref = isFR ? "/fr/politique-contributeurs" : "/contributor-policy";
   const benefitSharingHref = isFR ? "/fr/publication-partage-benefices" : "/publication-benefit-sharing";
@@ -57,6 +60,9 @@ export default function SiteFooter() {
             </a>
             <Link href={writersHref} className="ns-footer-link">
               {isFR ? "Pour les auteurs" : "For Writers"}
+            </Link>
+            <Link href={foundingWritersHref} className="ns-footer-link">
+              {isFR ? "Pilote auteurs fondateurs" : "Founding Writers Pilot"}
             </Link>
             <Link href={`${base}/faq`} className="ns-footer-link">
               FAQ

@@ -145,6 +145,19 @@ export default function HomePage() {
               {homeFeatures.clubSpotlight.description}
             </div>
           </Link>
+
+          <Link
+            href="/fr/pilote-auteurs-fondateurs"
+            className="ns-home-live-card"
+          >
+            <div className="ns-home-live-badge is-club">Auteurs</div>
+            <div className="ns-home-live-title">
+              Pilote des auteurs fondateurs
+            </div>
+            <div className="ns-home-live-desc">
+              NextScenes invite des auteurs sérieux avec des histoires originales.
+            </div>
+          </Link>
         </div>
       </section>
 

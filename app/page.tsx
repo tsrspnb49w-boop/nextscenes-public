@@ -142,6 +142,16 @@ export default function HomePage() {
               {homeFeatures.clubSpotlight.description}
             </div>
           </Link>
+
+          <Link href="/founding-writers-pilot" className="ns-home-live-card">
+            <div className="ns-home-live-badge is-club">Writers</div>
+            <div className="ns-home-live-title">
+              Founding Writers Pilot
+            </div>
+            <div className="ns-home-live-desc">
+              NextScenes is inviting 3 to 5 serious writers with original stories.
+            </div>
+          </Link>
         </div>
       </section>
 
