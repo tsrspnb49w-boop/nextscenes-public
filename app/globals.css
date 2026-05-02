@@ -2072,11 +2072,15 @@ div.ns-book-badge {
 }
 /* ===============================
    For Writers / Pour les auteurs
-   Build: 2026-04-30 (Writer Confidence Package Phase 1)
+   Build: 2026-05-02 (Writer Page Typography Balance v2)
+   Notes:
+   - Further calms the public Writers hero title
+   - Aligns visual weight more closely with About and other public pages
+   - Presentation-only change; no route, content, or logic changes
    =============================== */
 
 .ns-writers-page {
-  max-width: 1160px;
+  max-width: var(--max-width);
 }
 
 .ns-writers-hero {
@@ -2086,7 +2090,7 @@ div.ns-book-badge {
   grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
   gap: 22px;
   align-items: stretch;
-  padding: 30px;
+  padding: 28px;
   border-radius: 28px;
   border: 1px solid rgba(20, 138, 74, 0.14);
   background:
@@ -2129,11 +2133,11 @@ div.ns-book-badge {
 }
 
 .ns-writers-title {
-  max-width: 820px;
+  max-width: 720px;
   margin: 0 0 14px;
-  font-size: clamp(2.15rem, 4.6vw, 4.45rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
+  font-size: clamp(2rem, 1.55rem + 1.1vw, 2.35rem);
+  line-height: 1.13;
+  letter-spacing: -0.032em;
   color: rgba(15, 36, 24, 0.96);
 }
 
@@ -2141,8 +2145,8 @@ div.ns-book-badge {
   max-width: 760px;
   margin: 0 0 12px;
   color: rgba(15, 36, 24, 0.78);
-  font-size: 1.03rem;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .ns-writers-actions {
@@ -2174,8 +2178,8 @@ div.ns-book-badge {
 .ns-writers-card-label {
   margin-bottom: 14px;
   color: rgba(15, 36, 24, 0.96);
-  font-size: 1.05rem;
-  font-weight: 900;
+  font-size: 1rem;
+  font-weight: 850;
   letter-spacing: -0.01em;
 }
 
@@ -2191,7 +2195,8 @@ div.ns-book-badge {
   position: relative;
   padding-left: 30px;
   color: rgba(15, 36, 24, 0.82);
-  line-height: 1.55;
+  font-size: 0.96rem;
+  line-height: 1.52;
   font-weight: 650;
 }
 
@@ -2245,7 +2250,7 @@ div.ns-book-badge {
 .ns-writers-manuscript-copy h2,
 .ns-writers-plain h2,
 .ns-writers-promise h2 {
-  font-size: clamp(1.7rem, 3vw, 2.55rem);
+  font-size: clamp(1.35rem, 1.15rem + 1vw, 1.75rem);
 }
 
 .ns-writers-section-head p,
@@ -2255,7 +2260,8 @@ div.ns-book-badge {
 .ns-writers-promise p {
   margin: 0 0 12px;
   color: rgba(15, 36, 24, 0.76);
-  line-height: 1.68;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 .ns-writers-section-head p:last-child,
@@ -2284,7 +2290,7 @@ div.ns-book-badge {
 }
 
 .ns-writers-panel {
-  padding: 22px;
+  padding: 20px;
 }
 
 .ns-writers-panel.is-warm {
@@ -2316,8 +2322,8 @@ div.ns-book-badge {
 }
 
 .ns-writers-mode-card {
-  min-height: 210px;
-  padding: 18px;
+  min-height: 178px;
+  padding: 17px;
   border-radius: 22px;
   border: 1px solid rgba(20, 138, 74, 0.13);
   background: rgba(255,255,255,0.86);
@@ -2327,15 +2333,15 @@ div.ns-book-badge {
 .ns-writers-mode-card h3 {
   margin: 0 0 9px;
   color: rgba(15, 36, 24, 0.94);
-  font-size: 1.05rem;
-  line-height: 1.18;
+  font-size: 1rem;
+  line-height: 1.2;
 }
 
 .ns-writers-mode-card p {
   margin: 0;
   color: rgba(15, 36, 24, 0.72);
-  font-size: 0.94rem;
-  line-height: 1.58;
+  font-size: 0.92rem;
+  line-height: 1.52;
 }
 
 .ns-writers-manuscript {
@@ -2343,8 +2349,8 @@ div.ns-book-badge {
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
   gap: 18px;
   align-items: stretch;
-  padding: 24px;
-  border-radius: 28px;
+  padding: 22px;
+  border-radius: 26px;
   border: 1px solid rgba(20, 138, 74, 0.14);
   background:
     radial-gradient(720px 360px at 0% 0%, rgba(31, 182, 106, 0.10), transparent 58%),
@@ -2387,13 +2393,13 @@ div.ns-book-badge {
 }
 
 .ns-writers-plain {
-  padding: 24px;
+  padding: 22px;
 }
 
 .ns-writers-promise {
   margin-top: 28px;
-  padding: 30px;
-  border-radius: 30px;
+  padding: 26px;
+  border-radius: 28px;
   text-align: center;
   border: 1px solid rgba(20, 138, 74, 0.14);
   background:
@@ -2437,6 +2443,7 @@ div.ns-book-badge {
   }
 
   .ns-writers-title {
-    line-height: 1.04;
+    font-size: clamp(1.9rem, 8.5vw, 2.2rem);
+    line-height: 1.12;
   }
 }
