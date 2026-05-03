@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,15 +10,57 @@ const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org"
    Path helpers
    =============================== */
 
-function normalizePath(p: string) {
-  if (!p) return "/";
-  return p.startsWith("/") ? p : `/${p}`;
+function normalizePath(pathname: string) {
+  if (!pathname) return "/";
+
+  let p = pathname.startsWith("/") ? pathname : `/${pathname}`;
+
+  // Remove query/hash if a browser URL ever reaches this helper.
+  p = p.split("?")[0].split("#")[0];
+
+  // Remove trailing slash, except for root.
+  if (p.length > 1) p = p.replace(/\/+$/, "");
+
+  return p || "/";
 }
+
+const ROUTE_PAIRS: Array<[string, string]> = [
+  ["/", "/fr"],
+
+  ["/about", "/fr/about"],
+  ["/clubs", "/fr/clubs"],
+  ["/contact", "/fr/contact"],
+  ["/enter", "/fr/enter"],
+  ["/faq", "/fr/faq"],
+  ["/how-it-works", "/fr/how-it-works"],
+  ["/mystery250", "/fr/mystery250"],
+  ["/partners", "/fr/partners"],
+  ["/privacy", "/fr/privacy"],
+  ["/safety", "/fr/safety"],
+  ["/terms", "/fr/terms"],
+
+  ["/writers", "/fr/auteurs"],
+  ["/writer-rights", "/fr/droits-des-auteurs"],
+  ["/contributor-policy", "/fr/politique-contributeurs"],
+  ["/publication-benefit-sharing", "/fr/publication-partage-benefices"],
+  ["/plain-language-terms", "/fr/conditions-simples"],
+
+  ["/founding-writers-pilot", "/fr/pilote-auteurs-fondateurs"],
+  ["/pilote-auteurs-fondateurs", "/fr/pilote-auteurs-fondateurs"],
+];
+
+const EN_TO_FR_PATH: Record<string, string> = Object.fromEntries(ROUTE_PAIRS);
+const FR_TO_EN_PATH: Record<string, string> = Object.fromEntries(
+  ROUTE_PAIRS.map(([en, fr]) => [fr, en])
+);
+
+// Support the older duplicate French pilot route if anyone lands on it.
+FR_TO_EN_PATH["/fr/founding-writers-pilot"] = "/founding-writers-pilot";
 
 function stripFrPrefix(pathname: string) {
   const p = normalizePath(pathname);
   if (p === "/fr") return "/";
-  return p.startsWith("/fr/") ? p.slice(3) : p;
+  return p.startsWith("/fr/") ? p.slice(3) || "/" : p;
 }
 
 function addFrPrefix(pathname: string) {
@@ -27,27 +69,20 @@ function addFrPrefix(pathname: string) {
   return p.startsWith("/fr") ? p : `/fr${p}`;
 }
 
-const FR_TO_EN_PATH: Record<string, string> = {
-  "/fr/auteurs": "/writers",
-  "/fr/droits-des-auteurs": "/writer-rights",
-  "/fr/politique-contributeurs": "/contributor-policy",
-  "/fr/publication-partage-benefices": "/publication-benefit-sharing",
-  "/fr/conditions-simples": "/plain-language-terms",
-};
-
-const EN_TO_FR_PATH: Record<string, string> = {
-  "/writers": "/fr/auteurs",
-  "/writer-rights": "/fr/droits-des-auteurs",
-  "/contributor-policy": "/fr/politique-contributeurs",
-  "/publication-benefit-sharing": "/fr/publication-partage-benefices",
-  "/plain-language-terms": "/fr/conditions-simples",
-};
-
 function mapKnownPath(pathname: string, map: Record<string, string>) {
   const p = normalizePath(pathname);
-  for (const [from, to] of Object.entries(map)) {
-    if (p === from || p.startsWith(`${from}/`)) return p.replace(from, to);
+
+  // Exact match first.
+  if (map[p]) return map[p];
+
+  // Then preserve nested paths, choosing the longest matching route first.
+  const entries = Object.entries(map).sort((a, b) => b[0].length - a[0].length);
+
+  for (const [from, to] of entries) {
+    if (from === "/" || from === "/fr") continue;
+    if (p.startsWith(`${from}/`)) return `${to}${p.slice(from.length)}`;
   }
+
   return "";
 }
 
@@ -88,35 +123,42 @@ function isLikelyAuthedPayload(data: any) {
 
 export default function SiteNav() {
   const pathname = usePathname() || "/";
+  const cleanPathname = normalizePath(pathname);
 
-  const isFR = pathname === "/fr" || pathname.startsWith("/fr/");
+  const isFR = cleanPathname === "/fr" || cleanPathname.startsWith("/fr/");
   const base = isFR ? "/fr" : "";
 
-  const enHref = toEnglishPath(pathname);
-  const frHref = toFrenchPath(pathname);
+  const enHref = toEnglishPath(cleanPathname);
+  const frHref = toFrenchPath(cleanPathname);
 
   const PRIMARY = useMemo(
     () => [
-      { href: "/about", en: "About", fr: "À propos" },
+      { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
       { href: "/writers", frHref: "/auteurs", en: "For Writers", fr: "Pour les auteurs" },
-      { href: "/how-it-works", en: "How it works", fr: "Comment ça marche" },
-      { href: "/safety", en: "Safety", fr: "Sécurité" },
-      { href: "/mystery250", en: "Mystery250", fr: "Mystery250" },
+      { href: "/how-it-works", frHref: "/how-it-works", en: "How it works", fr: "Comment ça marche" },
+      { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
+      { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
     ],
     []
   );
 
   const MORE = useMemo(
     () => [
-      { href: "/clubs", en: "Clubs", fr: "Clubs" },
-      { href: "/partners", en: "Partners", fr: "Partenaires" },
-      { href: "/contact", en: "Contact", fr: "Contact" },
+      { href: "/clubs", frHref: "/clubs", en: "Clubs", fr: "Clubs" },
+      { href: "/partners", frHref: "/partners", en: "Partners", fr: "Partenaires" },
+      { href: "/contact", frHref: "/contact", en: "Contact", fr: "Contact" },
     ],
     []
   );
 
+  function localizedHref(link: { href: string; frHref?: string }) {
+    if (!isFR) return link.href;
+    return `${base}${link.frHref || link.href}`;
+  }
+
   function isActive(href: string) {
-    return pathname === href || pathname.startsWith(`${href}/`);
+    const h = normalizePath(href);
+    return cleanPathname === h || cleanPathname.startsWith(`${h}/`);
   }
 
   const [moreOpen, setMoreOpen] = useState(false);
@@ -142,9 +184,22 @@ export default function SiteNav() {
     setLangOpen((v) => !v);
   }, []);
 
+  const goToLanguage = useCallback(
+    (href: string) => {
+      closeAllMenus();
+
+      // A normal document navigation is deliberately used for the language switch.
+      // This avoids stale client state and guarantees the correct App Router page loads.
+      if (typeof window !== "undefined") {
+        window.location.assign(href);
+      }
+    },
+    [closeAllMenus]
+  );
+
   useEffect(() => {
     closeAllMenus();
-  }, [pathname, closeAllMenus]);
+  }, [cleanPathname, closeAllMenus]);
 
   useEffect(() => {
     if (!moreOpen && !langOpen) return;
@@ -234,6 +289,7 @@ export default function SiteNav() {
     function onFocus() {
       checkAuth();
     }
+
     function onVis() {
       if (document.visibilityState === "visible") checkAuth();
     }
@@ -276,16 +332,13 @@ export default function SiteNav() {
           aria-label="NextScenes home"
           onClick={closeAllMenus}
         >
-          <img
-            src="/nextscenes-logo.png"
-            alt="NextScenes"
-            className="ns-brand-logo"
-          />
+          <img src="/nextscenes-logo.png" alt="NextScenes" className="ns-brand-logo" />
         </Link>
 
         <nav className="ns-links" aria-label={isFR ? "Navigation principale" : "Main navigation"}>
           {PRIMARY.map((l) => {
-            const href = `${base}${isFR && "frHref" in l ? l.frHref : l.href}`;
+            const href = localizedHref(l);
+
             return (
               <Link
                 key={href}
@@ -319,17 +372,21 @@ export default function SiteNav() {
                 role="menu"
                 aria-label={isFR ? "Plus de liens" : "More links"}
               >
-                {MORE.map((l) => (
-                  <Link
-                    key={l.href}
-                    href={`${base}${l.href}`}
-                    className="ns-more-item"
-                    role="menuitem"
-                    onClick={closeAllMenus}
-                  >
-                    {isFR ? l.fr : l.en}
-                  </Link>
-                ))}
+                {MORE.map((l) => {
+                  const href = localizedHref(l);
+
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      className="ns-more-item"
+                      role="menuitem"
+                      onClick={closeAllMenus}
+                    >
+                      {isFR ? l.fr : l.en}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -356,31 +413,31 @@ export default function SiteNav() {
                 role="menu"
                 aria-label={isFR ? "Langue" : "Language"}
               >
-                <Link
-                  href={enHref}
+                <button
+                  type="button"
                   className={`ns-lang-item ${!isFR ? "is-active" : ""}`}
                   role="menuitem"
-                  onClick={closeAllMenus}
+                  onClick={() => goToLanguage(enHref)}
                 >
                   <span className="flag" aria-hidden="true">
                     🇬🇧
                   </span>
                   <span className="ns-lang-text">{isFR ? "Anglais" : "English"}</span>
                   <span className="ns-lang-check">{!isFR ? "✓" : ""}</span>
-                </Link>
+                </button>
 
-                <Link
-                  href={frHref}
+                <button
+                  type="button"
                   className={`ns-lang-item ${isFR ? "is-active" : ""}`}
                   role="menuitem"
-                  onClick={closeAllMenus}
+                  onClick={() => goToLanguage(frHref)}
                 >
                   <span className="flag" aria-hidden="true">
                     🇫🇷
                   </span>
                   <span className="ns-lang-text">{isFR ? "Français" : "French"}</span>
                   <span className="ns-lang-check">{isFR ? "✓" : ""}</span>
-                </Link>
+                </button>
               </div>
             )}
           </div>
