@@ -149,7 +149,7 @@ export default function HomePage() {
               Founding Writers Pilot
             </div>
             <div className="ns-home-live-desc">
-              NextScenes is inviting 3 to 5 serious writers with original stories.
+              NextScenes is inviting serious writers with original stories.
             </div>
           </Link>
         </div>
