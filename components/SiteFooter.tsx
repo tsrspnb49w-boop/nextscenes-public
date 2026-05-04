@@ -45,6 +45,11 @@ export default function SiteFooter() {
               ? "Plateforme collaborative de narration pour écrivains, écoles et communautés créatives."
               : "Collaborative storytelling platform for writers, schools, and creative communities."}
           </div>
+          <div className="ns-footer-location">
+            {isFR
+              ? "Plateforme en ligne, présence administrative au Mali et au Nigeria."
+              : "Online platform, administratively present in Mali and Nigeria."}
+          </div>
         </div>
 
         <nav
@@ -224,6 +229,13 @@ export default function SiteFooter() {
           line-height: 1.6;
           font-weight: 400;
           color: rgba(15, 36, 24, 0.62);
+        }
+
+        .ns-footer-location {
+          font-size: 0.84rem;
+          line-height: 1.5;
+          font-weight: 800;
+          color: rgba(15, 36, 24, 0.7);
         }
 
         .ns-footer-navgroup {

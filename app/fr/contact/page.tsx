@@ -192,6 +192,20 @@ export default function FrContactPage() {
         </p>
       </section>
 
+      <section className="ns-section ns-section-alt">
+        <h2 className="ns-h2">Localisation et correspondance</h2>
+        <div className="ns-card" style={{ maxWidth: 980 }}>
+          <p className="ns-p" style={{ marginBottom: 10 }}>
+            NextScenes est une plateforme de création littéraire en ligne, gérée à distance, avec une présence administrative au Mali et au Nigeria.
+          </p>
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            À ce stade, nous ne publions pas d’adresse de bureau ouverte au public. Pour l’assistance, les partenariats,
+            les questions éditoriales ou la correspondance officielle, veuillez utiliser ce formulaire ou écrire à{" "}
+            <span style={{ fontWeight: 800 }}>contact [at] nextscenes [dot] org</span>.
+          </p>
+        </div>
+      </section>
+
       <section className="ns-section ns-section-alt" id="contact-form">
         <h2 className="ns-h2">Envoyer un message</h2>
 

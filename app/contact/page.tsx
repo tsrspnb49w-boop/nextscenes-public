@@ -192,6 +192,20 @@ export default function ContactPage() {
         </p>
       </section>
 
+      <section className="ns-section ns-section-alt">
+        <h2 className="ns-h2">Location and correspondence</h2>
+        <div className="ns-card" style={{ maxWidth: 980 }}>
+          <p className="ns-p" style={{ marginBottom: 10 }}>
+            NextScenes is an online creative writing platform managed remotely, with administrative presence in Mali and Nigeria.
+          </p>
+          <p className="ns-p" style={{ marginBottom: 0 }}>
+            At this stage, we do not publish a walk-in office address. For support, partnerships, editorial matters,
+            or official correspondence, please use this contact form or write to{" "}
+            <span style={{ fontWeight: 800 }}>contact [at] nextscenes [dot] org</span>.
+          </p>
+        </div>
+      </section>
+
       <section className="ns-section ns-section-alt" id="contact-form">
         <h2 className="ns-h2">Send a message</h2>
 
