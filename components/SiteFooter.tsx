@@ -27,6 +27,9 @@ export default function SiteFooter() {
     : "/founding-writers-pilot";
   const writerRightsHref = isFR ? "/fr/droits-des-auteurs" : "/writer-rights";
   const contributorPolicyHref = isFR ? "/fr/politique-contributeurs" : "/contributor-policy";
+  const illustrationPolicyHref = isFR
+    ? "/fr/politique-illustrations-televersements"
+    : "/illustration-upload-policy";
   const benefitSharingHref = isFR ? "/fr/publication-partage-benefices" : "/publication-benefit-sharing";
   const plainTermsHref = isFR ? "/fr/conditions-simples" : "/plain-language-terms";
 
@@ -97,6 +100,9 @@ export default function SiteFooter() {
             </Link>
             <Link href={contributorPolicyHref} className="ns-footer-link">
               {isFR ? "Politique des contributeurs" : "Contributor Policy"}
+            </Link>
+            <Link href={illustrationPolicyHref} className="ns-footer-link">
+              {isFR ? "Illustrations et téléversements" : "Illustration Upload Policy"}
             </Link>
             <Link href={benefitSharingHref} className="ns-footer-link">
               {isFR ? "Publication et partage" : "Benefit Sharing"}

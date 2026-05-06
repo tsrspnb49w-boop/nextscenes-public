@@ -42,6 +42,7 @@ const ROUTE_PAIRS: Array<[string, string]> = [
   ["/writers", "/fr/auteurs"],
   ["/writer-rights", "/fr/droits-des-auteurs"],
   ["/contributor-policy", "/fr/politique-contributeurs"],
+  ["/illustration-upload-policy", "/fr/politique-illustrations-televersements"],
   ["/publication-benefit-sharing", "/fr/publication-partage-benefices"],
   ["/plain-language-terms", "/fr/conditions-simples"],
 
