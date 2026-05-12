@@ -1,8 +1,49 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
-import { FEATURED_STORIES } from "@/app/lib/featuredStories";
+import { FEATURED_STORIES, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
+
+type PublicHomepageResponse = {
+  ok?: boolean;
+  featuredStories?: FeaturedStory[];
+};
+
+function cleanApiBase(value: string | undefined) {
+  return String(value || "").trim().replace(/\/+$/, "");
+}
+
+function getPublicHomepageApiBase() {
+  return (
+    cleanApiBase(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE) ||
+    cleanApiBase(process.env.NEXT_PUBLIC_API_BASE) ||
+    "https://api.nextscenes.org"
+  );
+}
+
+async function getFeaturedStories(language: "en" | "fr") {
+  const apiBase = getPublicHomepageApiBase();
+
+  try {
+    const res = await fetch(
+      `${apiBase}/api/public-homepage?language=${encodeURIComponent(language)}`,
+      {
+        next: { revalidate: 60 },
+      }
+    );
+
+    if (!res.ok) return FEATURED_STORIES;
+
+    const data = (await res.json()) as PublicHomepageResponse;
+    const stories = Array.isArray(data?.featuredStories)
+      ? data.featuredStories
+      : [];
+
+    return stories.length ? stories : FEATURED_STORIES;
+  } catch {
+    return FEATURED_STORIES;
+  }
+}
 
 function PillButton({
   href,
@@ -27,9 +68,10 @@ function PillButton({
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   const homeFeatures = HOME_FEATURES.en;
   const bookOfTheWeek = homeFeatures.bookOfTheWeek;
+  const featuredStories = await getFeaturedStories("en");
 
   return (
     <div className="ns-page">
@@ -117,7 +159,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <FeaturedStoriesShelf stories={FEATURED_STORIES} authorLabel="By" />
+        <FeaturedStoriesShelf stories={featuredStories} authorLabel="By" />
       </section>
 
       {/* LIVE */}
