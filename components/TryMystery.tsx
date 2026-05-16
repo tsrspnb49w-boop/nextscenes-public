@@ -1,9 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import type { MysteryPuzzle } from "@/data/mystery250/types";
-import { selectAnotherPuzzle } from "@/lib/mystery250/selectPuzzle";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
@@ -12,56 +10,64 @@ type Lang = "en" | "fr";
 type TryMysteryProps = {
   lang?: Lang;
   initialPuzzle: MysteryPuzzle | null;
-  puzzles: MysteryPuzzle[];
+  puzzles?: MysteryPuzzle[];
 };
+
+function slugifyPuzzleRef(value: string) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getAppMysteryRef(puzzle: MysteryPuzzle | null) {
+  const id = String(puzzle?.id || "").trim();
+  const knownRefs: Record<string, string> = {
+    "m250-001": "the-vanishing-necklace",
+    "m250-002": "the-midnight-visitor",
+    "m250-003": "the-silent-clock",
+  };
+
+  return knownRefs[id] || slugifyPuzzleRef(puzzle?.title || puzzle?.slug || puzzle?.id || "");
+}
+
+function getAppMysteryHref(puzzle: MysteryPuzzle | null) {
+  const ref = getAppMysteryRef(puzzle);
+  if (!ref) return `${APP_URL}/mystery250`;
+
+  const params = new URLSearchParams({ mystery: ref });
+  return `${APP_URL}/mystery250?${params.toString()}`;
+}
 
 export default function TryMystery({
   lang = "en",
   initialPuzzle,
-  puzzles,
 }: TryMysteryProps) {
-  const [currentPuzzle, setCurrentPuzzle] = useState<MysteryPuzzle | null>(
-    initialPuzzle
-  );
-  const [showSolution, setShowSolution] = useState(false);
+  const currentPuzzle = initialPuzzle;
 
   const ui =
     lang === "fr"
       ? {
           title: "Essayez un mystère",
-          featureLabel: "Mystère du jour",
-          reveal: "Voir le raisonnement",
-          hide: "Masquer le raisonnement",
-          tryAnother: "Essayer un autre mystère",
+          featureLabel: "Mystère de la semaine",
+          solve: "Résoudre ce mystère",
           clues: "Indices",
           caseQuestion: "Question du cas",
           culpritQuestion: "Qui est le coupable ?",
-          solutionTitle: "Raisonnement",
           noPuzzle: "Aucun mystère n’est disponible pour le moment.",
-          cta: "Découvrir d'autres mystères dans l’App",
         }
       : {
           title: "Try a Mystery",
-          featureLabel: "Mystery of the Day",
-          reveal: "Reveal the reasoning",
-          hide: "Hide the reasoning",
-          tryAnother: "Try Another Mystery",
+          featureLabel: "Mystery of the Week",
+          solve: "Solve this mystery",
           clues: "Clues",
           caseQuestion: "Case Question",
           culpritQuestion: "Who is the culprit?",
-          solutionTitle: "Reasoning",
           noPuzzle: "No mystery is available right now.",
-          cta: "Explore more mysteries inside the App",
         };
 
-  function handleTryAnother() {
-    const nextPuzzle = selectAnotherPuzzle(puzzles, currentPuzzle?.id);
-
-    if (!nextPuzzle) return;
-
-    setCurrentPuzzle(nextPuzzle);
-    setShowSolution(false);
-  }
 
   if (!currentPuzzle) {
     return (
@@ -111,63 +117,14 @@ export default function TryMystery({
         </p>
       </div>
 
-      {!showSolution ? (
-        <div className="ns-hero-cta ns-m250-try-actions">
-          <button
-            type="button"
-            className="ns-btn ns-btn-primary"
-            onClick={() => setShowSolution(true)}
-          >
-            {ui.reveal}
-          </button>
-
-          {puzzles.length > 1 ? (
-            <button
-              type="button"
-              className="ns-btn ns-btn-secondary"
-              onClick={handleTryAnother}
-            >
-              {ui.tryAnother}
-            </button>
-          ) : null}
-        </div>
-      ) : (
-        <div className="ns-m250-try-solution-wrap">
-          <div className="ns-callout ns-m250-try-solution">
-            <p className="ns-p">
-              <strong>{ui.solutionTitle}</strong>
-            </p>
-            <p className="ns-p">{currentPuzzle.explanation}</p>
-            <p className="ns-p">
-              <strong>{currentPuzzle.answer}</strong>
-            </p>
-          </div>
-
-          <div className="ns-hero-cta ns-m250-try-actions">
-            <button
-              type="button"
-              className="ns-btn ns-btn-secondary"
-              onClick={() => setShowSolution(false)}
-            >
-              {ui.hide}
-            </button>
-
-            {puzzles.length > 1 ? (
-              <button
-                type="button"
-                className="ns-btn ns-btn-secondary"
-                onClick={handleTryAnother}
-              >
-                {ui.tryAnother}
-              </button>
-            ) : null}
-
-            <Link href={APP_URL} className="ns-btn ns-btn-primary">
-              {ui.cta}
-            </Link>
-          </div>
-        </div>
-      )}
+      <div className="ns-hero-cta ns-m250-try-actions">
+        <Link
+          href={getAppMysteryHref(currentPuzzle)}
+          className="ns-btn ns-btn-primary"
+        >
+          {ui.solve}
+        </Link>
+      </div>
     </section>
   );
 }

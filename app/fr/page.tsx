@@ -4,6 +4,20 @@ import { HOME_FEATURES } from "@/app/lib/homeFeatures";
 import { FEATURED_STORIES, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
+const WEEKLY_MYSTERY = {
+  ref: "the-vanishing-necklace",
+  title: "Le collier disparu",
+  teaser: "Une chambre fermée, un collier disparu et une hôtesse nerveuse. Suivez les indices avant la révélation.",
+};
+
+function getWeeklyMysteryAppHref() {
+  const params = new URLSearchParams({ mystery: WEEKLY_MYSTERY.ref });
+  return `${APP_URL}/mystery250?${params.toString()}`;
+}
+
 type PublicHomepageResponse = {
   ok?: boolean;
   featuredStories?: FeaturedStory[];
@@ -71,6 +85,7 @@ function PillButton({
 export default async function HomePage() {
   const homeFeatures = HOME_FEATURES.fr;
   const bookOfTheWeek = homeFeatures.bookOfTheWeek;
+  const weeklyMysteryAppHref = getWeeklyMysteryAppHref();
   const featuredStories = await getFeaturedStories("fr");
 
   return (
@@ -92,7 +107,7 @@ export default async function HomePage() {
               <PillButton href={bookOfTheWeek.href}>
                 Commencer à lire
               </PillButton>
-              <PillButton href="https://app.nextscenes.org" variant="ghost">
+              <PillButton href={APP_URL} variant="ghost">
                 Commencer à écrire
               </PillButton>
             </div>
@@ -163,15 +178,15 @@ export default async function HomePage() {
       <section className="ns-home-live">
         <div className="ns-home-live-grid">
           <Link
-            href={homeFeatures.puzzleOfTheWeek.href}
+            href={weeklyMysteryAppHref}
             className="ns-home-live-card"
           >
             <div className="ns-home-live-badge is-puzzle">Énigme</div>
             <div className="ns-home-live-title">
-              {homeFeatures.puzzleOfTheWeek.title}
+              Cette semaine : {WEEKLY_MYSTERY.title}
             </div>
             <div className="ns-home-live-desc">
-              {homeFeatures.puzzleOfTheWeek.description}
+              {WEEKLY_MYSTERY.teaser}
             </div>
           </Link>
 
@@ -224,10 +239,13 @@ export default async function HomePage() {
         <div className="ns-mystery-shell">
           <div>
             <h2 className="ns-h2">Mystères courts. Esprit affûté.</h2>
-            <p className="ns-p">Un défi clair à la fois.</p>
+            <p className="ns-p">
+              <strong>Cette semaine :</strong> {WEEKLY_MYSTERY.title}
+            </p>
+            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
           </div>
 
-          <Link className="ns-btn ns-btn-primary" href="/mystery250">
+          <Link className="ns-btn ns-btn-primary" href={weeklyMysteryAppHref}>
             Essayez l’énigme de la semaine
           </Link>
         </div>

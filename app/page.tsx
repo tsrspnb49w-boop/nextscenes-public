@@ -4,6 +4,19 @@ import { HOME_FEATURES } from "@/app/lib/homeFeatures";
 import { FEATURED_STORIES, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
+const WEEKLY_MYSTERY = {
+  ref: "the-vanishing-necklace",
+  title: "The Vanishing Necklace",
+  teaser: "A locked bedroom, a missing necklace, and one nervous hostess. Follow the clues before the reveal.",
+};
+
+function getWeeklyMysteryAppHref() {
+  const params = new URLSearchParams({ mystery: WEEKLY_MYSTERY.ref });
+  return `${APP_URL}/mystery250?${params.toString()}`;
+}
+
 type PublicHomepageResponse = {
   ok?: boolean;
   featuredStories?: FeaturedStory[];
@@ -71,6 +84,7 @@ function PillButton({
 export default async function HomePage() {
   const homeFeatures = HOME_FEATURES.en;
   const bookOfTheWeek = homeFeatures.bookOfTheWeek;
+  const weeklyMysteryAppHref = getWeeklyMysteryAppHref();
   const featuredStories = await getFeaturedStories("en");
 
   return (
@@ -93,7 +107,7 @@ export default async function HomePage() {
             {/* CTA */}
             <div className="ns-home-hero-cta">
               <PillButton href={bookOfTheWeek.href}>Start Reading</PillButton>
-              <PillButton href="https://app.nextscenes.org" variant="ghost">
+              <PillButton href={APP_URL} variant="ghost">
                 Start Writing
               </PillButton>
             </div>
@@ -165,13 +179,13 @@ export default async function HomePage() {
       {/* LIVE */}
       <section className="ns-home-live">
         <div className="ns-home-live-grid">
-          <Link href={homeFeatures.puzzleOfTheWeek.href} className="ns-home-live-card">
+          <Link href={weeklyMysteryAppHref} className="ns-home-live-card">
             <div className="ns-home-live-badge is-puzzle">Puzzle</div>
             <div className="ns-home-live-title">
-              {homeFeatures.puzzleOfTheWeek.title}
+              This week: {WEEKLY_MYSTERY.title}
             </div>
             <div className="ns-home-live-desc">
-              {homeFeatures.puzzleOfTheWeek.description}
+              {WEEKLY_MYSTERY.teaser}
             </div>
           </Link>
 
@@ -219,10 +233,13 @@ export default async function HomePage() {
         <div className="ns-mystery-shell">
           <div>
             <h2 className="ns-h2">Short mysteries. Sharp thinking.</h2>
-            <p className="ns-p">One clear challenge at a time.</p>
+            <p className="ns-p">
+              <strong>This week:</strong> {WEEKLY_MYSTERY.title}
+            </p>
+            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
           </div>
 
-          <Link className="ns-btn ns-btn-primary" href="/mystery250">
+          <Link className="ns-btn ns-btn-primary" href={weeklyMysteryAppHref}>
             Try this week’s puzzle
           </Link>
         </div>

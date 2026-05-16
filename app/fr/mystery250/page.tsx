@@ -2,10 +2,61 @@ import Link from "next/link";
 import TryMystery from "../../../components/TryMystery";
 import { mysteryPuzzlesFr } from "@/data/mystery250/fr";
 import { getActivePuzzles } from "@/lib/mystery250/getActivePuzzles";
-import { getUtcDaySeed } from "@/lib/mystery250/dateSeed";
-import { selectPuzzle } from "@/lib/mystery250/selectPuzzle";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
+const DEFAULT_WEEKLY_MYSTERY_ID = "m250-001";
+
+const FEATURED_MYSTERY_ID = String(
+  process.env.NEXT_PUBLIC_MYSTERY250_FEATURED_ID_FR ||
+    process.env.NEXT_PUBLIC_MYSTERY250_FEATURED_ID ||
+    DEFAULT_WEEKLY_MYSTERY_ID
+).trim();
+
+function slugifyPuzzleRef(value: string) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function matchesFeaturedPuzzle(puzzle: { id?: string; slug?: string; title?: string }, ref: string) {
+  const raw = String(ref || "").trim();
+  if (!raw) return false;
+
+  const knownRefs: Record<string, string> = {
+    "the-vanishing-necklace": "m250-001",
+    "vanishing-necklace": "m250-001",
+    "the-midnight-visitor": "m250-002",
+    "midnight-visitor": "m250-002",
+    "the-silent-clock": "m250-003",
+    "silent-clock": "m250-003",
+  };
+
+  const refSlug = slugifyPuzzleRef(raw);
+  const knownId = knownRefs[refSlug] || "";
+
+  return [puzzle.id, puzzle.slug, puzzle.title]
+    .filter(Boolean)
+    .some((value) => {
+      const text = String(value || "").trim();
+      return text === raw || text === knownId || slugifyPuzzleRef(text) === refSlug;
+    });
+}
+
+function selectFeaturedPuzzle(puzzles: typeof mysteryPuzzlesFr) {
+  const forcedPuzzle = puzzles.find((puzzle) =>
+    matchesFeaturedPuzzle(puzzle, FEATURED_MYSTERY_ID)
+  );
+  return (
+    forcedPuzzle ||
+    puzzles.find((puzzle) => matchesFeaturedPuzzle(puzzle, DEFAULT_WEEKLY_MYSTERY_ID)) ||
+    puzzles[0] ||
+    null
+  );
+}
 
 type MysteryCardItem = {
   icon: string;
@@ -67,8 +118,7 @@ function SectionShell({
 
 export default function FrMystery250Page() {
   const puzzles = getActivePuzzles(mysteryPuzzlesFr);
-  const daySeed = getUtcDaySeed();
-  const initialPuzzle = selectPuzzle(puzzles, "daily", daySeed);
+  const initialPuzzle = selectFeaturedPuzzle(puzzles);
 
   const levels: MysteryCardItem[] = [
     {
