@@ -2447,3 +2447,38 @@ div.ns-book-badge {
     line-height: 1.12;
   }
 }
+
+/* ===============================
+   Mystery250 — Weekly puzzle image
+   Build: 2026-05-17 (One-Way Footprints public feature image v1)
+   =============================== */
+
+.ns-m250-try-image-frame {
+  position: relative;
+  z-index: 1;
+  margin: 6px 0 16px;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(20, 138, 74, 0.16);
+  background: #e9efe9;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.055);
+}
+
+.ns-m250-try-image {
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .ns-m250-try-image-frame {
+    border-radius: 16px;
+    margin-bottom: 14px;
+  }
+
+  .ns-m250-try-image {
+    max-height: 260px;
+  }
+}

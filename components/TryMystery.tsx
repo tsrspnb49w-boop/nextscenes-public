@@ -28,6 +28,7 @@ function getAppMysteryRef(puzzle: MysteryPuzzle | null) {
     "m250-001": "the-vanishing-necklace",
     "m250-002": "the-midnight-visitor",
     "m250-003": "the-silent-clock",
+    "m250-006": "the-one-way-footprints",
   };
 
   return knownRefs[id] || slugifyPuzzleRef(puzzle?.title || puzzle?.slug || puzzle?.id || "");
@@ -68,7 +69,6 @@ export default function TryMystery({
           noPuzzle: "No mystery is available right now.",
         };
 
-
   if (!currentPuzzle) {
     return (
       <section className="ns-section ns-m250-panel ns-m250-try">
@@ -82,6 +82,9 @@ export default function TryMystery({
     );
   }
 
+  const questionText =
+    String(currentPuzzle.question || "").trim() || ui.culpritQuestion;
+
   return (
     <section className="ns-section ns-m250-panel ns-m250-try">
       <div className="ns-m250-try-head">
@@ -92,6 +95,16 @@ export default function TryMystery({
           <h3 className="ns-h3 ns-m250-try-title">{currentPuzzle.title}</h3>
         </div>
       </div>
+
+      {currentPuzzle.imageUrl ? (
+        <figure className="ns-m250-try-image-frame">
+          <img
+            src={currentPuzzle.imageUrl}
+            alt={currentPuzzle.imageAlt || currentPuzzle.title}
+            className="ns-m250-try-image"
+          />
+        </figure>
+      ) : null}
 
       <div className="ns-m250-try-case">
         <p className="ns-p ns-m250-try-line">{currentPuzzle.setup}</p>
@@ -113,7 +126,7 @@ export default function TryMystery({
         ) : null}
 
         <p className="ns-p ns-m250-try-question">
-          <strong>{ui.caseQuestion}:</strong> {ui.culpritQuestion}
+          <strong>{ui.caseQuestion}:</strong> {questionText}
         </p>
       </div>
 

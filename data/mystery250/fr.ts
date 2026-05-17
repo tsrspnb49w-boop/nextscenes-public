@@ -2,6 +2,23 @@ import type { MysteryPuzzle } from "./types";
 
 export const mysteryPuzzlesFr: MysteryPuzzle[] = [
   {
+    id: "m250-006",
+    slug: "les-empreintes-a-sens-unique",
+    title: "Les empreintes à sens unique",
+    setup:
+      "Après une nuit de neige fraîche, un fermier aperçoit une seule piste d’empreintes allant de la route jusqu’à sa grange fermée à clé. Il n’y a aucune trace de retour. Il se précipite vers la grange, l’ouvre, et ne trouve personne à l’intérieur.",
+    question: "Comment est-ce possible ?",
+    answer:
+      "La piste semblait seulement mener vers la grange. La personne avait marché à reculons depuis la grange vers la route.",
+    explanation:
+      "Comme les empreintes étaient orientées vers la grange, le fermier a supposé que quelqu’un y était entré. En réalité, la personne quittait la grange en marchant à reculons, ce qui donnait l’impression que la piste allait vers la porte.",
+    difficulty: "medium",
+    imageUrl: "/images/mystery250/the-one-way-footprints.png",
+    imageAlt:
+      "Une cour de ferme enneigée avec une grange fermée, une seule piste d’empreintes et un fermier perplexe.",
+    active: true,
+  },
+  {
     id: "m250-001",
     slug: "collier-disparu",
     title: "Le collier disparu",

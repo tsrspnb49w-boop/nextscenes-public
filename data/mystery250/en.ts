@@ -2,6 +2,23 @@ import type { MysteryPuzzle } from "./types";
 
 export const mysteryPuzzlesEn: MysteryPuzzle[] = [
   {
+    id: "m250-006",
+    slug: "the-one-way-footprints",
+    title: "The One-Way Footprints",
+    setup:
+      "After a night of fresh snowfall, a farmer saw a single trail of footprints leading from the road straight to his locked barn. There were no footprints leading away. He hurried to the barn, opened it, and found no one inside.",
+    question: "How was that possible?",
+    answer:
+      "The trail only appeared to lead into the barn. The person had walked backward from the barn toward the road.",
+    explanation:
+      "Because the footprints faced the barn, the farmer assumed the person had entered it. In truth, the person had walked backward away from the barn, making the trail look as if it led toward the door.",
+    difficulty: "medium",
+    imageUrl: "/images/mystery250/the-one-way-footprints.png",
+    imageAlt:
+      "A snowy farmyard with a locked barn, one trail of footprints, and a puzzled farmer.",
+    active: true,
+  },
+  {
     id: "m250-001",
     slug: "vanishing-necklace",
     title: "The Vanishing Necklace",
