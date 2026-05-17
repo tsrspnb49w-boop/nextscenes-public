@@ -7,9 +7,13 @@ import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 const WEEKLY_MYSTERY = {
-  ref: "the-vanishing-necklace",
-  title: "The Vanishing Necklace",
-  teaser: "A locked bedroom, a missing necklace, and one nervous hostess. Follow the clues before the reveal.",
+  ref: "the-one-way-footprints",
+  title: "The One-Way Footprints",
+  teaser:
+    "Fresh snow. One trail to a locked barn. No trail away. No one inside. Can you solve it before the reveal?",
+  imageSrc: "/images/mystery250/the-one-way-footprints.png",
+  imageAlt:
+    "A farmer studying one trail of footprints leading to a locked barn after fresh snow",
 };
 
 function getWeeklyMysteryAppHref() {
@@ -179,7 +183,17 @@ export default async function HomePage() {
       {/* LIVE */}
       <section className="ns-home-live">
         <div className="ns-home-live-grid">
-          <Link href={weeklyMysteryAppHref} className="ns-home-live-card">
+          <Link href={weeklyMysteryAppHref} className="ns-home-live-card ns-home-live-card-with-image">
+            <div className="ns-home-live-thumb" aria-hidden="true">
+              <Image
+                src={WEEKLY_MYSTERY.imageSrc}
+                alt=""
+                width={720}
+                height={405}
+                className="ns-home-live-thumb-img"
+              />
+            </div>
+
             <div className="ns-home-live-badge is-puzzle">Puzzle</div>
             <div className="ns-home-live-title">
               This week: {WEEKLY_MYSTERY.title}
@@ -231,17 +245,27 @@ export default async function HomePage() {
       {/* MYSTERY */}
       <section className="ns-mystery-section">
         <div className="ns-mystery-shell">
-          <div>
+          <div className="ns-mystery-copy">
             <h2 className="ns-h2">Short mysteries. Sharp thinking.</h2>
             <p className="ns-p">
               <strong>This week:</strong> {WEEKLY_MYSTERY.title}
             </p>
             <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
+
+            <Link className="ns-btn ns-btn-primary" href={weeklyMysteryAppHref}>
+              Try this week’s puzzle
+            </Link>
           </div>
 
-          <Link className="ns-btn ns-btn-primary" href={weeklyMysteryAppHref}>
-            Try this week’s puzzle
-          </Link>
+          <figure className="ns-mystery-image-card">
+            <Image
+              src={WEEKLY_MYSTERY.imageSrc}
+              alt={WEEKLY_MYSTERY.imageAlt}
+              width={720}
+              height={405}
+              className="ns-mystery-image"
+            />
+          </figure>
         </div>
       </section>
     </div>
