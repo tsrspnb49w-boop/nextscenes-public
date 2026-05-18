@@ -117,7 +117,7 @@ export default async function HomePage() {
             </div>
 
             <div className="ns-home-book-week">
-              <div className="ns-home-book-week-label">Livre de la semaine</div>
+              <div className="ns-home-book-week-label">Livre en avant</div>
 
               <h2 className="ns-home-book-week-title">Didie</h2>
 
@@ -179,56 +179,53 @@ export default async function HomePage() {
         <FeaturedStoriesShelf stories={featuredStories} authorLabel="Par" />
       </section>
 
-      <section className="ns-home-live">
+      <section className="ns-home-live" aria-label="Parcours communautaires de NextScenes">
         <div className="ns-home-live-grid">
-          <Link
-            href={weeklyMysteryAppHref}
-            className="ns-home-live-card ns-home-live-card-with-image"
-          >
-            <div className="ns-home-live-thumb" aria-hidden="true">
-              <Image
-                src={WEEKLY_MYSTERY.imageSrc}
-                alt=""
-                width={720}
-                height={405}
-                className="ns-home-live-thumb-img"
-              />
-            </div>
-
-            <div className="ns-home-live-badge is-puzzle">Énigme</div>
-            <div className="ns-home-live-title">
-              Cette semaine : {WEEKLY_MYSTERY.title}
-            </div>
-            <div className="ns-home-live-desc">
-              {WEEKLY_MYSTERY.teaser}
-            </div>
-          </Link>
-
-          <Link
-            href={homeFeatures.clubSpotlight.href}
-            className="ns-home-live-card"
-          >
+          <article className="ns-home-live-card ns-home-info-card">
             <div className="ns-home-live-badge is-club">Club</div>
-            <div className="ns-home-live-title">
-              {homeFeatures.clubSpotlight.title}
-            </div>
+            <div className="ns-home-live-title">Une communauté qui construit avec sérieux</div>
             <div className="ns-home-live-desc">
-              {homeFeatures.clubSpotlight.description}
+              Auteurs, lecteurs et esprits attentifs se retrouvent pour parler
+              des histoires, améliorer l’écriture et progresser avec discipline.
             </div>
-          </Link>
 
-          <Link
-            href="/fr/pilote-auteurs-fondateurs"
-            className="ns-home-live-card"
-          >
-            <div className="ns-home-live-badge is-club">Auteurs</div>
-            <div className="ns-home-live-title">
-              Pilote des auteurs fondateurs
-            </div>
+            <details className="ns-home-reveal">
+              <summary>Voir ce que propose le Club</summary>
+              <p>
+                Dans le Club, les membres peuvent suivre les nouvelles de la
+                plateforme, prendre part à des discussions utiles, soutenir les
+                histoires en cours de création et aider à bâtir une culture de
+                lecture et d’écriture plus réfléchie.
+              </p>
+            </details>
+
+            <Link href={homeFeatures.clubSpotlight.href} className="ns-home-live-link">
+              Entrer dans le Club →
+            </Link>
+          </article>
+
+          <article className="ns-home-live-card ns-home-info-card">
+            <div className="ns-home-live-badge is-writers">Auteurs</div>
+            <div className="ns-home-live-title">Pour les conteurs qui bâtissent avec soin</div>
             <div className="ns-home-live-desc">
-              NextScenes invite des auteurs sérieux avec des histoires originales.
+              NextScenes offre aux auteurs un espace pour développer leurs
+              histoires en public, inviter des contributions, protéger le canon
+              et garder l’autorité sur leur œuvre.
             </div>
-          </Link>
+
+            <details className="ns-home-reveal">
+              <summary>Voir comment les auteurs utilisent NextScenes</summary>
+              <p>
+                Les auteurs peuvent ouvrir leurs histoires à la collaboration,
+                examiner les propositions, approuver ce qui devient canon et
+                conserver la direction de leur récit. L’auteur reste le capitaine.
+              </p>
+            </details>
+
+            <Link href="/fr/pilote-auteurs-fondateurs" className="ns-home-live-link">
+              Découvrir le pilote des auteurs →
+            </Link>
+          </article>
         </div>
       </section>
 
@@ -249,20 +246,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="ns-mystery-section">
+      <section className="ns-mystery-section" aria-label="Énigme hebdomadaire Mystery250">
         <div className="ns-mystery-shell">
-          <div className="ns-mystery-copy">
-            <h2 className="ns-h2">Mystères courts. Esprit affûté.</h2>
-            <p className="ns-p">
-              <strong>Cette semaine :</strong> {WEEKLY_MYSTERY.title}
-            </p>
-            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
-
-            <Link className="ns-btn ns-btn-primary" href={weeklyMysteryAppHref}>
-              Essayez l’énigme de la semaine
-            </Link>
-          </div>
-
           <figure className="ns-mystery-image-card">
             <Image
               src={WEEKLY_MYSTERY.imageSrc}
@@ -271,7 +256,20 @@ export default async function HomePage() {
               height={405}
               className="ns-mystery-image"
             />
+
+            <Link className="ns-mystery-image-button" href={weeklyMysteryAppHref}>
+              Essayez l’énigme de la semaine
+            </Link>
           </figure>
+
+          <div className="ns-mystery-copy">
+            <div className="ns-mystery-kicker">Énigme de la semaine</div>
+            <h2 className="ns-h2">Mystery250 : mystères courts, esprit affûté.</h2>
+            <p className="ns-p">
+              <strong>Cette semaine :</strong> {WEEKLY_MYSTERY.title}
+            </p>
+            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
+          </div>
         </div>
       </section>
     </div>

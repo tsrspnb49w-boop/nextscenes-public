@@ -118,7 +118,7 @@ export default async function HomePage() {
 
             {/* BOOK OF THE WEEK */}
             <div className="ns-home-book-week">
-              <div className="ns-home-book-week-label">Book of the Week</div>
+              <div className="ns-home-book-week-label">Featured Book</div>
 
               <h2 className="ns-home-book-week-title">Didie</h2>
 
@@ -180,48 +180,53 @@ export default async function HomePage() {
         <FeaturedStoriesShelf stories={featuredStories} authorLabel="By" />
       </section>
 
-      {/* LIVE */}
-      <section className="ns-home-live">
+      {/* COMMUNITY */}
+      <section className="ns-home-live" aria-label="NextScenes community paths">
         <div className="ns-home-live-grid">
-          <Link href={weeklyMysteryAppHref} className="ns-home-live-card ns-home-live-card-with-image">
-            <div className="ns-home-live-thumb" aria-hidden="true">
-              <Image
-                src={WEEKLY_MYSTERY.imageSrc}
-                alt=""
-                width={720}
-                height={405}
-                className="ns-home-live-thumb-img"
-              />
-            </div>
-
-            <div className="ns-home-live-badge is-puzzle">Puzzle</div>
-            <div className="ns-home-live-title">
-              This week: {WEEKLY_MYSTERY.title}
-            </div>
-            <div className="ns-home-live-desc">
-              {WEEKLY_MYSTERY.teaser}
-            </div>
-          </Link>
-
-          <Link href={homeFeatures.clubSpotlight.href} className="ns-home-live-card">
+          <article className="ns-home-live-card ns-home-info-card">
             <div className="ns-home-live-badge is-club">Club</div>
-            <div className="ns-home-live-title">
-              {homeFeatures.clubSpotlight.title}
-            </div>
+            <div className="ns-home-live-title">A community that builds seriously</div>
             <div className="ns-home-live-desc">
-              {homeFeatures.clubSpotlight.description}
+              Writers, readers, and thoughtful minds gather here to discuss
+              stories, improve craft, and grow with discipline.
             </div>
-          </Link>
 
-          <Link href="/founding-writers-pilot" className="ns-home-live-card">
-            <div className="ns-home-live-badge is-club">Writers</div>
-            <div className="ns-home-live-title">
-              Founding Writers Pilot
-            </div>
+            <details className="ns-home-reveal">
+              <summary>See what the Club offers</summary>
+              <p>
+                Inside the Club, members can follow platform updates, join
+                meaningful discussions, support developing stories, and help
+                shape a more thoughtful reading and writing culture.
+              </p>
+            </details>
+
+            <Link href={homeFeatures.clubSpotlight.href} className="ns-home-live-link">
+              Enter the Club →
+            </Link>
+          </article>
+
+          <article className="ns-home-live-card ns-home-info-card">
+            <div className="ns-home-live-badge is-writers">Writers</div>
+            <div className="ns-home-live-title">For storytellers building with care</div>
             <div className="ns-home-live-desc">
-              NextScenes is inviting serious writers with original stories.
+              NextScenes gives writers room to develop stories in public,
+              invite contributions, protect canon, and guide their work with
+              authority.
             </div>
-          </Link>
+
+            <details className="ns-home-reveal">
+              <summary>See how writers use NextScenes</summary>
+              <p>
+                Writers can open stories for collaboration, review proposals,
+                approve what becomes canon, and keep control over the direction
+                of their work. The author remains the captain.
+              </p>
+            </details>
+
+            <Link href="/founding-writers-pilot" className="ns-home-live-link">
+              Explore the Writers Pilot →
+            </Link>
+          </article>
         </div>
       </section>
 
@@ -242,21 +247,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* MYSTERY */}
-      <section className="ns-mystery-section">
+      {/* MYSTERY250 */}
+      <section className="ns-mystery-section" aria-label="Mystery250 weekly puzzle">
         <div className="ns-mystery-shell">
-          <div className="ns-mystery-copy">
-            <h2 className="ns-h2">Short mysteries. Sharp thinking.</h2>
-            <p className="ns-p">
-              <strong>This week:</strong> {WEEKLY_MYSTERY.title}
-            </p>
-            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
-
-            <Link className="ns-btn ns-btn-primary" href={weeklyMysteryAppHref}>
-              Try this week’s puzzle
-            </Link>
-          </div>
-
           <figure className="ns-mystery-image-card">
             <Image
               src={WEEKLY_MYSTERY.imageSrc}
@@ -265,7 +258,20 @@ export default async function HomePage() {
               height={405}
               className="ns-mystery-image"
             />
+
+            <Link className="ns-mystery-image-button" href={weeklyMysteryAppHref}>
+              Try this week’s puzzle
+            </Link>
           </figure>
+
+          <div className="ns-mystery-copy">
+            <div className="ns-mystery-kicker">Puzzle of the Week</div>
+            <h2 className="ns-h2">Mystery250: Short mysteries. Sharp thinking.</h2>
+            <p className="ns-p">
+              <strong>This week:</strong> {WEEKLY_MYSTERY.title}
+            </p>
+            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
+          </div>
         </div>
       </section>
     </div>
