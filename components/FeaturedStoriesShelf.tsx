@@ -7,9 +7,11 @@ import { FeaturedStory } from "@/app/lib/featuredStories";
 export default function FeaturedStoriesShelf({
   stories,
   authorLabel = "By",
+  progressLabel = "In Progress",
 }: {
   stories: FeaturedStory[];
   authorLabel?: string;
+  progressLabel?: string;
 }) {
   return (
     <div className="ns-featured-grid" aria-label="Featured stories">
@@ -40,6 +42,10 @@ export default function FeaturedStoriesShelf({
                 {story.badge}
               </div>
             ) : null}
+
+            <div className="ns-book-progress-badge">
+              {progressLabel}
+            </div>
           </div>
 
           <div className="ns-book-meta">

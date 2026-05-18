@@ -126,6 +126,10 @@ export default async function HomePage() {
                 l’appel obstiné du foyer.
               </p>
 
+              <div className="ns-home-book-status">
+                En création sur NextScenes
+              </div>
+
               <Link href={bookOfTheWeek.href} className="ns-home-book-week-link">
                 Ouvrir le livre →
               </Link>
@@ -174,9 +178,19 @@ export default async function HomePage() {
             Entrez dans des récits déjà vivants, portés par la mémoire, le
             mystère et leurs conséquences.
           </p>
+          <p className="ns-home-featured-note">
+            Ces histoires sont actuellement en cours de création sur NextScenes.
+            Les lecteurs peuvent suivre leur développement à mesure que de
+            nouvelles scènes, de nouveaux chapitres et de nouvelles contributions
+            sont ajoutés.
+          </p>
         </div>
 
-        <FeaturedStoriesShelf stories={featuredStories} authorLabel="Par" />
+        <FeaturedStoriesShelf
+          stories={featuredStories}
+          authorLabel="Par"
+          progressLabel="En cours"
+        />
       </section>
 
       <section className="ns-home-live" aria-label="Parcours communautaires de NextScenes">

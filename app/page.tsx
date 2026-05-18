@@ -127,6 +127,10 @@ export default async function HomePage() {
                 of home.
               </p>
 
+              <div className="ns-home-book-status">
+                In creation on NextScenes
+              </div>
+
               <Link href={bookOfTheWeek.href} className="ns-home-book-week-link">
                 Open book →
               </Link>
@@ -175,9 +179,18 @@ export default async function HomePage() {
             Step into stories already alive with voice, mystery, memory, and
             consequence.
           </p>
+          <p className="ns-home-featured-note">
+            These stories are currently in creation on NextScenes. Readers can
+            follow their development as new scenes, chapters, and contributions
+            are added.
+          </p>
         </div>
 
-        <FeaturedStoriesShelf stories={featuredStories} authorLabel="By" />
+        <FeaturedStoriesShelf
+          stories={featuredStories}
+          authorLabel="By"
+          progressLabel="In Progress"
+        />
       </section>
 
       {/* COMMUNITY */}
