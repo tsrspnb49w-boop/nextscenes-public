@@ -7,24 +7,70 @@ import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
-const WEEKLY_MYSTERY = {
-  ref: "the-one-way-footprints",
+const FALLBACK_WEEKLY_MYSTERY: NormalizedWeeklyMystery = {
+  ref: "les-empreintes-a-sens-unique",
   title: "Les empreintes à sens unique",
   teaser:
     "Neige fraîche. Une seule piste vers une grange verrouillée. Aucune trace de retour. Personne à l’intérieur. Saurez-vous résoudre l’énigme avant la révélation ?",
   imageSrc: "/images/mystery250/the-one-way-footprints.png",
   imageAlt:
     "Un fermier observe une seule piste d’empreintes menant à une grange verrouillée après une chute de neige",
+  cta: "Essayez l’énigme de la semaine",
+  href: "",
 };
 
-function getWeeklyMysteryAppHref() {
-  const params = new URLSearchParams({ mystery: WEEKLY_MYSTERY.ref });
+type WeeklyMystery = {
+  id?: string;
+  mysteryId?: string;
+  ref?: string;
+  title?: string;
+  teaser?: string;
+  cta?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  href?: string;
+};
+
+type NormalizedWeeklyMystery = {
+  ref: string;
+  title: string;
+  teaser: string;
+  imageSrc: string;
+  imageAlt: string;
+  cta: string;
+  href: string;
+};
+
+function normalizeWeeklyMystery(raw?: WeeklyMystery | null): NormalizedWeeklyMystery {
+  if (!raw) return FALLBACK_WEEKLY_MYSTERY;
+
+  return {
+    ref: raw.ref || raw.mysteryId || FALLBACK_WEEKLY_MYSTERY.ref,
+    title: raw.title || FALLBACK_WEEKLY_MYSTERY.title,
+    teaser: raw.teaser || FALLBACK_WEEKLY_MYSTERY.teaser,
+    imageSrc: raw.imageSrc || FALLBACK_WEEKLY_MYSTERY.imageSrc,
+    imageAlt: raw.imageAlt || FALLBACK_WEEKLY_MYSTERY.imageAlt,
+    cta: raw.cta || FALLBACK_WEEKLY_MYSTERY.cta,
+    href: raw.href || "",
+  };
+}
+
+function getWeeklyMysteryAppHref(weeklyMystery: NormalizedWeeklyMystery) {
+  if (weeklyMystery.href) return weeklyMystery.href;
+
+  const params = new URLSearchParams({ mystery: weeklyMystery.ref });
   return `${APP_URL}/mystery250?${params.toString()}`;
 }
 
 type PublicHomepageResponse = {
   ok?: boolean;
   featuredStories?: FeaturedStory[];
+  weeklyMystery?: WeeklyMystery | null;
+};
+
+type PublicHomepageData = {
+  featuredStories: FeaturedStory[];
+  weeklyMystery: NormalizedWeeklyMystery;
 };
 
 function cleanApiBase(value: string | undefined) {
@@ -39,7 +85,7 @@ function getPublicHomepageApiBase() {
   );
 }
 
-async function getFeaturedStories(language: "en" | "fr") {
+async function getPublicHomepageData(language: "en" | "fr"): Promise<PublicHomepageData> {
   const apiBase = getPublicHomepageApiBase();
 
   try {
@@ -50,16 +96,27 @@ async function getFeaturedStories(language: "en" | "fr") {
       }
     );
 
-    if (!res.ok) return FEATURED_STORIES;
+    if (!res.ok) {
+      return {
+        featuredStories: FEATURED_STORIES,
+        weeklyMystery: FALLBACK_WEEKLY_MYSTERY,
+      };
+    }
 
     const data = (await res.json()) as PublicHomepageResponse;
     const stories = Array.isArray(data?.featuredStories)
       ? data.featuredStories
       : [];
 
-    return stories.length ? stories : FEATURED_STORIES;
+    return {
+      featuredStories: stories.length ? stories : FEATURED_STORIES,
+      weeklyMystery: normalizeWeeklyMystery(data?.weeklyMystery),
+    };
   } catch {
-    return FEATURED_STORIES;
+    return {
+      featuredStories: FEATURED_STORIES,
+      weeklyMystery: FALLBACK_WEEKLY_MYSTERY,
+    };
   }
 }
 
@@ -89,8 +146,10 @@ function PillButton({
 export default async function HomePage() {
   const homeFeatures = HOME_FEATURES.fr;
   const bookOfTheWeek = homeFeatures.bookOfTheWeek;
-  const weeklyMysteryAppHref = getWeeklyMysteryAppHref();
-  const featuredStories = await getFeaturedStories("fr");
+  const homepageData = await getPublicHomepageData("fr");
+  const weeklyMystery = homepageData.weeklyMystery;
+  const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
+  const featuredStories = homepageData.featuredStories;
 
   return (
     <div className="ns-page">
@@ -264,15 +323,16 @@ export default async function HomePage() {
         <div className="ns-mystery-shell">
           <figure className="ns-mystery-image-card">
             <Image
-              src={WEEKLY_MYSTERY.imageSrc}
-              alt={WEEKLY_MYSTERY.imageAlt}
+              src={weeklyMystery.imageSrc}
+              alt={weeklyMystery.imageAlt}
               width={720}
               height={405}
               className="ns-mystery-image"
+              unoptimized
             />
 
             <Link className="ns-mystery-image-button" href={weeklyMysteryAppHref}>
-              Essayez l’énigme de la semaine
+              {weeklyMystery.cta}
             </Link>
           </figure>
 
@@ -280,9 +340,9 @@ export default async function HomePage() {
             <div className="ns-mystery-kicker">Énigme de la semaine</div>
             <h2 className="ns-h2">Mystery250 : mystères courts, esprit affûté.</h2>
             <p className="ns-p">
-              <strong>Cette semaine :</strong> {WEEKLY_MYSTERY.title}
+              <strong>Cette semaine :</strong> {weeklyMystery.title}
             </p>
-            <p className="ns-p">{WEEKLY_MYSTERY.teaser}</p>
+            <p className="ns-p">{weeklyMystery.teaser}</p>
           </div>
         </div>
       </section>
