@@ -239,16 +239,16 @@ export default async function HomePage() {
             consequence.
           </p>
           <p className="ns-home-featured-note">
-            These stories are currently in creation on NextScenes. Readers can
-            follow their development as new scenes, chapters, and contributions
-            are added.
+            Some stories here are still growing on NextScenes. Others began as
+            selected previews and have now moved into publication, including books
+            now available on Amazon.
           </p>
         </div>
 
         <FeaturedStoriesShelf
           stories={featuredStories}
           authorLabel="By"
-          progressLabel="In Progress"
+          progressLabel="In Development"
         />
       </section>
 

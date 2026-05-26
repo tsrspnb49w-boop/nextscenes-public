@@ -238,17 +238,16 @@ export default async function HomePage() {
             mystère et leurs conséquences.
           </p>
           <p className="ns-home-featured-note">
-            Ces histoires sont actuellement en cours de création sur NextScenes.
-            Les lecteurs peuvent suivre leur développement à mesure que de
-            nouvelles scènes, de nouveaux chapitres et de nouvelles contributions
-            sont ajoutés.
+            Certaines histoires continuent de grandir sur NextScenes. D’autres
+            existent ici comme aperçus choisis et sont désormais passées vers la
+            publication, y compris des livres disponibles sur Amazon.
           </p>
         </div>
 
         <FeaturedStoriesShelf
           stories={featuredStories}
           authorLabel="Par"
-          progressLabel="En cours"
+          progressLabel="En développement"
         />
       </section>
 

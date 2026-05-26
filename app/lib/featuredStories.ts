@@ -1,6 +1,6 @@
-// Build: featured-stories-config-v8
-// Purpose: Homepage featured shelf, fully config-driven
-// Note: Keep featured public story links and covers aligned with current app storylines.
+// Build: featured-stories-config-v9
+// Purpose: Homepage featured shelf, config-driven fallback data.
+// Note: API-managed homepage items override this file when /api/public-homepage responds successfully.
 
 export type FeaturedStory = {
   id: string;
@@ -11,7 +11,30 @@ export type FeaturedStory = {
   href: string;
   cover: string;
   badge: string;
-  badgeTone: "featured" | "new" | "now-reading" | "live";
+  badgeTone:
+    | "featured"
+    | "new"
+    | "now-reading"
+    | "live"
+    | "published-amazon"
+    | "preview";
+  developmentStatus?:
+    | "inDevelopment"
+    | "activeOnNextScenes"
+    | "showcaseOnly"
+    | "completedOnNextScenes"
+    | string;
+  developmentLabel?: string;
+  publicationStatus?:
+    | "notPublished"
+    | "comingSoon"
+    | "publishedAmazon"
+    | "publishedElsewhere"
+    | string;
+  publicationLabel?: string;
+  publicationUrl?: string;
+  publicationCta?: string;
+  progressLabel?: string;
 };
 
 export const FEATURED_STORIES: FeaturedStory[] = [
@@ -25,6 +48,11 @@ export const FEATURED_STORIES: FeaturedStory[] = [
     cover: "/images/covers/didie-cover.jpg",
     badge: "Featured",
     badgeTone: "featured",
+    developmentStatus: "inDevelopment",
+    developmentLabel: "In Development",
+    publicationStatus: "notPublished",
+    publicationLabel: "Not Yet Published",
+    progressLabel: "In Development",
   },
   {
     id: "jar-lingo-and-evel-broda-en",
@@ -37,18 +65,29 @@ export const FEATURED_STORIES: FeaturedStory[] = [
       "https://grkvsllcpotylcvbecuj.supabase.co/storage/v1/object/public/story-covers/69a553cf65ebedc2820c44b0/2026-05-11T12-33-33-861Z-de1843ce-b61e-4645-8e17-59fc85bb1310-lingo_eng.png",
     badge: "New",
     badgeTone: "new",
+    developmentStatus: "inDevelopment",
+    developmentLabel: "In Development",
+    publicationStatus: "notPublished",
+    publicationLabel: "Not Yet Published",
+    progressLabel: "In Development",
   },
   {
-    id: "jar-lingo-et-evel-broda-fr",
-    title: "Le Conte du roi Jar Lingo et d’Evel Broda",
-    author: "Eze Dike",
-    hook: "Un conte de jalousie, de royauté, de prophétie et de lumière.",
-    cta: "Lire",
-    href: "https://app.nextscenes.org/reader-view?storyId=6a01ac35f783507dfbc969e4",
-    cover:
-      "https://grkvsllcpotylcvbecuj.supabase.co/storage/v1/object/public/story-covers/69a553cf65ebedc2820c44b0/2026-05-11T10-15-02-512Z-183bbb22-e054-40bb-95da-f380a9ea235d-le-conte-du.png",
-    badge: "Live",
-    badgeTone: "live",
+    id: "ugo-and-the-butterfly-woman-en",
+    title: "Ugo and the Butterfly Woman",
+    author: "Goddy Oguzie",
+    hook: "A gentle children’s story about kindness, courage, respect for elders, and the quiet wisdom that grows inside a child’s heart.",
+    cta: "Read preview",
+    href: "https://app.nextscenes.org/reader-view?storyId=69fff8dd7e622bb7e06332f6",
+    cover: "/images/books/ugo-and-the-butterfly-woman-cover.png",
+    badge: "Published on Amazon",
+    badgeTone: "published-amazon",
+    developmentStatus: "showcaseOnly",
+    developmentLabel: "Preview on NextScenes",
+    publicationStatus: "publishedAmazon",
+    publicationLabel: "Published on Amazon",
+    publicationUrl: "https://www.amazon.com/s?k=ugo+and+the+butterfly+woman+book",
+    publicationCta: "View on Amazon",
+    progressLabel: "Published on Amazon",
   },
   {
     id: "reflections-of-the-wayfarer-en",
@@ -60,5 +99,10 @@ export const FEATURED_STORIES: FeaturedStory[] = [
     cover: "/images/default-covers/storyline-en.webp",
     badge: "Now Reading",
     badgeTone: "now-reading",
+    developmentStatus: "activeOnNextScenes",
+    developmentLabel: "Active on NextScenes",
+    publicationStatus: "notPublished",
+    publicationLabel: "Not Yet Published",
+    progressLabel: "Active on NextScenes",
   },
 ];
