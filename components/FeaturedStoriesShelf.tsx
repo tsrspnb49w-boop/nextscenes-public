@@ -32,51 +32,88 @@ function cleanText(value: unknown, fallback = "") {
   return s || fallback;
 }
 
-function isPublished(story: FeaturedStoryWithStatus) {
-  return (
-    story.publicationStatus === "publishedAmazon" ||
-    story.publicationStatus === "publishedElsewhere"
-  );
+function normalize(value: unknown) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_-]+/g, " ");
 }
 
-function getProgressLabel(story: FeaturedStoryWithStatus, fallback: string) {
-  if (isPublished(story)) {
-    return cleanText(story.publicationLabel || story.progressLabel, fallback);
+function isPublished(story: FeaturedStoryWithStatus) {
+  const publicationStatus = normalize(story.publicationStatus);
+  const publicationLabel = normalize(story.publicationLabel);
+  const publicationCta = normalize(story.publicationCta);
+
+  const explicitPublished =
+    publicationStatus === "publishedamazon" ||
+    publicationStatus === "published amazon" ||
+    publicationStatus === "publishedelsewhere" ||
+    publicationStatus === "published elsewhere" ||
+    publicationStatus === "published";
+
+  const labelPublished =
+    publicationLabel.includes("published on amazon") ||
+    publicationLabel === "published" ||
+    publicationCta.includes("view on amazon");
+
+  if (explicitPublished || labelPublished) return true;
+
+  // A publication URL alone is not enough to mark a story as published.
+  // The admin status or publication label must say so explicitly, otherwise
+  // a story can remain safely marked as in development.
+  return false;
+}
+
+function getStatusLabel(story: FeaturedStoryWithStatus, fallback: string) {
+  if (isPublished(story)) return "Published";
+
+  const raw = cleanText(
+    story.progressLabel || story.developmentLabel,
+    fallback,
+  );
+  const lower = raw.toLowerCase();
+
+  if (lower.includes("new") || lower.includes("now reading")) {
+    return fallback;
   }
 
-  return cleanText(story.progressLabel || story.developmentLabel, fallback);
-}
-
-function getBadgeTone(story: FeaturedStoryWithStatus) {
-  if (isPublished(story)) return "published-amazon";
-  return cleanText(story.badgeTone, "featured");
+  return raw;
 }
 
 export default function FeaturedStoriesShelf({
   stories,
-  authorLabel = "By",
-  progressLabel = "In Progress",
+  progressLabel = "In Development",
+  storyCtaLabel = "Open story",
+  publicationAmazonCtaLabel = "View on Amazon",
 }: {
   stories: FeaturedStory[];
   authorLabel?: string;
   progressLabel?: string;
+  storyCtaLabel?: string;
+  publicationCtaLabel?: string;
+  publicationAmazonCtaLabel?: string;
 }) {
-  const safeStories = Array.isArray(stories) ? (stories as FeaturedStoryWithStatus[]) : [];
+  const safeStories = Array.isArray(stories)
+    ? (stories as FeaturedStoryWithStatus[])
+    : [];
 
   return (
     <div className="ns-featured-grid" aria-label="Featured stories">
       {safeStories.map((story) => {
-        const cardProgressLabel = getProgressLabel(story, progressLabel);
+        const published = isPublished(story);
         const publicationUrl = cleanText(story.publicationUrl);
-        const publicationCta = cleanText(story.publicationCta, story.publicationLabel || "View publication");
-        const badgeLabel = isPublished(story)
-          ? cleanText(story.publicationLabel, story.badge || "Published")
-          : cleanText(story.badge);
-        const badgeTone = getBadgeTone(story);
+        const statusLabel = getStatusLabel(story, progressLabel);
 
         return (
-          <article key={story.id} className="ns-book-card">
-            <Link href={story.href} className="ns-book-cover-link" aria-label={`Open ${story.title} preview on NextScenes`}>
+          <article
+            key={story.id}
+            className={`ns-book-card ${published ? "is-published" : "is-development"}`}
+          >
+            <Link
+              href={story.href}
+              className="ns-book-cover-link"
+              aria-label={`Open ${story.title} preview on NextScenes`}
+            >
               <div className="ns-book-cover-wrap">
                 <div className="ns-book-cover">
                   <Image
@@ -85,7 +122,7 @@ export default function FeaturedStoriesShelf({
                     width={1200}
                     height={1600}
                     className="ns-book-cover-img"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw"
+                    sizes="(max-width: 640px) 72px, (max-width: 1100px) 84px, 72px"
                     priority={story.id === "didie"}
                     unoptimized
                     style={{
@@ -96,14 +133,6 @@ export default function FeaturedStoriesShelf({
                     }}
                   />
                 </div>
-
-                {badgeLabel ? (
-                  <div className={`ns-book-badge is-${badgeTone}`} data-badge-tone={badgeTone}>
-                    {badgeLabel}
-                  </div>
-                ) : null}
-
-                <div className="ns-book-progress-badge">{cardProgressLabel}</div>
               </div>
             </Link>
 
@@ -112,21 +141,34 @@ export default function FeaturedStoriesShelf({
                 <div className="ns-book-title">{story.title}</div>
               </Link>
 
-              <div className="ns-book-author">
-                {authorLabel} {story.author}
-              </div>
               <div className="ns-book-hook">{story.hook}</div>
 
-              <div className="ns-book-actions" aria-label={`${story.title} actions`}>
-                <Link href={story.href} className="ns-book-cta">
-                  {story.cta} →
-                </Link>
+              <div
+                className="ns-book-status-row"
+                aria-label={`${story.title} status and action`}
+              >
+                <span
+                  className={`ns-book-status-pill ${published ? "is-published" : "is-development"}`}
+                >
+                  {statusLabel}
+                </span>
 
-                {publicationUrl ? (
-                  <Link href={publicationUrl} className="ns-book-cta ns-book-cta-publication" target="_blank" rel="noopener noreferrer">
-                    {publicationCta} →
+                {published ? (
+                  publicationUrl ? (
+                    <Link
+                      href={publicationUrl}
+                      className="ns-book-action-link ns-book-action-link-publication"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {publicationAmazonCtaLabel} →
+                    </Link>
+                  ) : null
+                ) : (
+                  <Link href={story.href} className="ns-book-action-link">
+                    {storyCtaLabel} →
                   </Link>
-                ) : null}
+                )}
               </div>
             </div>
           </article>

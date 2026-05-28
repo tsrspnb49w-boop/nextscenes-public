@@ -2851,3 +2851,3630 @@ div.ns-book-badge {
   color: #fffaf0;
   border: 1px solid rgba(255, 250, 240, 0.45);
 }
+
+
+/* ===============================
+   Public homepage redesign
+   Build: 2026-05-28 (visual public entrance v1)
+   Purpose:
+   - Stronger literary homepage
+   - Faded bookshelf hero image
+   - Dynamic featured shelf from public homepage API
+   - Cleaner public reading path
+   =============================== */
+
+:root {
+  --ns-navy: #071b33;
+  --ns-deep-green: #06331f;
+  --ns-green: #0f6d3a;
+  --ns-green-2: #148a4a;
+  --ns-green-3: #1fb66a;
+  --ns-cream: #f5efe1;
+  --ns-warm-cream: #fff8ea;
+  --ns-gold: #ffca28;
+  --ns-copper: #b74618;
+  --ns-ink: #071225;
+  --ns-hero-bg-url: url("/images/home/bookshelf-hero.webp");
+}
+
+/* Give the public nav a stronger NextScenes signature without changing its logic. */
+.ns-topbar {
+  background:
+    radial-gradient(700px 180px at 14% 0%, rgba(31, 182, 106, 0.28), transparent 68%),
+    linear-gradient(180deg, #0f6d3a 0%, #0a5f33 58%, #06331f 100%);
+  border-bottom-color: rgba(187, 247, 208, 0.20);
+}
+
+.ns-topbar-inner {
+  max-width: 1280px;
+}
+
+.ns-brand-logo {
+  height: 38px;
+}
+
+.ns-topbar .ns-btn-ghost {
+  background: rgba(255, 202, 40, 0.94);
+  border-color: rgba(255, 229, 155, 0.95);
+  color: #071225;
+  font-weight: 900;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+}
+
+.ns-topbar .ns-btn-ghost:hover {
+  background: #ffca28;
+  color: #071225;
+  border-color: rgba(255, 229, 155, 1);
+}
+
+.ns-page.ns-public-home {
+  max-width: none;
+  padding: 0;
+  background: var(--ns-cream);
+}
+
+.ns-home-container {
+  width: min(1280px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.ns-home-section-kicker,
+.ns-home-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.23em;
+  font-size: 0.75rem;
+  font-weight: 950;
+}
+
+.ns-home-hero-v2 {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 760px;
+  color: #ffffff;
+  background: var(--ns-deep-green);
+}
+
+.ns-home-hero-backdrop,
+.ns-home-hero-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ns-home-hero-backdrop {
+  z-index: -3;
+  background-image: var(--ns-hero-bg-url);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.54;
+  filter: saturate(0.98) contrast(0.96);
+}
+
+.ns-home-hero-shade {
+  z-index: -2;
+  background:
+    radial-gradient(circle at 12% 24%, rgba(31, 182, 106, 0.42), transparent 26%),
+    radial-gradient(circle at 78% 10%, rgba(255, 202, 40, 0.10), transparent 22%),
+    linear-gradient(90deg, rgba(6, 51, 31, 0.86), rgba(7, 27, 51, 0.78), rgba(7, 27, 51, 0.95));
+}
+
+.ns-home-hero-v2::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 160px;
+  z-index: -1;
+  background: linear-gradient(180deg, transparent, rgba(7, 27, 51, 0.94));
+}
+
+.ns-home-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.92fr);
+  gap: clamp(34px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(70px, 8vw, 112px) 0 clamp(76px, 8vw, 120px);
+}
+
+.ns-home-hero-copy-v2 {
+  max-width: 720px;
+}
+
+.ns-home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 202, 40, 0.38);
+  border-radius: 999px;
+  color: #ffe59b;
+  background: rgba(255, 202, 40, 0.10);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+}
+
+.ns-home-hero-copy-v2 h1 {
+  margin: 0;
+  max-width: 720px;
+  font-size: clamp(2.85rem, 5vw, 5.05rem);
+  line-height: 1.04;
+  letter-spacing: -0.058em;
+  font-weight: 950;
+}
+
+.ns-home-hero-lede {
+  margin: 26px 0 0;
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(1rem, 1vw, 1.15rem);
+  line-height: 1.78;
+}
+
+.ns-home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.ns-home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-size: 0.98rem;
+  font-weight: 950;
+  text-decoration: none;
+  transition: transform 150ms ease, filter 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.ns-home-btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.ns-home-btn-primary {
+  background: var(--ns-gold);
+  color: var(--ns-ink);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.24);
+}
+
+.ns-home-btn-primary:hover {
+  color: var(--ns-ink);
+  filter: brightness(1.02);
+}
+
+.ns-home-btn-secondary {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+}
+
+.ns-home-btn-secondary:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.ns-home-featured-book-card {
+  margin-top: 42px;
+  max-width: 650px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 28px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: 0 28px 74px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(18px);
+}
+
+.ns-home-featured-book-card .ns-home-section-kicker {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.ns-home-featured-book-card h2 {
+  margin: 18px 0 10px;
+  font-size: 1.7rem;
+  line-height: 1.1;
+  font-weight: 950;
+}
+
+.ns-home-featured-book-card p {
+  margin: 0;
+  max-width: 54ch;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.ns-home-featured-book-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.ns-home-featured-book-actions span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.ns-home-featured-book-actions a {
+  color: var(--ns-gold);
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.ns-home-shelf-panel {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 34px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 34px 94px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.ns-home-shelf-inner {
+  border-radius: 28px;
+  padding: 22px;
+  background: var(--ns-warm-cream);
+  color: var(--ns-ink);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.ns-home-shelf-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.ns-home-shelf-head .ns-home-section-kicker {
+  color: var(--ns-copper);
+}
+
+.ns-home-shelf-head h2 {
+  margin: 4px 0 0;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  line-height: 1.1;
+  font-weight: 950;
+}
+
+.ns-home-shelf-head > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  color: #11683d;
+  background: #dff8e7;
+  font-size: 0.82rem;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+/* Dynamic FeaturedStoriesShelf inside the hero */
+.ns-home-shelf-panel .ns-featured-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.ns-home-shelf-panel .ns-book-card {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid #e6dccd;
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 14px 36px rgba(20, 26, 38, 0.07);
+}
+
+.ns-home-shelf-panel .ns-book-cover-link {
+  min-width: 0;
+}
+
+.ns-home-shelf-panel .ns-book-cover {
+  width: 88px;
+  height: 112px;
+  aspect-ratio: auto;
+  border-radius: 16px;
+}
+
+.ns-home-shelf-panel .ns-book-cover-img {
+  width: 94% !important;
+  height: 94% !important;
+  object-fit: contain !important;
+}
+
+.ns-home-shelf-panel .ns-book-meta {
+  margin-top: 0;
+  min-width: 0;
+}
+
+.ns-home-shelf-panel .ns-book-title {
+  font-size: 1.1rem;
+  color: var(--ns-ink);
+}
+
+.ns-home-shelf-panel .ns-book-author {
+  display: none;
+}
+
+.ns-home-shelf-panel .ns-book-hook {
+  margin-top: 6px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: #44566f;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ns-home-shelf-panel .ns-book-actions {
+  margin-top: 12px;
+  gap: 8px;
+}
+
+.ns-home-shelf-panel .ns-book-cta {
+  border: 0;
+  background: var(--ns-ink);
+  color: #ffffff;
+  min-height: 32px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.ns-home-shelf-panel .ns-book-cta:hover {
+  background: #000816;
+  color: #ffffff;
+}
+
+.ns-home-shelf-panel .ns-book-badge,
+.ns-home-shelf-panel .ns-book-progress-badge {
+  font-size: 0.68rem;
+}
+
+.ns-home-doorways {
+  background: var(--ns-cream);
+  border-top: 1px solid rgba(20, 138, 74, 0.10);
+  border-bottom: 1px solid rgba(20, 138, 74, 0.10);
+}
+
+.ns-home-doorway-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  padding: 58px 0;
+}
+
+.ns-home-doorway-card {
+  overflow: hidden;
+  border: 1px solid rgba(15, 36, 24, 0.10);
+  border-radius: 28px;
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(22, 38, 27, 0.06);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.ns-home-doorway-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(20, 138, 74, 0.22);
+  box-shadow: 0 24px 70px rgba(22, 38, 27, 0.10);
+}
+
+.ns-home-doorway-image {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  background: #e8f6ee;
+}
+
+.ns-home-doorway-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.95) contrast(0.96);
+}
+
+.ns-home-doorway-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 22%, rgba(6, 51, 31, 0.48));
+}
+
+.ns-home-doorway-icon {
+  position: absolute;
+  left: 18px;
+  bottom: 16px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 18px;
+  font-size: 1.3rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.12);
+}
+
+.ns-home-doorway-body {
+  padding: 26px;
+}
+
+.ns-home-doorway-body h3 {
+  margin: 0;
+  color: var(--ns-ink);
+  font-size: 1.55rem;
+  line-height: 1.15;
+  font-weight: 950;
+}
+
+.ns-home-doorway-body p {
+  margin: 16px 0 0;
+  color: #44566f;
+  line-height: 1.68;
+}
+
+.ns-home-text-link {
+  display: inline-flex;
+  margin-top: 18px;
+  color: var(--ns-ink);
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.ns-home-text-link:hover {
+  color: var(--ns-green);
+  text-decoration: none;
+}
+
+.ns-home-audio-strip {
+  background: #fffaf0;
+}
+
+.ns-home-audio-strip-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: 28px;
+  align-items: center;
+  margin: 0 auto;
+  padding: 28px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 40px rgba(20, 26, 38, 0.06);
+  transform: translateY(-18px);
+}
+
+.ns-home-audio-strip-card h2 {
+  margin: 6px 0 8px;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+.ns-home-audio-strip-card p {
+  margin: 0;
+  color: #44566f;
+  line-height: 1.65;
+}
+
+.ns-home-audio-player {
+  width: 100%;
+}
+
+.ns-home-development {
+  background: #fff8ea;
+}
+
+.ns-home-development-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  padding: 76px 0;
+}
+
+.ns-home-development-copy .ns-home-section-kicker {
+  color: var(--ns-copper);
+}
+
+.ns-home-development-copy h2,
+.ns-home-feels h2 {
+  margin: 10px 0 0;
+  max-width: 680px;
+  color: var(--ns-ink);
+  font-size: clamp(2.1rem, 3.4vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -0.055em;
+  font-weight: 950;
+}
+
+.ns-home-development-copy p {
+  margin: 22px 0 0;
+  max-width: 620px;
+  color: #44566f;
+  line-height: 1.8;
+  font-size: 1.02rem;
+}
+
+.ns-home-check-list,
+.ns-home-mini-checks {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.ns-home-check-list span,
+.ns-home-mini-checks span {
+  position: relative;
+  padding-left: 30px;
+  color: #26384a;
+  font-weight: 800;
+}
+
+.ns-home-check-list span::before,
+.ns-home-mini-checks span::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--ns-green);
+  font-size: 0.72rem;
+  font-weight: 950;
+}
+
+.ns-home-workshop-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(215, 177, 93, 0.62);
+  border-radius: 30px;
+  background: #fff9df;
+  box-shadow: 0 24px 70px rgba(20, 26, 38, 0.08);
+}
+
+.ns-home-workshop-visual {
+  height: 190px;
+  background-image:
+    linear-gradient(180deg, rgba(6, 51, 31, 0.08), rgba(255, 249, 223, 0.90)),
+    var(--ns-hero-bg-url);
+  background-size: cover;
+  background-position: center;
+}
+
+.ns-home-workshop-content {
+  padding: 30px;
+}
+
+.ns-home-workshop-content h3 {
+  margin: 0;
+  color: var(--ns-ink);
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+  font-weight: 950;
+}
+
+.ns-home-workshop-content p {
+  margin: 18px 0 0;
+  color: #44566f;
+  line-height: 1.75;
+}
+
+.ns-home-feels {
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(20, 138, 74, 0.32), transparent 26%),
+    linear-gradient(180deg, #06331f, #071b33);
+}
+
+.ns-home-feels-grid {
+  display: grid;
+  grid-template-columns: 0.82fr 1.18fr;
+  gap: clamp(34px, 5vw, 72px);
+  align-items: center;
+  padding: 72px 0;
+}
+
+.ns-home-feels .ns-home-section-kicker {
+  color: var(--ns-gold);
+}
+
+.ns-home-feels h2 {
+  color: #ffffff;
+}
+
+.ns-home-feels-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.ns-home-feels-cards article {
+  min-height: 210px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.11);
+  backdrop-filter: blur(12px);
+}
+
+.ns-home-feels-cards span {
+  font-size: 1.65rem;
+}
+
+.ns-home-feels-cards h3 {
+  margin: 18px 0 0;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  font-weight: 950;
+}
+
+.ns-home-feels-cards p {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, 0.70);
+  line-height: 1.65;
+  font-size: 0.94rem;
+}
+
+.ns-home-mystery-feature {
+  background: var(--ns-cream);
+}
+
+.ns-home-mystery-card {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  padding: 72px 0 80px;
+}
+
+.ns-home-mystery-card figure {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(20, 138, 74, 0.16);
+  border-radius: 28px;
+  background: #dbe9dc;
+  box-shadow: 0 24px 70px rgba(22, 38, 27, 0.10);
+}
+
+.ns-home-mystery-image {
+  width: 100%;
+  height: auto;
+  min-height: 280px;
+  object-fit: cover;
+}
+
+.ns-home-mystery-card figure a {
+  position: absolute;
+  left: 22px;
+  bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--ns-green-2);
+  font-weight: 950;
+  text-decoration: none;
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.18);
+}
+
+.ns-home-mystery-card h2 {
+  margin: 8px 0 0;
+  color: var(--ns-ink);
+  font-size: clamp(2rem, 3.2vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  font-weight: 950;
+}
+
+.ns-home-mystery-card p {
+  margin: 18px 0 0;
+  color: #44566f;
+  line-height: 1.72;
+  font-size: 1.02rem;
+}
+
+/* Footer refinement: light institutional footer with the official logo. */
+.ns-footer {
+  margin-top: 0;
+  padding: 44px 0 0;
+  border-top: 1px solid rgba(20, 138, 74, 0.12);
+  background:
+    linear-gradient(180deg, rgba(31, 182, 106, 0.035), rgba(255, 255, 255, 0)),
+    #f8fafc;
+  color: rgba(15, 36, 24, 0.70);
+  font-size: 12px;
+}
+
+.ns-footer-inner {
+  width: min(1280px, calc(100% - 48px));
+  max-width: none;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.25fr 0.9fr 1fr 0.7fr;
+  gap: 34px;
+  align-items: start;
+  padding: 0 0 28px;
+}
+
+.ns-footer-brandblock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 42ch;
+}
+
+.ns-footer-logo-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.ns-footer-logo {
+  height: 42px;
+  width: auto;
+}
+
+.ns-footer-tagline {
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.88);
+}
+
+.ns-footer-description {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgba(15, 36, 24, 0.62);
+}
+
+.ns-footer-navgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ns-footer-heading {
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(15, 36, 24, 0.68);
+}
+
+.ns-footer-links-stack {
+  display: grid;
+  gap: 9px;
+}
+
+.ns-footer-link {
+  width: fit-content;
+  color: rgba(15, 36, 24, 0.82);
+  font-size: 0.92rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: color 140ms ease, opacity 140ms ease;
+}
+
+.ns-footer-link:hover {
+  color: var(--ns-green);
+  text-decoration: none;
+}
+
+.ns-footer-link-disabled {
+  opacity: 0.52;
+  cursor: default;
+}
+
+.ns-footer-bottom {
+  border-top: 1px solid rgba(20, 138, 74, 0.08);
+  padding: 16px 0 20px;
+}
+
+.ns-footer-bottom-inner {
+  width: min(1280px, calc(100% - 48px));
+  margin: 0 auto;
+  text-align: center;
+  color: rgba(15, 36, 24, 0.52);
+  font-size: 0.86rem;
+}
+
+@media (max-width: 1100px) {
+  .ns-home-hero-grid,
+  .ns-home-development-grid,
+  .ns-home-feels-grid,
+  .ns-home-mystery-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 760px;
+  }
+
+  .ns-home-doorway-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-audio-strip-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-feels-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .ns-home-container {
+    width: min(100% - 28px, 1280px);
+  }
+
+  .ns-home-hero-v2 {
+    min-height: auto;
+  }
+
+  .ns-home-hero-grid {
+    padding: 48px 0 64px;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    font-size: clamp(2.6rem, 13vw, 4rem);
+  }
+
+  .ns-home-hero-lede {
+    font-size: 1rem;
+  }
+
+  .ns-home-shelf-panel {
+    padding: 10px;
+    border-radius: 26px;
+  }
+
+  .ns-home-shelf-inner {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .ns-home-shelf-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 74px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 74px;
+    height: 94px;
+  }
+
+  .ns-home-featured-book-card,
+  .ns-home-workshop-content,
+  .ns-home-doorway-body {
+    padding: 22px;
+  }
+
+  .ns-home-doorway-grid,
+  .ns-home-development-grid,
+  .ns-home-feels-grid,
+  .ns-home-mystery-card {
+    padding: 42px 0;
+  }
+
+  .ns-home-audio-strip-card {
+    padding: 22px;
+    transform: translateY(0);
+  }
+
+  .ns-home-feels-cards {
+    gap: 14px;
+  }
+
+  .ns-footer-inner {
+    width: min(100% - 28px, 1280px);
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .ns-footer-bottom-inner {
+    width: min(100% - 28px, 1280px);
+  }
+
+  .ns-brand-logo {
+    height: 32px;
+  }
+
+  .ns-topbar .ns-btn-ghost {
+    background: rgba(236, 253, 245, 0.96);
+    border-color: rgba(187, 247, 208, 0.95);
+    color: rgba(15, 36, 24, 0.94);
+    box-shadow: none;
+  }
+}
+
+
+/* ===============================
+   Public homepage polish v2
+   Build: 2026-05-28
+   Purpose:
+   - Reduce hero scale and heading weight
+   - Clean Featured Shelf CTAs/publication badges
+   - Restore calmer footer sizing
+   - Reduce Mystery250 weekly feature weight
+   =============================== */
+
+:root {
+  --ns-hero-bg-url: url("/images/home/bookshelf-hero.webp");
+}
+
+.ns-topbar {
+  background:
+    radial-gradient(720px 190px at 16% 0%, rgba(31, 182, 106, 0.24), transparent 70%),
+    linear-gradient(180deg, #0f6d3a 0%, #0a5f33 58%, #06331f 100%);
+  border-bottom-color: rgba(187, 247, 208, 0.18);
+}
+
+.ns-topbar-inner {
+  max-width: 1280px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.ns-brand-logo {
+  height: 34px;
+}
+
+.ns-public-home.ns-page {
+  max-width: none;
+  padding: 0;
+}
+
+.ns-home-container {
+  width: min(1180px, calc(100% - 48px));
+}
+
+.ns-home-hero-v2 {
+  min-height: auto;
+  background: var(--ns-deep-green);
+}
+
+.ns-home-hero-backdrop {
+  opacity: 0.48;
+  filter: saturate(0.95) contrast(0.95) brightness(0.82);
+}
+
+.ns-home-hero-shade {
+  background:
+    radial-gradient(circle at 13% 23%, rgba(31, 182, 106, 0.34), transparent 26%),
+    radial-gradient(circle at 80% 8%, rgba(255, 202, 40, 0.08), transparent 20%),
+    linear-gradient(90deg, rgba(6, 51, 31, 0.88), rgba(7, 27, 51, 0.76), rgba(7, 27, 51, 0.94));
+}
+
+.ns-home-hero-v2::after {
+  height: 86px;
+  background: linear-gradient(180deg, transparent, rgba(7, 27, 51, 0.88));
+}
+
+.ns-home-hero-grid {
+  grid-template-columns: minmax(0, 0.95fr) minmax(390px, 0.86fr);
+  gap: clamp(28px, 4vw, 56px);
+  padding: clamp(48px, 6vw, 78px) 0 clamp(54px, 6vw, 84px);
+}
+
+.ns-home-hero-copy-v2 {
+  max-width: 620px;
+}
+
+.ns-home-eyebrow {
+  margin-bottom: 22px;
+  padding: 8px 14px;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+}
+
+.ns-home-hero-copy-v2 h1 {
+  max-width: 13.5ch;
+  font-size: clamp(2.55rem, 4.7vw, 4.45rem);
+  line-height: 1.045;
+  letter-spacing: -0.055em;
+}
+
+.ns-home-hero-lede {
+  margin-top: 22px;
+  max-width: 620px;
+  font-size: clamp(0.95rem, 0.9vw, 1.04rem);
+  line-height: 1.68;
+}
+
+.ns-home-hero-actions {
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.ns-home-btn {
+  min-height: 44px;
+  padding: 0 22px;
+  font-size: 0.9rem;
+}
+
+.ns-home-featured-book-card {
+  margin-top: 34px;
+  max-width: 560px;
+  border-radius: 24px;
+  padding: 22px;
+}
+
+.ns-home-featured-book-card h2 {
+  margin-top: 14px;
+  font-size: 1.35rem;
+}
+
+.ns-home-featured-book-card p {
+  font-size: 0.98rem;
+  line-height: 1.58;
+}
+
+.ns-home-featured-book-actions {
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.ns-home-featured-book-actions span {
+  min-height: 30px;
+  padding: 0 13px;
+  font-size: 0.8rem;
+}
+
+.ns-home-featured-book-actions a {
+  font-size: 0.88rem;
+}
+
+.ns-home-shelf-panel {
+  border-radius: 30px;
+  padding: 14px;
+}
+
+.ns-home-shelf-inner {
+  border-radius: 24px;
+  padding: 18px;
+}
+
+.ns-home-shelf-head {
+  margin-bottom: 16px;
+}
+
+.ns-home-shelf-head h2 {
+  font-size: clamp(1.35rem, 1.7vw, 1.7rem);
+}
+
+.ns-home-shelf-head > span {
+  min-height: 30px;
+  padding: 0 12px;
+  font-size: 0.74rem;
+}
+
+.ns-home-shelf-panel .ns-featured-grid {
+  gap: 14px;
+}
+
+.ns-home-shelf-panel .ns-book-card {
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 14px;
+  padding: 12px;
+  border-radius: 20px;
+}
+
+.ns-home-shelf-panel .ns-book-cover {
+  width: 76px;
+  height: 96px;
+  border-radius: 14px;
+}
+
+.ns-home-shelf-panel .ns-book-title {
+  font-size: 0.98rem;
+  line-height: 1.18;
+}
+
+.ns-home-shelf-panel .ns-book-hook {
+  margin-top: 5px;
+  font-size: 0.82rem;
+  line-height: 1.38;
+  -webkit-line-clamp: 2;
+}
+
+.ns-home-shelf-panel .ns-book-actions {
+  margin-top: 9px;
+  gap: 7px;
+}
+
+.ns-home-shelf-panel .ns-book-cta {
+  min-height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.ns-home-shelf-panel .ns-book-cta-publication {
+  background: var(--ns-ink);
+}
+
+.ns-home-shelf-panel .ns-book-badge,
+.ns-home-shelf-panel .ns-book-progress-badge {
+  font-size: 0.58rem;
+  line-height: 1.08;
+  padding: 5px 7px;
+  max-width: 78px;
+}
+
+.ns-home-shelf-panel .ns-book-progress-badge {
+  background: rgba(6, 51, 31, 0.86);
+  color: #ffffff;
+}
+
+.ns-home-doorway-grid {
+  gap: 18px;
+  padding: 46px 0;
+}
+
+.ns-home-doorway-image {
+  height: 130px;
+}
+
+.ns-home-doorway-body {
+  padding: 22px;
+}
+
+.ns-home-doorway-body h3 {
+  font-size: 1.35rem;
+}
+
+.ns-home-doorway-body p {
+  margin-top: 12px;
+  font-size: 0.94rem;
+  line-height: 1.58;
+}
+
+.ns-home-development-grid {
+  padding: 58px 0;
+}
+
+.ns-home-development-copy h2,
+.ns-home-feels h2 {
+  font-size: clamp(1.85rem, 2.7vw, 3rem);
+  letter-spacing: -0.045em;
+}
+
+.ns-home-workshop-visual {
+  height: 150px;
+}
+
+.ns-home-workshop-content {
+  padding: 26px;
+}
+
+.ns-home-workshop-content h3 {
+  font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+}
+
+.ns-home-feels-grid {
+  padding: 56px 0;
+}
+
+.ns-home-feels-cards article {
+  min-height: 172px;
+  padding: 20px;
+  border-radius: 24px;
+}
+
+.ns-home-mystery-card {
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1fr);
+  gap: clamp(26px, 3vw, 42px);
+  padding: 48px 0 56px;
+}
+
+.ns-home-mystery-card figure {
+  max-width: 520px;
+  border-radius: 22px;
+}
+
+.ns-home-mystery-image {
+  min-height: 0;
+  max-height: 260px;
+  object-fit: cover;
+}
+
+.ns-home-mystery-card figure a {
+  left: 18px;
+  bottom: 18px;
+  min-height: 36px;
+  padding: 0 16px;
+  font-size: 0.84rem;
+}
+
+.ns-home-mystery-card h2 {
+  font-size: clamp(1.75rem, 2.55vw, 2.7rem);
+  letter-spacing: -0.04em;
+}
+
+.ns-home-mystery-card p {
+  margin-top: 14px;
+  font-size: 0.95rem;
+  line-height: 1.62;
+}
+
+.ns-footer {
+  padding-top: 42px;
+  background:
+    linear-gradient(180deg, rgba(31, 182, 106, 0.035), rgba(255, 255, 255, 0)),
+    #f8fafc;
+  font-size: 12px;
+}
+
+.ns-footer-inner {
+  width: min(1280px, calc(100% - 48px));
+  grid-template-columns: 1.2fr 0.92fr 1fr 0.7fr;
+  gap: 32px;
+  padding-bottom: 26px;
+}
+
+.ns-footer-brandline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.ns-footer-nmark {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.ns-footer-wordmark {
+  font-size: 1.2rem;
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(15, 36, 24, 0.92);
+  letter-spacing: -0.03em;
+}
+
+.ns-footer-tagline {
+  font-size: 0.95rem;
+}
+
+.ns-footer-description,
+.ns-footer-link {
+  font-size: 0.88rem;
+}
+
+.ns-footer-heading {
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+}
+
+.ns-footer-links-stack {
+  gap: 8px;
+}
+
+.ns-footer-bottom-inner {
+  font-size: 0.82rem;
+}
+
+@media (max-width: 1100px) {
+  .ns-home-hero-grid {
+    grid-template-columns: 1fr;
+    padding: 50px 0 64px;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 760px;
+  }
+
+  .ns-home-mystery-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-mystery-card figure {
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 720px) {
+  .ns-home-container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .ns-home-hero-grid {
+    padding: 42px 0 56px;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 12.5ch;
+    font-size: clamp(2.35rem, 11vw, 3.45rem);
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 68px;
+    height: 86px;
+  }
+
+  .ns-home-mystery-image {
+    max-height: 230px;
+  }
+}
+
+/* ===============================
+   Public homepage polish v3
+   Build: 2026-05-28
+   Purpose:
+   - Reduce homepage scale to feel more like modern reading platforms
+   - Make the hero less crowded while retaining the bookshelf atmosphere
+   - Clean Featured Shelf duplication and give published books a distinct treatment
+   - Keep full-width public landing sections with calmer cards and typography
+   =============================== */
+
+.ns-public-home.ns-page {
+  max-width: none;
+  width: 100%;
+  padding: 0;
+}
+
+.ns-home-container {
+  width: min(1280px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.ns-home-hero-v2 {
+  min-height: auto;
+  background: #06331f;
+}
+
+.ns-home-hero-backdrop {
+  opacity: 0.56;
+  filter: saturate(0.95) contrast(0.94) brightness(0.72);
+}
+
+.ns-home-hero-shade {
+  background:
+    radial-gradient(circle at 10% 20%, rgba(20, 138, 74, 0.46), transparent 28%),
+    radial-gradient(circle at 50% 20%, rgba(255, 202, 40, 0.055), transparent 22%),
+    linear-gradient(90deg, rgba(6, 51, 31, 0.83), rgba(7, 27, 51, 0.71) 47%, rgba(7, 27, 51, 0.92));
+}
+
+.ns-home-hero-v2::after {
+  height: 64px;
+  background: linear-gradient(180deg, transparent, rgba(7, 27, 51, 0.72));
+}
+
+.ns-home-hero-grid {
+  grid-template-columns: minmax(0, 0.98fr) minmax(390px, 0.84fr);
+  gap: clamp(28px, 4.2vw, 58px);
+  padding: clamp(40px, 5vw, 62px) 0 clamp(44px, 5.6vw, 72px);
+}
+
+.ns-home-hero-copy-v2 {
+  max-width: 610px;
+}
+
+.ns-home-eyebrow {
+  margin-bottom: 18px;
+  padding: 7px 14px;
+  font-size: 0.66rem;
+  letter-spacing: 0.23em;
+}
+
+.ns-home-hero-copy-v2 h1 {
+  max-width: 15ch;
+  font-size: clamp(2.25rem, 3.9vw, 3.65rem);
+  line-height: 1.06;
+  letter-spacing: -0.045em;
+}
+
+.ns-home-hero-lede {
+  margin-top: 18px;
+  max-width: 590px;
+  font-size: clamp(0.92rem, 0.88vw, 1rem);
+  line-height: 1.62;
+}
+
+.ns-home-hero-actions {
+  margin-top: 24px;
+  gap: 11px;
+}
+
+.ns-home-btn {
+  min-height: 40px;
+  padding: 0 19px;
+  font-size: 0.84rem;
+}
+
+.ns-home-featured-book-card {
+  margin-top: 26px;
+  max-width: 520px;
+  border-radius: 22px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.105);
+}
+
+.ns-home-featured-book-card h2 {
+  margin-top: 12px;
+  font-size: 1.22rem;
+}
+
+.ns-home-featured-book-card p {
+  font-size: 0.92rem;
+  line-height: 1.52;
+}
+
+.ns-home-featured-book-actions {
+  margin-top: 16px;
+  gap: 10px;
+}
+
+.ns-home-featured-book-actions span {
+  min-height: 28px;
+  padding: 0 12px;
+  font-size: 0.74rem;
+}
+
+.ns-home-featured-book-actions a {
+  font-size: 0.82rem;
+}
+
+.ns-home-shelf-panel {
+  border-radius: 28px;
+  padding: 13px;
+  max-width: 520px;
+  justify-self: end;
+}
+
+.ns-home-shelf-inner {
+  border-radius: 23px;
+  padding: 16px;
+}
+
+.ns-home-shelf-head {
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.ns-home-shelf-head .ns-home-section-kicker {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+}
+
+.ns-home-shelf-head h2 {
+  font-size: clamp(1.22rem, 1.45vw, 1.48rem);
+  letter-spacing: -0.025em;
+}
+
+.ns-home-shelf-head > span {
+  min-height: 27px;
+  padding: 0 10px;
+  font-size: 0.68rem;
+}
+
+.ns-home-shelf-panel .ns-featured-grid {
+  gap: 11px;
+}
+
+.ns-home-shelf-panel .ns-book-card {
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 11px;
+  padding: 10px;
+  border-radius: 17px;
+  min-height: 88px;
+}
+
+.ns-home-shelf-panel .ns-book-card.is-published {
+  border-color: rgba(245, 158, 11, 0.36);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 202, 40, 0.20), transparent 44%),
+    linear-gradient(135deg, #fffdf7 0%, #fff5dc 42%, #fffaf0 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.82),
+    0 12px 28px rgba(180, 83, 9, 0.10);
+}
+
+.ns-home-shelf-panel .ns-book-card.is-development {
+  background:
+    linear-gradient(180deg, #ffffff, #fbfdfc);
+}
+
+.ns-home-shelf-panel .ns-book-cover {
+  width: 58px;
+  height: 74px;
+  border-radius: 12px;
+}
+
+.ns-home-shelf-panel .ns-book-cover-img {
+  width: 95% !important;
+  height: 95% !important;
+}
+
+.ns-home-shelf-panel .ns-book-title {
+  font-size: 0.84rem;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+
+.ns-home-shelf-panel .ns-book-hook {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  line-height: 1.32;
+  -webkit-line-clamp: 2;
+}
+
+.ns-home-shelf-panel .ns-book-actions {
+  margin-top: 7px;
+}
+
+.ns-home-shelf-panel .ns-book-cta {
+  min-height: auto;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ns-ink);
+  box-shadow: none;
+  font-size: 0.68rem;
+  line-height: 1.1;
+  font-weight: 950;
+}
+
+.ns-home-shelf-panel .ns-book-cta:hover {
+  background: transparent;
+  color: var(--ns-green);
+  text-decoration: none;
+}
+
+.ns-home-shelf-panel .ns-book-cta-publication {
+  color: #9a3412;
+}
+
+.ns-home-shelf-panel .ns-book-cta-publication:hover {
+  color: #c2410c;
+}
+
+.ns-home-shelf-panel .ns-book-badge,
+.ns-home-shelf-panel .ns-book-progress-badge {
+  padding: 4px 6px;
+  max-width: 66px;
+  font-size: 0.5rem;
+  line-height: 1.04;
+  letter-spacing: 0.02em;
+}
+
+.ns-home-shelf-panel .ns-book-badge.is-published-amazon,
+.ns-home-shelf-panel [data-badge-tone="published-amazon"] {
+  background: linear-gradient(135deg, #f97316 0%, #f59e0b 52%, #b45309 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.52) !important;
+  box-shadow: 0 7px 14px rgba(180, 83, 9, 0.22);
+}
+
+.ns-home-shelf-panel .ns-book-progress-badge {
+  background: rgba(6, 51, 31, 0.88);
+  color: #ffffff;
+}
+
+.ns-home-doorway-grid {
+  gap: 18px;
+  padding: 40px 0 42px;
+}
+
+.ns-home-doorway-card {
+  border-radius: 22px;
+}
+
+.ns-home-doorway-image {
+  height: 120px;
+}
+
+.ns-home-doorway-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  font-size: 1.08rem;
+}
+
+.ns-home-doorway-body {
+  padding: 19px;
+}
+
+.ns-home-doorway-body h3 {
+  font-size: 1.12rem;
+  line-height: 1.15;
+}
+
+.ns-home-doorway-body p {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.ns-home-text-link {
+  margin-top: 14px;
+  font-size: 0.82rem;
+}
+
+.ns-home-audio-strip-card {
+  padding: 22px;
+  border-radius: 22px;
+}
+
+.ns-home-audio-strip-card h2 {
+  font-size: 1.25rem;
+}
+
+.ns-home-development-grid {
+  padding: 46px 0;
+}
+
+.ns-home-development-copy h2,
+.ns-home-feels h2 {
+  font-size: clamp(1.55rem, 2.15vw, 2.35rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.ns-home-development-copy p,
+.ns-home-workshop-content p {
+  font-size: 0.92rem;
+  line-height: 1.62;
+}
+
+.ns-home-workshop-content h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.75rem);
+}
+
+.ns-home-feels-grid {
+  padding: 44px 0;
+}
+
+.ns-home-feels-cards article {
+  min-height: 142px;
+  padding: 17px;
+  border-radius: 20px;
+}
+
+.ns-home-feels-cards h3 {
+  font-size: 0.98rem;
+}
+
+.ns-home-feels-cards p {
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.ns-home-mystery-card {
+  grid-template-columns: minmax(230px, 0.56fr) minmax(0, 0.95fr);
+  gap: clamp(22px, 3vw, 38px);
+  padding: 42px 0 46px;
+}
+
+.ns-home-mystery-card figure {
+  max-width: 420px;
+  border-radius: 20px;
+}
+
+.ns-home-mystery-image {
+  max-height: 210px;
+  object-fit: cover;
+}
+
+.ns-home-mystery-card figure a {
+  left: 14px;
+  bottom: 14px;
+  min-height: 32px;
+  padding: 0 13px;
+  font-size: 0.76rem;
+}
+
+.ns-home-mystery-card h2 {
+  max-width: 540px;
+  font-size: clamp(1.45rem, 2.05vw, 2.15rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+
+.ns-home-mystery-card p {
+  margin-top: 11px;
+  font-size: 0.88rem;
+  line-height: 1.56;
+}
+
+.ns-footer {
+  margin-top: 0;
+  padding-top: 42px;
+  font-size: 12px;
+}
+
+.ns-footer-inner {
+  width: min(1280px, calc(100% - 48px));
+}
+
+.ns-footer-wordmark {
+  font-size: 1.16rem;
+}
+
+.ns-footer-tagline {
+  font-size: 0.94rem;
+}
+
+.ns-footer-description,
+.ns-footer-link {
+  font-size: 0.86rem;
+}
+
+.ns-footer-heading {
+  font-size: 0.74rem;
+}
+
+@media (max-width: 1100px) {
+  .ns-home-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 720px;
+    justify-self: start;
+  }
+
+  .ns-home-mystery-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .ns-home-container {
+    width: min(100% - 28px, 1280px);
+  }
+
+  .ns-home-hero-grid {
+    padding: 36px 0 48px;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 13.2ch;
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 54px minmax(0, 1fr);
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 54px;
+    height: 68px;
+  }
+
+  .ns-home-doorway-grid,
+  .ns-home-development-grid,
+  .ns-home-feels-grid,
+  .ns-home-mystery-card {
+    padding: 34px 0;
+  }
+}
+
+/* ===============================
+   Public homepage polish v4
+   Build: 2026-05-28
+   Purpose:
+   - Calm the scale of headings and hero spacing
+   - Clean Featured Shelf status/action logic visually
+   - Put status pills under the text, not over book covers
+   - Restore the elegant dark footer treatment with smaller type
+   - Lighten the “How NextScenes feels” section
+   =============================== */
+
+.ns-public-home.ns-page {
+  max-width: none;
+  width: 100%;
+  padding: 0;
+}
+
+.ns-home-container {
+  width: min(1320px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.ns-home-hero-v2 {
+  min-height: auto;
+  background: #06331f;
+}
+
+.ns-home-hero-backdrop {
+  opacity: 0.54;
+  filter: saturate(0.96) contrast(0.94) brightness(0.68);
+}
+
+.ns-home-hero-shade {
+  background:
+    radial-gradient(circle at 10% 22%, rgba(20, 138, 74, 0.46), transparent 28%),
+    radial-gradient(circle at 48% 16%, rgba(255, 202, 40, 0.06), transparent 22%),
+    linear-gradient(90deg, rgba(6, 51, 31, 0.82), rgba(7, 27, 51, 0.70) 48%, rgba(7, 27, 51, 0.91));
+}
+
+.ns-home-hero-v2::after {
+  height: 52px;
+  background: linear-gradient(180deg, transparent, rgba(7, 27, 51, 0.66));
+}
+
+.ns-home-hero-grid {
+  grid-template-columns: minmax(0, 0.92fr) minmax(380px, 0.86fr);
+  align-items: center;
+  gap: clamp(30px, 4.6vw, 68px);
+  padding: clamp(36px, 4.5vw, 54px) 0 clamp(38px, 5vw, 60px);
+}
+
+.ns-home-hero-copy-v2 {
+  max-width: 660px;
+}
+
+.ns-home-eyebrow {
+  margin-bottom: 16px;
+  padding: 7px 14px;
+  font-size: 0.62rem;
+  letter-spacing: 0.24em;
+}
+
+.ns-home-hero-copy-v2 h1 {
+  max-width: 16.6ch;
+  font-size: clamp(2.05rem, 3.55vw, 3.45rem);
+  line-height: 1.07;
+  letter-spacing: -0.042em;
+}
+
+.ns-home-hero-lede {
+  margin-top: 16px;
+  max-width: 620px;
+  font-size: clamp(0.88rem, 0.84vw, 0.96rem);
+  line-height: 1.6;
+}
+
+.ns-home-hero-actions {
+  margin-top: 22px;
+  gap: 10px;
+}
+
+.ns-home-btn {
+  min-height: 38px;
+  padding: 0 18px;
+  font-size: 0.8rem;
+}
+
+.ns-home-featured-book-card {
+  margin-top: 24px;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.105);
+}
+
+.ns-home-featured-book-card .ns-home-section-kicker {
+  font-size: 0.62rem;
+}
+
+.ns-home-featured-book-card h2 {
+  margin-top: 10px;
+  font-size: 1.08rem;
+}
+
+.ns-home-featured-book-card p {
+  font-size: 0.84rem;
+  line-height: 1.52;
+}
+
+.ns-home-featured-book-actions {
+  margin-top: 13px;
+  gap: 9px;
+}
+
+.ns-home-featured-book-actions span {
+  min-height: 26px;
+  padding: 0 11px;
+  font-size: 0.68rem;
+}
+
+.ns-home-featured-book-actions a {
+  font-size: 0.76rem;
+}
+
+.ns-home-shelf-panel {
+  max-width: 540px;
+  justify-self: end;
+  border-radius: 28px;
+  padding: 12px;
+}
+
+.ns-home-shelf-inner {
+  border-radius: 23px;
+  padding: 16px;
+}
+
+.ns-home-shelf-head {
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.ns-home-shelf-head .ns-home-section-kicker {
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+}
+
+.ns-home-shelf-head h2 {
+  font-size: clamp(1.15rem, 1.28vw, 1.34rem);
+  letter-spacing: -0.022em;
+}
+
+.ns-home-shelf-head > span {
+  min-height: 26px;
+  padding: 0 10px;
+  font-size: 0.64rem;
+}
+
+.ns-home-shelf-panel .ns-featured-grid {
+  gap: 10px;
+}
+
+.ns-home-shelf-panel .ns-book-card {
+  grid-template-columns: 56px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 90px;
+  padding: 10px 12px;
+  border-radius: 17px;
+  border-color: rgba(15, 36, 24, 0.10);
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(20, 26, 38, 0.055);
+}
+
+.ns-home-shelf-panel .ns-book-card.is-published {
+  border-color: rgba(245, 158, 11, 0.40);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 202, 40, 0.22), transparent 44%),
+    linear-gradient(135deg, #fffdf7 0%, #fff5df 44%, #fffaf0 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.88),
+    0 11px 26px rgba(180, 83, 9, 0.09);
+}
+
+.ns-home-shelf-panel .ns-book-card.is-development {
+  background: linear-gradient(180deg, #ffffff, #fbfdfc);
+}
+
+.ns-home-shelf-panel .ns-book-cover-link {
+  align-self: center;
+}
+
+.ns-home-shelf-panel .ns-book-cover-wrap {
+  position: relative;
+}
+
+.ns-home-shelf-panel .ns-book-cover {
+  width: 56px;
+  height: 72px;
+  border-radius: 11px;
+  background: #f8fafc;
+  box-shadow: 0 7px 14px rgba(2, 6, 23, 0.12);
+}
+
+.ns-home-shelf-panel .ns-book-cover-img {
+  width: 95% !important;
+  height: 95% !important;
+  object-fit: contain !important;
+}
+
+.ns-home-shelf-panel .ns-book-badge,
+.ns-home-shelf-panel .ns-book-progress-badge {
+  display: none !important;
+}
+
+.ns-home-shelf-panel .ns-book-meta {
+  min-width: 0;
+}
+
+.ns-home-shelf-panel .ns-book-title {
+  font-size: 0.82rem;
+  line-height: 1.16;
+  letter-spacing: -0.008em;
+}
+
+.ns-home-shelf-panel .ns-book-author {
+  display: none;
+}
+
+.ns-home-shelf-panel .ns-book-hook {
+  margin-top: 4px;
+  font-size: 0.7rem;
+  line-height: 1.32;
+  color: #314563;
+  -webkit-line-clamp: 2;
+}
+
+.ns-book-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ns-book-status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 21px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 0.58rem;
+  line-height: 1;
+  font-weight: 950;
+  white-space: nowrap;
+}
+
+.ns-book-status-pill.is-published {
+  color: #ffffff;
+  background: linear-gradient(135deg, #f97316 0%, #f59e0b 58%, #b45309 100%);
+  box-shadow: 0 6px 12px rgba(180, 83, 9, 0.18);
+}
+
+.ns-book-status-pill.is-development {
+  color: #ffffff;
+  background: #0b6a36;
+}
+
+.ns-book-action-link {
+  display: inline-flex;
+  align-items: center;
+  color: #0b6a36;
+  font-size: 0.68rem;
+  line-height: 1.1;
+  font-weight: 950;
+  text-decoration: none;
+}
+
+.ns-book-action-link:hover {
+  color: #064e2a;
+  text-decoration: none;
+}
+
+.ns-book-action-link-publication {
+  color: #0b6a36;
+}
+
+.ns-home-shelf-panel .ns-book-actions,
+.ns-home-shelf-panel .ns-book-cta {
+  display: none !important;
+}
+
+.ns-home-doorway-grid {
+  gap: 18px;
+  padding: 38px 0 40px;
+}
+
+.ns-home-doorway-card {
+  border-radius: 21px;
+}
+
+.ns-home-doorway-image {
+  height: 116px;
+}
+
+.ns-home-doorway-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  font-size: 1.02rem;
+}
+
+.ns-home-doorway-body {
+  padding: 18px;
+}
+
+.ns-home-doorway-body h3 {
+  font-size: 1.06rem;
+  line-height: 1.15;
+}
+
+.ns-home-doorway-body p {
+  margin-top: 9px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.ns-home-text-link {
+  margin-top: 12px;
+  font-size: 0.78rem;
+}
+
+.ns-home-audio-strip-card {
+  padding: 20px;
+  border-radius: 22px;
+}
+
+.ns-home-audio-strip-card h2 {
+  font-size: 1.12rem;
+}
+
+.ns-home-audio-strip-card p {
+  font-size: 0.86rem;
+}
+
+.ns-home-development-grid {
+  padding: 42px 0;
+  align-items: center;
+}
+
+.ns-home-development-copy h2,
+.ns-home-feels h2 {
+  font-size: clamp(1.35rem, 1.85vw, 2.05rem);
+  line-height: 1.12;
+  letter-spacing: -0.028em;
+}
+
+.ns-home-development-copy p,
+.ns-home-workshop-content p {
+  font-size: 0.86rem;
+  line-height: 1.58;
+}
+
+.ns-home-check-list,
+.ns-home-mini-checks {
+  gap: 9px;
+}
+
+.ns-home-check-list span,
+.ns-home-mini-checks span {
+  font-size: 0.84rem;
+}
+
+.ns-home-workshop-visual {
+  height: 132px;
+}
+
+.ns-home-workshop-content {
+  padding: 22px;
+}
+
+.ns-home-workshop-content h3 {
+  font-size: clamp(1.08rem, 1.42vw, 1.45rem);
+  line-height: 1.18;
+}
+
+.ns-home-feels {
+  background:
+    radial-gradient(circle at 12% 24%, rgba(31, 182, 106, 0.12), transparent 28%),
+    linear-gradient(180deg, #f4fbf6 0%, #eef8f2 100%);
+  color: #071225;
+}
+
+.ns-home-feels .ns-home-section-kicker {
+  color: #0b6a36;
+}
+
+.ns-home-feels h2 {
+  color: #071225;
+}
+
+.ns-home-feels-grid {
+  padding: 40px 0;
+}
+
+.ns-home-feels-cards article {
+  min-height: 130px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(20, 138, 74, 0.16);
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 14px 34px rgba(20, 26, 38, 0.055);
+}
+
+.ns-home-feels-cards span {
+  color: #0b6a36;
+}
+
+.ns-home-feels-cards h3 {
+  color: #071225;
+  font-size: 0.9rem;
+}
+
+.ns-home-feels-cards p {
+  color: #44566f;
+  font-size: 0.78rem;
+  line-height: 1.42;
+}
+
+.ns-home-mystery-card {
+  grid-template-columns: minmax(220px, 0.5fr) minmax(0, 0.92fr);
+  gap: clamp(22px, 3vw, 36px);
+  padding: 38px 0 42px;
+}
+
+.ns-home-mystery-card figure {
+  max-width: 390px;
+  border-radius: 18px;
+}
+
+.ns-home-mystery-image {
+  max-height: 190px;
+  object-fit: cover;
+}
+
+.ns-home-mystery-card figure a {
+  left: 13px;
+  bottom: 13px;
+  min-height: 30px;
+  padding: 0 12px;
+  font-size: 0.72rem;
+}
+
+.ns-home-mystery-card h2 {
+  max-width: 500px;
+  font-size: clamp(1.22rem, 1.72vw, 1.78rem);
+  line-height: 1.12;
+  letter-spacing: -0.026em;
+}
+
+.ns-home-mystery-card p {
+  margin-top: 10px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.ns-footer {
+  margin-top: 0;
+  padding-top: 38px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  background: #061426;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.ns-footer-inner {
+  width: min(1280px, calc(100% - 64px));
+  grid-template-columns: 1.15fr 0.95fr 1fr 0.65fr;
+  gap: 30px;
+  padding-bottom: 24px;
+}
+
+.ns-footer-brandline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.ns-footer-nmark {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.ns-footer-wordmark {
+  color: #ffffff;
+  font-size: 1.04rem;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.ns-footer-tagline {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.ns-footer-description {
+  margin-top: 12px;
+  max-width: 320px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.ns-footer-heading {
+  color: #ffca28;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+}
+
+.ns-footer-links-stack {
+  gap: 7px;
+}
+
+.ns-footer-link {
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.ns-footer-link:hover {
+  color: #ffffff;
+}
+
+.ns-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.ns-footer-bottom-inner {
+  width: min(1280px, calc(100% - 64px));
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.72rem;
+}
+
+@media (max-width: 1100px) {
+  .ns-home-container,
+  .ns-footer-inner,
+  .ns-footer-bottom-inner {
+    width: min(100% - 36px, 1280px);
+  }
+
+  .ns-home-hero-grid {
+    grid-template-columns: 1fr;
+    padding: 38px 0 48px;
+  }
+
+  .ns-home-shelf-panel {
+    justify-self: start;
+    max-width: 720px;
+  }
+
+  .ns-home-mystery-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-mystery-card figure {
+    max-width: 520px;
+  }
+
+  .ns-footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .ns-home-container,
+  .ns-footer-inner,
+  .ns-footer-bottom-inner {
+    width: min(100% - 28px, 1280px);
+  }
+
+  .ns-home-hero-grid {
+    padding: 34px 0 44px;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 14ch;
+    font-size: clamp(1.78rem, 8.6vw, 2.7rem);
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 52px minmax(0, 1fr);
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 52px;
+    height: 66px;
+  }
+
+  .ns-home-doorway-grid,
+  .ns-home-development-grid,
+  .ns-home-feels-grid,
+  .ns-home-mystery-card {
+    padding: 32px 0;
+  }
+
+  .ns-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+/* ===============================
+   Public homepage polish v5
+   Build: 2026-05-28
+   Purpose:
+   - Reintroduce Book of the Month as a compact editorial card
+   - Calm the paragraph/section heading weights so the page reads less heavy
+   =============================== */
+
+.ns-home-doorway-body h3,
+.ns-home-audio-strip-card h2,
+.ns-home-development-copy h2,
+.ns-home-workshop-content h3,
+.ns-home-feels h2,
+.ns-home-feels-cards h3,
+.ns-home-mystery-card h2 {
+  font-weight: 700;
+}
+
+.ns-home-check-list span,
+.ns-home-mini-checks span {
+  font-weight: 650;
+}
+
+.ns-home-book-month-strip {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(31, 182, 106, 0.06), transparent 34%),
+    #fffaf0;
+  padding: 10px 0 44px;
+}
+
+.ns-home-book-month-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 24px 28px;
+  border: 1px solid rgba(20, 138, 74, 0.14);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 16px 40px rgba(20, 26, 38, 0.055);
+}
+
+.ns-home-book-month-card .ns-home-section-kicker {
+  color: rgba(15, 36, 24, 0.58);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.ns-home-book-month-card h2 {
+  margin: 12px 0 0;
+  color: var(--ns-ink);
+  font-size: clamp(1.24rem, 1.6vw, 1.55rem);
+  line-height: 1.22;
+  letter-spacing: -0.018em;
+  font-weight: 700;
+}
+
+.ns-home-book-month-author {
+  margin: 8px 0 0;
+  color: rgba(15, 36, 24, 0.64);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  font-weight: 500;
+}
+
+.ns-home-book-month-desc {
+  margin: 14px 0 0;
+  max-width: 62ch;
+  color: #44566f;
+  font-size: 0.9rem;
+  line-height: 1.58;
+}
+
+.ns-home-book-month-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 0 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 138, 74, 0.18);
+  color: #0b6a36;
+  background: #eefaf2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ns-home-book-month-link:hover {
+  color: #064e2a;
+  background: #e3f6ea;
+  text-decoration: none;
+}
+
+@media (max-width: 720px) {
+  .ns-home-book-month-strip {
+    padding: 4px 0 32px;
+  }
+
+  .ns-home-book-month-card {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .ns-home-book-month-link {
+    width: fit-content;
+  }
+}
+
+/* Book of the Month is a quiet editorial recommendation, not a CTA block. */
+.ns-home-book-month-card {
+  grid-template-columns: 1fr;
+}
+
+
+/* ===============================
+   Public homepage polish v6
+   Build: 2026-05-28
+   Purpose:
+   - Further reduce the desktop hero so it no longer dominates the landing page
+   - Add a right-side cover slot to Book of the Month
+   =============================== */
+
+@media (min-width: 1101px) {
+  .ns-home-hero-grid {
+    grid-template-columns: minmax(0, 0.92fr) minmax(380px, 0.78fr);
+    gap: clamp(28px, 3.8vw, 52px);
+    padding: clamp(34px, 4.1vw, 54px) 0 clamp(38px, 4.5vw, 60px);
+  }
+
+  .ns-home-hero-copy-v2 {
+    max-width: 560px;
+  }
+
+  .ns-home-eyebrow {
+    margin-bottom: 14px;
+    padding: 6px 13px;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 16ch;
+    font-size: clamp(2.05rem, 3.25vw, 3.35rem);
+    line-height: 1.08;
+    letter-spacing: -0.038em;
+    font-weight: 800;
+  }
+
+  .ns-home-hero-lede {
+    margin-top: 16px;
+    max-width: 550px;
+    font-size: clamp(0.88rem, 0.78vw, 0.96rem);
+    line-height: 1.58;
+  }
+
+  .ns-home-hero-actions {
+    margin-top: 21px;
+  }
+
+  .ns-home-btn {
+    min-height: 38px;
+    padding: 0 17px;
+    font-size: 0.8rem;
+  }
+
+  .ns-home-featured-book-card {
+    margin-top: 22px;
+    max-width: 500px;
+    padding: 18px;
+    border-radius: 21px;
+  }
+
+  .ns-home-featured-book-card h2 {
+    margin-top: 10px;
+    font-size: 1.08rem;
+  }
+
+  .ns-home-featured-book-card p {
+    font-size: 0.86rem;
+    line-height: 1.48;
+  }
+
+  .ns-home-featured-book-actions {
+    margin-top: 13px;
+  }
+
+  .ns-home-featured-book-actions span {
+    min-height: 25px;
+    padding: 0 10px;
+    font-size: 0.68rem;
+  }
+
+  .ns-home-featured-book-actions a {
+    font-size: 0.76rem;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 500px;
+  }
+}
+
+.ns-home-book-month-card {
+  grid-template-columns: minmax(0, 1fr) 112px;
+  gap: 24px;
+  align-items: center;
+  max-width: 940px;
+  padding: 22px 24px;
+}
+
+.ns-home-book-month-copy {
+  min-width: 0;
+}
+
+.ns-home-book-month-cover {
+  justify-self: end;
+  width: 96px;
+  max-width: 96px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff7e7;
+  box-shadow: 0 14px 28px rgba(20, 26, 38, 0.13);
+  transform: rotate(1.5deg);
+}
+
+.ns-home-book-month-cover-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .ns-home-book-month-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-book-month-cover {
+    justify-self: start;
+    width: 82px;
+    max-width: 82px;
+  }
+}
+
+/* ===============================
+   Public homepage polish v7
+   Build: 2026-05-28
+   Purpose:
+   - Make the desktop hero quieter and less domineering
+   - Tighten the hero shelf and feature-card scale
+   - Keep Book of the Month cover slot from v6
+   =============================== */
+
+@media (min-width: 1101px) {
+  .ns-home-hero-v2 {
+    min-height: 620px;
+  }
+
+  .ns-home-hero-grid {
+    grid-template-columns: minmax(0, 0.84fr) minmax(390px, 0.82fr);
+    gap: clamp(26px, 3vw, 46px);
+    padding: clamp(26px, 3.2vw, 42px) 0 clamp(30px, 3.4vw, 48px);
+  }
+
+  .ns-home-hero-copy-v2 {
+    max-width: 520px;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 19ch;
+    font-size: clamp(1.9rem, 2.75vw, 2.85rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+  }
+
+  .ns-home-hero-lede {
+    margin-top: 14px;
+    max-width: 510px;
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .ns-home-eyebrow {
+    margin-bottom: 12px;
+    padding: 5px 12px;
+    font-size: 0.58rem;
+    letter-spacing: 0.21em;
+  }
+
+  .ns-home-hero-actions {
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .ns-home-btn {
+    min-height: 36px;
+    padding: 0 15px;
+    font-size: 0.77rem;
+  }
+
+  .ns-home-featured-book-card {
+    margin-top: 18px;
+    max-width: 460px;
+    padding: 16px 18px;
+    border-radius: 20px;
+  }
+
+  .ns-home-featured-book-card .ns-home-section-kicker {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+  }
+
+  .ns-home-featured-book-card h2 {
+    margin-top: 8px;
+    font-size: 1rem;
+  }
+
+  .ns-home-featured-book-card p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .ns-home-featured-book-actions {
+    margin-top: 11px;
+    gap: 10px;
+  }
+
+  .ns-home-featured-book-actions span {
+    min-height: 24px;
+    padding: 0 10px;
+    font-size: 0.66rem;
+  }
+
+  .ns-home-featured-book-actions a {
+    font-size: 0.72rem;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 510px;
+    border-radius: 31px;
+    padding: 13px;
+  }
+
+  .ns-home-shelf-inner {
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .ns-home-shelf-head {
+    margin-bottom: 15px;
+  }
+
+  .ns-home-shelf-head h2 {
+    font-size: 1.38rem;
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    min-height: 86px;
+    padding: 12px 14px;
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 60px;
+    height: 78px;
+    border-radius: 10px;
+  }
+
+  .ns-home-shelf-panel .ns-book-title {
+    font-size: 0.95rem;
+    line-height: 1.12;
+  }
+
+  .ns-home-shelf-panel .ns-book-hook {
+    margin-top: 4px;
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .ns-home-shelf-panel .ns-book-actions {
+    margin-top: 7px;
+  }
+
+  .ns-home-shelf-panel .ns-book-cta,
+  .ns-home-shelf-panel .ns-book-cta-publication {
+    min-height: 26px;
+    padding: 0 9px;
+    font-size: 0.70rem;
+  }
+
+  .ns-home-shelf-panel .ns-book-progress-badge,
+  .ns-home-shelf-panel .ns-book-badge {
+    min-height: 22px;
+    padding: 0 8px;
+    font-size: 0.60rem;
+  }
+}
+
+/* ===============================
+   Public homepage polish v8
+   Build: 2026-05-28
+   Purpose:
+   - Calm the mobile view after device testing
+   - Further reduce mobile hero scale
+   - Make the mobile nav compact without changing SiteNav logic
+   - Keep Book of the Month cover beside the text where possible
+   =============================== */
+
+@media (min-width: 1101px) {
+  .ns-home-hero-v2 {
+    min-height: 590px;
+  }
+
+  .ns-home-hero-grid {
+    grid-template-columns: minmax(0, 0.82fr) minmax(390px, 0.80fr);
+    gap: clamp(24px, 2.8vw, 42px);
+    padding: clamp(24px, 2.9vw, 38px) 0 clamp(28px, 3.1vw, 44px);
+  }
+
+  .ns-home-hero-copy-v2 {
+    max-width: 500px;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 20ch;
+    font-size: clamp(1.72rem, 2.42vw, 2.52rem);
+    line-height: 1.1;
+    letter-spacing: -0.028em;
+    font-weight: 780;
+  }
+
+  .ns-home-hero-lede {
+    max-width: 500px;
+    font-size: 0.82rem;
+    line-height: 1.52;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 720px) {
+  .ns-topbar-inner {
+    padding: 11px 12px 12px;
+    gap: 8px;
+  }
+
+  .ns-brand {
+    width: 100%;
+    flex: 1 1 100%;
+    padding-left: 0;
+  }
+
+  .ns-brand-logo {
+    height: 27px;
+  }
+
+  .ns-topbar-right {
+    order: 2;
+    width: auto;
+    flex: 0 0 auto;
+    gap: 7px;
+  }
+
+  .ns-links {
+    order: 3;
+    width: 100%;
+    gap: 7px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .ns-navlink,
+  .ns-lang-trigger,
+  .ns-topbar .ns-btn-ghost {
+    min-height: 31px;
+    padding: 0 10px;
+    font-size: 0.68rem;
+    line-height: 1;
+  }
+
+  .ns-topbar .ns-btn-ghost {
+    min-height: 34px;
+    padding: 0 13px;
+    font-size: 0.72rem;
+  }
+
+  .ns-home-hero-v2 {
+    min-height: auto;
+  }
+
+  .ns-home-hero-grid {
+    gap: 18px;
+    padding: 26px 0 32px;
+  }
+
+  .ns-home-eyebrow {
+    margin-bottom: 12px;
+    padding: 5px 10px;
+    font-size: 0.50rem;
+    letter-spacing: 0.20em;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 16.5ch;
+    font-size: clamp(1.5rem, 7vw, 2.02rem);
+    line-height: 1.11;
+    letter-spacing: -0.026em;
+    font-weight: 760;
+  }
+
+  .ns-home-hero-lede {
+    margin-top: 12px;
+    max-width: 100%;
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  .ns-home-hero-actions {
+    margin-top: 15px;
+    gap: 8px;
+  }
+
+  .ns-home-btn {
+    min-height: 34px;
+    padding: 0 13px;
+    font-size: 0.70rem;
+  }
+
+  .ns-home-featured-book-card {
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .ns-home-featured-book-card .ns-home-section-kicker {
+    font-size: 0.54rem;
+  }
+
+  .ns-home-featured-book-card h2 {
+    font-size: 0.92rem;
+  }
+
+  .ns-home-featured-book-card p {
+    font-size: 0.75rem;
+    line-height: 1.45;
+  }
+
+  .ns-home-featured-book-actions span,
+  .ns-home-featured-book-actions a {
+    font-size: 0.64rem;
+  }
+
+  .ns-home-shelf-panel {
+    max-width: 100%;
+    padding: 8px;
+    border-radius: 22px;
+  }
+
+  .ns-home-shelf-inner {
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .ns-home-shelf-head {
+    margin-bottom: 12px;
+  }
+
+  .ns-home-shelf-head h2 {
+    font-size: 1.15rem;
+  }
+
+  .ns-home-shelf-head > span {
+    min-height: 24px;
+    padding: 0 9px;
+    font-size: 0.58rem;
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 10px;
+    min-height: auto;
+    padding: 10px;
+    border-radius: 15px;
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 48px;
+    height: 62px;
+    border-radius: 9px;
+  }
+
+  .ns-home-shelf-panel .ns-book-title {
+    font-size: 0.76rem;
+    line-height: 1.16;
+  }
+
+  .ns-home-shelf-panel .ns-book-hook {
+    font-size: 0.66rem;
+    line-height: 1.28;
+  }
+
+  .ns-book-status-row {
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .ns-book-status-pill {
+    min-height: 19px;
+    padding: 0 7px;
+    font-size: 0.52rem;
+  }
+
+  .ns-book-action-link {
+    font-size: 0.60rem;
+  }
+
+  .ns-home-doorway-grid {
+    gap: 14px;
+    padding: 22px 0 24px;
+  }
+
+  .ns-home-doorway-card {
+    border-radius: 19px;
+  }
+
+  .ns-home-doorway-image {
+    height: 88px;
+  }
+
+  .ns-home-doorway-icon {
+    width: 32px;
+    height: 32px;
+    left: 12px;
+    bottom: 10px;
+    border-radius: 11px;
+    font-size: 0.92rem;
+  }
+
+  .ns-home-doorway-body {
+    padding: 15px;
+  }
+
+  .ns-home-doorway-body h3 {
+    font-size: 1rem;
+    line-height: 1.18;
+  }
+
+  .ns-home-doorway-body p {
+    margin-top: 7px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .ns-home-text-link {
+    margin-top: 10px;
+    font-size: 0.72rem;
+  }
+
+  .ns-home-audio-strip-card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .ns-home-audio-strip-card h2 {
+    font-size: 1rem;
+  }
+
+  .ns-home-audio-strip-card p {
+    font-size: 0.78rem;
+    line-height: 1.46;
+  }
+
+  .ns-home-audio-strip-card audio {
+    width: 100%;
+  }
+
+  .ns-home-book-month-card {
+    grid-template-columns: minmax(0, 1fr) 74px;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 18px;
+    align-items: start;
+  }
+
+  .ns-home-book-month-card .ns-home-section-kicker {
+    font-size: 0.56rem;
+    letter-spacing: 0.15em;
+  }
+
+  .ns-home-book-month-card h2 {
+    margin-top: 9px;
+    font-size: 1rem;
+  }
+
+  .ns-home-book-month-author {
+    font-size: 0.76rem;
+  }
+
+  .ns-home-book-month-desc {
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  .ns-home-book-month-cover {
+    justify-self: end;
+    width: 68px;
+    max-width: 68px;
+    border-radius: 10px;
+  }
+
+  .ns-home-development-grid,
+  .ns-home-feels-grid,
+  .ns-home-mystery-card {
+    padding: 28px 0;
+  }
+
+  .ns-home-development-copy h2,
+  .ns-home-feels h2,
+  .ns-home-workshop-content h3,
+  .ns-home-mystery-card h2 {
+    font-size: clamp(1.05rem, 5.5vw, 1.42rem);
+    line-height: 1.16;
+    letter-spacing: -0.018em;
+  }
+
+  .ns-home-development-copy p,
+  .ns-home-workshop-content p,
+  .ns-home-mystery-card p {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+
+  .ns-home-feels-card {
+    padding: 16px;
+    border-radius: 18px;
+  }
+
+  .ns-home-feels-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .ns-home-feels-card p {
+    font-size: 0.76rem;
+    line-height: 1.42;
+  }
+
+  .ns-home-mystery-card figure {
+    max-width: 100%;
+  }
+
+  .ns-footer {
+    padding-top: 24px;
+    font-size: 10px;
+  }
+
+  .ns-footer-inner {
+    gap: 18px;
+    padding-bottom: 18px;
+  }
+
+  .ns-footer-nmark {
+    width: 27px;
+    height: 27px;
+  }
+
+  .ns-footer-wordmark {
+    font-size: 0.92rem;
+  }
+
+  .ns-footer-tagline {
+    margin-top: 13px;
+    font-size: 0.72rem;
+  }
+
+  .ns-footer-description {
+    margin-top: 9px;
+    font-size: 0.68rem;
+    line-height: 1.45;
+  }
+
+  .ns-footer-heading {
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+  }
+
+  .ns-footer-links-stack {
+    gap: 6px;
+  }
+
+  .ns-footer-link {
+    font-size: 0.68rem;
+    line-height: 1.25;
+  }
+
+  .ns-footer-bottom-inner {
+    font-size: 0.64rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .ns-topbar-inner,
+  .ns-home-container,
+  .ns-footer-inner,
+  .ns-footer-bottom-inner {
+    width: auto;
+  }
+
+  .ns-home-container,
+  .ns-footer-inner,
+  .ns-footer-bottom-inner {
+    width: calc(100% - 24px);
+  }
+
+  .ns-brand-logo {
+    height: 25px;
+  }
+
+  .ns-navlink,
+  .ns-lang-trigger {
+    min-height: 30px;
+    padding: 0 9px;
+    font-size: 0.66rem;
+  }
+
+  .ns-topbar .ns-btn-ghost {
+    min-height: 32px;
+    padding: 0 12px;
+    font-size: 0.68rem;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    font-size: clamp(1.36rem, 6.55vw, 1.82rem);
+    max-width: 17ch;
+  }
+
+  .ns-home-hero-lede {
+    font-size: 0.74rem;
+  }
+
+  .ns-home-shelf-head h2 {
+    font-size: 1.05rem;
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 44px;
+    height: 58px;
+  }
+
+  .ns-home-book-month-card {
+    grid-template-columns: minmax(0, 1fr) 62px;
+  }
+
+  .ns-home-book-month-cover {
+    width: 60px;
+    max-width: 60px;
+  }
+}
+
+/* ===============================
+   Public homepage polish v9
+   Build: 2026-05-28
+   Purpose:
+   - Final mobile correction after device preview
+   - Put logo, language, and app button on one compact top row
+   - Keep the nav pills scrollable instead of wrapping into heavy rows
+   - Calm the mobile hero and footer without changing desktop direction
+   =============================== */
+
+@media (max-width: 720px) {
+  .ns-topbar-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 8px 10px 9px;
+    gap: 7px 8px;
+  }
+
+  .ns-brand {
+    grid-column: 1;
+    grid-row: 1;
+    width: auto;
+    min-width: 0;
+    flex: initial;
+  }
+
+  .ns-brand-logo {
+    height: 24px;
+  }
+
+  .ns-topbar-right {
+    grid-column: 2;
+    grid-row: 1;
+    width: auto;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+
+  .ns-links,
+  .ns-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1px 1px 3px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .ns-links::-webkit-scrollbar,
+  .ns-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ns-navlink,
+  .ns-nav a,
+  .ns-lang-trigger,
+  .ns-topbar .ns-btn-ghost {
+    flex: 0 0 auto;
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: 0.62rem;
+    line-height: 1;
+  }
+
+  .ns-topbar .ns-btn-ghost {
+    min-height: 31px;
+    padding: 0 12px;
+    font-size: 0.64rem;
+  }
+
+  .ns-home-hero-grid {
+    gap: 16px;
+    padding: 22px 0 28px;
+  }
+
+  .ns-home-eyebrow {
+    margin-bottom: 10px;
+    padding: 5px 9px;
+    font-size: 0.48rem;
+    letter-spacing: 0.18em;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    max-width: 18ch;
+    font-size: clamp(1.32rem, 6.2vw, 1.78rem);
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    font-weight: 740;
+  }
+
+  .ns-home-hero-lede {
+    margin-top: 10px;
+    font-size: 0.72rem;
+    line-height: 1.46;
+  }
+
+  .ns-home-hero-actions {
+    margin-top: 13px;
+    gap: 7px;
+  }
+
+  .ns-home-btn {
+    min-height: 31px;
+    padding: 0 12px;
+    font-size: 0.66rem;
+  }
+
+  .ns-home-featured-book-card {
+    margin-top: 14px;
+    padding: 13px;
+  }
+
+  .ns-home-shelf-panel {
+    padding: 7px;
+  }
+
+  .ns-home-shelf-inner {
+    padding: 13px;
+  }
+
+  .ns-home-shelf-head h2 {
+    font-size: 1.04rem;
+  }
+
+  .ns-home-shelf-panel .ns-book-card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 9px;
+    padding: 9px;
+  }
+
+  .ns-home-shelf-panel .ns-book-cover {
+    width: 44px;
+    height: 58px;
+  }
+
+  .ns-home-shelf-panel .ns-book-title {
+    font-size: 0.72rem;
+  }
+
+  .ns-home-shelf-panel .ns-book-hook {
+    font-size: 0.62rem;
+  }
+
+  .ns-book-status-pill {
+    min-height: 18px;
+    padding: 0 6px;
+    font-size: 0.49rem;
+  }
+
+  .ns-book-action-link {
+    font-size: 0.56rem;
+  }
+
+  .ns-home-doorway-grid {
+    gap: 12px;
+    padding: 20px 0 22px;
+  }
+
+  .ns-home-doorway-image {
+    height: 78px;
+  }
+
+  .ns-home-doorway-body {
+    padding: 13px;
+  }
+
+  .ns-home-doorway-body h3 {
+    font-size: 0.94rem;
+  }
+
+  .ns-home-doorway-body p,
+  .ns-home-audio-strip-card p,
+  .ns-home-development-copy p,
+  .ns-home-workshop-content p,
+  .ns-home-mystery-card p {
+    font-size: 0.72rem;
+    line-height: 1.42;
+  }
+
+  .ns-home-audio-strip-card {
+    padding: 14px;
+  }
+
+  .ns-home-book-month-card {
+    grid-template-columns: minmax(0, 1fr) 58px;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .ns-home-book-month-cover {
+    width: 56px;
+    max-width: 56px;
+  }
+
+  .ns-home-development-grid,
+  .ns-home-feels-grid,
+  .ns-home-mystery-card {
+    padding: 24px 0;
+  }
+
+  .ns-home-feels-cards article {
+    min-height: auto;
+    padding: 14px;
+  }
+
+  .ns-footer {
+    padding-top: 20px;
+  }
+
+  .ns-footer-inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 18px;
+    padding-bottom: 16px;
+  }
+
+  .ns-footer-brandblock {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+
+  .ns-footer-nmark {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ns-footer-wordmark {
+    font-size: 0.84rem;
+  }
+
+  .ns-footer-tagline {
+    margin-top: 10px;
+    font-size: 0.66rem;
+  }
+
+  .ns-footer-description {
+    margin-top: 6px;
+    font-size: 0.62rem;
+    line-height: 1.4;
+  }
+
+  .ns-footer-heading {
+    font-size: 0.54rem;
+    letter-spacing: 0.14em;
+  }
+
+  .ns-footer-links-stack {
+    gap: 5px;
+  }
+
+  .ns-footer-link {
+    font-size: 0.62rem;
+    line-height: 1.22;
+  }
+
+  .ns-footer-bottom {
+    padding: 10px 0 12px;
+  }
+
+  .ns-footer-bottom-inner {
+    font-size: 0.58rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .ns-topbar-inner {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .ns-brand-logo {
+    height: 22px;
+  }
+
+  .ns-lang-trigger,
+  .ns-topbar .ns-btn-ghost {
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: 0.58rem;
+  }
+
+  .ns-home-hero-copy-v2 h1 {
+    font-size: clamp(1.22rem, 6vw, 1.55rem);
+  }
+
+  .ns-home-book-month-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-home-book-month-cover {
+    justify-self: start;
+  }
+}
