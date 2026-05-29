@@ -244,14 +244,16 @@ export default async function HomePage() {
             </div>
 
             <div className="ns-home-featured-book-card">
-              <div className="ns-home-section-kicker">Featured Book</div>
-              <h2>Didie</h2>
+              <div className="ns-home-section-kicker">NextScenes today</div>
+              <h2>Stories in development. Books taking shape.</h2>
               <p>
-                A story shaped by memory, distance, grief, and the stubborn pull of home.
+                Follow selected works while they are being shaped, discover published titles
+                connected to NextScenes, and enter a calm literary space built around author
+                control, reader curiosity, and thoughtful collaboration.
               </p>
               <div className="ns-home-featured-book-actions">
-                <span>In creation on NextScenes</span>
-                <Link href={bookOfTheWeek.href}>Open book →</Link>
+                <span>In-development and published works are clearly marked</span>
+                <Link href={APP_URL}>Enter NextScenes →</Link>
               </div>
             </div>
           </div>
