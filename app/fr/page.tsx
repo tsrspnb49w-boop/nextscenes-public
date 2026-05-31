@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
-import { FEATURED_STORIES, type FeaturedStory } from "@/app/lib/featuredStories";
+import { FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
@@ -97,7 +97,7 @@ async function getPublicHomepageData(language: "en" | "fr"): Promise<PublicHomep
 
     if (!res.ok) {
       return {
-        featuredStories: FEATURED_STORIES,
+        featuredStories: FEATURED_STORIES_FR,
         weeklyMystery: FALLBACK_WEEKLY_MYSTERY,
       };
     }
@@ -108,12 +108,12 @@ async function getPublicHomepageData(language: "en" | "fr"): Promise<PublicHomep
       : [];
 
     return {
-      featuredStories: stories.length ? stories : FEATURED_STORIES,
+      featuredStories: stories.length ? stories : FEATURED_STORIES_FR,
       weeklyMystery: normalizeWeeklyMystery(data?.weeklyMystery),
     };
   } catch {
     return {
-      featuredStories: FEATURED_STORIES,
+      featuredStories: FEATURED_STORIES_FR,
       weeklyMystery: FALLBACK_WEEKLY_MYSTERY,
     };
   }
