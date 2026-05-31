@@ -37,6 +37,8 @@ type FeaturedReading = {
   description: string;
   cta?: string;
   href?: string;
+  cover?: string;
+  imageAlt?: string;
   isVisible?: boolean;
 };
 
@@ -109,6 +111,8 @@ function normalizeFeaturedReading(
     description: raw.description || fallback.description,
     cta: raw.cta || fallback.cta,
     href: raw.href || fallback.href || "",
+    cover: raw.cover || fallback.cover || "",
+    imageAlt: raw.imageAlt || fallback.imageAlt || "",
     isVisible: raw.isVisible,
   };
 }
@@ -221,9 +225,20 @@ function FeaturedReadingCard({ reading }: { reading: FeaturedReading }) {
     <section className="ns-home-featured-reading-strip" aria-label={reading.label}>
       <div className="ns-home-container">
         <article className="ns-home-featured-reading-card">
-          <div className="ns-home-featured-reading-mark" aria-hidden="true">
-            Monthly Reading
-          </div>
+          {reading.cover ? (
+            <div className="ns-home-featured-reading-cover-wrap">
+              <img
+                src={reading.cover}
+                alt={reading.imageAlt || `${reading.title} by ${reading.author}`}
+                className="ns-home-featured-reading-cover"
+              />
+            </div>
+          ) : (
+            <div className="ns-home-featured-reading-mark" aria-hidden="true">
+              Monthly Reading
+            </div>
+          )}
+
           <div className="ns-home-featured-reading-copy">
             <div className="ns-home-section-kicker">{reading.label}</div>
             <h2>{reading.title}</h2>
