@@ -21,8 +21,12 @@ export const HOME_FEATURES = {
       author: "Leo Tolstoy",
       description:
         "A searching novel of love, marriage, society, duty, and the price of choices made against the heart.",
+      wisdomText:
+        "Reading widens the mind, sharpens judgment, and lets us borrow wisdom from lives beyond our own.",
       cta: "Explore the recommendation",
       href: "",
+      cover: "/images/featured-reading/reading-wisdom.webp",
+      imageAlt: "Open books representing the wisdom gained through reading",
     },
 
     puzzleOfTheWeek: {
@@ -64,8 +68,12 @@ export const HOME_FEATURES = {
       author: "Victor Hugo",
       description:
         "Un grand roman sur la justice, la misère, la compassion, la faute, le pardon et la dignité humaine.",
+      wisdomText:
+        "La lecture élargit l’esprit, affine le jugement et nous permet d’emprunter la sagesse de vies au-delà de la nôtre.",
       cta: "Découvrir la recommandation",
       href: "",
+      cover: "/images/featured-reading/reading-wisdom.webp",
+      imageAlt: "Livres ouverts représentant la sagesse acquise par la lecture",
     },
 
     puzzleOfTheWeek: {

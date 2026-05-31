@@ -6330,6 +6330,22 @@ div.ns-book-badge {
   line-height: 1.6;
 }
 
+.ns-home-featured-reading-divider {
+  width: min(360px, 100%);
+  height: 1px;
+  margin: 16px 0 12px;
+  background: linear-gradient(90deg, rgba(151, 116, 43, 0.36), rgba(151, 116, 43, 0.06));
+}
+
+.ns-home-featured-reading-wisdom {
+  margin: 0;
+  max-width: 68ch;
+  color: rgba(15, 36, 24, 0.66);
+  font-size: 0.9rem;
+  line-height: 1.62;
+  font-style: italic;
+}
+
 .ns-home-featured-reading-link {
   display: inline-flex;
   align-items: center;
@@ -6367,8 +6383,13 @@ div.ns-book-badge {
   }
 
   .ns-home-featured-reading-author,
-  .ns-home-featured-reading-desc {
+  .ns-home-featured-reading-desc,
+  .ns-home-featured-reading-wisdom {
     font-size: 0.8rem;
+  }
+
+  .ns-home-featured-reading-divider {
+    margin: 12px 0 10px;
   }
 }
 

@@ -35,6 +35,7 @@ type FeaturedReading = {
   title: string;
   author: string;
   description: string;
+  wisdomText?: string;
   cta?: string;
   href?: string;
   cover?: string;
@@ -109,6 +110,7 @@ function normalizeFeaturedReading(
     title: raw.title || fallback.title,
     author: raw.author || fallback.author,
     description: raw.description || fallback.description,
+    wisdomText: raw.wisdomText || fallback.wisdomText || "Reading widens the mind, sharpens judgment, and lets us borrow wisdom from lives beyond our own.",
     cta: raw.cta || fallback.cta,
     href: raw.href || fallback.href || "",
     cover: raw.cover || fallback.cover || "",
@@ -244,6 +246,12 @@ function FeaturedReadingCard({ reading }: { reading: FeaturedReading }) {
             <h2>{reading.title}</h2>
             <p className="ns-home-featured-reading-author">By {reading.author}</p>
             <p className="ns-home-featured-reading-desc">{reading.description}</p>
+            {reading.wisdomText ? (
+              <>
+                <div className="ns-home-featured-reading-divider" aria-hidden="true" />
+                <p className="ns-home-featured-reading-wisdom">{reading.wisdomText}</p>
+              </>
+            ) : null}
             {reading.href ? (
               <Link href={reading.href} className="ns-home-featured-reading-link">
                 {reading.cta || "Explore the recommendation"} →
