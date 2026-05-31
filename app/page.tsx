@@ -181,34 +181,6 @@ function DoorwayCard({
   );
 }
 
-function BookOfMonthCard() {
-  return (
-    <section className="ns-home-book-month-strip" aria-label="Book of the month">
-      <div className="ns-home-container">
-        <article className="ns-home-book-month-card">
-          <div className="ns-home-book-month-copy">
-            <div className="ns-home-section-kicker">Book of the Month</div>
-            <h2>Half of a Yellow Sun</h2>
-            <p className="ns-home-book-month-author">By Chimamanda Ngozi Adichie</p>
-            <p className="ns-home-book-month-desc">
-              A sweeping, intimate novel of love, war, class, and fracture.
-            </p>
-          </div>
-          <div className="ns-home-book-month-cover" aria-hidden="true">
-            <Image
-              src="/images/home/half-yellow-sun.jpg"
-              alt=""
-              width={150}
-              height={230}
-              className="ns-home-book-month-cover-img"
-              unoptimized
-            />
-          </div>
-        </article>
-      </div>
-    </section>
-  );
-}
 
 export default async function HomePage() {
   const homeFeatures = HOME_FEATURES.en;
@@ -333,8 +305,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      <BookOfMonthCard />
 
       <section className="ns-home-development">
         <div className="ns-home-container ns-home-development-grid">
