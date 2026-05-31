@@ -339,34 +339,34 @@ export default async function HomePage() {
       <section className="ns-home-development">
         <div className="ns-home-container ns-home-development-grid">
           <div className="ns-home-development-copy">
-            <div className="ns-home-section-kicker">Histoires en création</div>
-            <h2>Une vue publique qui ressemble à des livres, pas à une machine de backend.</h2>
+            <div className="ns-home-section-kicker">Du brouillon à la destination</div>
+            <h2>Les lecteurs découvrent l’histoire. Les auteurs gardent la maîtrise du voyage.</h2>
             <p>
-              Les lecteurs doivent voir des couvertures, des titres, des teasers et des actions
-              de lecture simples. Le langage plus profond du Canon, des propositions et des journaux
-              de décision doit rester dans l’espace de travail de l’auteur.
+              NextScenes garde l’expérience publique calme et claire. Les visiteurs peuvent
+              découvrir des histoires choisies, voir quelles œuvres sont encore en création,
+              et reconnaître les livres déjà passés à la publication.
             </p>
 
             <div className="ns-home-check-list">
-              <span>Lecture publique simple</span>
-              <span>Histoires clairement marquées comme en cours ou publiées</span>
-              <span>Outils d’écriture gardés dans l’espace de travail</span>
-              <span>Confiance, droits et contrôle de l’auteur rendus visibles</span>
+              <span>Histoires présentées avec couvertures, titres et actions claires</span>
+              <span>Livres publiés séparés des œuvres encore en cours</span>
+              <span>Lecteurs accueillis sans encombrement technique</span>
+              <span>Contrôle de l’auteur, confiance et droits rendus visibles</span>
             </div>
           </div>
 
           <div className="ns-home-workshop-card">
             <div className="ns-home-workshop-visual" aria-hidden="true" />
             <div className="ns-home-workshop-content">
-              <h3>Une salle de lecture d’abord. Un atelier d’écriture derrière.</h3>
+              <h3>Une salle de lecture calme devant. Un vrai atelier créatif derrière.</h3>
               <p>
-                Les lecteurs rencontrent d’abord les histoires. Les auteurs gardent les outils plus
-                profonds, le flux des propositions et les contrôles de collaboration là où ils sont
-                réellement utiles. Le côté public reste calme. Le côté travail reste sérieux.
+                Le côté public sert à découvrir, lire et faire confiance. Le côté auteur
+                permet de façonner les scènes, examiner les contributions et protéger la
+                direction de l’œuvre.
               </p>
               <div className="ns-home-mini-checks">
-                <span>L’entrée publique reste claire et accueillante.</span>
-                <span>L’espace auteur garde la profondeur et les décisions.</span>
+                <span>Les visiteurs rencontrent les histoires sans confusion.</span>
+                <span>Les auteurs gardent les outils et décisions au bon endroit.</span>
               </div>
             </div>
           </div>

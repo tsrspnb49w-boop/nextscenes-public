@@ -339,34 +339,34 @@ export default async function HomePage() {
       <section className="ns-home-development">
         <div className="ns-home-container ns-home-development-grid">
           <div className="ns-home-development-copy">
-            <div className="ns-home-section-kicker">Stories under development</div>
-            <h2>A public view that feels like books, not backend machinery.</h2>
+            <div className="ns-home-section-kicker">From draft to destination</div>
+            <h2>Readers see the story. Writers keep control of the journey.</h2>
             <p>
-              Readers should see covers, titles, teasers, and simple reading actions.
-              The deeper language of Canon, proposals, and decision logs should remain
-              inside the writer workspace where it belongs.
+              NextScenes keeps the public reading experience calm and clear. Visitors can
+              discover selected stories, see which works are still growing, and recognize
+              books that have already moved into publication.
             </p>
 
             <div className="ns-home-check-list">
-              <span>Simple public reading</span>
-              <span>Stories clearly marked as in progress or published</span>
-              <span>Writer tools kept inside the workspace</span>
-              <span>Trust, rights, and author control made visible</span>
+              <span>Stories presented with covers, titles, and clear actions</span>
+              <span>Published books separated from works still in progress</span>
+              <span>Readers welcomed without technical clutter</span>
+              <span>Author control, trust, and rights kept visible</span>
             </div>
           </div>
 
           <div className="ns-home-workshop-card">
             <div className="ns-home-workshop-visual" aria-hidden="true" />
             <div className="ns-home-workshop-content">
-              <h3>A reading room first. A writing workshop behind it.</h3>
+              <h3>A calm reading room in front. A serious creative workshop behind it.</h3>
               <p>
-                Readers meet stories first. Writers keep the deeper tools, proposal flow,
-                and collaboration controls where they are most useful. The public side
-                feels calm. The working side remains serious.
+                The public side is for discovery, reading, and trust. The writer side is
+                where authors shape scenes, review contributions, and protect the direction
+                of their work.
               </p>
               <div className="ns-home-mini-checks">
-                <span>The public entrance stays clear and welcoming.</span>
-                <span>The writer workspace holds the depth and decisions.</span>
+                <span>Visitors meet stories without confusion.</span>
+                <span>Authors keep the tools and decisions where they belong.</span>
               </div>
             </div>
           </div>
