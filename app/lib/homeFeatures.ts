@@ -15,6 +15,16 @@ export const HOME_FEATURES = {
       href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
     },
 
+    featuredReading: {
+      label: "Book of the Month",
+      title: "Anna Karenina",
+      author: "Leo Tolstoy",
+      description:
+        "A searching novel of love, marriage, society, duty, and the price of choices made against the heart.",
+      cta: "Explore the recommendation",
+      href: "",
+    },
+
     puzzleOfTheWeek: {
       label: "Puzzle of the Week",
       title: "A puzzle worth solving",
@@ -46,6 +56,16 @@ export const HOME_FEATURES = {
       meta: "En cours · Toujours en évolution",
       cta: "Entrer dans le récit",
       href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
+    },
+
+    featuredReading: {
+      label: "Livre du mois",
+      title: "Les Misérables",
+      author: "Victor Hugo",
+      description:
+        "Un grand roman sur la justice, la misère, la compassion, la faute, le pardon et la dignité humaine.",
+      cta: "Découvrir la recommandation",
+      href: "",
     },
 
     puzzleOfTheWeek: {

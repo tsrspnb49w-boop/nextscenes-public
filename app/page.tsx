@@ -30,6 +30,16 @@ type WeeklyMystery = {
   href?: string;
 };
 
+type FeaturedReading = {
+  label: string;
+  title: string;
+  author: string;
+  description: string;
+  cta?: string;
+  href?: string;
+  isVisible?: boolean;
+};
+
 type NormalizedWeeklyMystery = {
   ref: string;
   title: string;
@@ -44,11 +54,13 @@ type PublicHomepageResponse = {
   ok?: boolean;
   featuredStories?: FeaturedStory[];
   weeklyMystery?: WeeklyMystery | null;
+  featuredReading?: FeaturedReading | null;
 };
 
 type PublicHomepageData = {
   featuredStories: FeaturedStory[];
   weeklyMystery: NormalizedWeeklyMystery;
+  featuredReading: FeaturedReading;
 };
 
 function cleanApiBase(value: string | undefined) {
@@ -84,6 +96,23 @@ function getWeeklyMysteryAppHref(weeklyMystery: NormalizedWeeklyMystery) {
   return `${APP_URL}/mystery250?${params.toString()}`;
 }
 
+function normalizeFeaturedReading(
+  raw: FeaturedReading | null | undefined,
+  fallback: FeaturedReading,
+): FeaturedReading {
+  if (!raw || raw.isVisible === false) return fallback;
+
+  return {
+    label: raw.label || fallback.label,
+    title: raw.title || fallback.title,
+    author: raw.author || fallback.author,
+    description: raw.description || fallback.description,
+    cta: raw.cta || fallback.cta,
+    href: raw.href || fallback.href || "",
+    isVisible: raw.isVisible,
+  };
+}
+
 async function getPublicHomepageData(language: "en" | "fr"): Promise<PublicHomepageData> {
   const apiBase = getPublicHomepageApiBase();
 
@@ -99,6 +128,7 @@ async function getPublicHomepageData(language: "en" | "fr"): Promise<PublicHomep
       return {
         featuredStories: FEATURED_STORIES,
         weeklyMystery: FALLBACK_WEEKLY_MYSTERY,
+        featuredReading: HOME_FEATURES.en.featuredReading,
       };
     }
 
@@ -110,11 +140,16 @@ async function getPublicHomepageData(language: "en" | "fr"): Promise<PublicHomep
     return {
       featuredStories: stories.length ? stories : FEATURED_STORIES,
       weeklyMystery: normalizeWeeklyMystery(data?.weeklyMystery),
+      featuredReading: normalizeFeaturedReading(
+        data?.featuredReading,
+        HOME_FEATURES.en.featuredReading,
+      ),
     };
   } catch {
     return {
       featuredStories: FEATURED_STORIES,
       weeklyMystery: FALLBACK_WEEKLY_MYSTERY,
+      featuredReading: HOME_FEATURES.en.featuredReading,
     };
   }
 }
@@ -181,6 +216,31 @@ function DoorwayCard({
   );
 }
 
+function FeaturedReadingCard({ reading }: { reading: FeaturedReading }) {
+  return (
+    <section className="ns-home-featured-reading-strip" aria-label={reading.label}>
+      <div className="ns-home-container">
+        <article className="ns-home-featured-reading-card">
+          <div className="ns-home-featured-reading-mark" aria-hidden="true">
+            Monthly Reading
+          </div>
+          <div className="ns-home-featured-reading-copy">
+            <div className="ns-home-section-kicker">{reading.label}</div>
+            <h2>{reading.title}</h2>
+            <p className="ns-home-featured-reading-author">By {reading.author}</p>
+            <p className="ns-home-featured-reading-desc">{reading.description}</p>
+            {reading.href ? (
+              <Link href={reading.href} className="ns-home-featured-reading-link">
+                {reading.cta || "Explore the recommendation"} →
+              </Link>
+            ) : null}
+          </div>
+        </article>
+      </div>
+    </section>
+  );
+}
+
 
 export default async function HomePage() {
   const homeFeatures = HOME_FEATURES.en;
@@ -189,6 +249,7 @@ export default async function HomePage() {
   const weeklyMystery = homepageData.weeklyMystery;
   const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
   const featuredStories = homepageData.featuredStories;
+  const featuredReading = homepageData.featuredReading;
 
   return (
     <div className="ns-page ns-public-home">
@@ -305,6 +366,8 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <FeaturedReadingCard reading={featuredReading} />
 
       <section className="ns-home-development">
         <div className="ns-home-container ns-home-development-grid">
