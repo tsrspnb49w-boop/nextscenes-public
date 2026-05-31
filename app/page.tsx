@@ -295,7 +295,7 @@ export default async function HomePage() {
 
           <DoorwayCard
             title="Write with purpose"
-            text="Create, polish, collaborate, approve proposals, and manage your story from a private writing workspace."
+            text="Create, polish, collaborate with care, and manage your story from a private writing workspace."
             href={APP_URL}
             cta="Start writing"
             imageSrc="/images/home/writer-studio.png"

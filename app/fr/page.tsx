@@ -295,7 +295,7 @@ export default async function HomePage() {
 
           <DoorwayCard
             title="Écrire avec intention"
-            text="Créez, améliorez, collaborez, approuvez les propositions et gérez votre histoire depuis un espace d’écriture privé."
+            text="Créez, améliorez, collaborez avec soin et gérez votre histoire depuis un espace d’écriture privé."
             href={APP_URL}
             cta="Commencer à écrire"
             imageSrc="/images/home/writer-studio.png"
