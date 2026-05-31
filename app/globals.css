@@ -5310,13 +5310,6 @@ div.ns-book-badge {
   }
 }
 
-/* ===============================
-   Public homepage polish v5
-   Build: 2026-05-28
-   Purpose:
-   - Reintroduce Book of the Month as a compact editorial card
-   - Calm the paragraph/section heading weights so the page reads less heavy
-   =============================== */
 
 .ns-home-doorway-body h3,
 .ns-home-audio-strip-card h2,
@@ -5333,108 +5326,6 @@ div.ns-book-badge {
   font-weight: 650;
 }
 
-.ns-home-book-month-strip {
-  background:
-    radial-gradient(circle at 12% 10%, rgba(31, 182, 106, 0.06), transparent 34%),
-    #fffaf0;
-  padding: 10px 0 44px;
-}
-
-.ns-home-book-month-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 24px;
-  align-items: center;
-  max-width: 940px;
-  margin: 0 auto;
-  padding: 24px 28px;
-  border: 1px solid rgba(20, 138, 74, 0.14);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 16px 40px rgba(20, 26, 38, 0.055);
-}
-
-.ns-home-book-month-card .ns-home-section-kicker {
-  color: rgba(15, 36, 24, 0.58);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-}
-
-.ns-home-book-month-card h2 {
-  margin: 12px 0 0;
-  color: var(--ns-ink);
-  font-size: clamp(1.24rem, 1.6vw, 1.55rem);
-  line-height: 1.22;
-  letter-spacing: -0.018em;
-  font-weight: 700;
-}
-
-.ns-home-book-month-author {
-  margin: 8px 0 0;
-  color: rgba(15, 36, 24, 0.64);
-  font-size: 0.88rem;
-  line-height: 1.45;
-  font-weight: 500;
-}
-
-.ns-home-book-month-desc {
-  margin: 14px 0 0;
-  max-width: 62ch;
-  color: #44566f;
-  font-size: 0.9rem;
-  line-height: 1.58;
-}
-
-.ns-home-book-month-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 34px;
-  padding: 0 15px;
-  border-radius: 999px;
-  border: 1px solid rgba(20, 138, 74, 0.18);
-  color: #0b6a36;
-  background: #eefaf2;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.ns-home-book-month-link:hover {
-  color: #064e2a;
-  background: #e3f6ea;
-  text-decoration: none;
-}
-
-@media (max-width: 720px) {
-  .ns-home-book-month-strip {
-    padding: 4px 0 32px;
-  }
-
-  .ns-home-book-month-card {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-
-  .ns-home-book-month-link {
-    width: fit-content;
-  }
-}
-
-/* Book of the Month is a quiet editorial recommendation, not a CTA block. */
-.ns-home-book-month-card {
-  grid-template-columns: 1fr;
-}
-
-
-/* ===============================
-   Public homepage polish v6
-   Build: 2026-05-28
-   Purpose:
-   - Further reduce the desktop hero so it no longer dominates the landing page
-   - Add a right-side cover slot to Book of the Month
-   =============================== */
 
 @media (min-width: 1101px) {
   .ns-home-hero-grid {
@@ -5515,56 +5406,6 @@ div.ns-book-badge {
   }
 }
 
-.ns-home-book-month-card {
-  grid-template-columns: minmax(0, 1fr) 112px;
-  gap: 24px;
-  align-items: center;
-  max-width: 940px;
-  padding: 22px 24px;
-}
-
-.ns-home-book-month-copy {
-  min-width: 0;
-}
-
-.ns-home-book-month-cover {
-  justify-self: end;
-  width: 96px;
-  max-width: 96px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #fff7e7;
-  box-shadow: 0 14px 28px rgba(20, 26, 38, 0.13);
-  transform: rotate(1.5deg);
-}
-
-.ns-home-book-month-cover-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-@media (max-width: 720px) {
-  .ns-home-book-month-card {
-    grid-template-columns: 1fr;
-  }
-
-  .ns-home-book-month-cover {
-    justify-self: start;
-    width: 82px;
-    max-width: 82px;
-  }
-}
-
-/* ===============================
-   Public homepage polish v7
-   Build: 2026-05-28
-   Purpose:
-   - Make the desktop hero quieter and less domineering
-   - Tighten the hero shelf and feature-card scale
-   - Keep Book of the Month cover slot from v6
-   =============================== */
 
 @media (min-width: 1101px) {
   .ns-home-hero-v2 {
@@ -5711,15 +5552,6 @@ div.ns-book-badge {
   }
 }
 
-/* ===============================
-   Public homepage polish v8
-   Build: 2026-05-28
-   Purpose:
-   - Calm the mobile view after device testing
-   - Further reduce mobile hero scale
-   - Make the mobile nav compact without changing SiteNav logic
-   - Keep Book of the Month cover beside the text where possible
-   =============================== */
 
 @media (min-width: 1101px) {
   .ns-home-hero-v2 {
@@ -5991,39 +5823,6 @@ div.ns-book-badge {
     width: 100%;
   }
 
-  .ns-home-book-month-card {
-    grid-template-columns: minmax(0, 1fr) 74px;
-    gap: 12px;
-    padding: 16px;
-    border-radius: 18px;
-    align-items: start;
-  }
-
-  .ns-home-book-month-card .ns-home-section-kicker {
-    font-size: 0.56rem;
-    letter-spacing: 0.15em;
-  }
-
-  .ns-home-book-month-card h2 {
-    margin-top: 9px;
-    font-size: 1rem;
-  }
-
-  .ns-home-book-month-author {
-    font-size: 0.76rem;
-  }
-
-  .ns-home-book-month-desc {
-    font-size: 0.76rem;
-    line-height: 1.45;
-  }
-
-  .ns-home-book-month-cover {
-    justify-self: end;
-    width: 68px;
-    max-width: 68px;
-    border-radius: 10px;
-  }
 
   .ns-home-development-grid,
   .ns-home-feels-grid,
@@ -6167,14 +5966,7 @@ div.ns-book-badge {
     height: 58px;
   }
 
-  .ns-home-book-month-card {
-    grid-template-columns: minmax(0, 1fr) 62px;
-  }
 
-  .ns-home-book-month-cover {
-    width: 60px;
-    max-width: 60px;
-  }
 }
 
 /* ===============================
@@ -6368,16 +6160,6 @@ div.ns-book-badge {
     padding: 14px;
   }
 
-  .ns-home-book-month-card {
-    grid-template-columns: minmax(0, 1fr) 58px;
-    gap: 10px;
-    padding: 14px;
-  }
-
-  .ns-home-book-month-cover {
-    width: 56px;
-    max-width: 56px;
-  }
 
   .ns-home-development-grid,
   .ns-home-feels-grid,
@@ -6470,11 +6252,5 @@ div.ns-book-badge {
     font-size: clamp(1.22rem, 6vw, 1.55rem);
   }
 
-  .ns-home-book-month-card {
-    grid-template-columns: 1fr;
-  }
 
-  .ns-home-book-month-cover {
-    justify-self: start;
-  }
 }
