@@ -376,25 +376,25 @@ export default async function HomePage() {
       <section className="ns-home-feels">
         <div className="ns-home-container ns-home-feels-grid">
           <div>
-            <div className="ns-home-section-kicker">How NextScenes feels</div>
-            <h2>A reading room in front. A serious workshop behind it.</h2>
+            <div className="ns-home-section-kicker">What NextScenes protects</div>
+            <h2>A literary space built for clarity, fairness, and careful growth.</h2>
           </div>
 
           <div className="ns-home-feels-cards">
             <article>
               <BookIcon />
-              <h3>Readers enter easily</h3>
-              <p>They read, follow, rate, and return without learning platform mechanics first.</p>
+              <h3>Calm reading</h3>
+              <p>Readers can enter a story without noise, confusion, or unnecessary technical weight.</p>
             </article>
             <article>
               <PenIcon />
-              <h3>Writers work deeply</h3>
-              <p>The advanced tools remain available, but only where they are useful.</p>
+              <h3>Author control</h3>
+              <p>Writers remain in charge of their stories, their direction, and the work they approve.</p>
             </article>
             <article>
               <GlobeIcon />
-              <h3>The public sees clarity</h3>
-              <p>In progress, completed, and published works are presented with dignity.</p>
+              <h3>Honest presentation</h3>
+              <p>Works in development and books already published are shown clearly, each in its proper place.</p>
             </article>
           </div>
         </div>
