@@ -1,29 +1,29 @@
 // app/lib/homeFeatures.ts
-// Build: home-features-config-v6
+// Build: home-features-config-v7
 // Purpose: Central control for homepage feature blocks
 
 export const HOME_FEATURES = {
   en: {
     bookOfTheWeek: {
-      label: "Book of the Week",
+      label: "Featured Story",
       title: "A Living Storyline",
       author: "NextScenes Writers",
       description:
-        "A book still unfolding, where each new scene carries visible continuity and consequence.",
+        "A story still unfolding, where each approved scene carries continuity, consequence, and creative care.",
       meta: "Live now · Still unfolding",
       cta: "Enter storyline",
       href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
     },
 
     featuredReading: {
-      label: "Book of the Month",
+      label: "Featured Reading / Book of the Month",
       title: "Anna Karenina",
       author: "Leo Tolstoy",
       description:
         "A searching novel of love, marriage, society, duty, and the price of choices made against the heart.",
       wisdomText:
-        "Reading widens the mind, sharpens judgment, and lets us borrow wisdom from lives beyond our own.",
-      cta: "Explore the recommendation",
+        "A good book does not only entertain. It trains attention, awakens judgment, and reminds the heart what is worth protecting.",
+      cta: "",
       href: "",
       cover: "/images/featured-reading/reading-wisdom.webp",
       imageAlt: "Open books representing the wisdom gained through reading",
@@ -40,37 +40,37 @@ export const HOME_FEATURES = {
     },
 
     clubSpotlight: {
-      label: "Club Spotlight",
-      title: "A community that builds seriously",
+      label: "Community",
+      title: "A platform that builds seriously",
       description:
-        "Writers, readers, and thinkers growing through practice, discussion, and disciplined creation.",
-      meta: "Clubs for every level",
-      cta: "Explore clubs",
-      href: "/clubs",
+        "Writers, readers, and thoughtful contributors growing through disciplined creation and careful participation.",
+      meta: "Readers · Writers · Contributors",
+      cta: "Enter NextScenes",
+      href: "https://app.nextscenes.org",
     },
   },
 
   fr: {
     bookOfTheWeek: {
-      label: "Livre de la semaine",
+      label: "Récit à découvrir",
       title: "Une histoire vivante",
       author: "Les auteurs de NextScenes",
       description:
-        "Un livre encore en train de se déployer, où chaque nouvelle scène porte une continuité visible et ses conséquences.",
+        "Une histoire encore en train de se déployer, où chaque scène approuvée porte une continuité, des conséquences et un vrai soin créatif.",
       meta: "En cours · Toujours en évolution",
       cta: "Entrer dans le récit",
       href: "https://app.nextscenes.org/reader-view?storyId=69c8ed091023337bec53061c",
     },
 
     featuredReading: {
-      label: "Livre du mois",
+      label: "Lecture du mois",
       title: "Les Misérables",
       author: "Victor Hugo",
       description:
         "Un grand roman sur la justice, la misère, la compassion, la faute, le pardon et la dignité humaine.",
       wisdomText:
-        "La lecture élargit l’esprit, affine le jugement et nous permet d’emprunter la sagesse de vies au-delà de la nôtre.",
-      cta: "Découvrir la recommandation",
+        "Un bon livre ne se contente pas de divertir. Il éduque l’attention, réveille le jugement et rappelle au cœur ce qui mérite d’être protégé.",
+      cta: "",
       href: "",
       cover: "/images/featured-reading/reading-wisdom.webp",
       imageAlt: "Livres ouverts représentant la sagesse acquise par la lecture",
@@ -87,13 +87,13 @@ export const HOME_FEATURES = {
     },
 
     clubSpotlight: {
-      label: "Club à l’honneur",
-      title: "Une communauté qui construit avec rigueur",
+      label: "Communauté",
+      title: "Une plateforme qui construit avec sérieux",
       description:
-        "Des écrivains, lecteurs et penseurs qui progressent par la pratique, l’échange et une création disciplinée.",
-      meta: "Des clubs pour tous les niveaux",
-      cta: "Découvrir les clubs",
-      href: "/clubs",
+        "Des écrivains, lecteurs et contributeurs attentifs qui progressent par une création disciplinée et une participation réfléchie.",
+      meta: "Lecteurs · Auteurs · Contributeurs",
+      cta: "Entrer dans NextScenes",
+      href: "https://app.nextscenes.org",
     },
   },
 } as const;

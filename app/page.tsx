@@ -3,6 +3,7 @@ import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
 import { FEATURED_STORIES, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
+import { buildPinnedHomepageFeaturedStories } from "./lib/pinnedFeaturedShelf";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
@@ -272,6 +273,7 @@ export default async function HomePage() {
   const weeklyMystery = homepageData.weeklyMystery;
   const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
   const featuredStories = homepageData.featuredStories;
+  const homepageFeaturedStories = buildPinnedHomepageFeaturedStories(featuredStories, "en");
   const featuredReading = homepageData.featuredReading;
 
   return (
@@ -282,14 +284,13 @@ export default async function HomePage() {
 
         <div className="ns-home-container ns-home-hero-grid">
           <div className="ns-home-hero-copy-v2">
-            <div className="ns-home-eyebrow">Read. Follow. Create. Grow.</div>
+            <div className="ns-home-eyebrow">Read. Create. Publish. Discover.</div>
 
-            <h1>Enter stories that are already alive, while they are still becoming books.</h1>
+            <h1>Create your story. Discover books shaped on NextScenes.</h1>
 
             <p className="ns-home-hero-lede">
-              NextScenes is a literary home where you can read stories, write your own,
-              invite others to contribute with care, follow stories in creation, and
-              discover books that began their journey here.
+              Read selected stories in progress, begin your own creative journey, and discover
+              published books that grew from imagination, discipline, and careful storytelling.
             </p>
 
             <div className="ns-home-hero-actions">
@@ -298,42 +299,44 @@ export default async function HomePage() {
                 Start Writing
               </HomeButton>
             </div>
-
-            <div className="ns-home-featured-book-card">
-              <div className="ns-home-section-kicker">NextScenes today</div>
-              <h2>Stories in development. Books taking shape.</h2>
-              <p>
-                Follow selected works while they are being shaped, discover published titles
-                connected to NextScenes, and enter a calm literary space built around author
-                control, reader curiosity, and thoughtful collaboration.
-              </p>
-              <div className="ns-home-featured-book-actions">
-                <span>In-development and published works are clearly marked</span>
-                <Link href={APP_URL}>Enter NextScenes →</Link>
-              </div>
-            </div>
           </div>
 
-          <aside className="ns-home-shelf-panel" aria-label="Featured shelf">
-            <div className="ns-home-shelf-inner">
-              <div className="ns-home-shelf-head">
-                <div>
-                  <div className="ns-home-section-kicker">Featured Shelf</div>
-                  <h2>Books and stories</h2>
-                </div>
-                <span>Simple public view</span>
-              </div>
+          <aside className="ns-home-hero-journey-card" aria-label="NextScenes creative journey">
+            <div className="ns-home-hero-journey-kicker">The NextScenes path</div>
+            <h2>From first scene to finished work.</h2>
+            <p>
+              Start with an idea, shape it scene by scene, invite thoughtful reading, and give strong work a road toward publication.
+            </p>
 
-              <FeaturedStoriesShelf
-                stories={featuredStories}
-                authorLabel="By"
-                progressLabel="In Development"
-                storyCtaLabel="Open story"
-                publicationCtaLabel="View publication"
-                publicationAmazonCtaLabel="View on Amazon"
-              />
+            <div className="ns-home-hero-journey-steps">
+              <span>Write</span>
+              <span>Polish</span>
+              <span>Share</span>
+              <span>Publish</span>
             </div>
           </aside>
+        </div>
+      </section>
+<section className="ns-home-featured-works-row" aria-label="Featured works">
+        <div className="ns-home-container">
+          <div className="ns-home-featured-works-head">
+            <div>
+              <div className="ns-home-section-kicker">Featured Works</div>
+              <h2>Books and stories</h2>
+            </div>
+            <p>
+              Browse works in progress and published books connected to the NextScenes journey.
+            </p>
+          </div>
+
+          <FeaturedStoriesShelf
+            stories={homepageFeaturedStories}
+            authorLabel="By"
+            progressLabel="In Development"
+            storyCtaLabel="Open story"
+            publicationCtaLabel="View publication"
+            publicationAmazonCtaLabel="View on Amazon"
+          />
         </div>
       </section>
 
