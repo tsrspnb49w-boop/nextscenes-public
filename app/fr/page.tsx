@@ -1,75 +1,151 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
-import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
+import { FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 import { buildPinnedHomepageFeaturedStories } from "../lib/pinnedFeaturedShelf";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+
 const HOMEPAGE_FEATURED_WORKS_LIMIT = 8;
 
-function getFallbackFeaturedStories(language: "en" | "fr") {
-  return language === "fr" ? FEATURED_STORIES_FR : FEATURED_STORIES;
-}
-
 function getFeaturedStoryFamilyKey(story: FeaturedStory) {
-  const rawKey = `${story.id || ""} ${story.title || ""} ${story.cover || ""}`.toLowerCase();
+  const rawKey = `${story.id || ""} ${story.title || ""} ${story.cover || ""}`
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 
-  if (rawKey.includes("butterfly-woman") || rawKey.includes("femme-papillon")) {
+  if (
+    rawKey.includes("butterfly woman") ||
+    rawKey.includes("femme papillon")
+  ) {
     return "ugo-butterfly-woman";
   }
 
-  if (rawKey.includes("pet-dog") || rawKey.includes("petit-chien")) {
+  if (
+    rawKey.includes("pet dog") ||
+    rawKey.includes("petit chien")
+  ) {
     return "ugo-pet-dog";
   }
 
-  if (rawKey.includes("her-friend-awa") || rawKey.includes("friend, awa")) {
+  if (
+    rawKey.includes("her friend awa") ||
+    rawKey.includes("friend awa")
+  ) {
     return "ugo-friend-awa";
   }
 
-  if (rawKey.includes("jar-lingo") || rawKey.includes("roi-jar-lingo") || rawKey.includes("conte-du-roi")) {
+  if (
+    rawKey.includes("jar lingo") ||
+    rawKey.includes("roi jar lingo") ||
+    rawKey.includes("conte du roi")
+  ) {
     return "jar-lingo-evel-broda";
   }
 
-  if (rawKey.includes("reflections-of-the-wayfarer") || rawKey.includes("reflexions-du-voyageur")) {
+  if (
+    rawKey.includes("reflections of the wayfarer") ||
+    rawKey.includes("reflexions du voyageur")
+  ) {
     return "reflections-wayfarer";
   }
 
   return story.id || story.title;
 }
 
-function uniqueStoriesByFamily(stories: FeaturedStory[]) {
-  const seenIds = new Set<string>();
-  const seenFamilies = new Set<string>();
-  const unique: FeaturedStory[] = [];
+function inferFeaturedStoryLanguage(story: FeaturedStory) {
+  const item = story as FeaturedStory & { language?: string };
+  const declared = String(item.language || "").trim().toLowerCase();
+  if (declared === "fr" || declared === "en") return declared;
 
-  for (const story of stories) {
-    if (!story?.id || seenIds.has(story.id)) continue;
+  const rawKey = `${story.id || ""} ${story.title || ""} ${story.hook || ""} ${story.cover || ""}`
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 
-    const familyKey = getFeaturedStoryFamilyKey(story);
-    if (seenFamilies.has(familyKey)) continue;
-
-    seenIds.add(story.id);
-    seenFamilies.add(familyKey);
-    unique.push(story);
+  if (
+    rawKey.includes(" fr") || rawKey.endsWith("fr") ||
+    rawKey.includes("femme papillon") ||
+    rawKey.includes("petit chien") ||
+    rawKey.includes("petit chien") ||
+    rawKey.includes("reflexions") ||
+    rawKey.includes("reflexions") ||
+    rawKey.includes("le conte du roi") ||
+    rawKey.includes("un livre") ||
+    rawKey.includes("un récit") ||
+    rawKey.includes("en developpement") ||
+    rawKey.includes("publie") ||
+    rawKey.includes("verite")
+  ) {
+    return "fr";
   }
 
-  return unique;
+  return "en";
 }
 
-function buildHomepageFeaturedWorks(
+function chooseBetterFeaturedStory(
+  current: FeaturedStory,
+  candidate: FeaturedStory,
+  language: "en" | "fr",
+) {
+  const currentMatches = inferFeaturedStoryLanguage(current) === language;
+  const candidateMatches = inferFeaturedStoryLanguage(candidate) === language;
+
+  if (candidateMatches && !currentMatches) return candidate;
+  if (currentMatches && !candidateMatches) return current;
+
+  const currentHasPublication = current.publicationStatus === "publishedAmazon" || Boolean(current.publicationUrl);
+  const candidateHasPublication = candidate.publicationStatus === "publishedAmazon" || Boolean(candidate.publicationUrl);
+
+  if (candidateHasPublication && !currentHasPublication) return candidate;
+  return current;
+}
+
+function uniqueStoriesByFamilyForLanguage(
   stories: FeaturedStory[],
   language: "en" | "fr",
 ) {
-  const pinnedStories = buildPinnedHomepageFeaturedStories(stories, language);
-  const languageFallbackStories = getFallbackFeaturedStories(language);
+  const familyOrder: string[] = [];
+  const bestByFamily = new Map<string, FeaturedStory>();
 
-  return uniqueStoriesByFamily([
+  for (const story of stories) {
+    if (!story?.id) continue;
+
+    const familyKey = getFeaturedStoryFamilyKey(story);
+    if (!bestByFamily.has(familyKey)) {
+      familyOrder.push(familyKey);
+      bestByFamily.set(familyKey, story);
+      continue;
+    }
+
+    bestByFamily.set(
+      familyKey,
+      chooseBetterFeaturedStory(bestByFamily.get(familyKey) as FeaturedStory, story, language),
+    );
+  }
+
+  return familyOrder
+    .map((familyKey) => bestByFamily.get(familyKey))
+    .filter(Boolean) as FeaturedStory[];
+}
+
+function buildHomepageFeaturedWorks(stories: FeaturedStory[]) {
+  const pinnedStories = buildPinnedHomepageFeaturedStories(stories, "fr");
+
+  return uniqueStoriesByFamilyForLanguage([
     ...pinnedStories,
     ...stories,
-    ...languageFallbackStories,
-  ]).slice(0, HOMEPAGE_FEATURED_WORKS_LIMIT);
+    ...FEATURED_STORIES_FR,
+  ], "fr").slice(0, HOMEPAGE_FEATURED_WORKS_LIMIT);
 }
+
 
 const FALLBACK_WEEKLY_MYSTERY: NormalizedWeeklyMystery = {
   ref: "les-empreintes-a-sens-unique",
@@ -337,7 +413,7 @@ export default async function HomePage() {
   const weeklyMystery = homepageData.weeklyMystery;
   const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
   const featuredStories = homepageData.featuredStories;
-  const homepageFeaturedStories = buildHomepageFeaturedWorks(featuredStories, "fr");
+  const homepageFeaturedStories = buildHomepageFeaturedWorks(featuredStories);
   const featuredReading = homepageData.featuredReading;
 
   return (
