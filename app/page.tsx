@@ -6,54 +6,31 @@ import {
   type FeaturedStory,
 } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
-import { buildPinnedHomepageFeaturedStories } from "./lib/pinnedFeaturedShelf";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 const HOMEPAGE_FEATURED_WORKS_LIMIT = 8;
 
 function getFeaturedStoryFamilyKey(story: FeaturedStory) {
-  const rawKey = `${story.id || ""} ${story.title || ""} ${story.cover || ""}`
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/['’]/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+  const rawKey = `${story.id || ""} ${story.title || ""} ${story.cover || ""}`.toLowerCase();
 
-  if (
-    rawKey.includes("butterfly woman") ||
-    rawKey.includes("femme papillon")
-  ) {
+  if (rawKey.includes("butterfly-woman") || rawKey.includes("femme-papillon")) {
     return "ugo-butterfly-woman";
   }
 
-  if (
-    rawKey.includes("pet dog") ||
-    rawKey.includes("petit chien")
-  ) {
+  if (rawKey.includes("pet-dog") || rawKey.includes("petit-chien")) {
     return "ugo-pet-dog";
   }
 
-  if (
-    rawKey.includes("her friend awa") ||
-    rawKey.includes("friend awa")
-  ) {
+  if (rawKey.includes("her-friend-awa") || rawKey.includes("friend, awa")) {
     return "ugo-friend-awa";
   }
 
-  if (
-    rawKey.includes("jar lingo") ||
-    rawKey.includes("roi jar lingo") ||
-    rawKey.includes("conte du roi")
-  ) {
+  if (rawKey.includes("jar-lingo") || rawKey.includes("roi-jar-lingo") || rawKey.includes("conte-du-roi")) {
     return "jar-lingo-evel-broda";
   }
 
-  if (
-    rawKey.includes("reflections of the wayfarer") ||
-    rawKey.includes("reflexions du voyageur")
-  ) {
+  if (rawKey.includes("reflections-of-the-wayfarer") || rawKey.includes("reflexions-du-voyageur")) {
     return "reflections-wayfarer";
   }
 
@@ -65,27 +42,21 @@ function inferFeaturedStoryLanguage(story: FeaturedStory) {
   const declared = String(item.language || "").trim().toLowerCase();
   if (declared === "fr" || declared === "en") return declared;
 
-  const rawKey = `${story.id || ""} ${story.title || ""} ${story.hook || ""} ${story.cover || ""}`
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/['’]/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+  const rawKey = `${story.id || ""} ${story.title || ""} ${story.hook || ""} ${story.cover || ""}`.toLowerCase();
 
   if (
-    rawKey.includes(" fr") || rawKey.endsWith("fr") ||
-    rawKey.includes("femme papillon") ||
+    rawKey.includes("-fr") ||
+    rawKey.includes("femme-papillon") ||
+    rawKey.includes("petit-chien") ||
     rawKey.includes("petit chien") ||
-    rawKey.includes("petit chien") ||
-    rawKey.includes("reflexions") ||
+    rawKey.includes("réflexions") ||
     rawKey.includes("reflexions") ||
     rawKey.includes("le conte du roi") ||
     rawKey.includes("un livre") ||
     rawKey.includes("un récit") ||
-    rawKey.includes("en developpement") ||
-    rawKey.includes("publie") ||
-    rawKey.includes("verite")
+    rawKey.includes("en développement") ||
+    rawKey.includes("publié") ||
+    rawKey.includes("vérité")
   ) {
     return "fr";
   }
@@ -140,13 +111,7 @@ function uniqueStoriesByFamilyForLanguage(
 }
 
 function buildHomepageFeaturedWorks(stories: FeaturedStory[]) {
-  const pinnedStories = buildPinnedHomepageFeaturedStories(stories, "en");
-
-  return uniqueStoriesByFamilyForLanguage([
-    ...pinnedStories,
-    ...stories,
-    ...FEATURED_STORIES,
-  ], "en").slice(0, HOMEPAGE_FEATURED_WORKS_LIMIT);
+  return uniqueStoriesByFamilyForLanguage(stories, "en").slice(0, HOMEPAGE_FEATURED_WORKS_LIMIT);
 }
 
 const FALLBACK_WEEKLY_MYSTERY: NormalizedWeeklyMystery = {
