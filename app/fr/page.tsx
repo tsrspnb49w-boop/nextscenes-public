@@ -12,13 +12,45 @@ function getFallbackFeaturedStories(language: "en" | "fr") {
   return language === "fr" ? FEATURED_STORIES_FR : FEATURED_STORIES;
 }
 
-function uniqueStoriesById(stories: FeaturedStory[]) {
-  const seen = new Set<string>();
+function getFeaturedStoryFamilyKey(story: FeaturedStory) {
+  const rawKey = `${story.id || ""} ${story.title || ""} ${story.cover || ""}`.toLowerCase();
+
+  if (rawKey.includes("butterfly-woman") || rawKey.includes("femme-papillon")) {
+    return "ugo-butterfly-woman";
+  }
+
+  if (rawKey.includes("pet-dog") || rawKey.includes("petit-chien")) {
+    return "ugo-pet-dog";
+  }
+
+  if (rawKey.includes("her-friend-awa") || rawKey.includes("friend, awa")) {
+    return "ugo-friend-awa";
+  }
+
+  if (rawKey.includes("jar-lingo") || rawKey.includes("roi-jar-lingo") || rawKey.includes("conte-du-roi")) {
+    return "jar-lingo-evel-broda";
+  }
+
+  if (rawKey.includes("reflections-of-the-wayfarer") || rawKey.includes("reflexions-du-voyageur")) {
+    return "reflections-wayfarer";
+  }
+
+  return story.id || story.title;
+}
+
+function uniqueStoriesByFamily(stories: FeaturedStory[]) {
+  const seenIds = new Set<string>();
+  const seenFamilies = new Set<string>();
   const unique: FeaturedStory[] = [];
 
   for (const story of stories) {
-    if (!story?.id || seen.has(story.id)) continue;
-    seen.add(story.id);
+    if (!story?.id || seenIds.has(story.id)) continue;
+
+    const familyKey = getFeaturedStoryFamilyKey(story);
+    if (seenFamilies.has(familyKey)) continue;
+
+    seenIds.add(story.id);
+    seenFamilies.add(familyKey);
     unique.push(story);
   }
 
@@ -32,7 +64,7 @@ function buildHomepageFeaturedWorks(
   const pinnedStories = buildPinnedHomepageFeaturedStories(stories, language);
   const languageFallbackStories = getFallbackFeaturedStories(language);
 
-  return uniqueStoriesById([
+  return uniqueStoriesByFamily([
     ...pinnedStories,
     ...stories,
     ...languageFallbackStories,
