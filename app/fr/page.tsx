@@ -1,11 +1,43 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
-import { FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
+import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 import { buildPinnedHomepageFeaturedStories } from "../lib/pinnedFeaturedShelf";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+const HOMEPAGE_FEATURED_WORKS_LIMIT = 8;
+
+function getFallbackFeaturedStories(language: "en" | "fr") {
+  return language === "fr" ? FEATURED_STORIES_FR : FEATURED_STORIES;
+}
+
+function uniqueStoriesById(stories: FeaturedStory[]) {
+  const seen = new Set<string>();
+  const unique: FeaturedStory[] = [];
+
+  for (const story of stories) {
+    if (!story?.id || seen.has(story.id)) continue;
+    seen.add(story.id);
+    unique.push(story);
+  }
+
+  return unique;
+}
+
+function buildHomepageFeaturedWorks(
+  stories: FeaturedStory[],
+  language: "en" | "fr",
+) {
+  const pinnedStories = buildPinnedHomepageFeaturedStories(stories, language);
+  const languageFallbackStories = getFallbackFeaturedStories(language);
+
+  return uniqueStoriesById([
+    ...pinnedStories,
+    ...stories,
+    ...languageFallbackStories,
+  ]).slice(0, HOMEPAGE_FEATURED_WORKS_LIMIT);
+}
 
 const FALLBACK_WEEKLY_MYSTERY: NormalizedWeeklyMystery = {
   ref: "les-empreintes-a-sens-unique",
@@ -273,7 +305,7 @@ export default async function HomePage() {
   const weeklyMystery = homepageData.weeklyMystery;
   const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
   const featuredStories = homepageData.featuredStories;
-  const homepageFeaturedStories = buildPinnedHomepageFeaturedStories(featuredStories, "fr");
+  const homepageFeaturedStories = buildHomepageFeaturedWorks(featuredStories, "fr");
   const featuredReading = homepageData.featuredReading;
 
   return (
