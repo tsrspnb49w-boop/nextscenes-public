@@ -38,6 +38,7 @@ const ROUTE_PAIRS: Array<[string, string]> = [
   ["/privacy", "/fr/privacy"],
   ["/safety", "/fr/safety"],
   ["/terms", "/fr/terms"],
+  ["/ai-principles", "/fr/principes-ia"],
 
   ["/writers", "/fr/auteurs"],
   ["/writer-rights", "/fr/droits-des-auteurs"],
@@ -147,6 +148,7 @@ export default function SiteNav() {
     () => [
       { href: "/clubs", frHref: "/clubs", en: "Clubs", fr: "Clubs" },
       { href: "/partners", frHref: "/partners", en: "Partners", fr: "Partenaires" },
+      { href: "/ai-principles", frHref: "/principes-ia", en: "AI Principles", fr: "Principes IA" },
       { href: "/contact", frHref: "/contact", en: "Contact", fr: "Contact" },
     ],
     []

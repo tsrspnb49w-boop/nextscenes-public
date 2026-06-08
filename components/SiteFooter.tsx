@@ -33,6 +33,7 @@ export default function SiteFooter() {
     : "/illustration-upload-policy";
   const benefitSharingHref = isFR ? "/fr/publication-partage-benefices" : "/publication-benefit-sharing";
   const plainTermsHref = isFR ? "/fr/conditions-simples" : "/plain-language-terms";
+  const aiPrinciplesHref = isFR ? "/fr/principes-ia" : "/ai-principles";
 
   return (
     <footer className="ns-footer" role="contentinfo">
@@ -113,6 +114,9 @@ export default function SiteFooter() {
             </Link>
             <Link href={plainTermsHref} className="ns-footer-link">
               {isFR ? "Conditions simples" : "Plain-Language Terms"}
+            </Link>
+            <Link href={aiPrinciplesHref} className="ns-footer-link">
+              {isFR ? "Principes IA" : "AI Principles"}
             </Link>
             <Link href={`${base}/contact`} className="ns-footer-link">
               {isFR ? "Contact" : "Contact"}
