@@ -2,6 +2,28 @@ import type { MysteryPuzzle } from "./types";
 
 export const mysteryPuzzlesFr: MysteryPuzzle[] = [
   {
+    id: "m250-007",
+    slug: "le-cambriolage-de-la-bibliotheque",
+    title: "Le cambriolage de la bibliothèque",
+    setup:
+      "À l’aube, la bibliothécaire découvre que le bureau est fermé de l’intérieur. Un manuscrit rare a disparu. Le propriétaire affirme qu’un voleur est entré par la fenêtre pendant la nuit, a pris le manuscrit, puis s’est échappé par le même chemin. La pièce semble en désordre. Une chaise est renversée. Des papiers sont éparpillés sur le sol. La fenêtre est fissurée, et l’on aperçoit du verre brisé près d’elle. Mais un détail montre que le cambriolage a été mis en scène.",
+    question: "Quel indice prouve que le cambriolage a été mis en scène ?",
+    options: [
+      "Les traces de boue s’arrêtent près de la bibliothèque.",
+      "La pièce était fermée de l’intérieur.",
+      "Le verre brisé se trouve à l’extérieur de la fenêtre, pas dans la pièce.",
+      "La chaise renversée montre qu’il n’y a pas eu de vraie lutte.",
+    ],
+    answer: "Le verre brisé se trouve à l’extérieur de la fenêtre, pas dans la pièce.",
+    explanation:
+      "Si quelqu’un avait cassé la fenêtre depuis l’extérieur pour entrer dans le bureau, la plupart des morceaux de verre seraient tombés à l’intérieur. Comme le verre est à l’extérieur, la fenêtre a probablement été brisée depuis l’intérieur pour faire croire à un cambriolage.",
+    difficulty: "medium",
+    imageUrl: "/images/mystery250/Mystery250_Library_Break_In_1600x900.png",
+    imageAlt:
+      "Une affiche Mystery250 montrant un bureau de bibliothèque fermé, une fenêtre brisée, des papiers éparpillés et du verre à l’extérieur.",
+    active: true,
+  },
+  {
     id: "m250-006",
     slug: "les-empreintes-a-sens-unique",
     title: "Les empreintes à sens unique",

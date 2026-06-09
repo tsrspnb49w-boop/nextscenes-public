@@ -29,6 +29,7 @@ function getAppMysteryRef(puzzle: MysteryPuzzle | null) {
     "m250-002": "the-midnight-visitor",
     "m250-003": "the-silent-clock",
     "m250-006": "the-one-way-footprints",
+    "m250-007": "the-library-break-in",
   };
 
   return knownRefs[id] || slugifyPuzzleRef(puzzle?.title || puzzle?.slug || puzzle?.id || "");

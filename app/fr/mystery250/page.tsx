@@ -5,7 +5,7 @@ import { getActivePuzzles } from "@/lib/mystery250/getActivePuzzles";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
-const DEFAULT_WEEKLY_MYSTERY_ID = "m250-006";
+const DEFAULT_WEEKLY_MYSTERY_ID = "m250-007";
 
 const FEATURED_MYSTERY_ID = String(
   process.env.NEXT_PUBLIC_MYSTERY250_FEATURED_ID_FR ||
@@ -37,6 +37,10 @@ function matchesFeaturedPuzzle(puzzle: { id?: string; slug?: string; title?: str
     "one-way-footprints": "m250-006",
     "les-empreintes-a-sens-unique": "m250-006",
     "empreintes-a-sens-unique": "m250-006",
+    "the-library-break-in": "m250-007",
+    "library-break-in": "m250-007",
+    "le-cambriolage-de-la-bibliotheque": "m250-007",
+    "cambriolage-de-la-bibliotheque": "m250-007",
   };
 
   const refSlug = slugifyPuzzleRef(raw);

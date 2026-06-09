@@ -5,7 +5,7 @@ import { getActivePuzzles } from "@/lib/mystery250/getActivePuzzles";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
-const DEFAULT_WEEKLY_MYSTERY_ID = "m250-006";
+const DEFAULT_WEEKLY_MYSTERY_ID = "m250-007";
 
 const FEATURED_MYSTERY_ID = String(
   process.env.NEXT_PUBLIC_MYSTERY250_FEATURED_ID || DEFAULT_WEEKLY_MYSTERY_ID
@@ -33,6 +33,8 @@ function matchesFeaturedPuzzle(puzzle: { id?: string; slug?: string; title?: str
     "silent-clock": "m250-003",
     "the-one-way-footprints": "m250-006",
     "one-way-footprints": "m250-006",
+    "the-library-break-in": "m250-007",
+    "library-break-in": "m250-007",
   };
 
   const refSlug = slugifyPuzzleRef(raw);

@@ -2,6 +2,28 @@ import type { MysteryPuzzle } from "./types";
 
 export const mysteryPuzzlesEn: MysteryPuzzle[] = [
   {
+    id: "m250-007",
+    slug: "the-library-break-in",
+    title: "The Library Break-In",
+    setup:
+      "At dawn, the librarian found the study locked from the inside. A rare manuscript was missing. The owner claimed that a thief had broken in through the window during the night, stolen the manuscript, and escaped the same way. The room looked disturbed. A chair had been knocked over. Papers were scattered across the floor. The window was cracked, and broken glass could be seen near it. But one detail showed that the break-in had been staged.",
+    question: "What clue proves the break-in was staged?",
+    options: [
+      "The muddy footprints stop near the bookshelf.",
+      "The room was locked from the inside.",
+      "The broken glass is outside the window, not inside the room.",
+      "The overturned chair shows there was no real struggle.",
+    ],
+    answer: "The broken glass is outside the window, not inside the room.",
+    explanation:
+      "If someone had broken the window from outside to enter the study, most of the glass would have fallen inside the room. Since the broken glass is outside, the window was most likely broken from inside the study to fake a break-in.",
+    difficulty: "medium",
+    imageUrl: "/images/mystery250/Mystery250_Library_Break_In_1600x900.png",
+    imageAlt:
+      "A branded Mystery250 library break-in puzzle poster showing a locked study, broken window, scattered papers, and glass outside the window.",
+    active: true,
+  },
+  {
     id: "m250-006",
     slug: "the-one-way-footprints",
     title: "The One-Way Footprints",
