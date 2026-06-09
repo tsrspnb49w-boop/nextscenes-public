@@ -6812,3 +6812,53 @@ div.ns-book-badge {
   }
 }
 
+/* =========================================================
+   Public Mystery250 — Branded poster full-display standard
+   Build: 2026-06-09-mystery250-template-full-image-v1
+   Purpose:
+   - Allow Mystery250 branded images to display whole on the public site.
+   - Avoid clipping text panels on homepage and Mystery250 feature areas.
+   ========================================================= */
+
+.ns-m250-try-image-frame {
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.ns-m250-try-image {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.ns-home-live-thumb {
+  aspect-ratio: auto;
+  height: auto;
+  background: #0f172a;
+}
+
+.ns-home-live-thumb-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+.ns-home-mystery-card figure {
+  max-width: 720px;
+  background: #0f172a;
+}
+
+.ns-home-mystery-image {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
