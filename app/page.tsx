@@ -432,6 +432,11 @@ export default async function HomePage() {
               discipline, and careful storytelling.
             </p>
 
+            <div className="ns-home-free-access-strip" role="note">
+              <strong>Free to join. Free to read. Free to participate.</strong>
+              <span>No hidden fees for core NextScenes participation.</span>
+            </div>
+
             <div className="ns-home-hero-actions">
               <HomeButton href={bookOfTheWeek.href}>Read Stories →</HomeButton>
               <HomeButton href={APP_URL} tone="secondary">
@@ -450,7 +455,8 @@ export default async function HomePage() {
             <h2>From first scene to finished work.</h2>
             <p>
               Start with an idea, shape it scene by scene, invite thoughtful
-              reading, and give strong work a road toward publication.
+              reading, and give strong work a road toward publication. Joining
+              and taking part in the core story experience are free.
             </p>
 
             <div className="ns-home-hero-journey-steps">
@@ -503,7 +509,7 @@ export default async function HomePage() {
 
           <DoorwayCard
             title="Write with purpose"
-            text="Create, polish, collaborate with care, and manage your story from a private writing workspace."
+            text="Create, polish, collaborate with care, and manage your story from a private writing workspace. Core participation is free."
             href={APP_URL}
             cta="Start writing"
             imageSrc="/images/home/writer-studio.png"
@@ -532,7 +538,7 @@ export default async function HomePage() {
               <p>
                 Listen to a short guide on how to explore the site, read
                 stories, enter the app, and begin participating as a reader or
-                writer.
+                writer. Registration and core participation are free.
               </p>
             </div>
 

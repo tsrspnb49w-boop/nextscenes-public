@@ -398,6 +398,11 @@ export default async function HomePage() {
               et découvrez des livres publiés nés de l’imagination, de la discipline et d’un travail patient.
             </p>
 
+            <div className="ns-home-free-access-strip" role="note">
+              <strong>Inscription gratuite. Lecture gratuite. Participation gratuite.</strong>
+              <span>Aucun frais caché pour la participation de base sur NextScenes.</span>
+            </div>
+
             <div className="ns-home-hero-actions">
               <HomeButton href={bookOfTheWeek.href}>Lire les histoires →</HomeButton>
               <HomeButton href={APP_URL} tone="secondary">
@@ -411,7 +416,7 @@ export default async function HomePage() {
             <h2>De la première scène à l’œuvre accomplie.</h2>
             <p>
               Commencez par une idée, façonnez-la scène après scène, invitez une lecture attentive,
-              et donnez aux œuvres solides une route vers la publication.
+              et donnez aux œuvres solides une route vers la publication. L’inscription et la participation de base sont gratuites.
             </p>
 
             <div className="ns-home-hero-journey-steps">
@@ -461,7 +466,7 @@ export default async function HomePage() {
 
           <DoorwayCard
             title="Écrire avec intention"
-            text="Créez, améliorez, collaborez avec soin et gérez votre histoire depuis un espace d’écriture privé."
+            text="Créez, améliorez, collaborez avec soin et gérez votre histoire depuis un espace d’écriture privé. La participation de base est gratuite."
             href={APP_URL}
             cta="Commencer à écrire"
             imageSrc="/images/home/writer-studio.png"
@@ -490,6 +495,7 @@ export default async function HomePage() {
               <p>
                 Écoutez un court guide pour comprendre comment explorer le site,
                 lire les histoires, entrer dans l’application et participer comme lecteur ou auteur.
+                L’inscription et la participation de base sont gratuites.
               </p>
             </div>
 

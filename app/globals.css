@@ -6862,3 +6862,59 @@ div.ns-book-badge {
   object-position: center;
   display: block;
 }
+
+/* ===============================
+   Free Access Messaging
+   Build: 2026-06-11 (visibility contrast polish)
+   =============================== */
+
+.ns-home-free-access-strip {
+  margin-top: 18px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 13px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 138, 74, 0.22);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 253, 250, 0.90));
+  color: #10251c;
+  box-shadow: 0 12px 28px rgba(15, 36, 24, 0.08);
+  max-width: 640px;
+}
+
+.ns-home-free-access-strip strong {
+  font-size: 0.94rem;
+  line-height: 1.25;
+  font-weight: 950;
+  letter-spacing: 0.005em;
+  color: #0f2418;
+}
+
+.ns-home-free-access-strip span {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: rgba(15, 36, 24, 0.76);
+}
+
+.ns-home-hero-actions .ns-home-btn-secondary {
+  color: #0f2418;
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(20, 138, 74, 0.24);
+  box-shadow: 0 12px 24px rgba(15, 36, 24, 0.08);
+}
+
+.ns-home-hero-actions .ns-home-btn-secondary:hover {
+  color: #0f2418;
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(20, 138, 74, 0.34);
+}
+
+@media (max-width: 640px) {
+  .ns-home-free-access-strip {
+    margin-top: 14px;
+    padding: 12px 13px;
+    border-radius: 15px;
+  }
+}
+
