@@ -72,7 +72,7 @@ const FALLBACK_TEXT: Record<string, { author: string; hook: string; status: stri
   },
   "Ugo and the Butterfly Woman": {
     author: "Goddy Oguzie",
-    hook: "A published children’s book about kindness, courage, respect for elders, and the quiet wisdom that grows inside a child’s heart.",
+    hook: "A published children’s book about wonder, kindness, courage, respect for elders, and the quiet wisdom found in unexpected encounters.",
     status: "publishedAmazon",
     cta: "View on Amazon",
     href: "https://www.amazon.com/s?k=ugo+and+the+butterfly+woman+book&crid=3HM66YL97GD5W&sprefix=%2Caps%2C235&ref=nb_sb_ss_recent_2_0_recent",

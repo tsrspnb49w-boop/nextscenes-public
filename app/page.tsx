@@ -433,7 +433,7 @@ export default async function HomePage() {
             </p>
 
             <div className="ns-home-free-access-strip" role="note">
-              <strong>Free to join. Free to read. Free to participate.</strong>
+              <strong>Free to join. Free to read. Free to participate.</strong>{" "}
               <span>No hidden fees for core NextScenes participation.</span>
             </div>
 
