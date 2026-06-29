@@ -250,12 +250,11 @@ export default function AboutPage() {
           <PillLink href="/contact">Contact</PillLink>
         </div>
 
+
         {/* NEXTSCENES_LEGAL_NOTICE_START */}
-        <section className="gincoLegalNotice" aria-label="Legal business information">
-          <p><strong>NextScenes is owned and operated by GINCO GROUP SARL.</strong></p>
-          <p>Registered office: Quartier HAMDALLAYE ACI 2000, Immeuble PACIFIC, Bamako, Mali.</p>
-          <p>Contact: <a href="mailto:support@nextscenes.org">support@nextscenes.org</a></p>
-        </section>
+        <div className="gincoLegalNotice" aria-label="Legal business information">
+          <p>Legal notice: NextScenes is owned and operated by <strong>GINCO GROUP SARL</strong>. Registered office: Quartier HAMDALLAYE ACI 2000, Immeuble PACIFIC, Bamako, Mali.</p>
+        </div>
         {/* NEXTSCENES_LEGAL_NOTICE_END */}
 
 </section>

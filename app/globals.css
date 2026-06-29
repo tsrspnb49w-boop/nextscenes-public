@@ -6921,20 +6921,22 @@ div.ns-book-badge {
 
 /* NEXTSCENES_LEGAL_NOTICE_STYLES_START */
 .gincoLegalNotice {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(120, 120, 120, 0.25);
-  font-size: 0.88rem;
-  line-height: 1.5;
-  opacity: 0.95;
+  max-width: 920px;
+  margin: 0.75rem auto 0;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(140, 140, 140, 0.22);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  text-align: center;
+  opacity: 0.62;
 }
 
 .gincoLegalNotice p {
-  margin: 0.2rem 0;
+  margin: 0;
 }
 
-.gincoLegalNotice a {
-  text-decoration: underline;
+.gincoLegalNotice strong {
+  font-weight: 700;
 }
 /* NEXTSCENES_LEGAL_NOTICE_STYLES_END */
 
