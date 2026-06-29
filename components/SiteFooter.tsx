@@ -191,6 +191,15 @@ export default function SiteFooter() {
           {isFR ? "Tous droits réservés." : "All rights reserved."}
         </div>
       </div>
-    </footer>
+
+        {/* NEXTSCENES_LEGAL_NOTICE_START */}
+        <section className="gincoLegalNotice" aria-label="Legal business information">
+          <p><strong>NextScenes is owned and operated by GINCO GROUP SARL.</strong></p>
+          <p>Registered office: Quartier HAMDALLAYE ACI 2000, Immeuble PACIFIC, Bamako, Mali.</p>
+          <p>Contact: <a href="mailto:support@nextscenes.org">support@nextscenes.org</a></p>
+        </section>
+        {/* NEXTSCENES_LEGAL_NOTICE_END */}
+
+</footer>
   );
 }
