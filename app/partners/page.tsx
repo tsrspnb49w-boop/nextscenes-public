@@ -1,5 +1,17 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "Partners and Institutions | NextScenes",
+  description:
+    "NextScenes welcomes serious partnerships with schools, cultural institutions, youth programs, NGOs, libraries, and organizations that support reading and writing.",
+  path: "/partners",
+  languages: {
+    en: "/partners",
+    fr: "/fr/partners",
+  },
+});
 
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (

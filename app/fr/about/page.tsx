@@ -1,5 +1,18 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "À propos de NextScenes | Histoires propres et narration responsable",
+  description:
+    "Découvrez NextScenes, une plateforme gratuite de lecture et d’écriture pour les histoires propres, les récits africains, les livres jeunesse, la lecture familiale et l’écriture collaborative.",
+  path: "/fr/about",
+  locale: "fr",
+  languages: {
+    en: "/about",
+    fr: "/fr/about",
+  },
+});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 

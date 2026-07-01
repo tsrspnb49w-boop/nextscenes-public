@@ -1,5 +1,17 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "Safety and Values | NextScenes",
+  description:
+    "NextScenes is built for clean, responsible storytelling with moderation, dignity, child-conscious standards, and values that protect readers and writers.",
+  path: "/safety",
+  languages: {
+    en: "/safety",
+    fr: "/fr/safety",
+  },
+});
 
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (

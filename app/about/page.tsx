@@ -1,5 +1,17 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "About NextScenes | Clean Stories and Responsible Storytelling",
+  description:
+    "Learn about NextScenes, a free reading and writing platform for clean stories, serious collaborative fiction, African storytelling, children’s books, and family reading.",
+  path: "/about",
+  languages: {
+    en: "/about",
+    fr: "/fr/about",
+  },
+});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 

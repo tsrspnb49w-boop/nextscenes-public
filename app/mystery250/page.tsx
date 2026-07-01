@@ -2,6 +2,19 @@ import Link from "next/link";
 import TryMystery from "../../components/TryMystery";
 import { mysteryPuzzlesEn } from "@/data/mystery250/en";
 import { getActivePuzzles } from "@/lib/mystery250/getActivePuzzles";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "Mystery250 | Weekly Mystery Stories and Reading Puzzles",
+  description:
+    "Read and solve Mystery250 on NextScenes: short weekly mystery stories and clean reading puzzles designed to sharpen attention, reasoning, and imagination.",
+  path: "/mystery250",
+  image: "/images/mystery250/Mystery250_Library_Break_In_1600x900.png",
+  languages: {
+    en: "/mystery250",
+    fr: "/fr/mystery250",
+  },
+});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 

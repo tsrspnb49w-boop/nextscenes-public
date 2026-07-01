@@ -1,5 +1,18 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "Partenariats et institutions | NextScenes",
+  description:
+    "NextScenes accueille des partenariats sérieux avec les écoles, institutions culturelles, programmes jeunesse, ONG, bibliothèques et organisations qui soutiennent la lecture et l’écriture.",
+  path: "/fr/partners",
+  locale: "fr",
+  languages: {
+    en: "/partners",
+    fr: "/fr/partners",
+  },
+});
 
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (

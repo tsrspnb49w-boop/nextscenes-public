@@ -3,11 +3,17 @@ import type { ReactNode } from "react";
 import Script from "next/script";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
+import { DEFAULT_SEO_DESCRIPTION, DEFAULT_SEO_TITLE, buildMetadata } from "@/app/seo";
 
-export const metadata = {
-  title: "NextScenes",
-  description: "A calm, serious platform for building stories together.",
-};
+export const metadata = buildMetadata({
+  title: DEFAULT_SEO_TITLE,
+  description: DEFAULT_SEO_DESCRIPTION,
+  path: "/",
+  languages: {
+    en: "/",
+    fr: "/fr",
+  },
+});
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

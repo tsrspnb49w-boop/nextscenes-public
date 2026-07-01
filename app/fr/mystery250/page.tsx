@@ -2,6 +2,20 @@ import Link from "next/link";
 import TryMystery from "../../../components/TryMystery";
 import { mysteryPuzzlesFr } from "@/data/mystery250/fr";
 import { getActivePuzzles } from "@/lib/mystery250/getActivePuzzles";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "Mystery250 | Mystères hebdomadaires et énigmes de lecture",
+  description:
+    "Lisez et résolvez Mystery250 sur NextScenes : de courts mystères hebdomadaires et des énigmes propres pour développer l’attention, le raisonnement et l’imagination.",
+  path: "/fr/mystery250",
+  locale: "fr",
+  image: "/images/mystery250/Mystery250_Library_Break_In_1600x900.png",
+  languages: {
+    en: "/mystery250",
+    fr: "/fr/mystery250",
+  },
+});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 

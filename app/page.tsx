@@ -6,6 +6,18 @@ import {
   type FeaturedStory,
 } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "NextScenes | Clean Stories, African Books and Collaborative Writing",
+  description:
+    "Read and write clean, values-based stories on NextScenes, a free platform for children’s books, African storytelling, family reading, Weekly Mystery puzzles, and serious collaborative writing.",
+  path: "/",
+  languages: {
+    en: "/",
+    fr: "/fr",
+  },
+});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 

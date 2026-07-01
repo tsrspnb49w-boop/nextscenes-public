@@ -3,6 +3,19 @@ import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
 import { FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "NextScenes | Histoires propres, livres africains et écriture collaborative",
+  description:
+    "Lisez et écrivez des histoires propres et porteuses de valeurs sur NextScenes, une plateforme gratuite pour les livres jeunesse, la lecture familiale, les récits africains et l’écriture collaborative.",
+  path: "/fr",
+  locale: "fr",
+  languages: {
+    en: "/",
+    fr: "/fr",
+  },
+});
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 

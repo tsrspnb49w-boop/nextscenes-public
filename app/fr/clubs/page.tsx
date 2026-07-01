@@ -1,5 +1,18 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { buildMetadata } from "@/app/seo";
+
+export const metadata = buildMetadata({
+  title: "Clubs et communautés | NextScenes",
+  description:
+    "Créez des clubs d’écriture, des groupes scolaires, des programmes jeunesse et des communautés créatives sur NextScenes avec des règles claires, de la sécurité et des valeurs.",
+  path: "/fr/clubs",
+  locale: "fr",
+  languages: {
+    en: "/clubs",
+    fr: "/fr/clubs",
+  },
+});
 
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
