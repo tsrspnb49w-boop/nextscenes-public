@@ -6940,3 +6940,280 @@ div.ns-book-badge {
 }
 /* NEXTSCENES_LEGAL_NOTICE_STYLES_END */
 
+
+
+/* =========================================================
+   NEXTSCENES PUBLIC BRAND REFRESH
+   Build: 2026-07-02-public-header-footer-brand-v1
+   Purpose:
+   - Match public site header/footer to the refreshed app identity.
+   - Give the dark green/gold logo a light stage.
+   - Keep gold for headings, deep green for text, and a green copyright bar.
+   ========================================================= */
+
+:root {
+  --ns-brand-ivory: #fffdf7;
+  --ns-brand-warm-ivory: #f7f3e8;
+  --ns-brand-deep-teal: #0e2f2f;
+  --ns-brand-green: #0f5f35;
+  --ns-brand-gold: #c89d3d;
+  --ns-brand-border: rgba(15, 95, 53, 0.20);
+}
+
+.ns-topbar {
+  background: linear-gradient(180deg, var(--ns-brand-ivory), #fffaf0) !important;
+  color: var(--ns-brand-deep-teal) !important;
+  border-bottom: 1px solid var(--ns-brand-border) !important;
+  box-shadow: 0 8px 22px rgba(14, 47, 47, 0.10) !important;
+}
+
+.ns-topbar::after {
+  content: "" !important;
+  display: block !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, rgba(200,157,61,0.22), rgba(15,95,53,0.28), rgba(200,157,61,0.22)) !important;
+}
+
+.ns-topbar-inner {
+  min-height: 66px !important;
+}
+
+.ns-brand-logo {
+  height: 34px !important;
+  width: auto !important;
+  max-width: 190px !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+.ns-navlink,
+.ns-nav a,
+.ns-lang-trigger {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 95, 53, 0.26) !important;
+  color: var(--ns-brand-green) !important;
+  box-shadow: 0 2px 8px rgba(14, 47, 47, 0.035) !important;
+  font-weight: 750 !important;
+}
+
+.ns-navlink:hover,
+.ns-nav a:hover,
+.ns-lang-trigger:hover {
+  background: #f7fbf6 !important;
+  border-color: rgba(15, 95, 53, 0.48) !important;
+  color: var(--ns-brand-deep-teal) !important;
+}
+
+.ns-navlink.is-active,
+.ns-navlink[aria-current="page"],
+.ns-nav a[aria-current="page"],
+.ns-more-trigger.is-open,
+.ns-lang-trigger.is-open {
+  background: var(--ns-brand-green) !important;
+  border-color: var(--ns-brand-green) !important;
+  color: #ffffff !important;
+  box-shadow: 0 7px 18px rgba(15, 95, 53, 0.22) !important;
+}
+
+.ns-topbar .ns-btn-ghost {
+  background: #ffca28 !important;
+  border-color: #e3ae12 !important;
+  color: #0e2f2f !important;
+  box-shadow: 0 7px 18px rgba(200, 157, 61, 0.22) !important;
+  font-weight: 850 !important;
+}
+
+.ns-topbar .ns-btn-ghost:hover {
+  background: #f2bb1f !important;
+  border-color: #d99f05 !important;
+  color: #0e2f2f !important;
+}
+
+.ns-footer {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(200, 157, 61, 0.16), transparent 30%),
+    linear-gradient(180deg, #fffdf7 0%, #f7f3e8 100%) !important;
+  border-top: 1px solid rgba(15, 95, 53, 0.20) !important;
+  color: var(--ns-brand-deep-teal) !important;
+  padding-top: 44px !important;
+}
+
+.ns-footer-brandline {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.ns-footer-logo {
+  height: 42px !important;
+  width: auto !important;
+  max-width: 220px !important;
+  display: block !important;
+  object-fit: contain !important;
+}
+
+.ns-footer-nmark,
+.ns-footer-wordmark {
+  display: none !important;
+}
+
+.ns-footer-tagline {
+  margin-top: 20px !important;
+  color: var(--ns-brand-deep-teal) !important;
+  font-family: Georgia, "Times New Roman", serif !important;
+  font-size: 0.92rem !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.02em !important;
+}
+
+.ns-footer-description,
+.ns-footer-link {
+  color: #183f34 !important;
+  font-size: 0.82rem !important;
+  font-weight: 680 !important;
+}
+
+.ns-footer-description {
+  max-width: 360px !important;
+  line-height: 1.55 !important;
+}
+
+.ns-footer-heading {
+  color: var(--ns-brand-gold) !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.24em !important;
+}
+
+.ns-footer-link:hover,
+.ns-footer-link:focus-visible {
+  color: var(--ns-brand-green) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+.ns-footer-bottom {
+  margin-top: 34px !important;
+  background: linear-gradient(90deg, #0e2f2f 0%, #0f5f35 100%) !important;
+  border-top: 1px solid rgba(200, 157, 61, 0.32) !important;
+}
+
+.ns-footer-bottom-inner {
+  color: #fffdf7 !important;
+  font-size: 0.78rem !important;
+}
+
+.gincoLegalNotice {
+  background: #0e2f2f !important;
+  color: rgba(255, 253, 247, 0.82) !important;
+  border-top: 1px solid rgba(200, 157, 61, 0.22) !important;
+}
+
+.gincoLegalNotice p {
+  color: rgba(255, 253, 247, 0.82) !important;
+}
+
+.gincoLegalNotice strong {
+  color: #fffdf7 !important;
+}
+
+@media (max-width: 640px) {
+  .ns-brand-logo {
+    height: 32px !important;
+    max-width: 180px !important;
+  }
+
+  .ns-footer-logo {
+    height: 38px !important;
+    max-width: 200px !important;
+  }
+}
+
+
+/* =========================================================
+   PUBLIC FOOTER LEGAL BAR POLISH
+   Build: 2026-07-02-public-footer-legal-v1
+   Purpose:
+   - Keep the legal notice, but integrate it properly.
+   - One dignified green bottom bar, with copyright and legal line.
+   ========================================================= */
+
+.ns-footer .ns-footer-bottom {
+  margin-top: 42px !important;
+  background: linear-gradient(90deg, #0e2f2f 0%, #0f5f35 100%) !important;
+  border-top: 1px solid rgba(200, 157, 61, 0.34) !important;
+  color: #fffdf7 !important;
+}
+
+.ns-footer .ns-footer-bottom-inner {
+  max-width: var(--max-width) !important;
+  margin: 0 auto !important;
+  padding: 16px 18px 15px !important;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+
+.ns-footer .ns-footer-copyright,
+.ns-footer .ns-footer-legal {
+  margin: 0 !important;
+}
+
+.ns-footer .ns-footer-copyright {
+  color: #fffdf7 !important;
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+  font-weight: 760 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.ns-footer .ns-footer-legal {
+  max-width: 960px !important;
+  color: rgba(255, 253, 247, 0.78) !important;
+  font-size: 0.68rem !important;
+  line-height: 1.45 !important;
+  font-weight: 520 !important;
+}
+
+.ns-footer .ns-footer-legal strong {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Legacy loose legal notice is no longer used. Hide it if older markup remains cached. */
+.gincoLegalNotice {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .ns-footer .ns-footer-bottom {
+    margin-top: 30px !important;
+  }
+
+  .ns-footer .ns-footer-bottom-inner {
+    padding: 14px 16px !important;
+    gap: 7px !important;
+  }
+
+  .ns-footer .ns-footer-legal {
+    font-size: 0.64rem !important;
+    line-height: 1.45 !important;
+  }
+}
+
+
+/* =========================================================
+   PUBLIC FOOTER BOTTOM BAR NORMAL TEXT
+   Build: 2026-07-02-public-bottom-bar-normal-text-v1
+   Purpose:
+   - Only the green bottom bar text should be normal weight.
+   - Main footer columns remain unchanged.
+   ========================================================= */
+
+.ns-footer .ns-footer-bottom .ns-footer-copyright,
+.ns-footer .ns-footer-bottom .ns-footer-legal,
+.ns-footer .ns-footer-bottom .ns-footer-legal strong {
+  font-weight: 400 !important;
+}

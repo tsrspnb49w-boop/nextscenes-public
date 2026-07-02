@@ -40,20 +40,19 @@ export default function SiteFooter() {
       <div className="ns-footer-inner">
         <div className="ns-footer-brandblock">
           <Link href={isFR ? "/fr" : "/"} className="ns-footer-brandline" aria-label="NextScenes home">
-            <img src="/nextscenes-n-logo.png" alt="" className="ns-footer-nmark" />
-            <span className="ns-footer-wordmark">NextScenes®</span>
+            <img src="/nextscenes-logo.png" alt="NextScenes" className="ns-footer-logo" />
           </Link>
 
           <div className="ns-footer-tagline">
             {isFR
-              ? "L’imagination avec conscience."
-              : "Imagination with conscience."}
+              ? "Lire. Écrire. Imaginer. Grandir."
+              : "Read. Write. Imagine. Grow."}
           </div>
 
           <div className="ns-footer-description">
             {isFR
-              ? "Plateforme collaborative de narration pour écrivains, écoles et communautés créatives."
-              : "Collaborative storytelling platform for writers, schools, and creative communities."}
+              ? "Histoires en développement, parcours publiés et collaboration réfléchie pour lecteurs, écrivains, écoles et communautés créatives. L’inscription, la lecture et la participation de base sont gratuites."
+              : "Stories in development, published journeys, and thoughtful collaboration for readers, writers, schools, and creative communities. Core registration, reading, and participation are free."}
           </div>
         </div>
 
@@ -187,18 +186,20 @@ export default function SiteFooter() {
 
       <div className="ns-footer-bottom">
         <div className="ns-footer-bottom-inner">
-          © {new Date().getFullYear()} NextScenes.{" "}
-          {isFR ? "Tous droits réservés." : "All rights reserved."}
+          <p className="ns-footer-copyright">
+            © {new Date().getFullYear()} NextScenes.{" "}
+            {isFR ? "Tous droits réservés." : "All rights reserved."}
+          </p>
+
+          <p className="ns-footer-legal">
+            {isFR ? "Mention légale : " : "Legal notice: "}
+            NextScenes {isFR ? "est détenu et exploité par " : "is owned and operated by "}
+            <strong>GINCO GROUP SARL</strong>.{" "}
+            {isFR ? "Siège social : " : "Registered office: "}
+            Quartier HAMDALLAYE ACI 2000, Immeuble PACIFIC, Bamako, Mali.
+          </p>
         </div>
       </div>
-
-
-        {/* NEXTSCENES_LEGAL_NOTICE_START */}
-        <div className="gincoLegalNotice" aria-label="Legal business information">
-          <p>Legal notice: NextScenes is owned and operated by <strong>GINCO GROUP SARL</strong>. Registered office: Quartier HAMDALLAYE ACI 2000, Immeuble PACIFIC, Bamako, Mali.</p>
-        </div>
-        {/* NEXTSCENES_LEGAL_NOTICE_END */}
-
-</footer>
+    </footer>
   );
 }
