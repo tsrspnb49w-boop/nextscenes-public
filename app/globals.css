@@ -7217,3 +7217,79 @@ div.ns-book-badge {
 .ns-footer .ns-footer-bottom .ns-footer-legal strong {
   font-weight: 400 !important;
 }
+
+/* =========================================================
+   PUBLIC HEADER LOGO VISIBILITY POLISH
+   Build: 2026-07-02-public-header-logo-visibility-v1
+   Purpose:
+   - Make the refreshed NextScenes logo clearer in the public header.
+   ========================================================= */
+
+.ns-brand {
+  min-width: 230px !important;
+}
+
+.ns-brand-logo {
+  height: 44px !important;
+  max-width: 260px !important;
+  width: auto !important;
+  opacity: 1 !important;
+  filter: saturate(1.08) contrast(1.08) !important;
+}
+
+.ns-topbar-inner {
+  min-height: 76px !important;
+}
+
+@media (max-width: 780px) {
+  .ns-brand {
+    min-width: 190px !important;
+  }
+
+  .ns-brand-logo {
+    height: 38px !important;
+    max-width: 220px !important;
+  }
+
+  .ns-topbar-inner {
+    min-height: 68px !important;
+  }
+}
+
+/* =========================================================
+   PUBLIC HEADER LOGO VISIBILITY POLISH
+   Build: 2026-07-02-public-header-logo-visibility-v1
+   Purpose:
+   - Make the refreshed NextScenes logo clearer in the public header.
+   ========================================================= */
+
+.ns-brand {
+  min-width: 230px !important;
+}
+
+.ns-brand-logo {
+  height: 44px !important;
+  max-width: 260px !important;
+  width: auto !important;
+  opacity: 1 !important;
+  filter: saturate(1.08) contrast(1.08) !important;
+}
+
+.ns-topbar-inner {
+  min-height: 76px !important;
+}
+
+@media (max-width: 780px) {
+  .ns-brand {
+    min-width: 190px !important;
+  }
+
+  .ns-brand-logo {
+    height: 38px !important;
+    max-width: 220px !important;
+  }
+
+  .ns-topbar-inner {
+    min-height: 68px !important;
+  }
+}
