@@ -1,3 +1,4 @@
+// NEXTSCENES_FAVICON_CACHE_VERSION: 20260702164323
 import "./globals.css";
 import type { ReactNode } from "react";
 import Script from "next/script";
