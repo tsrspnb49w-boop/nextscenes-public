@@ -7293,3 +7293,27 @@ div.ns-book-badge {
     min-height: 68px !important;
   }
 }
+
+/* ---------------------------------------------------------
+   Homepage Mystery250 teaser polish
+   Build: 2026-07-03-public-home-mystery250-teaser-v2
+
+   Purpose:
+   Keep the homepage Mystery250 teaser readable and clean. The
+   homepage now guards against incomplete teaser text from the API.
+--------------------------------------------------------- */
+
+.ns-home-mystery-teaser {
+  display: block;
+  overflow: visible;
+  max-height: none;
+  text-overflow: initial;
+  white-space: normal;
+}
+
+@media (max-width: 760px) {
+  .ns-home-mystery-teaser {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+}

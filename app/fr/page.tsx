@@ -137,6 +137,60 @@ const FALLBACK_WEEKLY_MYSTERY: NormalizedWeeklyMystery = {
   href: "",
 };
 
+
+const HOMEPAGE_WEEKLY_MYSTERY_TEASERS: Record<string, string> = {
+  "library-break-in":
+    "À l’aube, la bibliothécaire trouva le bureau fermé de l’intérieur. Un manuscrit rare avait disparu. Le propriétaire affirma qu’un voleur était entré par la fenêtre pendant la nuit, avait pris le manuscrit, puis s’était enfui par le même chemin. La pièce semblait en désordre. Une chaise avait été renversée. Des papiers étaient éparpillés sur le sol. Mais un détail montrait que le cambriolage avait été mis en scène.",
+  "the-library-break-in":
+    "À l’aube, la bibliothécaire trouva le bureau fermé de l’intérieur. Un manuscrit rare avait disparu. Le propriétaire affirma qu’un voleur était entré par la fenêtre pendant la nuit, avait pris le manuscrit, puis s’était enfui par le même chemin. La pièce semblait en désordre. Une chaise avait été renversée. Des papiers étaient éparpillés sur le sol. Mais un détail montrait que le cambriolage avait été mis en scène.",
+  "la-bibliotheque-cambriolage":
+    "À l’aube, la bibliothécaire trouva le bureau fermé de l’intérieur. Un manuscrit rare avait disparu. Le propriétaire affirma qu’un voleur était entré par la fenêtre pendant la nuit, avait pris le manuscrit, puis s’était enfui par le même chemin. La pièce semblait en désordre. Une chaise avait été renversée. Des papiers étaient éparpillés sur le sol. Mais un détail montrait que le cambriolage avait été mis en scène.",
+};
+
+function normalizeMysteryLookupKey(value?: string) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function isLikelyIncompleteHomepageTeaser(value: string) {
+  const teaser = String(value || "").trim();
+
+  if (!teaser) return true;
+
+  if (/[.!?…][)"'’”\]]*$/.test(teaser)) {
+    return false;
+  }
+
+  return teaser.length >= 160;
+}
+
+function getSafeHomepageMysteryTeaser(
+  rawTeaser: string | undefined,
+  fallbackTeaser: string,
+  ref: string,
+  title: string,
+) {
+  const teaser = String(rawTeaser || "").trim();
+  const refKey = normalizeMysteryLookupKey(ref);
+  const titleKey = normalizeMysteryLookupKey(title);
+  const knownTeaser =
+    HOMEPAGE_WEEKLY_MYSTERY_TEASERS[refKey] ||
+    HOMEPAGE_WEEKLY_MYSTERY_TEASERS[titleKey];
+
+  if (!teaser) return knownTeaser || fallbackTeaser;
+
+  if (isLikelyIncompleteHomepageTeaser(teaser)) {
+    return knownTeaser || fallbackTeaser;
+  }
+
+  return teaser;
+}
+
 type WeeklyMystery = {
   id?: string;
   mysteryId?: string;
@@ -203,7 +257,12 @@ function normalizeWeeklyMystery(raw?: WeeklyMystery | null): NormalizedWeeklyMys
   return {
     ref: raw.ref || raw.mysteryId || FALLBACK_WEEKLY_MYSTERY.ref,
     title: raw.title || FALLBACK_WEEKLY_MYSTERY.title,
-    teaser: raw.teaser || FALLBACK_WEEKLY_MYSTERY.teaser,
+    teaser: getSafeHomepageMysteryTeaser(
+      raw.teaser,
+      FALLBACK_WEEKLY_MYSTERY.teaser,
+      raw.ref || raw.mysteryId || FALLBACK_WEEKLY_MYSTERY.ref,
+      raw.title || FALLBACK_WEEKLY_MYSTERY.title,
+    ),
     imageSrc: raw.imageSrc || FALLBACK_WEEKLY_MYSTERY.imageSrc,
     imageAlt: raw.imageAlt || FALLBACK_WEEKLY_MYSTERY.imageAlt,
     cta: raw.cta || FALLBACK_WEEKLY_MYSTERY.cta,
@@ -605,7 +664,7 @@ export default async function HomePage() {
             <p>
               <strong>Cette semaine :</strong> {weeklyMystery.title}
             </p>
-            <p>{weeklyMystery.teaser}</p>
+            <p className="ns-home-mystery-teaser">{weeklyMystery.teaser}</p>
           </div>
         </div>
       </section>
