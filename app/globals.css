@@ -7317,3 +7317,332 @@ div.ns-book-badge {
     line-height: 1.55;
   }
 }
+
+/* ==========================================================================
+   NEXTSCENES PUBLIC NAV FINAL CLEAN POLISH
+   Date: 2026-07-03
+   Purpose:
+   - One clean public navigation rule set.
+   - Desktop remains calm and compact.
+   - Mobile matches app-style arrangement:
+     Row 1: Logo
+     Row 2: About / For Writers / How it works / Safety
+     Row 3: More alone, centered
+     Row 4: Mystery250 / Lang / Enter the App
+   ========================================================================== */
+
+.ns-topbar,
+.ns-topbar * {
+  box-sizing: border-box;
+}
+
+.ns-topbar,
+.ns-topbar-inner,
+.ns-links,
+.ns-topbar-right,
+.ns-more,
+.ns-langdrop {
+  overflow: visible !important;
+}
+
+.ns-topbar {
+  z-index: 9000;
+}
+
+.ns-navlink,
+.ns-more-trigger,
+.ns-lang-trigger,
+.ns-btn.ns-btn-ghost,
+.ns-btn.ns-btn-primary {
+  min-height: 34px;
+  border-radius: 999px !important;
+  padding: 7px 14px !important;
+  font-size: 0.9rem;
+  line-height: 1 !important;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ns-more,
+.ns-langdrop {
+  position: relative !important;
+  z-index: 9010;
+}
+
+.ns-more-trigger,
+.ns-lang-trigger {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+}
+
+.ns-more-trigger::after,
+.ns-lang-trigger::after {
+  content: "⌄";
+  display: inline-block;
+  font-size: 0.85em;
+  opacity: 0.72;
+  transform: translateY(-1px);
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.ns-more-trigger[aria-expanded="true"]::after,
+.ns-lang-trigger[aria-expanded="true"]::after {
+  transform: translateY(1px) rotate(180deg);
+  opacity: 1;
+}
+
+.ns-more-menu,
+.ns-lang-menu {
+  position: absolute !important;
+  top: calc(100% + 10px) !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  min-width: 220px !important;
+  width: max-content !important;
+  max-width: min(320px, calc(100vw - 32px)) !important;
+  padding: 10px !important;
+  border-radius: 17px !important;
+  border: 1px solid rgba(15, 92, 77, 0.18) !important;
+  background:
+    linear-gradient(180deg, rgba(255, 254, 248, 0.98), rgba(250, 247, 236, 0.98)) !important;
+  box-shadow:
+    0 22px 62px rgba(7, 43, 34, 0.17),
+    0 8px 22px rgba(7, 43, 34, 0.09) !important;
+  z-index: 10000 !important;
+}
+
+.ns-lang-menu {
+  min-width: 175px !important;
+}
+
+.ns-more-menu::before,
+.ns-lang-menu::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgba(255, 254, 248, 0.98);
+  border-left: 1px solid rgba(15, 92, 77, 0.16);
+  border-top: 1px solid rgba(15, 92, 77, 0.16);
+}
+
+.ns-more-menu a,
+.ns-more-menu button,
+.ns-lang-menu a,
+.ns-lang-menu button,
+.ns-more-item,
+.ns-lang-item {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  width: 100%;
+  min-height: 38px;
+  padding: 9px 12px !important;
+  border-radius: 13px !important;
+  color: #092f27 !important;
+  font-weight: 750 !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease !important;
+}
+
+.ns-more-menu a:hover,
+.ns-more-menu button:hover,
+.ns-lang-menu a:hover,
+.ns-lang-menu button:hover,
+.ns-more-menu a:focus-visible,
+.ns-more-menu button:focus-visible,
+.ns-lang-menu a:focus-visible,
+.ns-lang-menu button:focus-visible,
+.ns-more-item:hover,
+.ns-lang-item:hover,
+.ns-more-item:focus-visible,
+.ns-lang-item:focus-visible {
+  background: rgba(15, 92, 77, 0.12) !important;
+  color: #034638 !important;
+  transform: translateX(3px);
+  box-shadow: inset 4px 0 0 rgba(15, 92, 77, 0.45) !important;
+  outline: none !important;
+}
+
+/* Mobile: exact app-style row structure for the public site. */
+@media (max-width: 760px) {
+  .ns-topbar-inner {
+    display: grid !important;
+    grid-template-columns: repeat(4, max-content) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    column-gap: 7px !important;
+    row-gap: 8px !important;
+    width: 100% !important;
+    padding: 12px 10px 11px !important;
+    overflow: visible !important;
+  }
+
+  .ns-brand {
+    grid-row: 1 !important;
+    grid-column: 1 / -1 !important;
+    justify-self: center !important;
+    margin: 0 auto 2px !important;
+  }
+
+  .ns-brand-logo {
+    max-height: 46px !important;
+    width: auto !important;
+  }
+
+  .ns-links,
+  .ns-topbar-right {
+    display: contents !important;
+  }
+
+  .ns-links > a[href="/about"],
+  .ns-links > a[href="/fr/about"] {
+    grid-row: 2 !important;
+    grid-column: 1 !important;
+    justify-self: center !important;
+  }
+
+  .ns-links > a[href="/writers"],
+  .ns-links > a[href="/fr/auteurs"] {
+    grid-row: 2 !important;
+    grid-column: 2 !important;
+    justify-self: center !important;
+  }
+
+  .ns-links > a[href="/how-it-works"],
+  .ns-links > a[href="/fr/how-it-works"] {
+    grid-row: 2 !important;
+    grid-column: 3 !important;
+    justify-self: center !important;
+  }
+
+  .ns-links > a[href="/safety"],
+  .ns-links > a[href="/fr/safety"] {
+    grid-row: 2 !important;
+    grid-column: 4 !important;
+    justify-self: center !important;
+  }
+
+  /* More alone, centered on its own row. */
+  .ns-links > .ns-more {
+    grid-row: 3 !important;
+    grid-column: 1 / -1 !important;
+    justify-self: center !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  /* Bottom action row: Mystery250 / Lang / Enter the App */
+  .ns-links > a[href="/mystery250"],
+  .ns-links > a[href="/fr/mystery250"] {
+    grid-row: 4 !important;
+    grid-column: 1 / 2 !important;
+    justify-self: end !important;
+  }
+
+  .ns-topbar-right > .ns-langdrop {
+    grid-row: 4 !important;
+    grid-column: 2 / 3 !important;
+    justify-self: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .ns-topbar-right > .ns-btn {
+    grid-row: 4 !important;
+    grid-column: 3 / 5 !important;
+    justify-self: start !important;
+  }
+
+  .ns-more-menu,
+  .ns-lang-menu {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    width: min(100%, 360px) !important;
+    max-width: calc(100vw - 32px) !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 9px auto 4px !important;
+    padding: 12px !important;
+    border-radius: 20px !important;
+  }
+
+  .ns-lang-menu {
+    width: min(260px, calc(100vw - 32px)) !important;
+  }
+
+  .ns-more-menu::before,
+  .ns-lang-menu::before {
+    display: none !important;
+  }
+
+  .ns-navlink,
+  .ns-more-trigger,
+  .ns-lang-trigger,
+  .ns-btn.ns-btn-ghost,
+  .ns-btn.ns-btn-primary {
+    min-height: 36px !important;
+    padding: 8px 12px !important;
+    font-size: 0.82rem !important;
+    line-height: 1 !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+  }
+
+  .ns-btn.ns-btn-primary {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .ns-topbar-inner {
+    column-gap: 6px !important;
+    row-gap: 7px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .ns-brand-logo {
+    max-height: 42px !important;
+  }
+
+  .ns-navlink,
+  .ns-more-trigger,
+  .ns-lang-trigger,
+  .ns-btn.ns-btn-ghost,
+  .ns-btn.ns-btn-primary {
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .ns-btn.ns-btn-primary {
+    padding-left: 13px !important;
+    padding-right: 13px !important;
+  }
+}
+
+
