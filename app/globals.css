@@ -7646,3 +7646,254 @@ div.ns-book-badge {
 }
 
 
+
+
+/* =========================================================
+   PUBLIC LANGUAGE GATEWAY + NAV BREATHING ROOM
+   Build: 2026-07-04-public-language-direct-more-fix-v1
+   Purpose:
+   - Replace the language dropdown with one clear switch.
+   - Move For Writers under More to prevent squeezing.
+   - Keep Enter the App as the main gold gateway.
+   ========================================================= */
+
+@media (min-width: 761px) {
+  .ns-topbar-inner {
+    max-width: min(1480px, calc(100% - 56px)) !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+  }
+
+  .ns-links {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  .ns-topbar-right {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 10px !important;
+  }
+
+  .ns-brand {
+    flex: 0 0 auto !important;
+  }
+}
+
+.ns-language-switch {
+  display: inline-flex !important;
+  align-items: center !important;
+}
+
+.ns-language-gateway {
+  background: linear-gradient(180deg, #fff8df 0%, #f7df9b 100%) !important;
+  border: 1px solid rgba(155, 112, 13, 0.52) !important;
+  color: #0b4d2d !important;
+  box-shadow: 0 8px 20px rgba(115, 82, 12, 0.13) !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.ns-language-gateway:hover,
+.ns-language-gateway:focus-visible {
+  background: linear-gradient(180deg, #fff2c7 0%, #f4cf64 100%) !important;
+  border-color: rgba(135, 91, 9, 0.7) !important;
+  color: #073f26 !important;
+  transform: translateY(-1px) !important;
+}
+
+.ns-language-gateway::after {
+  content: none !important;
+  display: none !important;
+}
+
+.ns-topbar .ns-btn.ns-btn-ghost {
+  background: linear-gradient(180deg, #ffd93d 0%, #f6bd16 100%) !important;
+  border: 1px solid rgba(151, 103, 0, 0.55) !important;
+  color: #122014 !important;
+  box-shadow: 0 10px 22px rgba(109, 72, 0, 0.16) !important;
+  font-weight: 900 !important;
+}
+
+.ns-topbar .ns-btn.ns-btn-ghost:hover,
+.ns-topbar .ns-btn.ns-btn-ghost:focus-visible {
+  background: linear-gradient(180deg, #ffe26a 0%, #f2b705 100%) !important;
+  color: #0f2418 !important;
+  transform: translateY(-1px) !important;
+}
+
+@media (max-width: 760px) {
+  .ns-topbar-inner {
+    display: grid !important;
+    grid-template-columns: repeat(4, max-content) !important;
+    justify-content: center !important;
+    align-items: center !important;
+    column-gap: 7px !important;
+    row-gap: 8px !important;
+    width: 100% !important;
+    padding: 12px 10px 11px !important;
+    overflow: visible !important;
+  }
+
+  .ns-brand {
+    grid-row: 1 !important;
+    grid-column: 1 / -1 !important;
+    justify-self: center !important;
+    margin: 0 auto 2px !important;
+  }
+
+  .ns-links,
+  .ns-topbar-right {
+    display: contents !important;
+  }
+
+  .ns-links > a[href="/about"],
+  .ns-links > a[href="/fr/about"] {
+    grid-row: 2 !important;
+    grid-column: 1 !important;
+    justify-self: center !important;
+  }
+
+  .ns-links > a[href="/how-it-works"],
+  .ns-links > a[href="/fr/how-it-works"] {
+    grid-row: 2 !important;
+    grid-column: 2 !important;
+    justify-self: center !important;
+  }
+
+  .ns-links > a[href="/safety"],
+  .ns-links > a[href="/fr/safety"] {
+    grid-row: 2 !important;
+    grid-column: 3 !important;
+    justify-self: center !important;
+  }
+
+  .ns-links > .ns-more {
+    grid-row: 2 !important;
+    grid-column: 4 !important;
+    justify-self: center !important;
+    width: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  .ns-links > a[href="/mystery250"],
+  .ns-links > a[href="/fr/mystery250"] {
+    grid-row: 3 !important;
+    grid-column: 1 / 2 !important;
+    justify-self: end !important;
+  }
+
+  .ns-topbar-right > .ns-langdrop {
+    grid-row: 3 !important;
+    grid-column: 2 / 3 !important;
+    justify-self: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .ns-topbar-right > .ns-btn {
+    grid-row: 3 !important;
+    grid-column: 3 / 5 !important;
+    justify-self: start !important;
+  }
+
+  .ns-language-gateway {
+    min-width: 108px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .ns-language-gateway {
+    min-width: 98px !important;
+  }
+}
+
+
+/* =========================================================
+   PUBLIC LANGUAGE DROPDOWN GATEWAY
+   Build: 2026-07-04-public-language-dropdown-more-fix-v1
+   Purpose:
+   - Keep the public language gateway visible.
+   - Restore the dropdown behavior so it matches the app site.
+   ========================================================= */
+
+.ns-language-switch {
+  position: relative !important;
+}
+
+.ns-language-gateway {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  min-width: 126px !important;
+  background: linear-gradient(180deg, #fff8df 0%, #f7df9b 100%) !important;
+  border: 1px solid rgba(155, 112, 13, 0.52) !important;
+  color: #0b4d2d !important;
+  box-shadow: 0 8px 20px rgba(115, 82, 12, 0.13) !important;
+  font-weight: 850 !important;
+  letter-spacing: 0.01em !important;
+}
+
+.ns-language-gateway:hover,
+.ns-language-gateway:focus-visible,
+.ns-language-gateway.is-open {
+  background: linear-gradient(180deg, #fff2c7 0%, #f4cf64 100%) !important;
+  border-color: rgba(135, 91, 9, 0.7) !important;
+  color: #073f26 !important;
+  transform: translateY(-1px) !important;
+}
+
+.ns-language-gateway::after {
+  content: "⌄" !important;
+  display: inline-block !important;
+  font-size: 0.85em !important;
+  opacity: 0.72 !important;
+  transform: translateY(-1px) !important;
+  transition: transform 150ms ease, opacity 150ms ease !important;
+}
+
+.ns-language-gateway[aria-expanded="true"]::after {
+  transform: translateY(1px) rotate(180deg) !important;
+  opacity: 1 !important;
+}
+
+.ns-language-menu {
+  min-width: 186px !important;
+}
+
+.ns-language-menu .ns-lang-item {
+  justify-content: flex-start !important;
+  gap: 9px !important;
+}
+
+.ns-language-menu .ns-lang-check {
+  margin-left: auto !important;
+}
+
+@media (max-width: 760px) {
+  .ns-language-gateway {
+    min-width: 112px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .ns-language-gateway {
+    min-width: 104px !important;
+  }
+}

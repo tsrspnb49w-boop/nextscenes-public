@@ -136,7 +136,6 @@ export default function SiteNav() {
   const PRIMARY = useMemo(
     () => [
       { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
-      { href: "/writers", frHref: "/auteurs", en: "For Writers", fr: "Pour les auteurs" },
       { href: "/how-it-works", frHref: "/how-it-works", en: "How it works", fr: "Comment ça marche" },
       { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
@@ -146,6 +145,7 @@ export default function SiteNav() {
 
   const MORE = useMemo(
     () => [
+      { href: "/writers", frHref: "/auteurs", en: "For Writers", fr: "Pour les auteurs" },
       { href: "/clubs", frHref: "/clubs", en: "Clubs", fr: "Clubs" },
       { href: "/partners", frHref: "/partners", en: "Partners", fr: "Partenaires" },
       { href: "/ai-principles", frHref: "/principes-ia", en: "AI Principles", fr: "Principes IA" },
@@ -165,10 +165,10 @@ export default function SiteNav() {
   }
 
   const [moreOpen, setMoreOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+
   const moreWrapRef = useRef<HTMLDivElement>(null);
   const moreButtonRef = useRef<HTMLButtonElement>(null);
-
-  const [langOpen, setLangOpen] = useState(false);
   const langWrapRef = useRef<HTMLDivElement>(null);
   const langButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -178,27 +178,20 @@ export default function SiteNav() {
   }, []);
 
   const toggleMore = useCallback(() => {
-    setLangOpen(false);
-    setMoreOpen((v) => !v);
+    setMoreOpen((v) => {
+      const next = !v;
+      if (next) setLangOpen(false);
+      return next;
+    });
   }, []);
 
   const toggleLang = useCallback(() => {
-    setMoreOpen(false);
-    setLangOpen((v) => !v);
+    setLangOpen((v) => {
+      const next = !v;
+      if (next) setMoreOpen(false);
+      return next;
+    });
   }, []);
-
-  const goToLanguage = useCallback(
-    (href: string) => {
-      closeAllMenus();
-
-      // A normal document navigation is deliberately used for the language switch.
-      // This avoids stale client state and guarantees the correct App Router page loads.
-      if (typeof window !== "undefined") {
-        window.location.assign(href);
-      }
-    },
-    [closeAllMenus]
-  );
 
   useEffect(() => {
     closeAllMenus();
@@ -211,14 +204,14 @@ export default function SiteNav() {
       if (e.key !== "Escape") return;
       e.preventDefault();
 
-      const wasMore = moreOpen;
-      const wasLang = langOpen;
+      const wasMoreOpen = moreOpen;
+      const wasLangOpen = langOpen;
 
       closeAllMenus();
 
       requestAnimationFrame(() => {
-        if (wasMore) moreButtonRef.current?.focus();
-        else if (wasLang) langButtonRef.current?.focus();
+        if (wasMoreOpen) moreButtonRef.current?.focus();
+        else if (wasLangOpen) langButtonRef.current?.focus();
       });
     }
 
@@ -323,7 +316,9 @@ export default function SiteNav() {
     return isFR ? "/fr/enter" : "/enter";
   }, [authHint, isFR]);
 
-  const langLabel = isFR ? "Langue" : "Lang";
+  const languageSwitchLabel = isFR ? "🇫🇷 Français" : "🇬🇧 English";
+  const languageSwitchAria = isFR ? "Changer de langue" : "Switch language";
+  const languageMenuAria = isFR ? "Choisir la langue" : "Choose language";
   const menuOpen = moreOpen || langOpen;
 
   return (
@@ -396,51 +391,50 @@ export default function SiteNav() {
         </nav>
 
         <div className="ns-topbar-right">
-          <div className="ns-langdrop" ref={langWrapRef}>
+          <div className="ns-langdrop ns-language-switch" ref={langWrapRef}>
             <button
               ref={langButtonRef}
               type="button"
-              className={`ns-lang-trigger ${langOpen ? "is-open" : ""}`}
+              className={`ns-lang-trigger ns-language-gateway ${langOpen ? "is-open" : ""}`}
+              aria-label={languageSwitchAria}
               aria-haspopup="menu"
               aria-expanded={langOpen}
-              aria-controls="ns-lang-menu"
+              aria-controls="ns-language-menu"
               onClick={toggleLang}
             >
-              {langLabel}
+              {languageSwitchLabel}
             </button>
 
             {langOpen && (
               <div
-                id="ns-lang-menu"
-                className="ns-lang-menu"
+                id="ns-language-menu"
+                className="ns-lang-menu ns-language-menu"
                 role="menu"
-                aria-label={isFR ? "Langue" : "Language"}
+                aria-label={languageMenuAria}
               >
-                <button
-                  type="button"
+                <Link
+                  href={enHref}
                   className={`ns-lang-item ${!isFR ? "is-active" : ""}`}
                   role="menuitem"
-                  onClick={() => goToLanguage(enHref)}
+                  aria-current={!isFR ? "page" : undefined}
+                  onClick={closeAllMenus}
                 >
-                  <span className="flag" aria-hidden="true">
-                    🇬🇧
-                  </span>
-                  <span className="ns-lang-text">{isFR ? "Anglais" : "English"}</span>
-                  <span className="ns-lang-check">{!isFR ? "✓" : ""}</span>
-                </button>
+                  <span className="flag" aria-hidden="true">🇬🇧</span>
+                  <span className="ns-lang-text">English</span>
+                  {!isFR && <span className="ns-lang-check" aria-hidden="true">✓</span>}
+                </Link>
 
-                <button
-                  type="button"
+                <Link
+                  href={frHref}
                   className={`ns-lang-item ${isFR ? "is-active" : ""}`}
                   role="menuitem"
-                  onClick={() => goToLanguage(frHref)}
+                  aria-current={isFR ? "page" : undefined}
+                  onClick={closeAllMenus}
                 >
-                  <span className="flag" aria-hidden="true">
-                    🇫🇷
-                  </span>
-                  <span className="ns-lang-text">{isFR ? "Français" : "French"}</span>
-                  <span className="ns-lang-check">{isFR ? "✓" : ""}</span>
-                </button>
+                  <span className="flag" aria-hidden="true">🇫🇷</span>
+                  <span className="ns-lang-text">Français</span>
+                  {isFR && <span className="ns-lang-check" aria-hidden="true">✓</span>}
+                </Link>
               </div>
             )}
           </div>
