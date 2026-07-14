@@ -499,6 +499,27 @@ export default async function HomePage() {
               discipline, and careful storytelling.
             </p>
 
+            <p
+              style={{
+                maxWidth: 760,
+                margin: "16px 0 0",
+                padding: "12px 16px",
+                border: "1px solid rgba(177, 126, 24, 0.34)",
+                borderLeft: "5px solid #d9a441",
+                borderRadius: "0 14px 14px 0",
+                background: "rgba(255, 244, 204, 0.92)",
+                color: "#123d32",
+                boxShadow: "0 10px 24px rgba(84, 61, 15, 0.08)",
+                fontSize: 16,
+                fontWeight: 800,
+                lineHeight: 1.55,
+              }}
+            >
+              Built by writers and book lovers, for writers at every stage and
+              readers who believe stories can entertain, inspire, and shape the
+              future.
+            </p>
+
             <div className="ns-home-free-access-strip" role="note">
               <strong>Free to join. Free to read. Free to participate.</strong>{" "}
               <span>No hidden fees for core NextScenes participation.</span>

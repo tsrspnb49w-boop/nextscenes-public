@@ -470,6 +470,27 @@ export default async function HomePage() {
               et découvrez des livres publiés nés de l’imagination, de la discipline et d’un travail patient.
             </p>
 
+            <p
+              style={{
+                maxWidth: 760,
+                margin: "16px 0 0",
+                padding: "12px 16px",
+                border: "1px solid rgba(177, 126, 24, 0.34)",
+                borderLeft: "5px solid #d9a441",
+                borderRadius: "0 14px 14px 0",
+                background: "rgba(255, 244, 204, 0.92)",
+                color: "#123d32",
+                boxShadow: "0 10px 24px rgba(84, 61, 15, 0.08)",
+                fontSize: 16,
+                fontWeight: 800,
+                lineHeight: 1.55,
+              }}
+            >
+              Conçu par des écrivains et des amoureux des livres, pour les auteurs
+              à toutes les étapes de leur parcours et les lecteurs qui croient que
+              les histoires peuvent divertir, inspirer et façonner l’avenir.
+            </p>
+
             <div className="ns-home-free-access-strip" role="note">
               <strong>Inscription gratuite. Lecture gratuite. Participation gratuite.</strong>
               <span>Aucun frais caché pour la participation de base sur NextScenes.</span>
