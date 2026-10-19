@@ -49,6 +49,11 @@ const copy = {
     inDevelopment: "In development",
     publicationLink: "View publication",
     openStory: "Open story",
+    didieEyebrow: "FEATURED NOVEL · HISTORICAL FICTION",
+    didieTitle: "The Story of Didie",
+    didieLead: "Love beyond custom. A truth buried in silence. A destiny that still demands an answer.",
+    didieEdition: "Published in English · Available on Amazon",
+    didieCta: "Discover Didie",
     journeyKicker: "FOR WRITERS · MORE THAN A MANUSCRIPT",
     journeyTitle: "From your first words to a professionally formatted book.",
     journeyLine: "Write. Edit. Organise. Format. Prepare to publish.",
@@ -85,6 +90,11 @@ const copy = {
     inDevelopment: "En développement",
     publicationLink: "Voir la publication",
     openStory: "Ouvrir l’histoire",
+    didieEyebrow: "ROMAN À LA UNE · FICTION HISTORIQUE",
+    didieTitle: "The Story of Didie",
+    didieLead: "Un amour au-delà des coutumes. Une vérité enfouie dans le silence. Un destin qui réclame encore une réponse.",
+    didieEdition: "Roman disponible en anglais uniquement",
+    didieCta: "Découvrir Didie",
     journeyKicker: "POUR LES AUTEURS · BIEN PLUS QU’UN MANUSCRIT",
     journeyTitle: "De vos premiers mots à un livre mis en page professionnellement.",
     journeyLine: "Écrivez. Révisez. Organisez. Mettez en page. Préparez la publication.",
@@ -221,6 +231,20 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               );
             })}
           </div>
+          <aside className={styles.didieFeature} aria-label={t.didieEyebrow}>
+            <Link href={language === "fr" ? "/fr/books/didie" : "/books/didie"} className={styles.didieArt} aria-label={t.didieCta}>
+              <Image src="/images/books/didie/approved-front.webp" alt="The Story of Didie book cover" width={112} height={168} unoptimized className={styles.didieCover} />
+            </Link>
+            <div className={styles.didieDetails}>
+              <div className={styles.eyebrow}>{t.didieEyebrow}</div>
+              <h3>{t.didieTitle}</h3>
+              <p>{t.didieLead}</p>
+              <span className={styles.didieEdition}>{t.didieEdition}</span>
+            </div>
+            <Link className={`${styles.button} ${styles.didieAction}`} href={language === "fr" ? "/fr/books/didie" : "/books/didie"}>
+              {t.didieCta} →
+            </Link>
+          </aside>
         </div>
       </section>
 
