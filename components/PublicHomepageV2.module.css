@@ -81,15 +81,46 @@
 @media(max-width:720px){.heroInner{grid-template-columns:1fr;padding-top:47px;padding-bottom:42px;gap:12px}.heroCopy h1{font-size:42px}.heroLede{font-size:17px}.artStage{min-height:260px}.artStage::before{width:230px;height:230px}.artStage::after{width:180px;height:180px}.artCover{width:120px;height:170px}.middleCover{width:151px;height:205px}.artStage .rightCover{transform:translate(97px,15px) rotate(10deg)}.artStage .leftCover{transform:translate(-97px,15px) rotate(-10deg)}.visualLabel{font-size:10px}.booksSection,.curiosity{padding:39px 0}.sectionHeading{align-items:start;flex-wrap:wrap}.bookGrid{gap:12px}.bookCard{padding:12px}.bookImageLink{height:178px}.bookCover{height:170px;width:125px}.bookCard h3{font-size:14px;min-height:40px}.bookDescription{font-size:12px}.bookBottom{flex-wrap:wrap}.journey{padding:40px 0}.journeyGrid{grid-template-columns:1fr;gap:22px}.spot{min-height:210px}.spotCopy{padding:18px}.spot h3{font-size:20px}.spotImage{width:34%;min-width:95px}.entryPanel{grid-template-columns:1fr;padding:22px}}
 @media(max-width:390px){.heroCopy h1{font-size:36px}.bookGrid{grid-template-columns:1fr}.bookImageLink{height:220px}.bookCover{height:210px;width:155px}.spotImage{min-width:80px}}
 
-/* DIDIE_DISCOVERY_V1: an unobtrusive link below the existing four-book shelf. */
-.didieFeature{display:grid;grid-template-columns:112px minmax(0,1fr) auto;gap:23px;align-items:center;margin-top:27px;padding:20px 26px;background:linear-gradient(115deg,#fffaf0,#edf7ef);border:1px solid #e5e4d8;border-radius:21px;box-shadow:0 8px 27px rgba(29,59,43,.05)}
-.didieArt{display:block;width:112px;justify-self:center}
-.didieCover{display:block;width:112px;height:auto;border-radius:5px;box-shadow:0 10px 19px rgba(32,46,35,.19);transition:transform .2s}
-.didieArt:hover .didieCover{transform:translateY(-3px)}
+/* DIDIE_DISCOVERY_V2: tasteful featured-novel emphasis; no surrounding layout changes. */
+.didieFeature{
+  display:grid;grid-template-columns:140px minmax(0,1fr) auto;gap:27px;align-items:center;
+  position:relative;isolation:isolate;margin-top:28px;padding:25px 29px;
+  background:radial-gradient(ellipse 48% 115% at 8% 50%,rgba(255,203,91,.25),transparent 85%),linear-gradient(112deg,#fff9e9 0%,#f4f8ee 54%,#e8f5ec 100%);
+  border:1px solid #e2c98e;border-left:5px solid #c99c38;border-radius:22px;
+  box-shadow:0 15px 34px rgba(55,66,36,.105),0 2px 8px rgba(83,64,23,.045);
+}
+.didieArt{display:block;width:135px;justify-self:center;line-height:0}
+.didieCover{
+  display:block;width:135px;height:auto;border:3px solid #fff9ed;border-radius:7px;
+  transform:rotate(-1.4deg);box-shadow:5px 16px 26px rgba(39,45,24,.26),0 0 0 1px rgba(80,55,25,.1);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.didieArt:hover .didieCover{transform:rotate(0deg) translateY(-4px);box-shadow:4px 21px 30px rgba(39,45,24,.24)}
 .didieDetails{min-width:0}
-.didieDetails h3{font-family:Georgia,serif;font-size:clamp(21px,2.2vw,29px);line-height:1.16;color:#0d4937;margin:7px 0 6px}
-.didieDetails p{font-family:Georgia,serif;color:#41574c;font-size:15px;line-height:1.5;margin:0 0 7px}
-.didieEdition{font-size:12px;font-weight:650;color:#64766a}
-.didieAction{background:#fff;border-color:#b8ddc9;color:#075b39;font-size:13px;box-shadow:0 6px 15px rgba(7,54,39,.04)}
-@media(max-width:900px){.didieFeature{grid-template-columns:100px minmax(0,1fr);gap:16px}.didieArt{width:95px}.didieCover{width:95px}.didieAction{grid-column:2;justify-self:start}}
-@media(max-width:500px){.didieFeature{grid-template-columns:76px minmax(0,1fr);gap:13px;margin-top:20px;padding:17px 14px}.didieArt{width:76px}.didieCover{width:76px}.didieDetails h3{font-size:20px}.didieDetails p{font-size:13px}.didieEdition{font-size:11px}.didieAction{grid-column:1/-1;justify-self:start;padding:11px 16px}}
+.didieDetails .eyebrow{
+  display:inline-flex;align-items:center;border:1px solid #e4cf94;background:#fff0c9;
+  color:#81570b;letter-spacing:.13em;border-radius:100px;padding:6px 11px;font-size:10px;
+}
+.didieDetails h3{font-family:Georgia,serif;font-size:clamp(25px,2.65vw,34px);line-height:1.16;color:#0c4737;margin:11px 0 8px}
+.didieDetails p{font-family:Georgia,serif;color:#334b3f;font-size:clamp(14px,1.2vw,16px);line-height:1.5;margin:0 0 9px}
+.didieEdition{font-size:12px;font-weight:720;color:#566d5d}
+.didieAction{
+  background:#ffcb29;border:1px solid #e3ae20;color:#103726;font-size:14px;font-weight:850;
+  padding:14px 23px;box-shadow:0 9px 20px rgba(171,116,16,.17);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.didieAction:hover{transform:translateY(-2px);box-shadow:0 12px 23px rgba(171,116,16,.24)}
+@media(max-width:900px){
+  .didieFeature{grid-template-columns:112px minmax(0,1fr);gap:18px;padding:22px 24px}
+  .didieArt,.didieCover{width:110px}
+  .didieAction{grid-column:2;justify-self:start}
+}
+@media(max-width:500px){
+  .didieFeature{grid-template-columns:87px minmax(0,1fr);gap:14px;margin-top:21px;padding:19px 15px;border-left-width:4px}
+  .didieArt,.didieCover{width:86px}
+  .didieDetails .eyebrow{font-size:9px;letter-spacing:.075em;padding:5px 8px}
+  .didieDetails h3{font-size:23px;margin:8px 0 6px}
+  .didieDetails p{font-size:13px}
+  .didieEdition{font-size:11px}
+  .didieAction{grid-column:1/-1;justify-self:start;padding:12px 18px;font-size:13px}
+}
