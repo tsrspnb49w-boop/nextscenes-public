@@ -1,0 +1,254 @@
+import Image from "next/image";
+import Link from "next/link";
+import type { FeaturedStory } from "@/app/lib/featuredStories";
+import styles from "./PublicHomepageV2.module.css";
+
+type Language = "en" | "fr";
+type Mystery = {
+  ref: string;
+  title: string;
+  teaser: string;
+  imageSrc: string;
+  imageAlt: string;
+  cta: string;
+};
+type Reading = {
+  label: string;
+  title: string;
+  author: string;
+  description: string;
+  href?: string;
+  cover?: string;
+  imageAlt?: string;
+  cta?: string;
+};
+
+type Props = {
+  language: Language;
+  stories: FeaturedStory[];
+  mystery: Mystery;
+  mysteryHref: string;
+  reading: Reading;
+  storiesHref: string;
+};
+
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
+const copy = {
+  en: {
+    eyebrow: "READ · WRITE · DISCOVER",
+    headline: "Read a story. Create your own.",
+    lede: "Discover books, follow stories as they grow, or begin something entirely your own.",
+    read: "Explore stories",
+    write: "Start writing",
+    confidence: "Free core participation · No tour required · Explore at your own pace",
+    covers: "Stories in progress & published books",
+    booksEyebrow: "OPEN A STORY",
+    booksTitle: "Discover something worth reading.",
+    browse: "Browse all stories",
+    published: "Published",
+    inDevelopment: "In development",
+    publicationLink: "View publication",
+    openStory: "Open story",
+    journeyKicker: "FOR WRITERS · MORE THAN A MANUSCRIPT",
+    journeyTitle: "From your first words to a professionally formatted book.",
+    journeyLine: "Write. Edit. Organise. Format. Prepare to publish.",
+    journeyParagraph: "NextScenes brings the book-creation journey together in one workspace. Develop your story, refine your writing, organise your chapters, and transform your manuscript into a professionally formatted book interior designed for publication.",
+    journeyClosing: "More than a writing platform. A place to bring your book to life.",
+    stepsTitle: "YOUR BOOK · ONE CONNECTED WORKSPACE",
+    steps: ["Write your story", "Edit and refine", "Organise chapters", "Format the book interior", "Prepare for publication"],
+    stepsFoot: "A real book interior—not just a stack of draft pages.",
+    curiosity: "A LITTLE CURIOSITY",
+    curiosityTitle: "A reason to come back.",
+    mysteryTitle: "FEATURED MYSTERY · MYSTERY250",
+    tryMystery: "Try a mystery",
+    readingTitle: "READING SPOTLIGHT",
+    discoverReading: "Discover this book",
+    discovery: "Explore more books",
+    welcome: "Ready to explore? You're welcome already.",
+    welcomeText: "You can enter the app directly. Guides are here only if you want them.",
+    welcomeCTA: "Enter NextScenes",
+    guideTitle: "Show the 20-second guide",
+    guideText: "Discover stories in Reader View. Create a project in Project Hub. Write and organise scenes in Writer Studio. Learn more whenever you wish.",
+  },
+  fr: {
+    eyebrow: "LIRE · ÉCRIRE · DÉCOUVRIR",
+    headline: "Lisez une histoire. Créez la vôtre.",
+    lede: "Découvrez des livres, suivez des récits qui prennent forme ou commencez votre propre aventure.",
+    read: "Explorer les histoires",
+    write: "Commencer à écrire",
+    confidence: "Participation de base gratuite · Aucun parcours imposé · Explorez à votre rythme",
+    covers: "Récits en cours et livres publiés",
+    booksEyebrow: "OUVRIR UNE HISTOIRE",
+    booksTitle: "Découvrez des histoires qui valent la lecture.",
+    browse: "Explorer toutes les histoires",
+    published: "Publié",
+    inDevelopment: "En développement",
+    publicationLink: "Voir la publication",
+    openStory: "Ouvrir l’histoire",
+    journeyKicker: "POUR LES AUTEURS · BIEN PLUS QU’UN MANUSCRIT",
+    journeyTitle: "De vos premiers mots à un livre mis en page professionnellement.",
+    journeyLine: "Écrivez. Révisez. Organisez. Mettez en page. Préparez la publication.",
+    journeyParagraph: "NextScenes réunit les étapes de création d’un livre dans un même espace. Développez votre histoire, affinez votre texte, organisez vos chapitres et transformez votre manuscrit en un intérieur de livre mis en page professionnellement, conçu pour la publication.",
+    journeyClosing: "Plus qu’une plateforme d’écriture. Un espace pour donner vie à votre livre.",
+    stepsTitle: "VOTRE LIVRE · UN ESPACE UNIQUE",
+    steps: ["Écrire votre histoire", "Réviser et affiner", "Organiser les chapitres", "Mettre en page l’intérieur du livre", "Préparer la publication"],
+    stepsFoot: "Un véritable intérieur de livre, pas simplement des pages de brouillon.",
+    curiosity: "UN PEU DE CURIOSITÉ",
+    curiosityTitle: "Une raison de revenir.",
+    mysteryTitle: "ÉNIGME À LA UNE · MYSTERY250",
+    tryMystery: "Résoudre une énigme",
+    readingTitle: "À LIRE",
+    discoverReading: "Découvrir ce livre",
+    discovery: "Découvrir d’autres livres",
+    welcome: "Prêt à découvrir ? Vous êtes déjà le bienvenu.",
+    welcomeText: "Entrez directement dans l’application. Les guides sont facultatifs.",
+    welcomeCTA: "Entrer sur NextScenes",
+    guideTitle: "Afficher le guide en 20 secondes",
+    guideText: "Découvrez les récits en mode lecture. Créez un projet dans le Centre de projets. Écrivez et organisez vos scènes dans Writer Studio. Des explications restent disponibles à tout moment.",
+  },
+} as const;
+
+function isPublished(story: FeaturedStory) {
+  const status = String(story.publicationStatus || "").toLowerCase().replace(/[\s_-]/g, "");
+  const label = String(story.publicationLabel || "").toLowerCase();
+  return status === "publishedamazon" || status === "publishedelsewhere" ||
+    label === "published" || label.includes("published on amazon");
+}
+
+function selectFeatured(stories: FeaturedStory[]) {
+  const safe = (Array.isArray(stories) ? stories : []).filter(s => Boolean(s?.cover && s?.title && s?.href));
+  const output: FeaturedStory[] = [];
+  const picks = [/ugo.*magic.*seed/i, /reflections|réflexions|reflexions/i, /butterfly.*woman|femme.papillon/i, /52.*windows|52.*fenêtres|52.*fenetres/i];
+  for (const matcher of picks) {
+    const selected = safe.find(s => !output.some(x => x.id === s.id) && matcher.test(s.title));
+    if (selected) output.push(selected);
+  }
+  for (const candidate of safe) {
+    if (output.length === 4) break;
+    if (!output.some(s => s.id === candidate.id)) output.push(candidate);
+  }
+  return output.slice(0, 4);
+}
+
+export default function PublicHomepageV2({language, stories, mystery, mysteryHref, reading, storiesHref}: Props) {
+  const t = copy[language];
+  const featured = selectFeatured(stories);
+  const heroCovers = featured.slice(0, 3);
+  return (
+    <div className={styles.home}>
+      <section className={styles.hero} aria-label={t.headline}>
+        <div className={`${styles.wrap} ${styles.heroInner}`}>
+          <div className={styles.heroCopy}>
+            <div className={styles.eyebrow}>{t.eyebrow}</div>
+            <h1>{t.headline}</h1>
+            <p className={styles.heroLede}>{t.lede}</p>
+            <div className={styles.heroActions}>
+              <Link className={`${styles.button} ${styles.gold}`} href={storiesHref}>{t.read} →</Link>
+              <a className={`${styles.button} ${styles.outline}`} href={appUrl}>{t.write} →</a>
+            </div>
+            <p className={styles.confidence}>✓ {t.confidence}</p>
+          </div>
+          <div className={styles.artStage} aria-label={t.covers}>
+            {heroCovers.map((story, i) => (
+              <Image key={story.id} src={story.cover} alt={`${story.title} cover`}
+                width={300} height={440} unoptimized
+                className={`${styles.artCover} ${i===0 ? styles.leftCover : i===1 ? styles.middleCover : styles.rightCover}`} />
+            ))}
+            <span className={styles.visualLabel}>{t.covers}</span>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.booksSection} id="books" aria-label={t.booksTitle}>
+        <div className={styles.wrap}>
+          <div className={styles.sectionHeading}>
+            <div><div className={styles.eyebrow}>{t.booksEyebrow}</div><h2>{t.booksTitle}</h2></div>
+            <Link className={styles.textLink} href={storiesHref}>{t.browse} →</Link>
+          </div>
+          <div className={styles.bookGrid}>
+            {featured.map(story => {
+              const published = isPublished(story);
+              const link = published && story.publicationUrl ? story.publicationUrl : story.href;
+              return (
+                <article key={story.id} className={styles.bookCard}>
+                  <Link href={story.href} className={styles.bookImageLink} aria-label={`${t.openStory}: ${story.title}`}>
+                    <Image src={story.cover} alt={`${story.title} cover`} width={180} height={250} unoptimized className={styles.bookCover} />
+                  </Link>
+                  <h3>{story.title}</h3>
+                  <p className={styles.bookDescription}>{story.hook}</p>
+                  <div className={styles.bookBottom}>
+                    <span className={`${styles.pill} ${published ? styles.pillPublished : ""}`}>{published ? t.published : t.inDevelopment}</span>
+                    {published && story.publicationUrl ? (
+                      <a className={styles.textLink} href={link} target="_blank" rel="noopener noreferrer">{t.publicationLink} →</a>
+                    ) : (
+                      <Link className={styles.textLink} href={link}>{t.openStory} →</Link>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.journey} id="for-writers" aria-label={t.journeyTitle}>
+        <div className={`${styles.wrap} ${styles.journeyGrid}`}>
+          <div className={styles.journeyCopy}>
+            <div className={styles.eyebrow}>{t.journeyKicker}</div>
+            <h2>{t.journeyTitle}</h2>
+            <p className={styles.journeyLine}>{t.journeyLine}</p>
+            <p>{t.journeyParagraph}</p>
+            <strong>{t.journeyClosing}</strong>
+          </div>
+          <div className={styles.stepsCard}>
+            <div className={styles.eyebrow}>{t.stepsTitle}</div>
+            <ol>{t.steps.map((step,i) => <li key={step}><span>{String(i+1).padStart(2,"0")}</span><strong>{step}</strong></li>)}</ol>
+            <p>{t.stepsFoot}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.curiosity} id="discover" aria-label={t.curiosityTitle}>
+        <div className={styles.wrap}>
+          <div className={styles.eyebrow}>{t.curiosity}</div><h2>{t.curiosityTitle}</h2>
+          <div className={styles.spotGrid}>
+            <article className={`${styles.spot} ${styles.spotMystery}`}>
+              <div className={styles.spotCopy}>
+                <div className={styles.eyebrow}>{t.mysteryTitle}</div>
+                <h3>{mystery.title}</h3>
+                <p>{mystery.teaser}</p>
+                <Link href={mysteryHref}>{t.tryMystery} →</Link>
+              </div>
+              <div className={styles.spotImage}>
+                <Image src={mystery.imageSrc} alt={mystery.imageAlt || mystery.title} width={410} height={320} unoptimized />
+              </div>
+            </article>
+            <article className={`${styles.spot} ${styles.spotReading}`}>
+              <div className={styles.spotCopy}>
+                <div className={styles.eyebrow}>{t.readingTitle}</div>
+                <h3>{reading.title}</h3>
+                <p>{reading.author} · {reading.description}</p>
+                {reading.href ? <Link href={reading.href}>{reading.cta || t.discoverReading} →</Link> : <Link href={storiesHref}>{t.discovery} →</Link>}
+              </div>
+              <div className={styles.readingImage}>
+                {reading.cover ? <Image src={reading.cover} alt={reading.imageAlt || reading.title} width={180} height={255} unoptimized /> : <span>{language === "fr" ? "Un livre à partager" : "A book worth sharing"}</span>}
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.entry} id="start">
+        <div className={styles.wrap}>
+          <div className={styles.entryPanel}>
+            <div>
+              <h2>{t.welcome}</h2><p>{t.welcomeText}</p>
+              <details><summary>{t.guideTitle}</summary><p>{t.guideText}</p></details>
+            </div>
+            <a className={`${styles.button} ${styles.green}`} href={appUrl}>{t.welcomeCTA} →</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
