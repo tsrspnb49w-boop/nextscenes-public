@@ -445,8 +445,6 @@ function FeaturedReadingCard({ reading }: { reading: FeaturedReading }) {
 
 
 export default async function HomePage() {
-  const homeFeatures = HOME_FEATURES.fr;
-  const bookOfTheWeek = homeFeatures.bookOfTheWeek;
   const homepageData = await getPublicHomepageData("fr");
   const weeklyMystery = homepageData.weeklyMystery;
   const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
@@ -461,7 +459,7 @@ export default async function HomePage() {
       mystery={weeklyMystery}
       mysteryHref={weeklyMysteryAppHref}
       reading={featuredReading}
-      storiesHref={bookOfTheWeek.href}
+      storiesHref={`${APP_URL.replace(/\/+$/, "")}/storylines`}
     />
   );
 }
