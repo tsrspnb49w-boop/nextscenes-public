@@ -35,11 +35,11 @@ const copy = {
     ],
     anchor: "A question at the heart of the novel",
     anchorQuote: "Is destiny predetermined, or do human choices, acts of courage and failures of conscience give it direction?",
-    highlight1: "From Odah to Lagos",
+    highlight1: "A Rich Historical Setting",
     highlightText1: "A story set against the changing world of early twentieth-century Nigeria.",
-    highlight2: "Across generations",
+    highlight2: "Compelling Characters",
     highlightText2: "The consequences of love, silence and injustice reach beyond a single lifetime.",
-    highlight3: "Memory and hope",
+    highlight3: "A Story That Resonates",
     highlightText3: "Buried truths linger, but the possibility of reconciliation endures.",
     about: "About the Author",
     author: "Goddy Oguzie is a Nigerian writer and cultural thinker whose work explores the meeting point of tradition, justice, memory, and human destiny. His fiction blends historical realism with the spiritual undertones of African storytelling, reimagining the emotional and moral depth of the continent’s past for modern readers.",
@@ -75,11 +75,11 @@ const copy = {
     ],
     anchor: "Une question au cœur du roman",
     anchorQuote: "Le destin est-il tracé d’avance, ou nos choix, nos actes de courage et nos manquements à la conscience lui donnent-ils sa direction ?",
-    highlight1: "D’Odah à Lagos",
+    highlight1: "Un cadre historique riche",
     highlightText1: "Un récit inscrit dans les bouleversements du Nigeria du début du XXe siècle.",
-    highlight2: "D’une génération à l’autre",
+    highlight2: "Des personnages captivants",
     highlightText2: "Les conséquences de l’amour, du silence et de l’injustice dépassent une seule vie.",
-    highlight3: "Mémoire et espoir",
+    highlight3: "Une histoire qui résonne",
     highlightText3: "Des vérités restent enfouies, mais l’espoir d’une réconciliation demeure.",
     about: "À propos de l’auteur",
     author: "Goddy Oguzie est un écrivain et penseur culturel nigérian dont l’œuvre explore la rencontre entre tradition, justice, mémoire et destin humain. Ses récits associent le réalisme historique aux dimensions spirituelles de la tradition orale africaine, offrant aux lecteurs d’aujourd’hui une réflexion sur la profondeur émotionnelle et morale du passé du continent.",
@@ -97,10 +97,12 @@ export default function DidieBookPage({ language }: { language: Language }) {
   return (
     <div className={styles.page} lang={language}>
       <section className={styles.hero} aria-label={t.title}>
-        <div className={styles.heroBackdrop} aria-hidden="true" />
+        <div className={styles.heroLandscapeLeft} aria-hidden="true" />
+        <div className={styles.heroLandscapeRight} aria-hidden="true" />
         <div className={styles.wrap}>
           <div className={styles.heroGrid}>
             <div className={styles.coverFrame}>
+              <span className={styles.bookSpine} aria-hidden="true" />
               <Image priority src={COVER} alt="The Story of Didie — English edition book cover by Goddy Oguzie" width={1024} height={1536} sizes="(max-width: 760px) 60vw, 310px" className={styles.cover} />
             </div>
             <div className={styles.heroText}>
@@ -110,7 +112,7 @@ export default function DidieBookPage({ language }: { language: Language }) {
               <p className={styles.heroQuote}>{t.opening}</p>
               <p className={styles.intro}>{t.intro}</p>
               <div className={styles.actions}>
-                <a className={`${styles.button} ${styles.primary}`} href={DIDIE_AMAZON} target="_blank" rel="noopener noreferrer">{t.amazon} <span aria-hidden="true">↗</span></a>
+                <a className={`${styles.button} ${styles.primary}`} href={DIDIE_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.amazon} <span aria-hidden="true">→</span></a>
                 <a className={`${styles.button} ${styles.secondary}`} href="#the-story">{t.introLink} <span aria-hidden="true">↓</span></a>
               </div>
               <p className={styles.edition}>{t.edition}</p>
@@ -121,9 +123,9 @@ export default function DidieBookPage({ language }: { language: Language }) {
       </section>
       <section className={styles.highlights} aria-label={isFrench ? "Le monde du roman" : "Inside the novel"}>
         <div className={`${styles.wrap} ${styles.highlightGrid}`}>
-          <article><span className={styles.highlightSymbol} aria-hidden="true">✦</span><h2>{t.highlight1}</h2><p>{t.highlightText1}</p></article>
-          <article><span className={styles.highlightSymbol} aria-hidden="true">◇</span><h2>{t.highlight2}</h2><p>{t.highlightText2}</p></article>
-          <article><span className={styles.highlightSymbol} aria-hidden="true">❧</span><h2>{t.highlight3}</h2><p>{t.highlightText3}</p></article>
+          <article><span className={styles.highlightSymbol}><svg viewBox="0 0 32 32" width="27" height="27" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 29V13m0 7c-7-1-11-7-10-15 7 0 13 4 13 12m-3 10c7-1 11-7 10-16-7 0-13 4-13 12"/><path d="M13 14 9 10m10 8 4-4"/></svg></span><h2>{t.highlight1}</h2><p>{t.highlightText1}</p></article>
+          <article><span className={styles.highlightSymbol}><svg viewBox="0 0 32 32" width="27" height="27" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="4"/><circle cx="22" cy="12" r="3.5"/><path d="M3.5 27v-3c0-5 3.2-8 7.5-8s7.5 3 7.5 8v3H3.5Zm15-9c4.4-.4 8 2.5 8 7v2h-5"/></svg></span><h2>{t.highlight2}</h2><p>{t.highlightText2}</p></article>
+          <article><span className={styles.highlightSymbol}><svg viewBox="0 0 32 32" width="27" height="27" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 8c-4-3.6-9-4-13-2v21c4-2 9-1.8 13 1m0-20c4-3.6 9-4 13-2v21c-4-2-9-1.8-13 1V8Z"/><path d="M7 11c3-.6 5.5.2 7 1.4m4 .1c1.5-1.2 4-2 7-1.4"/></svg></span><h2>{t.highlight3}</h2><p>{t.highlightText3}</p></article>
         </div>
       </section>
       <section className={styles.storySection} id="the-story" aria-labelledby="story-title">
@@ -166,7 +168,7 @@ export default function DidieBookPage({ language }: { language: Language }) {
             <h2>{t.lastHeading}</h2><p>{t.lastText}</p>
             {isFrench && <p className={styles.finalEdition}>{t.edition}</p>}
           </div>
-          <a className={`${styles.button} ${styles.primary}`} href={DIDIE_AMAZON} target="_blank" rel="noopener noreferrer">{t.amazon} <span aria-hidden="true">↗</span></a>
+          <a className={`${styles.button} ${styles.primary}`} href={DIDIE_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.amazon} <span aria-hidden="true">→</span></a>
         </div>
         <div className={styles.returnLink}><Link href={isFrench ? "/fr" : "/"}>← {t.returnHome}</Link></div>
       </section>
