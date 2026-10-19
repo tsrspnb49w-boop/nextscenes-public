@@ -4,6 +4,8 @@ import { SITE_URL } from "@/app/seo";
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" },
   { path: "/fr", priority: 1.0, changeFrequency: "weekly" },
+  { path: "/books/didie", priority: 0.85, changeFrequency: "monthly" },
+  { path: "/fr/books/didie", priority: 0.85, changeFrequency: "monthly" },
   { path: "/about", priority: 0.9, changeFrequency: "monthly" },
   { path: "/fr/about", priority: 0.9, changeFrequency: "monthly" },
   { path: "/how-it-works", priority: 0.9, changeFrequency: "monthly" },
