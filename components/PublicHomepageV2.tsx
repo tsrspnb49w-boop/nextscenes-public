@@ -66,7 +66,7 @@ const copy = {
     discovery: "Explore more books",
     welcome: "Ready to explore? You're welcome already.",
     welcomeText: "You can enter the app directly. Guides are here only if you want them.",
-    welcomeCTA: "Enter NextScenes",
+    welcomeCTA: "Enter the Application",
     guideTitle: "Show the 20-second guide",
     guideText: "Discover stories in Reader View. Create a project in Project Hub. Write and organise scenes in Writer Studio. Learn more whenever you wish.",
   },
@@ -102,7 +102,7 @@ const copy = {
     discovery: "Découvrir d’autres livres",
     welcome: "Prêt à découvrir ? Vous êtes déjà le bienvenu.",
     welcomeText: "Entrez directement dans l’application. Les guides sont facultatifs.",
-    welcomeCTA: "Entrer sur NextScenes",
+    welcomeCTA: "Accéder à l’application",
     guideTitle: "Afficher le guide en 20 secondes",
     guideText: "Découvrez les récits en mode lecture. Créez un projet dans le Centre de projets. Écrivez et organisez vos scènes dans Writer Studio. Des explications restent disponibles à tout moment.",
   },
@@ -115,25 +115,58 @@ function isPublished(story: FeaturedStory) {
     label === "published" || label.includes("published on amazon");
 }
 
-function selectFeatured(stories: FeaturedStory[]) {
-  const safe = (Array.isArray(stories) ? stories : []).filter(s => Boolean(s?.cover && s?.title && s?.href));
-  const output: FeaturedStory[] = [];
-  const picks = [/ugo.*magic.*seed/i, /reflections|réflexions|reflexions/i, /butterfly.*woman|femme.papillon/i, /52.*windows|52.*fenêtres|52.*fenetres/i];
+function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedStory[] {
+  // Only the homepage's four display slots are curated; the API-driven featured feed
+  // and its administrative controls remain unchanged.
+  const safe = (Array.isArray(stories) ? stories : []).filter(
+    s => Boolean(s?.cover && s?.title && s?.href) && !/tarl+l?us/i.test(s.title)
+  );
+  const tarlus: FeaturedStory = {
+    id: `trials-of-tarllus-public-${language}`,
+    title: language === "fr" ? "Les Épreuves de Tarllus" : "The Trials of Tarllus",
+    author: "Goddy Oguzie",
+    hook: language === "fr"
+      ? "Le récit du roi Jar Lingo et d’Evel Broda."
+      : "The Tale of King Jar Lingo and Evel Broda.",
+    cta: language === "fr" ? "Voir la publication" : "View publication",
+    href: language === "fr" ? "https://www.amazon.com/dp/B0HB4P9HS1" : "https://www.amazon.com/dp/B0H9NLFKP4",
+    cover: language === "fr"
+      ? "/images/covers/featured-flat/trials-of-tarllus-fr.webp"
+      : "/images/covers/featured-flat/trials-of-tarllus-en.webp",
+    badge: language === "fr" ? "Publié" : "Published",
+    badgeTone: "published-amazon",
+    developmentStatus: "showcaseOnly",
+    publicationStatus: "publishedAmazon",
+    publicationLabel: language === "fr" ? "Publié sur Amazon (édition française)" : "Published on Amazon (English edition)",
+    publicationUrl: language === "fr" ? "https://www.amazon.com/dp/B0HB4P9HS1" : "https://www.amazon.com/dp/B0H9NLFKP4",
+    publicationCta: language === "fr" ? "Voir la publication" : "View publication",
+  };
+
+  const picks = language === "fr"
+    ? [/femme.papillon|butterfly.*woman/i,
+       /52.*fenêtres|52.*fenetres|52.*windows/i,
+       /ugo.*(amie.*awa|friend.*awa|awa)/i]
+    : [/ugo.*magic.*seed/i,
+       /butterfly.*woman/i,
+       /52.*windows/i];
+  const chosen: FeaturedStory[] = [];
   for (const matcher of picks) {
-    const selected = safe.find(s => !output.some(x => x.id === s.id) && matcher.test(s.title));
-    if (selected) output.push(selected);
+    const item = safe.find(s => !chosen.some(x => x.id === s.id) && matcher.test(s.title));
+    if (item) chosen.push(item);
   }
-  for (const candidate of safe) {
-    if (output.length === 4) break;
-    if (!output.some(s => s.id === candidate.id)) output.push(candidate);
+  for (const item of safe) {
+    if (chosen.length >= 3) break;
+    if (!chosen.some(s => s.id === item.id)) chosen.push(item);
   }
-  return output.slice(0, 4);
+  return language === "fr"
+    ? [tarlus, ...chosen].slice(0, 4)
+    : [chosen[0], tarlus, ...chosen.slice(1)].filter(Boolean).slice(0, 4);
 }
 
 export default function PublicHomepageV2({language, stories, mystery, mysteryHref, reading, storiesHref}: Props) {
   const t = copy[language];
-  const featured = selectFeatured(stories);
-  const heroCovers = featured.slice(0, 3);
+  const featured = selectFeatured(stories, language);
+  const heroCovers = language === "fr" ? [featured[1], featured[0], featured[3]].filter(Boolean) : featured.slice(0, 3);
   return (
     <div className={styles.home}>
       <section className={styles.hero} aria-label={t.headline}>
