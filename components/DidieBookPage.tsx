@@ -44,6 +44,7 @@ const copy = {
     highlight3: "A Story That Resonates",
     highlightText3: "Buried truths linger, but the possibility of reconciliation endures.",
     about: "About the Author",
+    moreBooks: "Explore more books by Goddy Oguzie on Amazon",
     author: "Goddy Oguzie is a Nigerian writer and cultural thinker whose work explores the meeting point of tradition, justice, memory, and human destiny. His fiction blends historical realism with the spiritual undertones of African storytelling, reimagining the emotional and moral depth of the continent’s past for modern readers.",
     lastHeading: "Discover The Story of Didie",
     lastText: "A journey through love, memory and the choices that shape our destinies.",
@@ -85,6 +86,7 @@ const copy = {
     highlight3: "Une histoire qui résonne",
     highlightText3: "Des vérités restent enfouies, mais l’espoir d’une réconciliation demeure.",
     about: "À propos de l’auteur",
+    moreBooks: "Découvrir les autres livres de Goddy Oguzie sur Amazon",
     author: "Goddy Oguzie est un écrivain et penseur culturel nigérian dont l’œuvre explore la rencontre entre tradition, justice, mémoire et destin humain. Ses récits associent le réalisme historique aux dimensions spirituelles de la tradition orale africaine, offrant aux lecteurs d’aujourd’hui une réflexion sur la profondeur émotionnelle et morale du passé du continent.",
     lastHeading: "Découvrez The Story of Didie",
     lastText: "Un voyage à travers l’amour, la mémoire et les choix qui façonnent nos destins.",
@@ -163,6 +165,7 @@ export default function DidieBookPage({ language }: { language: Language }) {
             <div className={styles.sectionLabel}>{isFrench ? "LA VOIX DERRIÈRE L’HISTOIRE" : "BEHIND THE STORY"}</div>
             <h2 id="author-title">{t.about}</h2>
             <p>{t.author}</p>
+            <a className={styles.storyLink} style={{ marginTop: 12 }} href="https://www.amazon.com/author/goddyoguzie" target="_blank" rel="noopener noreferrer">{t.moreBooks} <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
