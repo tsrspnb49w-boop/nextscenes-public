@@ -4,7 +4,8 @@ import styles from "./DidieBookPage.module.css";
 
 type Language = "en" | "fr";
 
-const DIDIE_AMAZON = "https://www.amazon.com/dp/B0HKCZF51W";
+const DIDIE_KINDLE_AMAZON = "https://www.amazon.com/dp/B0HP3LZL32";
+const DIDIE_PAPERBACK_AMAZON = "https://www.amazon.com/dp/B0HKCZF51W";
 const COVER = "/images/books/didie/approved-front.webp";
 
 const copy = {
@@ -14,9 +15,10 @@ const copy = {
     title: "The Story of Didie",
     opening: "Love beyond custom. A truth buried in silence. A destiny that still demands an answer.",
     intro: "A sweeping story of forbidden love, injustice and the far-reaching consequences of choices made across generations.",
-    amazon: "Buy on Amazon",
+    kindle: "Buy Kindle Edition",
+    paperback: "Buy Paperback",
     introLink: "Discover the story",
-    edition: "Published in English · Available on Amazon",
+    edition: "Published in English · Kindle and paperback on Amazon (availability varies by country)",
     theStory: "The Story",
     story: [
       "In the heart of early twentieth-century Nigeria, a gifted young villager named Didie finds himself caught between the demands of tradition and a love that defies the boundaries of his world.",
@@ -54,9 +56,10 @@ const copy = {
     title: "The Story of Didie",
     opening: "Un amour au-delà des coutumes. Une vérité enfouie dans le silence. Un destin qui réclame encore une réponse.",
     intro: "Une fresque où se mêlent amour interdit, injustice et conséquences de choix dont l’écho traverse les générations.",
-    amazon: "Acheter l’édition anglaise sur Amazon",
+    kindle: "Kindle (en anglais)",
+    paperback: "Broché (en anglais)",
     introLink: "Découvrir l’histoire",
-    edition: "Roman publié en anglais uniquement · Aucune traduction française disponible pour le moment",
+    edition: "Disponible en anglais sur Amazon aux formats Kindle et broché · Aucune traduction française disponible pour le moment",
     theStory: "L’histoire",
     story: [
       "Au cœur du Nigeria du début du XXe siècle, Didie, un jeune villageois doué, se trouve déchiré entre les exigences de la tradition et un amour qui défie les frontières de son monde.",
@@ -112,9 +115,10 @@ export default function DidieBookPage({ language }: { language: Language }) {
               <p className={styles.heroQuote}>{t.opening}</p>
               <p className={styles.intro}>{t.intro}</p>
               <div className={styles.actions}>
-                <a className={`${styles.button} ${styles.primary}`} href={DIDIE_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.amazon} <span aria-hidden="true">→</span></a>
-                <a className={`${styles.button} ${styles.secondary}`} href="#the-story">{t.introLink} <span aria-hidden="true">↓</span></a>
+                <a className={`${styles.button} ${styles.primary}`} href={DIDIE_KINDLE_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.kindle} <span aria-hidden="true">→</span></a>
+                <a className={`${styles.button} ${styles.secondary}`} href={DIDIE_PAPERBACK_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.paperback} <span aria-hidden="true">→</span></a>
               </div>
+              <a className={styles.storyLink} href="#the-story">{t.introLink} <span aria-hidden="true">↓</span></a>
               <p className={styles.edition}>{t.edition}</p>
               <Link className={styles.languageSwitch} href={alternate}>{t.languageNote} <span aria-hidden="true">↗</span></Link>
             </div>
@@ -168,7 +172,10 @@ export default function DidieBookPage({ language }: { language: Language }) {
             <h2>{t.lastHeading}</h2><p>{t.lastText}</p>
             {isFrench && <p className={styles.finalEdition}>{t.edition}</p>}
           </div>
-          <a className={`${styles.button} ${styles.primary}`} href={DIDIE_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.amazon} <span aria-hidden="true">→</span></a>
+          <div className={styles.actions}>
+            <a className={`${styles.button} ${styles.primary}`} href={DIDIE_KINDLE_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.kindle} <span aria-hidden="true">→</span></a>
+            <a className={`${styles.button} ${styles.secondary}`} href={DIDIE_PAPERBACK_AMAZON} target="_blank" rel="noopener noreferrer"><span className={styles.amazonMark} aria-hidden="true">a</span>{t.paperback} <span aria-hidden="true">→</span></a>
+          </div>
         </div>
         <div className={styles.returnLink}><Link href={isFrench ? "/fr" : "/"}>← {t.returnHome}</Link></div>
       </section>

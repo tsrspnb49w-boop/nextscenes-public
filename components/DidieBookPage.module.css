@@ -83,7 +83,24 @@
   color: #3c4035;
 }
 .intro { max-width: 605px; font-size:1rem; line-height:1.76; color: #425b56; margin:0; }
-.actions { margin: 26px 0 12px; display:flex; gap: 12px; flex-wrap:wrap; }
+.actions {
+  margin: 26px 0 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 490px;
+}
+.actions .button { min-width: 0; padding: 14px 14px; gap: 6px; font-size: 13px; }
+.storyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #0c6241;
+  font: 700 13px/1.5 Arial, Helvetica, sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.storyLink:focus-visible { outline: 3px solid #307e5d; outline-offset: 3px; }
 .button {
   display:inline-flex; align-items:center; justify-content:center; gap:9px;
   border-radius:30px; text-decoration:none;
@@ -135,6 +152,7 @@
 .authorSection p {max-width:930px;margin:0;}
 .finalSection {padding:39px 0 20px;background:#f4eee0;border-top:1px solid #e3d8bf;}
 .finalInner {display:flex;align-items:center;justify-content:space-between;gap:25px;}
+.finalInner .actions { flex: 0 1 490px; margin: 0; }
 .finalSection h2 {font-size:2.02rem;margin:0 0 8px;}
 .finalSection p {font-size:.97rem;color:#506158;margin:0;line-height:1.55;}
 .finalSection .finalEdition {font-size:.8rem;margin-top:9px;color:#82613a;}
@@ -151,6 +169,7 @@
  .highlightGrid article + article{padding-left:18px;}
  .highlightSymbol,.highlightGrid article + article .highlightSymbol{position:static;margin-bottom:12px;}
  .themesGrid{grid-template-columns:minmax(0,1fr);gap:24px;}
+ .finalInner{flex-wrap:wrap;}
  .pullQuote{position:static;margin:6px 0 0;}
 }
 @media (max-width: 650px) {
@@ -166,7 +185,7 @@
  .eyebrow{letter-spacing:.12em;}
  .genre{margin-top:8px;}
  .intro{font-size:.94rem;}
- .actions{gap:9px;margin-top:20px;}
+ .actions{grid-template-columns:1fr;max-width:330px;gap:9px;margin-top:20px;}
  .button{padding:12px 17px;font-size:13px;}
  .highlightGrid{grid-template-columns:1fr;gap:18px;padding:24px 0;}
  .highlightGrid article{padding-left:45px;}
