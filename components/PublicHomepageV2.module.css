@@ -124,3 +124,14 @@
   .didieEdition{font-size:11px}
   .didieAction{grid-column:1/-1;justify-self:start;padding:12px 18px;font-size:13px}
 }
+
+/* NEXTSCENES_FIRST_IMPRESSIONS_V1D — Homepage entry only; current book and mystery CSS retained. */
+.journeyCompact{padding:32px 0;background:#eef7f2;border-top:1px solid #dfeae2;border-bottom:1px solid #dfeae2}
+.journeyCompactRow{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.journeyCompact h2{font-family:Georgia,serif;font-size:clamp(22px,2.6vw,31px);color:#103f30;margin:8px 0 7px;line-height:1.25}
+.journeyCompact p{font-size:14px;color:#456859;margin:0}
+.community{padding:36px 0;background:#fffef9}
+.communityPanel{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:25px 28px;border:1px solid #cde5d5;border-radius:22px;background:linear-gradient(110deg,#f0fbf4,#fffaf0)}
+.communityPanel h2{font-family:Georgia,serif;color:#0c4934;font-size:clamp(24px,2.5vw,33px);margin:8px 0}
+.communityPanel p{font-size:15px;color:#47675b;margin:0;line-height:1.5}
+@media(max-width:720px){.journeyCompactRow,.communityPanel{flex-direction:column;align-items:flex-start}.communityPanel{padding:20px}.heroActions{gap:8px}.heroActions .button{padding:11px 14px}}

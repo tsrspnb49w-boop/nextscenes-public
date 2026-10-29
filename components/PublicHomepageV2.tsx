@@ -35,11 +35,17 @@ type Props = {
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 const copy = {
   en: {
-    eyebrow: "READ · WRITE · DISCOVER",
+    eyebrow: "READ · WRITE · COLLABORATE",
     headline: "Read a story. Create your own.",
-    lede: "Discover books, follow stories as they grow, or begin something entirely your own.",
-    read: "Explore stories",
-    write: "Start writing",
+    lede: "Read, write and create together.",
+    read: "Read",
+    write: "Write",
+    collaborate: "Collaborate",
+    communityKicker: "COMMUNITY · ON NEXTSCENES",
+    communityTitle: "Join the conversation.",
+    communityDescription: "Discuss stories and share thoughtful feedback on NextScenes itself.",
+    communityAction: "Community Discussions",
+    learnMore: "Help when you need it",
     confidence: "Free core participation · No tour required · Explore at your own pace",
     covers: "Stories in progress & published books",
     booksEyebrow: "OPEN A STORY",
@@ -76,11 +82,17 @@ const copy = {
     guideText: "Discover stories in Reader View. Create a project in Project Hub. Write and organise scenes in Writer Studio. Learn more whenever you wish.",
   },
   fr: {
-    eyebrow: "LIRE · ÉCRIRE · DÉCOUVRIR",
+    eyebrow: "LIRE · ÉCRIRE · COLLABORER",
     headline: "Lisez une histoire. Créez la vôtre.",
-    lede: "Découvrez des livres, suivez des récits qui prennent forme ou commencez votre propre aventure.",
-    read: "Explorer les histoires",
-    write: "Commencer à écrire",
+    lede: "Lisez, écrivez et créez ensemble.",
+    read: "Lire",
+    write: "Écrire",
+    collaborate: "Collaborer",
+    communityKicker: "COMMUNAUTÉ · SUR NEXTSCENES",
+    communityTitle: "Rejoignez la conversation.",
+    communityDescription: "Discutez des récits et partagez vos impressions sur NextScenes.",
+    communityAction: "Discussions de la communauté",
+    learnMore: "Aide quand vous en avez besoin",
     confidence: "Participation de base gratuite · Aucun parcours imposé · Explorez à votre rythme",
     covers: "Récits en cours et livres publiés",
     booksEyebrow: "OUVRIR UNE HISTOIRE",
@@ -187,9 +199,9 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.heroLede}>{t.lede}</p>
             <div className={styles.heroActions}>
               <Link className={`${styles.button} ${styles.gold}`} href={storiesHref}>{t.read} →</Link>
-              <a className={`${styles.button} ${styles.outline}`} href={appUrl}>{t.write} →</a>
+              <a className={`${styles.button} ${styles.green}`} href={appUrl}>{t.write} →</a>
+              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/storylines`}>{t.collaborate} →</a>
             </div>
-            <p className={styles.confidence}>✓ {t.confidence}</p>
           </div>
           <div className={styles.artStage} aria-label={t.covers}>
             {heroCovers.map((story, i) => (
@@ -248,19 +260,28 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
         </div>
       </section>
 
-      <section className={styles.journey} id="for-writers" aria-label={t.journeyTitle}>
-        <div className={`${styles.wrap} ${styles.journeyGrid}`}>
-          <div className={styles.journeyCopy}>
-            <div className={styles.eyebrow}>{t.journeyKicker}</div>
-            <h2>{t.journeyTitle}</h2>
-            <p className={styles.journeyLine}>{t.journeyLine}</p>
-            <p>{t.journeyParagraph}</p>
-            <strong>{t.journeyClosing}</strong>
+      <section className={styles.journeyCompact} id="for-writers" aria-label={t.journeyTitle}>
+        <div className={styles.wrap}>
+          <div className={styles.journeyCompactRow}>
+            <div>
+              <div className={styles.eyebrow}>{t.journeyKicker}</div>
+              <h2>{t.journeyTitle}</h2>
+              <p>{t.journeyLine}</p>
+            </div>
+            <Link className={`${styles.button} ${styles.outline}`} href={language === "fr" ? "/fr/help" : "/help"}>{t.learnMore} →</Link>
           </div>
-          <div className={styles.stepsCard}>
-            <div className={styles.eyebrow}>{t.stepsTitle}</div>
-            <ol>{t.steps.map((step,i) => <li key={step}><span>{String(i+1).padStart(2,"0")}</span><strong>{step}</strong></li>)}</ol>
-            <p>{t.stepsFoot}</p>
+        </div>
+      </section>
+
+      <section className={styles.community} id="community" aria-label={t.communityTitle}>
+        <div className={styles.wrap}>
+          <div className={styles.communityPanel}>
+            <div>
+              <div className={styles.eyebrow}>{t.communityKicker}</div>
+              <h2>{t.communityTitle}</h2>
+              <p>{t.communityDescription}</p>
+            </div>
+            <a className={`${styles.button} ${styles.green}`} href={`${appUrl}/?community=1#live-feedback-section`}>{t.communityAction} →</a>
           </div>
         </div>
       </section>
