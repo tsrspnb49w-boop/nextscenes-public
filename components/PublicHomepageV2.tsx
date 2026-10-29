@@ -281,7 +281,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               <h2>{t.communityTitle}</h2>
               <p>{t.communityDescription}</p>
             </div>
-            <a className={`${styles.button} ${styles.green}`} href={`${appUrl}/#live-feedback-section`}>{t.communityAction} →</a>
+            <a className={`${styles.button} ${styles.green}`} href={`${appUrl}/?community=1#live-feedback-section`}>{t.communityAction} →</a>
           </div>
         </div>
       </section>
