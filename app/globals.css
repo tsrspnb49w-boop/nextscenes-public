@@ -7524,8 +7524,8 @@ div.ns-book-badge {
     justify-self: center !important;
   }
 
-  .ns-links > a[href="/how-it-works"],
-  .ns-links > a[href="/fr/how-it-works"] {
+  .ns-links > a[href="/help"],
+  .ns-links > a[href="/fr/help"] {
     grid-row: 2 !important;
     grid-column: 3 !important;
     justify-self: center !important;
@@ -7765,8 +7765,8 @@ div.ns-book-badge {
     justify-self: center !important;
   }
 
-  .ns-links > a[href="/how-it-works"],
-  .ns-links > a[href="/fr/how-it-works"] {
+  .ns-links > a[href="/help"],
+  .ns-links > a[href="/fr/help"] {
     grid-row: 2 !important;
     grid-column: 2 !important;
     justify-self: center !important;

@@ -33,6 +33,7 @@ const ROUTE_PAIRS: Array<[string, string]> = [
   ["/enter", "/fr/enter"],
   ["/faq", "/fr/faq"],
   ["/how-it-works", "/fr/how-it-works"],
+  ["/help", "/fr/help"],
   ["/mystery250", "/fr/mystery250"],
   ["/partners", "/fr/partners"],
   ["/privacy", "/fr/privacy"],
@@ -136,7 +137,7 @@ export default function SiteNav() {
   const PRIMARY = useMemo(
     () => [
       { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
-      { href: "/how-it-works", frHref: "/how-it-works", en: "How it works", fr: "Comment ça marche" },
+      { href: "/help", frHref: "/help", en: "Help", fr: "Aide" },
       { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
     ],
