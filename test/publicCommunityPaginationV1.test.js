@@ -69,3 +69,13 @@ test("public server proxy never mixes staging and production API origins",()=>{
  assert.ok(api.includes('permittedUpstream(request.nextUrl.hostname,origin)'));
  assert.ok(!api.includes('if(!/^https:'));
 });
+
+test("isolated discussion-review website permits only its own review API",()=>{
+ const publicName="nextscenes-review-public-discussion.onrender.com";
+ const apiName="nextscenes-review-api-discussion.onrender.com";
+ assert.ok(ui.includes('page==="'+publicName+'"'));
+ assert.ok(ui.includes('target==="'+apiName+'"'));
+ assert.ok(api.includes('host==="'+publicName+'"'));
+ assert.ok(api.includes('api.origin==="https://'+apiName+'"'));
+ assert.ok(api.includes('return false;'));
+});
