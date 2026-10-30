@@ -136,7 +136,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      </>}
      <div className={styles.entryActions}>
       <a href={safeStoryHref(appUrl,item)}>{t.open} →</a>
-      <a href={safeStoryHref(appUrl,item)}>{t.discuss} →</a>
+      <a href={safeStoryHref(appUrl,item).includes("?storyId=") ? `${safeStoryHref(appUrl,item)}&tab=participate` : safeStoryHref(appUrl,item)}>{t.discuss} →</a>
      </div>
    </article>)}
   </div>
