@@ -87,17 +87,14 @@ test("Live Feedback has an actual bounded scrolling viewport even with a short p
 test("member composer uses the staging login and API on staging and keeps production API unchanged",()=>{
  assert.ok(ui.includes('window.location.hostname==="nextscenes-public-staging.onrender.com"'));
  assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase'));
- assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-frontend.onrender.com/login":appUrl+"/login"'));
  assert.ok(ui.includes('window.addEventListener("focus",recheck)'));
  assert.ok(ui.includes('document.addEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
  assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
- assert.ok(ui.includes('Read-only access. Only authorised writers can post and reply.'));
  assert.ok(ui.includes('item.storyId&&<button'));
  assert.ok(ui.includes('memberStatus==="reader"&&<p'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
- assert.ok(ui.includes('href={memberSignInUrl}'));
  assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('credentials:"include"'));
 });
@@ -122,7 +119,6 @@ test("both developing stories have Explore links that respect private reading pe
  assert.ok(developing.includes('key==="windows"?"52":key==="sin"?"S.I.N.":""'));
  assert.ok(developing.includes('https://nextscenes-staging-frontend.onrender.com'));
  assert.ok(developing.includes('item?.public && /^\\/reader-view'));
- assert.ok(developing.includes('Public preview unavailable. Explore in the app.'));
  assert.ok(!developing.includes(': <p className={styles.availability}'));
 });
 
@@ -137,4 +133,18 @@ test("only verified writers see public feedback posting controls",()=>{
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('You cannot reply to your own post.'));
  assert.ok(ui.includes('Writer access is required to participate.'));
+});
+
+test("Live Feedback and developing-story cards contain no redundant instructional paragraphs",()=>{
+ for(const copy of [
+   "Sign in with a writer account to comment or reply.",
+   "Visitors can read. Sign in as a writer to participate.",
+   "Read-only access. Only authorised writers can post and reply.",
+   "Direct replies are unavailable in this session.",
+   "To reply, open the story and sign in if required."
+ ])assert.ok(!ui.includes(copy),copy);
+ assert.ok(!developing.includes("Public preview unavailable. Explore in the app."));
+ assert.ok(!developing.includes("Aperçu public non disponible. Explorer dans l’application."));
+ assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
+ assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
 });
