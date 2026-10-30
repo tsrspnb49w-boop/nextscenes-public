@@ -83,7 +83,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  };
  return <section className={styles.livePanel} aria-label={t.title}>
   <header className={styles.liveHead}>
-   <div><h3>{t.title}</h3><p>{t.sub}</p></div>
+   <div><h3>{t.title}</h3></div>
    <div className={styles.liveActions}>
     {updated?<small aria-live="polite">{t.updated}: {formatDate(updated,language)}</small>:null}
     <button type="button" onClick={()=>{setLoading(true);void refresh()}}>{t.refresh}</button>
