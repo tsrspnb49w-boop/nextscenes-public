@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { FeaturedStory } from "@/app/lib/featuredStories";
+import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import styles from "./PublicHomepageV2.module.css";
 
 type Language = "en" | "fr";
@@ -42,6 +42,20 @@ const copy = {
     write: "Start writing",
     confidence: "Free core participation · No tour required · Explore at your own pace",
     covers: "Stories in progress & published books",
+    communityEyebrow: "COMMUNITY CONVERSATIONS",
+    communityTitle: "Stories come alive in conversation.",
+    communityLead: "Explore public stories and join thoughtful conversations. Private drafts and Beta Feedback are never published here.",
+    joinCommunity: "Explore public storylines",
+    discuss: "Open public story",
+    motionEyebrow: "STORIES IN MOTION",
+    motionTitle: "Follow stories as they grow.",
+    motionLead: "Featured public storylines, not a ranking of private activity.",
+    spotlightEyebrow: "HOME SPOTLIGHT",
+    spotlightTitle: "Words and writers worth remembering.",
+    authorMonth: "Writer Spotlight",
+    bookMonth: "Book Spotlight",
+    wordsTitle: "Daily Words",
+    helpCta: "New here? Get help when you need it",
     booksEyebrow: "OPEN A STORY",
     booksTitle: "Discover something worth reading.",
     browse: "Browse all stories",
@@ -83,6 +97,20 @@ const copy = {
     write: "Commencer à écrire",
     confidence: "Participation de base gratuite · Aucun parcours imposé · Explorez à votre rythme",
     covers: "Récits en cours et livres publiés",
+    communityEyebrow: "DISCUSSIONS DE LA COMMUNAUTÉ",
+    communityTitle: "Les histoires vivent dans les échanges.",
+    communityLead: "Découvrez les récits publics et participez aux discussions. Les brouillons privés et les retours bêta ne sont jamais diffusés ici.",
+    joinCommunity: "Explorer les histoires publiques",
+    discuss: "Ouvrir ce récit public",
+    motionEyebrow: "RÉCITS EN MOUVEMENT",
+    motionTitle: "Suivez les récits en évolution.",
+    motionLead: "Une sélection de récits publics, pas un classement des activités privées.",
+    spotlightEyebrow: "À LA UNE",
+    spotlightTitle: "Des mots et des auteurs à redécouvrir.",
+    authorMonth: "Portrait d'auteur",
+    bookMonth: "Un livre à découvrir",
+    wordsTitle: "Pensée du jour",
+    helpCta: "Besoin d'aide ? Consultez nos guides",
     booksEyebrow: "OUVRIR UNE HISTOIRE",
     booksTitle: "Découvrez des histoires qui valent la lecture.",
     browse: "Explorer toutes les histoires",
@@ -126,57 +154,65 @@ function isPublished(story: FeaturedStory) {
 }
 
 function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedStory[] {
-  // Only the homepage's four display slots are curated; the API-driven featured feed
-  // and its administrative controls remain unchanged.
-  const safe = (Array.isArray(stories) ? stories : []).filter(
-    s => Boolean(s?.cover && s?.title && s?.href) && !/tarl+l?us/i.test(s.title)
-  );
-  const tarlus: FeaturedStory = {
-    id: `trials-of-tarllus-public-${language}`,
-    title: language === "fr" ? "Les Épreuves de Tarllus" : "The Trials of Tarllus",
-    author: "Goddy Oguzie",
-    hook: language === "fr"
-      ? "Le récit du roi Jar Lingo et d’Evel Broda."
-      : "The Tale of King Jar Lingo and Evel Broda.",
-    cta: language === "fr" ? "Voir la publication" : "View publication",
-    href: language === "fr" ? "https://www.amazon.com/dp/B0HB4P9HS1" : "https://www.amazon.com/dp/B0H9NLFKP4",
-    cover: language === "fr"
-      ? "/images/covers/featured-flat/trials-of-tarllus-fr.webp"
-      : "/images/covers/featured-flat/trials-of-tarllus-en.webp",
-    badge: language === "fr" ? "Publié" : "Published",
-    badgeTone: "published-amazon",
-    developmentStatus: "showcaseOnly",
-    publicationStatus: "publishedAmazon",
-    publicationLabel: language === "fr" ? "Publié sur Amazon (édition française)" : "Published on Amazon (English edition)",
-    publicationUrl: language === "fr" ? "https://www.amazon.com/dp/B0HB4P9HS1" : "https://www.amazon.com/dp/B0H9NLFKP4",
-    publicationCta: language === "fr" ? "Voir la publication" : "View publication",
+  const available = (Array.isArray(stories) ? stories : []).filter(s => Boolean(s?.title && s?.cover && s?.href));
+  const fallback = language === "fr" ? FEATURED_STORIES_FR : FEATURED_STORIES;
+  const find = (pattern: RegExp) => available.find(s => pattern.test(s.title)) || fallback.find(s => pattern.test(s.title));
+  const ugo = find(/ugo.*magic.*seed/i);
+  const reflections = find(/reflections.*wayfarer|réflexions.*voyageur/i);
+  const ugoCard: FeaturedStory = ugo || {
+    id: "ugo-magic-seed-public-entry",
+    title: "Ugo and the Magic Seed",
+    author: "Trone",
+    hook: language === "fr" ? "Une jeune fille découvre une graine mystérieuse." : "A magical seed, a young girl and a lesson in kindness.",
+    cta: "Open story", href: appUrl + "/storylines",
+    cover: "/images/default-covers/storyline-en.webp",
+    badge: "In development", badgeTone: "featured", publicationStatus: "notPublished",
   };
-
-  const picks = language === "fr"
-    ? [/femme.papillon|butterfly.*woman/i,
-       /52.*fenêtres|52.*fenetres|52.*windows/i,
-       /ugo.*(amie.*awa|friend.*awa|awa)/i]
-    : [/ugo.*magic.*seed/i,
-       /butterfly.*woman/i,
-       /52.*windows/i];
-  const chosen: FeaturedStory[] = [];
-  for (const matcher of picks) {
-    const item = safe.find(s => !chosen.some(x => x.id === s.id) && matcher.test(s.title));
-    if (item) chosen.push(item);
-  }
-  for (const item of safe) {
-    if (chosen.length >= 3) break;
-    if (!chosen.some(s => s.id === item.id)) chosen.push(item);
-  }
-  return language === "fr"
-    ? [tarlus, ...chosen].slice(0, 4)
-    : [chosen[0], tarlus, ...chosen.slice(1)].filter(Boolean).slice(0, 4);
+  // The original Shadows artwork must be installed from the approved V1C file
+  // before production approval. A neutral legacy cover is used only in review.
+  const shadows: FeaturedStory = {
+    id: "shadows-harbour-v1c-review",
+    title: "Shadows of the Harbour",
+    author: "Ugochukwu Ezeji",
+    hook: language === "fr" ? "Une enquête sur un réseau de stupéfiants." : "A drugs bust investigation.",
+    cta: "Find story", href: appUrl + "/storylines",
+    cover: "/images/default-covers/storyline-en.webp",
+    badge: "On NextScenes", badgeTone: "featured", publicationStatus: "notPublished",
+  };
+  const reflectionsCard: FeaturedStory = {
+    ...(reflections || {
+      id: "reflections-wayfarer-public", title: "Reflections of the Wayfarer",
+      author: "Goddy Oguzie", hook: "Reflections on choices, character and the lessons life teaches.",
+      cta: "Open story", href: appUrl + "/storylines",
+      cover: "/images/covers/featured-flat/reflections-wayfarer.webp",
+      badge: "Published", badgeTone: "published-amazon",
+    }),
+    publicationStatus: "publishedAmazon",
+    publicationUrl: undefined,
+  };
+  const didie: FeaturedStory = {
+    id: "the-story-of-didie-published",
+    title: "The Story of Didie",
+    author: "Goddy Oguzie",
+    hook: language === "fr" ? "Amour, tradition et justice au Nigeria du début du XXe siècle." : "Love, tradition and justice across generations in early twentieth-century Nigeria.",
+    cta: "Discover Didie",
+    href: language === "fr" ? "/fr/books/didie" : "/books/didie",
+    cover: "/images/books/didie/approved-front.webp",
+    badge: "Published", badgeTone: "published-amazon",
+    publicationStatus: "publishedAmazon",
+  };
+  return [ugoCard, shadows, reflectionsCard, didie];
 }
+
 
 export default function PublicHomepageV2({language, stories, mystery, mysteryHref, reading, storiesHref}: Props) {
   const t = copy[language];
   const featured = selectFeatured(stories, language);
-  const heroCovers = language === "fr" ? [featured[1], featured[0], featured[3]].filter(Boolean) : featured.slice(0, 3);
+  const heroCovers = [
+    { ...featured[0], title: "The Kingdom Beneath the Baobab", cover: "/images/default-covers/storyline-en.webp" },
+    { ...featured[1], title: "The Trials of Tarllus", cover: language === "fr" ? "/images/covers/featured-flat/trials-of-tarllus-fr.webp" : "/images/covers/featured-flat/trials-of-tarllus-en.webp" },
+    featured[1]
+  ]; // Review placeholders for the two user-approved original hero covers.
   return (
     <div className={styles.home}>
       <section className={styles.hero} aria-label={t.headline}>
@@ -187,9 +223,10 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.heroLede}>{t.lede}</p>
             <div className={styles.heroActions}>
               <Link className={`${styles.button} ${styles.gold}`} href={storiesHref}>{t.read} →</Link>
-              <a className={`${styles.button} ${styles.outline}`} href={appUrl}>{t.write} →</a>
+              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/?lang=${language}`}>{t.write} →</a>
             </div>
             <p className={styles.confidence}>✓ {t.confidence}</p>
+            <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
           </div>
           <div className={styles.artStage} aria-label={t.covers}>
             {heroCovers.map((story, i) => (
@@ -245,6 +282,66 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               {t.didieCta} →
             </Link>
           </aside>
+        </div>
+      </section>
+
+      <section className={styles.community} id="community" aria-label={t.communityTitle}>
+        <div className={styles.wrap}>
+          <div className={styles.eyebrow}>{t.communityEyebrow}</div>
+          <h2>{t.communityTitle}</h2>
+          <p className={styles.communityLead}>{t.communityLead}</p>
+          <div className={styles.activityGrid}>
+            {featured.filter(story => story.href.startsWith("http")).slice(0,3).map((story) => (
+              <article className={styles.activityCard} key={story.id}>
+                <span className={styles.activityLabel}>{language === "fr" ? "RÉCIT PUBLIC" : "PUBLIC STORYLINE"}</span>
+                <h3>{story.title}</h3>
+                <p>{story.hook}</p>
+                <Link className={styles.textLink} href={story.href}>{t.discuss} →</Link>
+              </article>
+            ))}
+          </div>
+          <Link className={styles.textLink} href={storiesHref}>{t.joinCommunity} →</Link>
+        </div>
+      </section>
+
+      <section className={styles.motion} id="stories-in-motion" aria-label={t.motionTitle}>
+        <div className={styles.wrap}>
+          <div className={styles.eyebrow}>{t.motionEyebrow}</div>
+          <h2>{t.motionTitle}</h2>
+          <p>{t.motionLead}</p>
+          <div className={styles.motionGrid}>
+            {stories.filter(item => item?.title && item?.href && item?.cover && !/didie/i.test(item.title)).slice(0,3).map((story) => (
+              <article className={styles.motionCard} key={story.id}>
+                <Image src={story.cover} alt={story.title + " cover"} width={75} height={110} unoptimized />
+                <div><h3>{story.title}</h3><p>{story.author}</p><Link className={styles.textLink} href={story.href}>{t.discuss} →</Link></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.spotlight} id="spotlight">
+        <div className={styles.wrap}>
+          <div className={styles.eyebrow}>{t.spotlightEyebrow}</div>
+          <h2>{t.spotlightTitle}</h2>
+          <div className={styles.spotlightGrid}>
+            <article className={styles.spotlightCard}>
+              <div className={styles.eyebrow}>{t.authorMonth}</div>
+              <h3>Mariama Bâ</h3>
+              <p>{language === "fr" ? "Une voix sénégalaise qui explore la dignité, la famille et la place des femmes." : "A Senegalese writer whose work examines dignity, family and women's lives."}</p>
+            </article>
+            <article className={styles.spotlightCard}>
+              <div className={styles.eyebrow}>{t.bookMonth}</div>
+              <h3>{language === "fr" ? "Une si longue lettre" : "So Long a Letter"}</h3>
+              <p>{language === "fr" ? "Un roman épistolaire sur l'amitié, le mariage et le choix." : "A novel told through a letter about friendship, marriage and choice."}</p>
+            </article>
+            <article className={styles.spotlightCard}>
+              <div className={styles.eyebrow}>{t.wordsTitle}</div>
+              <h3>{language === "fr" ? "Pensée à méditer" : "A thought worth keeping"}</h3>
+              <p>{language === "fr" ? "La dignité se protège par la vérité, le courage et la justice." : "Dignity is protected through truth, courage and justice."}</p>
+              <small>NextScenes</small>
+            </article>
+          </div>
         </div>
       </section>
 
