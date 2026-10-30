@@ -222,7 +222,6 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   showing:isFR?"Affichage":"Showing",
   of:isFR?"sur":"of",
   updated:isFR?"Actualisé":"Updated",
-  signIn:isFR?"Pour répondre, ouvrez l'histoire et connectez-vous si nécessaire.":"To reply, open the story and sign in if required.",
  };
  return <section className={styles.livePanel} aria-label={t.title}>
   <header className={styles.liveHead}>
@@ -270,16 +269,9 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      </button>
     </form>
    </>}
-   {memberStatus==="guest"&&<p className={styles.bottomNote}>
-    {isFR?"Connectez-vous avec un compte auteur pour commenter ou répondre.":"Sign in with a writer account to comment or reply."}{" "}
-    <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
-   </p>}
-   {memberStatus==="reader"&&<p className={styles.bottomNote}>
-    {isFR?"Lecture seule. Seuls les auteurs autorisés peuvent participer.":"Read-only access. Only authorised writers can post and reply."}
-   </p>}
-   {memberStatus==="unavailable"&&<p className={styles.bottomNote}>
-    {isFR?"Les réponses directes ne sont pas disponibles dans cette session. Ouvrez une histoire dans l’application pour participer.":"Direct replies are unavailable in this session. Open a story in the app to participate."}
-   </p>}
+
+
+
    {postError&&<p role="alert" className={styles.error}>{postError}</p>}
    {postSuccess&&<p role="status" className={styles.success}>{postSuccess}</p>}
   </div>
@@ -348,6 +340,6 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   {nextBefore&&<button className={styles.more} type="button" disabled={loadingOlder}
    onClick={()=>void loadOlder()}>{loadingOlder?t.loadingMore:t.more}</button>}
   {olderError&&<p role="alert" className={styles.bottomNote}>{t.olderError}</p>}
-  {memberStatus==="guest"&&<p className={styles.bottomNote}>{isFR?"Les visiteurs peuvent lire. Connectez-vous en tant qu’auteur pour participer.":"Visitors can read. Sign in as a writer to participate."}</p>}
+
  </section>;
 }
