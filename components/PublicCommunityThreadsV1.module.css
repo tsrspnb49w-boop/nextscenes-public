@@ -9,7 +9,7 @@
 .field{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#3d6552;font-weight:750}
 .field select,.field input{border:1px solid #c9ddd2;border-radius:11px;background:#fff;color:#163f2e;min-height:44px;padding:10px 12px;width:100%;font-size:14px}
 .count{font-size:12px;color:#637469;margin:15px 1px 9px}
-.feed{max-height:min(650px,65vh);overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:12px;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8bbda4 #e5f1e8;scroll-behavior:smooth;scroll-padding-block:12px;-webkit-overflow-scrolling:touch}
+.feed{height:min(440px,55vh);min-height:260px;max-height:min(650px,65vh);overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain;display:flex;flex-direction:column;gap:12px;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8bbda4 #e5f1e8;scroll-behavior:smooth;scroll-padding-block:12px;-webkit-overflow-scrolling:touch}
 .feed::-webkit-scrollbar{width:10px}
 .feed::-webkit-scrollbar-track{background:#e5f1e8;border-radius:9px}
 .feed::-webkit-scrollbar-thumb{background:#8bbda4;border:2px solid #e5f1e8;border-radius:9px}
