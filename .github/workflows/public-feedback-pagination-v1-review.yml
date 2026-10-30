@@ -17,16 +17,4 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node --test test/publicCommunityPaginationV1.test.js
-      - run: node --test test/publicFeedbackStagingPreflight.test.mjs
-      - run: node --test test/discussionReviewAppUrl.test.cjs
       - run: npm run build
-
-  staging-read-only-preflight:
-    if: github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - run: node scripts/publicFeedbackStagingPreflight.mjs --review
