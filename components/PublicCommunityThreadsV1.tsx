@@ -286,11 +286,16 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      <div className={styles.entryActions}>
       <a href={safeStoryHref(appUrl,item)}>{t.open} →</a>
       <a href={safeStoryHref(appUrl,item).includes("?storyId=") ? `${safeStoryHref(appUrl,item)}&tab=participate` : safeStoryHref(appUrl,item)}>{t.discuss} →</a>
-      {memberStatus==="member"&&item.storyId&&<button type="button" className={styles.replyAction}
+      {item.storyId&&<button type="button" className={styles.replyAction}
        onClick={()=>{setReplyTo(replyTo===item.id?"":item.id);setReplyText("");}}>
        {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre ici":"Reply here")}
       </button>}
      </div>
+     {memberStatus!=="member"&&replyTo===item.id&&item.storyId&&
+      <p className={styles.bottomNote}>
+       {isFR?"Connectez-vous à NextScenes pour répondre à ce commentaire.":"Sign in to NextScenes to reply to this comment."}{" "}
+       <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
+      </p>}
      {memberStatus==="member"&&replyTo===item.id&&item.storyId&&
       <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id)}}>
        <label className={styles.field}><span>{isFR?"Votre réponse":"Your reply"}</span>
