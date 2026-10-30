@@ -29,6 +29,7 @@ function trustedFeedbackApi(base:string){
     const page=window.location.hostname.toLowerCase();
     const target=api.hostname.toLowerCase();
     if(page==="nextscenes-public-staging.onrender.com")return target==="nextscenes-staging-backend.onrender.com";
+    if(page==="public.staging.nextscenes.org")return target==="api.staging.nextscenes.org";
     if(page==="nextscenes.org"||page==="www.nextscenes.org")return target==="api.nextscenes.org";
     if(page==="localhost"||page==="127.0.0.1")return target==="localhost"||target==="127.0.0.1";
     return false;
@@ -48,9 +49,14 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [postSuccess,setPostSuccess]=useState("");
  const [memberStatus,setMemberStatus]=useState<"checking"|"writer"|"reader"|"guest"|"unavailable">("checking");
  const configuredApiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||process.env.NEXT_PUBLIC_API_BASE||"").trim().replace(/\/+$/,"");
- const isStagingPublic=typeof window!=="undefined"&&window.location.hostname==="nextscenes-public-staging.onrender.com";
- // Keep staging sign-in and feedback within the staging environment.
- const apiBase=isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase;
+ const pageHost=typeof window!=="undefined"?window.location.hostname.toLowerCase():"";
+ const isStagingPublic=pageHost==="nextscenes-public-staging.onrender.com";
+ const isSameSiteStagingPublic=pageHost==="public.staging.nextscenes.org";
+ // Existing Render staging URLs remain unchanged until custom DNS is verified.
+ const apiBase=isSameSiteStagingPublic?"https://api.staging.nextscenes.org":
+   isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase;
+ const activeAppUrl=isSameSiteStagingPublic?"https://app.staging.nextscenes.org":
+   isStagingPublic?"https://nextscenes-staging-frontend.onrender.com":appUrl;
  const [connected,setConnected]=useState(false);
  const [loading,setLoading]=useState(true);
  const [updated,setUpdated]=useState("");
@@ -309,8 +315,8 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       </div>}
      </>}
      <div className={styles.entryActions}>
-      <a href={safeStoryHref(appUrl,item)}>{t.open} →</a>
-      <a href={safeStoryHref(appUrl,item).includes("?storyId=") ? `${safeStoryHref(appUrl,item)}&tab=participate` : safeStoryHref(appUrl,item)}>{t.discuss} →</a>
+      <a href={safeStoryHref(activeAppUrl,item)}>{t.open} →</a>
+      <a href={safeStoryHref(activeAppUrl,item).includes("?storyId=") ? `${safeStoryHref(activeAppUrl,item)}&tab=participate` : safeStoryHref(activeAppUrl,item)}>{t.discuss} →</a>
       {memberStatus==="writer"&&item.storyId&&<button type="button" className={styles.replyAction}
        onClick={()=>replyTo===item.id?setReplyTo(""):activateReply(item)}>
        {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
