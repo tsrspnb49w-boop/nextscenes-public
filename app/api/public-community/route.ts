@@ -29,7 +29,9 @@ export async function GET(request: NextRequest) {
     const safeNext = typeof data.nextBefore === "string" && CURSOR.test(data.nextBefore) ? data.nextBefore : "";
     return NextResponse.json({
       ok:true, threads:data.threads.slice(0,raw.length?10:3),
-      development:data.development.slice(0,3), nextBefore:safeNext
+      development:data.development.slice(0,3),
+      storylines:Array.isArray(data.storylines)?data.storylines.slice(0,300):[],
+      nextBefore:safeNext
     },{headers:{"Cache-Control":"no-store"}});
   } catch {return fail();}
 }
