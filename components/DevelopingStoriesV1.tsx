@@ -9,6 +9,12 @@ const definitions=[
 ] as const;
 export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr";appUrl:string}) {
  const [live,setLive]=useState<Development[]>([]);
+ const [directoryAppUrl,setDirectoryAppUrl]=useState(appUrl);
+ useEffect(()=>{
+   if(window.location.hostname==="nextscenes-public-staging.onrender.com")
+     setDirectoryAppUrl("https://nextscenes-staging-frontend.onrender.com");
+   else setDirectoryAppUrl(appUrl);
+ },[appUrl]);
  useEffect(()=>{
    let active=true;
    const load=async()=>{
@@ -22,13 +28,13 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
    return ()=>{active=false;window.clearInterval(timer)};
  },[]);
  const safeHref=(item:Development|undefined,key:string)=>{
-   if(key==="ugo")return appUrl+"/reader-view?storyId=6a2984a9e2727b95968cf87c";
+   if(key==="ugo")return directoryAppUrl+"/reader-view?storyId=6a2984a9e2727b95968cf87c";
    if(item?.public && /^\/reader-view\?storyId=[a-zA-Z0-9-]{12,64}$/.test(item.href||""))
-     return appUrl+item.href;
+     return directoryAppUrl+item.href;
    // No public preview? Link to the existing, permission-aware Storylines search
    // rather than hiding Explore or inventing an unpublished manuscript URL.
-   const term=key==="windows"?"52 Windows":key==="sin"?"World of S.I.N.":"";
-   return appUrl+"/storylines"+(term?"?q="+encodeURIComponent(term):"");
+   const term=key==="windows"?"52":key==="sin"?"S.I.N.":"";
+   return directoryAppUrl+"/storylines"+(term?"?q="+encodeURIComponent(term):"");
  };
  const safeCover=(url:string)=>{
    if(url.startsWith("/"))return url;
