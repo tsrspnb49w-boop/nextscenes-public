@@ -42,7 +42,7 @@ Without the review cookie flag, the production-mode backend keeps the historical
 ## Read-only preflight before writing
 Check HTTPS connectivity, `GET /api/csrf` cookie attributes, exact `Access-Control-Allow-Origin`, `Access-Control-Allow-Credentials: true`, an unauthenticated 401 from `GET /api/public-community/v1/member`, and `OPTIONS /api/public-community/v1/feedback` for `POST`, `Content-Type` and `X-CSRF-Token`.
 
-Do **not** send test writes to production. The existing public-site preflight script is tied to the **existing staging** hostnames, not these new review hostnames; parameterize or add a dedicated review preflight before using it for the isolated services. Mocked preflight tests do not prove browser session behavior.
+Do **not** send test writes to production. The read-only public-site preflight accepts the explicit `--review` profile for these isolated review hostnames (`node scripts/publicFeedbackStagingPreflight.mjs --review`). The manual GitHub workflow uses this profile and never performs POST. Run it only **after** the isolated services are configured. Mocked preflight tests do not prove browser session behavior.
 
 ## Browser acceptance with synthetic accounts
 1. Anonymous visitor: can read eligible public threads, but cannot post. Login prompt appears. A direct anonymous POST receives 401 or 403 (CSRF).
