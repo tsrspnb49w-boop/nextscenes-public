@@ -19,7 +19,7 @@ export async function GET() {
     const data = await upstream.json();
     if(data?.ok !== true || !Array.isArray(data.threads) || !Array.isArray(data.development)) return fail();
     return NextResponse.json({
-      ok:true, threads:data.threads.slice(0,3), development:data.development.slice(0,3)
+      ok:true, threads:data.threads.slice(0,40), development:data.development.slice(0,3)
     },{headers:{"Cache-Control":"no-store"}});
   } catch {return fail();}
 }
