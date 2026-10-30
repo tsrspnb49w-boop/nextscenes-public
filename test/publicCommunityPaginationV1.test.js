@@ -88,7 +88,8 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase'));
  assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-frontend.onrender.com/login":appUrl+"/login"'));
  assert.ok(ui.includes('window.addEventListener("focus",recheck)'));
- assert.ok(ui.includes('window.addEventListener("visibilitychange",recheck)'));
+ assert.ok(ui.includes('document.addEventListener("visibilitychange",recheck)'));
+ assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
  assert.ok(ui.includes('if(active)setMemberStatus(result.ok?"member":result.status===401?"guest":"unavailable")'));
  assert.ok(ui.includes('memberStatus==="member"&&item.storyId&&<button'));
