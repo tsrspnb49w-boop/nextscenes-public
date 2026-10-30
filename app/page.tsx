@@ -8,7 +8,6 @@ import {
 } from "@/app/lib/featuredStories";
 import FeaturedStoriesShelf from "@/components/FeaturedStoriesShelf";
 import { buildMetadata } from "@/app/seo";
-import { resolvePublicAppUrl } from "@/app/lib/discussionReviewAppUrl";
 
 export const metadata = buildMetadata({
   title: "NextScenes | Clean Stories, African Books and Collaborative Writing",
@@ -21,10 +20,7 @@ export const metadata = buildMetadata({
   },
 });
 
-const APP_URL = resolvePublicAppUrl(
-  process.env.NEXT_PUBLIC_APP_URL,
-  process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE || process.env.NEXT_PUBLIC_API_BASE
-);
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
 
 const HOMEPAGE_FEATURED_WORKS_LIMIT = 8;
 
