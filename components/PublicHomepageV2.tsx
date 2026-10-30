@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
+import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
+import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import styles from "./PublicHomepageV2.module.css";
 
 type Language = "en" | "fr";
@@ -44,12 +46,12 @@ const copy = {
     covers: "Stories in progress & published books",
     communityEyebrow: "COMMUNITY CONVERSATIONS",
     communityTitle: "Stories come alive in conversation.",
-    communityLead: "Explore public stories and join thoughtful conversations. Private drafts and Beta Feedback are never published here.",
+    communityLead: "Read real public comments, expand the replies and follow the conversation into the story. Private drafts and Beta Feedback never appear here.",
     joinCommunity: "Explore public storylines",
     discuss: "Open public story",
     motionEyebrow: "STORIES IN MOTION",
     motionTitle: "Follow stories as they grow.",
-    motionLead: "Featured public storylines, not a ranking of private activity.",
+    motionLead: "Works currently being created on NextScenes. Covers appear only when approved and publicly available.",
     spotlightEyebrow: "HOME SPOTLIGHT",
     spotlightTitle: "Words and writers worth remembering.",
     authorMonth: "Writer Spotlight",
@@ -99,12 +101,12 @@ const copy = {
     covers: "Récits en cours et livres publiés",
     communityEyebrow: "DISCUSSIONS DE LA COMMUNAUTÉ",
     communityTitle: "Les histoires vivent dans les échanges.",
-    communityLead: "Découvrez les récits publics et participez aux discussions. Les brouillons privés et les retours bêta ne sont jamais diffusés ici.",
+    communityLead: "Lisez les échanges publics, ouvrez les réponses et poursuivez la conversation dans le récit. Les brouillons privés et retours bêta restent protégés.",
     joinCommunity: "Explorer les histoires publiques",
     discuss: "Ouvrir ce récit public",
     motionEyebrow: "RÉCITS EN MOUVEMENT",
     motionTitle: "Suivez les récits en évolution.",
-    motionLead: "Une sélection de récits publics, pas un classement des activités privées.",
+    motionLead: "Des œuvres en cours de création sur NextScenes. Seules les couvertures approuvées et publiques sont affichées.",
     spotlightEyebrow: "À LA UNE",
     spotlightTitle: "Des mots et des auteurs à redécouvrir.",
     authorMonth: "Portrait d'auteur",
@@ -288,16 +290,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.eyebrow}>{t.communityEyebrow}</div>
           <h2>{t.communityTitle}</h2>
           <p className={styles.communityLead}>{t.communityLead}</p>
-          <div className={styles.activityGrid}>
-            {featured.filter(story => story.href.startsWith("http")).slice(0,3).map((story) => (
-              <article className={styles.activityCard} key={story.id}>
-                <span className={styles.activityLabel}>{language === "fr" ? "RÉCIT PUBLIC" : "PUBLIC STORYLINE"}</span>
-                <h3>{story.title}</h3>
-                <p>{story.hook}</p>
-                <Link className={styles.textLink} href={story.href}>{t.discuss} →</Link>
-              </article>
-            ))}
-          </div>
+          <PublicCommunityThreadsV1 language={language} appUrl={appUrl} />
           <Link className={styles.textLink} href={storiesHref}>{t.joinCommunity} →</Link>
         </div>
       </section>
@@ -307,14 +300,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.eyebrow}>{t.motionEyebrow}</div>
           <h2>{t.motionTitle}</h2>
           <p>{t.motionLead}</p>
-          <div className={styles.motionGrid}>
-            {stories.filter(item => item?.title && item?.href && item?.cover && !/didie/i.test(item.title)).slice(0,3).map((story) => (
-              <article className={styles.motionCard} key={story.id}>
-                <Image src={story.cover} alt={story.title + " cover"} width={75} height={110} unoptimized />
-                <div><h3>{story.title}</h3><p>{story.author}</p><Link className={styles.textLink} href={story.href}>{t.discuss} →</Link></div>
-              </article>
-            ))}
-          </div>
+          <DevelopingStoriesV1 language={language} appUrl={appUrl} />
         </div>
       </section>
 
