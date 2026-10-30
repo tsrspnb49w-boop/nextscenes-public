@@ -164,19 +164,17 @@ function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedS
     title: "Ugo and the Magic Seed",
     author: "Trone",
     hook: language === "fr" ? "Une jeune fille découvre une graine mystérieuse." : "A magical seed, a young girl and a lesson in kindness.",
-    cta: "Open story", href: appUrl + "/storylines",
-    cover: "/images/default-covers/storyline-en.webp",
+    cta: "Open story", href: appUrl + "/reader-view?storyId=6a2984a9e2727b95968cf87c",
+    cover: "https://grkvsllcpotylcvbecuj.supabase.co/storage/v1/object/public/story-covers/69623c5a3f3a3c7b988420a6/2026-06-10T15-34-56-054Z-2f9be5e7-81ec-43a1-bb0a-38067a553e9b-site-cover.png",
     badge: "In development", badgeTone: "featured", publicationStatus: "notPublished",
   };
-  // The original Shadows artwork must be installed from the approved V1C file
-  // before production approval. A neutral legacy cover is used only in review.
   const shadows: FeaturedStory = {
     id: "shadows-harbour-v1c-review",
     title: "Shadows of the Harbour",
     author: "Ugochukwu Ezeji",
     hook: language === "fr" ? "Une enquête sur un réseau de stupéfiants." : "A drugs bust investigation.",
     cta: "Find story", href: appUrl + "/storylines",
-    cover: "/images/default-covers/storyline-en.webp",
+    cover: "/images/covers/v1c-approved/shadows-of-the-harbour.webp",
     badge: "On NextScenes", badgeTone: "featured", publicationStatus: "notPublished",
   };
   const reflectionsCard: FeaturedStory = {
@@ -209,10 +207,10 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
   const t = copy[language];
   const featured = selectFeatured(stories, language);
   const heroCovers = [
-    { ...featured[0], title: "The Kingdom Beneath the Baobab", cover: "/images/default-covers/storyline-en.webp" },
+    { ...featured[0], title: "The Kingdom Beneath the Baobab", cover: "/images/covers/v1c-approved/kingdom-beneath-baobab.webp" },
     { ...featured[1], title: "The Trials of Tarllus", cover: language === "fr" ? "/images/covers/featured-flat/trials-of-tarllus-fr.webp" : "/images/covers/featured-flat/trials-of-tarllus-en.webp" },
-    featured[1]
-  ]; // Review placeholders for the two user-approved original hero covers.
+    { ...featured[1], title: "Shadows of the Harbour", cover: "/images/covers/v1c-approved/shadows-of-the-harbour.webp" }
+  ];
   return (
     <div className={styles.home}>
       <section className={styles.hero} aria-label={t.headline}>
