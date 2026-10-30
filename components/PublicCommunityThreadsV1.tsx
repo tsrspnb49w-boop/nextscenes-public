@@ -4,10 +4,11 @@ import styles from "./PublicCommunityThreadsV1.module.css";
 
 type Reply={id:string;author:string;text:string;createdAt:string;parentId:string;source?:string};
 type Thread={
- id:string;storyTitle:string;author:string;text:string;createdAt:string;href:string;
+ id:string;storyId?:string;storyTitle:string;author:string;text:string;createdAt:string;href:string;
  source?:string;forum?:string;replies:Reply[];replyCount:number;
 };
-type Payload={ok?:boolean;threads?:Thread[];nextBefore?:string};
+type PublicStoryOption={id:string;title:string};
+type Payload={ok?:boolean;threads?:Thread[];storylines?:PublicStoryOption[];nextBefore?:string};
 const formatDate=(stamp:string,lang:"en"|"fr")=>{
  const ms=Date.parse(stamp||"");
  return Number.isFinite(ms) ? new Date(ms).toLocaleString(lang==="fr"?"fr-FR":"en-GB",{
@@ -22,6 +23,16 @@ function safeStoryHref(appUrl:string,t:Thread){
 export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en"|"fr";appUrl:string}){
  const isFR=language==="fr";
  const [threads,setThreads]=useState<Thread[]>([]);
+ const [storylines,setStorylines]=useState<PublicStoryOption[]>([]);
+ const [commentStory,setCommentStory]=useState("");
+ const [commentText,setCommentText]=useState("");
+ const [replyTo,setReplyTo]=useState("");
+ const [replyText,setReplyText]=useState("");
+ const [posting,setPosting]=useState(false);
+ const [postError,setPostError]=useState("");
+ const [postSuccess,setPostSuccess]=useState("");
+ const [memberStatus,setMemberStatus]=useState<"checking"|"member"|"guest"|"unavailable">("checking");
+ const apiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||"").trim().replace(/\/+$/,"");
  const [connected,setConnected]=useState(false);
  const [loading,setLoading]=useState(true);
  const [updated,setUpdated]=useState("");
@@ -43,12 +54,17 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      if(version!==requestVersion.current) return;
      if(response.ok && data.ok && Array.isArray(data.threads)){
        setThreads(data.threads.filter(t=>t&&t.id&&t.storyTitle&&t.text).slice(0,3));
+       const options=Array.isArray(data.storylines)?data.storylines.filter(
+         option=>option&&/^[a-f0-9]{24}$/i.test(option.id)&&typeof option.title==="string"&&option.title.trim()
+       ):[];
+       setStorylines(options);
+       setCommentStory(previous=>options.some(option=>option.id===previous)?previous:(options[0]?.id||""));
        setNextBefore(typeof data.nextBefore==="string"?data.nextBefore:"");
        setConnected(true);
        setUpdated(new Date().toISOString());
-     }else{setThreads([]);setNextBefore("");setConnected(false)}
+     }else{setThreads([]);setStorylines([]);setNextBefore("");setConnected(false)}
    }catch{
-     if(version===requestVersion.current){setThreads([]);setNextBefore("");setConnected(false)}
+     if(version===requestVersion.current){setThreads([]);setStorylines([]);setNextBefore("");setConnected(false)}
    }finally{if(version===requestVersion.current)setLoading(false)}
  },[]);
  const loadOlder=useCallback(async()=>{
@@ -75,6 +91,58 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    const tick=window.setInterval(()=>{if(!pagingActive.current)void refresh()},15000);
    return()=>{window.clearInterval(tick);requestVersion.current++};
  },[refresh]);
+ useEffect(()=>{
+   let active=true;
+   const probe=async()=>{
+     if(!/^https:\/\/[^/]+$/i.test(apiBase)){if(active)setMemberStatus("unavailable");return;}
+     try{
+       const result=await fetch(apiBase+"/api/public-community/v1/member",{
+         cache:"no-store",credentials:"include",headers:{Accept:"application/json"}
+       });
+       if(active)setMemberStatus(result.ok?"member":result.status===401?"guest":"unavailable");
+     }catch{if(active)setMemberStatus("unavailable");}
+   };
+   void probe();
+   return()=>{active=false;};
+ },[apiBase]);
+ const postPublic=async(text:string,storyId:string,parentId="")=>{
+   if(memberStatus!=="member"||posting||!storyId||!text.trim())return;
+   setPosting(true);setPostError("");setPostSuccess("");
+   try{
+     if(!/^https:\/\/[^/]+$/i.test(apiBase))throw new Error("API unavailable");
+     const csrfResponse=await fetch(apiBase+"/api/csrf",{
+       cache:"no-store",credentials:"include",headers:{Accept:"application/json"}
+     });
+     if(!csrfResponse.ok)throw new Error("CSRF unavailable");
+     const csrfData=await csrfResponse.json();
+     const token=typeof csrfData?.token==="string"?csrfData.token:"";
+     if(!/^[a-f0-9]{48}$/i.test(token))throw new Error("Invalid CSRF");
+     const response=await fetch(apiBase+"/api/public-community/v1/feedback",{
+       method:"POST",credentials:"include",cache:"no-store",
+       headers:{"Content-Type":"application/json","Accept":"application/json","X-CSRF-Token":token},
+       body:JSON.stringify({storyId,parentId,text:text.trim()})
+     });
+     if(!response.ok){
+       if(response.status===401)setMemberStatus("guest");
+       throw new Error("Feedback rejected");
+     }
+     const result=await response.json();
+     if(!result?.ok)throw new Error("Feedback not confirmed");
+     setPostSuccess(isFR?"Message publié.":"Comment posted.");
+     if(parentId&&result.comment){
+       setThreads(prev=>prev.map(thread=>thread.id===parentId?{
+         ...thread,replies:[...(thread.replies||[]),result.comment as Reply],
+         replyCount:(thread.replyCount||0)+1
+       }:thread));
+       setReplyTo("");setReplyText("");
+     }else{
+       setCommentText("");setSelected("all");
+       setLoading(true);await refresh({resetPaging:true});
+     }
+   }catch{
+     setPostError(isFR?"Publication impossible. Vérifiez votre session.":"Could not post. Check your sign-in session.");
+   }finally{setPosting(false);}
+ };
  const storyTitles=useMemo(()=>Array.from(new Set(threads.map(t=>t.storyTitle))).sort(),[threads]);
  const filtered=useMemo(()=>{
   const q=search.trim().toLocaleLowerCase();
