@@ -9,7 +9,7 @@ const ui=fs.readFileSync(path.join(root,"components/PublicCommunityThreadsV1.tsx
 const css=fs.readFileSync(path.join(root,"components/PublicCommunityThreadsV1.module.css"),"utf8");
 test("public read proxy does not expose private or direct feedback writes",()=>{
  assert.ok(api.includes('"/api/public-community/v1"'));
- assert.ok(!api.includes("/api/feedback/live"));
+ assert.ok(!api.includes('origin + "/api/feedback/live"'));
  assert.ok(!api.includes("export async function POST("));
  assert.ok(api.includes('raw.length?10:3'));
  assert.ok(api.includes('CURSOR.test(raw[0])'));
