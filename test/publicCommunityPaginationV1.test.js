@@ -32,7 +32,7 @@ test("scroll region is keyboard-operable and respects reduced motion",()=>{
 });
 
 test("live feedback client offers authenticated public root comment and inline replies",()=>{
- assert.ok(ui.includes('memberStatus==="member"'));
+ assert.ok(ui.includes('memberStatus==="writer"'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/member"'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
  assert.ok(ui.includes('apiBase+"/api/csrf"'));
@@ -92,11 +92,13 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('document.addEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
- assert.ok(ui.includes('if(active)setMemberStatus(result.ok?"member":result.status===401?"guest":"unavailable")'));
+ assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
+ assert.ok(ui.includes('Read-only access. Only authorised writers can post and reply.'));
  assert.ok(ui.includes('item.storyId&&<button'));
- assert.ok(ui.includes('memberStatus!=="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('memberStatus==="reader"&&<p'));
+ assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('href={memberSignInUrl}'));
- assert.ok(ui.includes('memberStatus==="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('credentials:"include"'));
 });
 
@@ -107,8 +109,9 @@ test("public feedback uses the existing shared replies endpoint for clicked comm
  assert.ok(ui.includes('const quickEmojis=["👍","❤️","😊","👏"]'));
  assert.ok(ui.includes('void postPublic(emoji,root.storyId,root.id)'));
  assert.ok(ui.includes('onClick={()=>addEmoji(item,emoji)}'));
- assert.ok(ui.includes('memberStatus!=="member"&&replyTo===item.id&&item.storyId&&'));
- assert.ok(ui.includes('memberStatus==="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('memberStatus==="reader"&&<p'));
+ assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
  assert.ok(css.includes(".commentTrigger"));
  assert.ok(css.includes(".replyCommentTrigger"));
@@ -121,4 +124,17 @@ test("both developing stories have Explore links that respect private reading pe
  assert.ok(developing.includes('item?.public && /^\\/reader-view'));
  assert.ok(developing.includes('Public preview unavailable. Explore in the app.'));
  assert.ok(!developing.includes(': <p className={styles.availability}'));
+});
+
+test("only verified writers see public feedback posting controls",()=>{
+ assert.ok(ui.includes('useState<"checking"|"writer"|"reader"|"guest"|"unavailable">'));
+ assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
+ assert.ok(ui.includes('memberStatus==="writer"?<button'));
+ assert.ok(ui.includes('memberStatus==="writer"&&item.storyId&&<button'));
+ assert.ok(ui.includes('memberStatus==="writer"&&item.storyId&&<div'));
+ assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('if(memberStatus==="writer")activateReply(root,emoji)'));
+ assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('You cannot reply to your own post.'));
+ assert.ok(ui.includes('Writer access is required to participate.'));
 });
