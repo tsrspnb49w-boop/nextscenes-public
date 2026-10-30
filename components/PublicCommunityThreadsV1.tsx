@@ -42,6 +42,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [commentText,setCommentText]=useState("");
  const [replyTo,setReplyTo]=useState("");
  const [replyText,setReplyText]=useState("");
+ const quickEmojis=["👍","❤️","😊","👏"];
  const [posting,setPosting]=useState(false);
  const [postError,setPostError]=useState("");
  const [postSuccess,setPostSuccess]=useState("");
@@ -164,6 +165,19 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      setPostError(isFR?"Publication impossible. Vérifiez votre session.":"Could not post. Check your sign-in session.");
    }finally{setPosting(false);}
  };
+ const activateReply=(root:Thread,mention="")=>{
+   setReplyTo(root.id);
+   setReplyText(mention);
+   setPostError("");
+   setPostSuccess("");
+ };
+ const addEmoji=(root:Thread,emoji:string)=>{
+   if(memberStatus==="member" && root.storyId && !posting){
+     void postPublic(emoji,root.storyId,root.id);
+     return;
+   }
+   activateReply(root,emoji);
+ };
  const storyTitles=useMemo(()=>Array.from(new Set(threads.map(t=>t.storyTitle))).sort(),[threads]);
  const filtered=useMemo(()=>{
   const q=search.trim().toLocaleLowerCase();
@@ -270,7 +284,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       <span className={styles.entryMeta}>{item.author} · {formatDate(item.createdAt,language)}</span>
      </div>
      <p className={styles.storyLine}><strong>{item.storyTitle}</strong>{item.forum?` · ${item.forum}`:""}</p>
-     <p className={styles.comment}>{item.text}</p>
+     <button type="button" className={styles.commentTrigger}
+       aria-label={isFR?"Répondre au commentaire de "+item.author:"Reply to comment by "+item.author}
+       onClick={()=>activateReply(item)}>
+       {item.text}
+     </button>
      {Array.isArray(item.replies)&&item.replies.length>0&&<>
       <button className={styles.replyToggle} type="button" aria-expanded={!!expanded[item.id]}
        onClick={()=>setExpanded(prev=>({...prev,[item.id]:!prev[item.id]}))}>
@@ -279,7 +297,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       {expanded[item.id]&&<div className={styles.replyList}>
        {item.replies.map(reply=><div className={styles.reply} key={reply.id}>
         <span className={styles.replyMeta}>{reply.author} · {formatDate(reply.createdAt,language)}</span>
-        <p>{reply.text}</p>
+        <button type="button" className={styles.replyCommentTrigger}
+          aria-label={isFR?"Répondre à "+reply.author:"Reply to "+reply.author}
+          onClick={()=>activateReply(item,"@"+reply.author+" ")}>
+          {reply.text}
+        </button>
        </div>)}
       </div>}
      </>}
@@ -287,15 +309,30 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       <a href={safeStoryHref(appUrl,item)}>{t.open} →</a>
       <a href={safeStoryHref(appUrl,item).includes("?storyId=") ? `${safeStoryHref(appUrl,item)}&tab=participate` : safeStoryHref(appUrl,item)}>{t.discuss} →</a>
       {item.storyId&&<button type="button" className={styles.replyAction}
-       onClick={()=>{setReplyTo(replyTo===item.id?"":item.id);setReplyText("");}}>
-       {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre ici":"Reply here")}
+       onClick={()=>replyTo===item.id?setReplyTo(""):activateReply(item)}>
+       {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
       </button>}
+      {item.storyId&&<div className={styles.emojiActions} role="group"
+       aria-label={isFR?"Réactions rapides":"Quick emoji replies"}>
+       {quickEmojis.map(emoji=><button type="button" key={emoji}
+        onClick={()=>addEmoji(item,emoji)}
+        disabled={posting}
+        aria-label={(isFR?"Envoyer ":"Send ")+emoji}>{emoji}</button>)}
+      </div>}
      </div>
      {memberStatus!=="member"&&replyTo===item.id&&item.storyId&&
-      <p className={styles.bottomNote}>
-       {isFR?"Connectez-vous à NextScenes pour répondre à ce commentaire.":"Sign in to NextScenes to reply to this comment."}{" "}
-       <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
-      </p>}
+      <div className={styles.composer}>
+       <label className={styles.field}>
+        <span>{isFR?"Votre réponse":"Your reply"}</span>
+        <textarea value={replyText} maxLength={2000} rows={3}
+         onChange={e=>setReplyText(e.target.value)}
+         placeholder={isFR?"Écrivez votre réponse…":"Write your reply…"} />
+       </label>
+       <p className={styles.bottomNote}>
+        {isFR?"Connectez-vous pour envoyer cette réponse.":"Sign in to send this reply."}{" "}
+        <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
+       </p>
+      </div>}
      {memberStatus==="member"&&replyTo===item.id&&item.storyId&&
       <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id)}}>
        <label className={styles.field}><span>{isFR?"Votre réponse":"Your reply"}</span>
