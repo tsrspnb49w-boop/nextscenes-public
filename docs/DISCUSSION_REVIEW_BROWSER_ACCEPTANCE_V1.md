@@ -35,7 +35,7 @@ Use `autoDeploy=no` for all three. Pin the exact passing review commits rather t
 Without the review cookie flag, the production-mode backend keeps the historical `.nextscenes.org` cookie Domain, unsuitable for an onrender.com review API. The flag makes **both session and CSRF cookies host-only**, `Secure`, `HttpOnly` and `SameSite=None`. An invalid service name causes startup failure.
 
 ## Public website and application
-- Public build: `NEXT_PUBLIC_NEXTSCENES_API_BASE=https://nextscenes-review-api-discussion.onrender.com`; configure the public app link to the review app.
+- Public build: `NEXT_PUBLIC_NEXTSCENES_API_BASE=https://nextscenes-review-api-discussion.onrender.com` and `NEXT_PUBLIC_APP_URL=https://nextscenes-review-app-discussion.onrender.com`. Without the second setting, the site defaults its sign-in links to the production application: **do not launch the isolated review site in that state**.
 - Review application build: `REACT_APP_API_BASE=https://nextscenes-review-api-discussion.onrender.com`.
 - The public site enforces this exact read/write origin pairing. Wrong environment combinations fail closed.
 
