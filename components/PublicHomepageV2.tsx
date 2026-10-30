@@ -289,7 +289,6 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
         <div className={styles.wrap}>
           <div className={styles.eyebrow}>{t.communityEyebrow}</div>
           <h2>{t.communityTitle}</h2>
-          <p className={styles.communityLead}>{t.communityLead}</p>
           <PublicCommunityThreadsV1 language={language} appUrl={appUrl} />
           <Link className={styles.textLink} href={storiesHref}>{t.joinCommunity} →</Link>
         </div>
@@ -299,7 +298,6 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
         <div className={styles.wrap}>
           <div className={styles.eyebrow}>{language === "fr" ? "COMMUNAUTÉ SUR LES RÉSEAUX" : "SOCIAL CONVERSATIONS"}</div>
           <h2>{language === "fr" ? "La conversation continue ailleurs." : "The conversation continues beyond our pages."}</h2>
-          <p>{language === "fr" ? "Rejoignez les pages officielles de NextScenes et réagissez aux publications publiques. Les messages privés ne sont pas reproduits ici." : "Follow our official pages, discuss public posts and return to NextScenes to read. Private social messages are never copied to this page."}</p>
           <div className={styles.socialConversationLinks}>
             <a href="https://www.facebook.com/nextscenes" target="_blank" rel="noopener noreferrer">Facebook · {language === "fr" ? "Discussions publiques" : "Public discussions"} ↗</a>
             <a href="https://www.instagram.com/nextscenes/" target="_blank" rel="noopener noreferrer">Instagram · {language === "fr" ? "Publications et commentaires" : "Posts and comments"} ↗</a>
