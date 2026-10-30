@@ -1,5 +1,5 @@
 "use client";
-import {useCallback,useEffect,useMemo,useState} from "react";
+import {useCallback,useEffect,useMemo,useRef,useState} from "react";
 import styles from "./PublicCommunityThreadsV1.module.css";
 
 type Reply={id:string;author:string;text:string;createdAt:string;parentId:string;source?:string};
@@ -7,7 +7,7 @@ type Thread={
  id:string;storyTitle:string;author:string;text:string;createdAt:string;href:string;
  source?:string;forum?:string;replies:Reply[];replyCount:number;
 };
-type Payload={ok?:boolean;threads?:Thread[]};
+type Payload={ok?:boolean;threads?:Thread[];nextBefore?:string};
 const formatDate=(stamp:string,lang:"en"|"fr")=>{
  const ms=Date.parse(stamp||"");
  return Number.isFinite(ms) ? new Date(ms).toLocaleString(lang==="fr"?"fr-FR":"en-GB",{
@@ -28,25 +28,52 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [selected,setSelected]=useState("all");
  const [search,setSearch]=useState("");
  const [sort,setSort]=useState<"newest"|"oldest">("newest");
- const [visible,setVisible]=useState(10);
+ const [nextBefore,setNextBefore]=useState("");
+ const [loadingOlder,setLoadingOlder]=useState(false);
+ const [olderError,setOlderError]=useState(false);
+ const pagingActive=useRef(false);
+ const requestVersion=useRef(0);
  const [expanded,setExpanded]=useState<Record<string,boolean>>({});
- const refresh=useCallback(async()=>{
+ const refresh=useCallback(async({resetPaging=false}:{resetPaging?:boolean}={})=>{
+   if(resetPaging) pagingActive.current=false;
+   const version=++requestVersion.current;
    try {
      const response=await fetch("/api/public-community",{cache:"no-store"});
      const data:Payload=await response.json();
+     if(version!==requestVersion.current) return;
      if(response.ok && data.ok && Array.isArray(data.threads)){
-       setThreads(data.threads.filter(t=>t&&t.id&&t.storyTitle&&t.text)
-         .slice(0,40));
+       setThreads(data.threads.filter(t=>t&&t.id&&t.storyTitle&&t.text).slice(0,3));
+       setNextBefore(typeof data.nextBefore==="string"?data.nextBefore:"");
        setConnected(true);
        setUpdated(new Date().toISOString());
-     }else{setThreads([]);setConnected(false)}
-   }catch{setThreads([]);setConnected(false)}
-   finally{setLoading(false)}
+     }else{setThreads([]);setNextBefore("");setConnected(false)}
+   }catch{
+     if(version===requestVersion.current){setThreads([]);setNextBefore("");setConnected(false)}
+   }finally{if(version===requestVersion.current)setLoading(false)}
  },[]);
+ const loadOlder=useCallback(async()=>{
+   if(!nextBefore||loadingOlder) return;
+   pagingActive.current=true;
+   const version=++requestVersion.current;
+   setLoadingOlder(true);setOlderError(false);
+   try{
+     const response=await fetch("/api/public-community?before="+encodeURIComponent(nextBefore),{cache:"no-store"});
+     const data:Payload=await response.json();
+     if(version!==requestVersion.current) return;
+     if(!response.ok||!data.ok||!Array.isArray(data.threads)) throw new Error("Discussion page unavailable");
+     const older=data.threads.filter(t=>t&&t.id&&t.storyTitle&&t.text);
+     setThreads(prev=>{
+       const seen=new Set(prev.map(t=>t.id));
+       return [...prev,...older.filter(t=>!seen.has(t.id))];
+     });
+     setNextBefore(typeof data.nextBefore==="string"?data.nextBefore:"");
+   }catch{if(version===requestVersion.current)setOlderError(true)}
+   finally{if(version===requestVersion.current)setLoadingOlder(false)}
+ },[nextBefore,loadingOlder]);
  useEffect(()=>{
    void refresh();
-   const tick=window.setInterval(()=>{void refresh()},15000);
-   return()=>window.clearInterval(tick);
+   const tick=window.setInterval(()=>{if(!pagingActive.current)void refresh()},15000);
+   return()=>{window.clearInterval(tick);requestVersion.current++};
  },[refresh]);
  const storyTitles=useMemo(()=>Array.from(new Set(threads.map(t=>t.storyTitle))).sort(),[threads]);
  const filtered=useMemo(()=>{
@@ -58,7 +85,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     ? Date.parse(b.createdAt||"")-Date.parse(a.createdAt||"")
     : Date.parse(a.createdAt||"")-Date.parse(b.createdAt||""));
  },[threads,selected,search,sort]);
- const visibleItems=filtered.slice(0,visible);
+ const visibleItems=filtered;
  const t={
   title:isFR?"Retours en direct":"Live Feedback",
   sub:isFR?"Les échanges publics des histoires et les réponses de Writer Studio.":"Public storyline conversations and Reader Response from Writer Studio.",
@@ -75,7 +102,9 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   home:isFR?"Discussion des histoires":"Storyline discussion",
   noComments:isFR?"Aucune conversation publique visible pour le moment.":"No publicly visible conversations yet.",
   unavail:isFR?"Les échanges publics ne sont pas disponibles pour le moment.":"Public feedback is temporarily unavailable.",
-  more:isFR?"Afficher davantage":"Load more",
+  more:isFR?"Charger des discussions précédentes":"Load older discussions",
+  loadingMore:isFR?"Chargement des discussions…":"Loading older discussions…",
+  olderError:isFR?"Impossible de charger les discussions précédentes. Réessayez.":"Could not load older discussions. Try again.",
   showing:isFR?"Affichage":"Showing",
   of:isFR?"sur":"of",
   updated:isFR?"Actualisé":"Updated",
@@ -86,19 +115,19 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    <div><h3>{t.title}</h3></div>
    <div className={styles.liveActions}>
     {updated?<small aria-live="polite">{t.updated}: {formatDate(updated,language)}</small>:null}
-    <button type="button" onClick={()=>{setLoading(true);void refresh()}}>{t.refresh}</button>
+    <button type="button" onClick={()=>{setLoading(true);setOlderError(false);void refresh({resetPaging:true})}}>{t.refresh}</button>
    </div>
   </header>
   <div className={styles.controls}>
    <label className={styles.field}><span>{isFR?"Histoire":"Storyline"}</span>
-    <select value={selected} onChange={e=>{setSelected(e.target.value);setVisible(10)}}>
+    <select value={selected} onChange={e=>setSelected(e.target.value)}>
      <option value="all">{t.all}</option>
      {storyTitles.map(name=><option key={name} value={name}>{name}</option>)}
     </select>
    </label>
    <label className={styles.field}><span>{isFR?"Rechercher":"Search all"}</span>
     <input type="search" value={search} placeholder={t.search}
-     onChange={e=>{setSearch(e.target.value);setVisible(10)}}/>
+     onChange={e=>setSearch(e.target.value)}/>
    </label>
    <label className={styles.field}><span>{isFR?"Ordre":"Sort"}</span>
     <select value={sort} onChange={e=>setSort(e.target.value as "newest"|"oldest")}>
@@ -140,8 +169,9 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      </div>
    </article>)}
   </div>
-  {visibleItems.length<filtered.length && <button className={styles.more} type="button"
-   onClick={()=>setVisible(n=>Math.min(n+10,40))}>{t.more}</button>}
+  {nextBefore&&<button className={styles.more} type="button" disabled={loadingOlder}
+   onClick={()=>void loadOlder()}>{loadingOlder?t.loadingMore:t.more}</button>}
+  {olderError&&<p role="alert" className={styles.bottomNote}>{t.olderError}</p>}
   <p className={styles.bottomNote}>{t.signIn}</p>
  </section>;
 }
