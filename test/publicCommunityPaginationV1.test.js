@@ -61,21 +61,20 @@ test("public feedback writes fail closed on staging/production API mismatch",()=
  assert.ok(!ui.includes("localStorage.getItem"));
 });
 
-test("public server proxy never mixes staging and production API origins",()=>{
- assert.ok(api.includes("function permittedUpstream(siteHost:string,apiBase:string)"));
- assert.ok(api.includes('host==="nextscenes-public-staging.onrender.com"'));
- assert.ok(api.includes('api.origin==="https://nextscenes-staging-backend.onrender.com"'));
- assert.ok(api.includes('api.origin==="https://api.nextscenes.org"'));
- assert.ok(api.includes('permittedUpstream(request.nextUrl.hostname,origin)'));
- assert.ok(!api.includes('if(!/^https:'));
-});
-
-
-test("public staging feed uses only its dedicated staging backend even when API env points elsewhere",()=>{
- assert.ok(api.includes('siteHost === "nextscenes-public-staging.onrender.com"'));
- assert.ok(api.includes('? "https://nextscenes-staging-backend.onrender.com"'));
- assert.ok(api.includes(': configuredOrigin'));
- assert.ok(api.includes("if(!permittedUpstream(request.nextUrl.hostname,origin)) return fail()"));
+test("public read proxy chooses an exact API by server-owned Render identity, not by request headers",()=>{
+ const match=api.match(/function trustedFeedbackOrigin\(\)\{[\s\S]*?\n\}/);
+ assert.ok(match,"Trusted origin function must exist");
+ const vm=require("node:vm");
+ const probe=env=>vm.runInNewContext(match[0]+"; trustedFeedbackOrigin()",{process:{env}});
+ assert.equal(probe({RENDER_SERVICE_ID:"srv-dbi96qjbc2fs73af0i80"}),"https://nextscenes-staging-backend.onrender.com");
+ assert.equal(probe({RENDER_SERVICE_NAME:"nextscenes-public-staging"}),"https://nextscenes-staging-backend.onrender.com");
+ assert.equal(probe({RENDER_SERVICE_ID:"srv-d62fm2onputs73b2dr7g"}),"https://api.nextscenes.org");
+ assert.equal(probe({RENDER_SERVICE_NAME:"nextscenes-public"}),"https://api.nextscenes.org");
+ assert.equal(probe({RENDER_SERVICE_NAME:"unknown",RENDER_SERVICE_ID:"unknown"}),"");
+ assert.equal(probe({}),"");
+ assert.ok(api.includes('if(!origin){'));
+ assert.ok(!api.includes('permittedUpstream(request.nextUrl.hostname'));
+ assert.ok(!api.includes('origin + "/api/feedback/live"'));
 });
 test("Live Feedback has an actual bounded scrolling viewport even with a short preview",()=>{
  assert.ok(css.includes("height:min(440px,55vh)"));
