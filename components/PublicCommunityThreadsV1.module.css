@@ -45,3 +45,15 @@
 .composer button:focus-visible,.replyAction:focus-visible{outline:3px solid #147a53;outline-offset:3px}
 .error{font-size:13px;color:#a12626;margin:6px 0}
 .success{font-size:13px;color:#075b32;margin:6px 0}
+
+/* Familiar comment-to-reply interaction. Uses existing Feedback text endpoint. */
+.commentTrigger,.replyCommentTrigger{display:block;width:100%;text-align:left;border:0;background:transparent;padding:4px 0;color:inherit;font:inherit;line-height:inherit;cursor:pointer;white-space:pre-wrap;overflow-wrap:anywhere}
+.commentTrigger{font-size:15px;line-height:1.65;margin:0 0 12px}
+.replyCommentTrigger{font-size:14px;line-height:1.6;margin:6px 0 0}
+.commentTrigger:hover,.replyCommentTrigger:hover{text-decoration:underline;text-decoration-color:#83ad94;text-underline-offset:4px}
+.commentTrigger:focus-visible,.replyCommentTrigger:focus-visible{outline:2px solid #147a53;outline-offset:3px;border-radius:4px}
+.emojiActions{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
+.emojiActions button{background:#fffdf8;border:1px solid #d3e2d8;border-radius:20px;padding:5px 9px;cursor:pointer;font-size:17px;line-height:1.2}
+.emojiActions button:hover{background:#e5f4ea}
+.emojiActions button:focus-visible{outline:2px solid #147a53;outline-offset:2px}
+.emojiActions button:disabled{opacity:.6;cursor:not-allowed}
