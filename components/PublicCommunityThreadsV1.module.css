@@ -35,3 +35,13 @@
 @media(max-width:600px){.liveHead{flex-direction:column}.liveActions{justify-content:start}.controls{grid-template-columns:1fr}.controls .field:last-child{grid-column:auto}.entry{padding:14px}.feed{max-height:600px}}
 
 @media(prefers-reduced-motion:reduce){.feed{scroll-behavior:auto}}
+
+.participation{margin:16px 0 10px}
+.composer{display:grid;gap:12px;margin:0 0 14px;padding:16px;background:#f8fcf9;border:1px solid #c9dfd0;border-radius:16px}
+.composer>strong{color:#134e37;font-size:15px}
+.field textarea{border:1px solid #c9ddd2;border-radius:11px;background:#fff;color:#163f2e;padding:11px 12px;width:100%;resize:vertical;font:inherit;font-size:14px;min-height:90px}
+.composer button,.replyAction{justify-self:start;border:1px solid #9db9a7;background:#fffdf6;color:#064c34;border-radius:22px;font-size:13px;font-weight:800;padding:9px 16px;cursor:pointer}
+.composer button:disabled,.replyAction:disabled{opacity:.55;cursor:not-allowed}
+.composer button:focus-visible,.replyAction:focus-visible{outline:3px solid #147a53;outline-offset:3px}
+.error{font-size:13px;color:#a12626;margin:6px 0}
+.success{font-size:13px;color:#075b32;margin:6px 0}
