@@ -29,3 +29,24 @@ test("scroll region is keyboard-operable and respects reduced motion",()=>{
  assert.ok(css.includes("overflow-y:auto"));
  assert.ok(css.includes("prefers-reduced-motion:reduce"));
 });
+
+test("live feedback client offers authenticated public root comment and inline replies",()=>{
+ assert.ok(ui.includes('memberStatus==="member"'));
+ assert.ok(ui.includes('apiBase+"/api/public-community/v1/member"'));
+ assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
+ assert.ok(ui.includes('apiBase+"/api/csrf"'));
+ assert.ok(ui.includes('credentials:"include"'));
+ assert.ok(ui.includes('"X-CSRF-Token":token'));
+ assert.ok(ui.includes('Post comment'));
+ assert.ok(ui.includes('Post reply'));
+ assert.ok(ui.includes('Publier le commentaire'));
+ assert.ok(ui.includes('Publier la réponse'));
+ assert.ok(ui.includes('parentId,text:text.trim()'));
+ assert.ok(ui.includes('data.storylines.filter('));
+ assert.ok(ui.includes('storylines.map(story=>'));
+});
+test("the public site's own Next API route never accepts feedback writes",()=>{
+ assert.ok(!api.includes("export async function POST"));
+ assert.ok(api.includes('storylines:Array.isArray(data.storylines)'));
+ assert.ok(api.includes('"/api/public-community/v1"'));
+});
