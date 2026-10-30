@@ -51,7 +51,6 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const isStagingPublic=typeof window!=="undefined"&&window.location.hostname==="nextscenes-public-staging.onrender.com";
  // Keep staging sign-in and feedback within the staging environment.
  const apiBase=isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase;
- const memberSignInUrl=isStagingPublic?"https://nextscenes-staging-frontend.onrender.com/login":appUrl+"/login";
  const [connected,setConnected]=useState(false);
  const [loading,setLoading]=useState(true);
  const [updated,setUpdated]=useState("");
