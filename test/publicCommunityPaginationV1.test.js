@@ -85,7 +85,9 @@ test("Live Feedback has an actual bounded scrolling viewport even with a short p
 });
 
 test("member composer uses the staging login and API on staging and keeps production API unchanged",()=>{
- assert.ok(ui.includes('window.location.hostname==="nextscenes-public-staging.onrender.com"'));
+ assert.ok(ui.includes('pageHost==="nextscenes-public-staging.onrender.com"'));
+ assert.ok(ui.includes('pageHost==="public.staging.nextscenes.org"'));
+ assert.ok(ui.includes('isSameSiteStagingPublic?"https://api.staging.nextscenes.org":'));
  assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase'));
  assert.ok(ui.includes('window.addEventListener("focus",recheck)'));
  assert.ok(ui.includes('document.addEventListener("visibilitychange",recheck)'));
@@ -147,4 +149,29 @@ test("Live Feedback and developing-story cards contain no redundant instructiona
  assert.ok(!developing.includes("Aperçu public non disponible. Explorer dans l’application."));
  assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
  assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
+});
+
+test("staging custom host is paired only with its own staging API and app",()=>{
+ assert.ok(ui.includes('page==="public.staging.nextscenes.org"'));
+ assert.ok(ui.includes('target==="api.staging.nextscenes.org"'));
+ assert.ok(ui.includes('isSameSiteStagingPublic?"https://app.staging.nextscenes.org":'));
+ assert.ok(developing.includes('hostname==="public.staging.nextscenes.org"'));
+ assert.ok(developing.includes('setDirectoryAppUrl("https://app.staging.nextscenes.org")'));
+ assert.ok(ui.includes('page==="nextscenes.org"||page==="www.nextscenes.org"'));
+ assert.ok(ui.includes('target==="api.nextscenes.org"'));
+ assert.ok(!api.includes("export async function POST("));
+});
+test("server trusted origin uses opt-in and exact Render service identity",()=>{
+ const match=api.match(/function trustedFeedbackOrigin\(\)\{[\s\S]*?\n\}/);
+ assert.ok(match);
+ const vm=require("node:vm");
+ const probe=env=>vm.runInNewContext(match[0]+"; trustedFeedbackOrigin()",{process:{env}});
+ assert.equal(probe({RENDER_SERVICE_ID:"srv-dbi96qjbc2fs73af0i80",
+   NEXTSCENES_STAGING_SAMESITE_AUTH:"true"}),"https://api.staging.nextscenes.org");
+ assert.equal(probe({RENDER_SERVICE_ID:"srv-dbi96qjbc2fs73af0i80",
+   NEXTSCENES_STAGING_SAMESITE_AUTH:"false"}),"https://nextscenes-staging-backend.onrender.com");
+ assert.equal(probe({RENDER_SERVICE_NAME:"nextscenes-public",
+   NEXTSCENES_STAGING_SAMESITE_AUTH:"true"}),"https://api.nextscenes.org");
+ assert.equal(probe({RENDER_SERVICE_ID:"unknown",
+   NEXTSCENES_STAGING_SAMESITE_AUTH:"true"}),"");
 });
