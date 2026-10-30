@@ -29,7 +29,7 @@ function trustedFeedbackApi(base:string){
     const page=window.location.hostname.toLowerCase();
     const target=api.hostname.toLowerCase();
     if(page==="nextscenes-public-staging.onrender.com")return target==="nextscenes-staging-backend.onrender.com";
-    if(page==="public.staging.nextscenes.org")return target==="api.staging.nextscenes.org";
+    if(page==="public-staging.nextscenes.org")return target==="api-staging.nextscenes.org";
     if(page==="nextscenes.org"||page==="www.nextscenes.org")return target==="api.nextscenes.org";
     if(page==="localhost"||page==="127.0.0.1")return target==="localhost"||target==="127.0.0.1";
     return false;
@@ -51,11 +51,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const configuredApiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||process.env.NEXT_PUBLIC_API_BASE||"").trim().replace(/\/+$/,"");
  const pageHost=typeof window!=="undefined"?window.location.hostname.toLowerCase():"";
  const isStagingPublic=pageHost==="nextscenes-public-staging.onrender.com";
- const isSameSiteStagingPublic=pageHost==="public.staging.nextscenes.org";
+ const isSameSiteStagingPublic=pageHost==="public-staging.nextscenes.org";
  // Existing Render staging URLs remain unchanged until custom DNS is verified.
- const apiBase=isSameSiteStagingPublic?"https://api.staging.nextscenes.org":
+ const apiBase=isSameSiteStagingPublic?"https://api-staging.nextscenes.org":
    isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase;
- const activeAppUrl=isSameSiteStagingPublic?"https://app.staging.nextscenes.org":
+ const activeAppUrl=isSameSiteStagingPublic?"https://staging.nextscenes.org":
    isStagingPublic?"https://nextscenes-staging-frontend.onrender.com":appUrl;
  const [connected,setConnected]=useState(false);
  const [loading,setLoading]=useState(true);
