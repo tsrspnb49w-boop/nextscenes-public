@@ -136,6 +136,7 @@ export default function SiteNav() {
   const PRIMARY = useMemo(
     () => [
       { href: "/", frHref: "", en: "Home", fr: "Accueil" },
+      { href: "/help", frHref: "/help", en: "Help", fr: "Aide" },
       { href: "/#community", frHref: "#community", en: "Community", fr: "Communauté" },
     ],
     []
@@ -143,7 +144,6 @@ export default function SiteNav() {
 
   const MORE = useMemo(
     () => [
-      { href: "/help", frHref: "/help", en: "Help", fr: "Aide" },
       { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
       { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
