@@ -60,3 +60,12 @@ test("public feedback writes fail closed on staging/production API mismatch",()=
  assert.ok(ui.includes('if(!trustedFeedbackApi(apiBase))'));
  assert.ok(!ui.includes("localStorage.getItem"));
 });
+
+test("public server proxy never mixes staging and production API origins",()=>{
+ assert.ok(api.includes("function permittedUpstream(siteHost:string,apiBase:string)"));
+ assert.ok(api.includes('host==="nextscenes-public-staging.onrender.com"'));
+ assert.ok(api.includes('api.origin==="https://nextscenes-staging-backend.onrender.com"'));
+ assert.ok(api.includes('api.origin==="https://api.nextscenes.org"'));
+ assert.ok(api.includes('permittedUpstream(request.nextUrl.hostname,origin)'));
+ assert.ok(!api.includes('if(!/^https:'));
+});
