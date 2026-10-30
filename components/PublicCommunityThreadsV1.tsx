@@ -46,7 +46,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [postError,setPostError]=useState("");
  const [postSuccess,setPostSuccess]=useState("");
  const [memberStatus,setMemberStatus]=useState<"checking"|"member"|"guest"|"unavailable">("checking");
- const apiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||"").trim().replace(/\/+$/,"");
+ const apiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||process.env.NEXT_PUBLIC_API_BASE||"").trim().replace(/\/+$/,"");
  const [connected,setConnected]=useState(false);
  const [loading,setLoading]=useState(true);
  const [updated,setUpdated]=useState("");
