@@ -70,3 +70,16 @@ test("public server proxy never mixes staging and production API origins",()=>{
  assert.ok(!api.includes('if(!/^https:'));
 });
 
+
+test("public staging feed uses only its dedicated staging backend even when API env points elsewhere",()=>{
+ assert.ok(api.includes('siteHost === "nextscenes-public-staging.onrender.com"'));
+ assert.ok(api.includes('? "https://nextscenes-staging-backend.onrender.com"'));
+ assert.ok(api.includes(': configuredOrigin'));
+ assert.ok(api.includes("if(!permittedUpstream(request.nextUrl.hostname,origin)) return fail()"));
+});
+test("Live Feedback has an actual bounded scrolling viewport even with a short preview",()=>{
+ assert.ok(css.includes("height:min(440px,55vh)"));
+ assert.ok(css.includes("scrollbar-gutter:stable"));
+ assert.ok(css.includes("overflow-y:auto"));
+ assert.ok(ui.includes('aria-label={isFR?"Liste défilante des discussions publiques":"Scrollable public discussion list"}'));
+});
