@@ -124,7 +124,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    const recheck=()=>{if(document.visibilityState==="visible")void probe();};
    window.addEventListener("focus",recheck);
    document.addEventListener("visibilitychange",recheck);
-   return()=>{active=false;window.removeEventListener("focus",recheck);window.removeEventListener("visibilitychange",recheck);};
+   return()=>{active=false;window.removeEventListener("focus",recheck);document.removeEventListener("visibilitychange",recheck);};
  },[apiBase]);
  const postPublic=async(text:string,storyId:string,parentId="")=>{
    if(memberStatus!=="member"||posting||!storyId||!text.trim())return;
