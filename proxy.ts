@@ -13,7 +13,7 @@ export function proxy(request:NextRequest){
   if(serviceId!==STAGING_SERVICE_ID && serviceName!=="nextscenes-public-staging")
     return NextResponse.next();
   const incoming=[request.headers.get("host"),request.headers.get("x-forwarded-host")]
-    .map(h=>String(h||"").trim().toLowerCase().replace(/:\\d+$/,""));
+    .map(h=>String(h||"").trim().toLowerCase().replace(/:\d+$/,""));
   if(!incoming.includes(OLD_HOST))return NextResponse.next();
   const dest=new URL(request.nextUrl.pathname+request.nextUrl.search,CANONICAL_ORIGIN);
   // Staging redirect remains reversible and does not alter the user's cookies.
