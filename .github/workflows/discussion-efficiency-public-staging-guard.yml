@@ -4,6 +4,7 @@ on:
     branches:
       - candidate/discussion-efficiency-public-staging-20261030
       - review/navigation-continuity-v1b-public-20261030
+      - candidate/staging-samesite-auth-public-v1-20261030
 permissions:
   contents: read
 jobs:
