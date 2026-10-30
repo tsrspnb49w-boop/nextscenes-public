@@ -312,7 +312,7 @@ export default function SiteNav() {
   }, [authHint, isFR]);
 
   const appCtaHref = useMemo(() => {
-    if (authHint === "authed") return `${APP_URL}/storylines`;
+    if (authHint === "authed") return `${APP_URL}/?lang=${isFR ? "fr" : "en"}`;
     return isFR ? "/fr/enter" : "/enter";
   }, [authHint, isFR]);
 
