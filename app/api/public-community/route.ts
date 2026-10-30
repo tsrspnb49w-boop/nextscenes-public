@@ -17,7 +17,14 @@ function permittedUpstream(siteHost:string,apiBase:string){
   }catch{return false;}
 }
 export async function GET(request: NextRequest) {
-  const origin = String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE || "").replace(/\/+$/, "");
+  // This staging site must always read the staging backend, even if an older
+  // NEXT_PUBLIC_NEXTSCENES_API_BASE setting still points at production.
+  // The public feed contains PUBLIC storylines only; no private or general channels.
+  const siteHost = request.nextUrl.hostname.toLowerCase();
+  const configuredOrigin = String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE || "").replace(/\/+$/, "");
+  const origin = siteHost === "nextscenes-public-staging.onrender.com"
+    ? "https://nextscenes-staging-backend.onrender.com"
+    : configuredOrigin;
   const fail = () => NextResponse.json(
     { ok:false, threads:[], development:[], nextBefore:"" },
     { status:503, headers:{"Cache-Control":"no-store"} }
