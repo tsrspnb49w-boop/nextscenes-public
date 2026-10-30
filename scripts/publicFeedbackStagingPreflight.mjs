@@ -2,6 +2,8 @@
 import {pathToFileURL} from "node:url";
 const PUBLIC_ORIGIN="https://nextscenes-public-staging.onrender.com";
 const API_ORIGIN="https://nextscenes-staging-backend.onrender.com";
+const REVIEW_PUBLIC_ORIGIN="https://nextscenes-review-public-discussion.onrender.com";
+const REVIEW_API_ORIGIN="https://nextscenes-review-api-discussion.onrender.com";
 const status=(ok,message)=>({ok:Boolean(ok),message});
 export function cookieSafety(setCookie){
   const cookie=String(setCookie||"");
@@ -16,54 +18,57 @@ export function cookieSafety(setCookie){
     return status(false,"Cross-origin staging CSRF cookie requires SameSite=None");
   return status(true,"Host-only secure HttpOnly CSRF cookie issued");
 }
-export function corsSafety(headers){
+export function corsSafety(headers,expectedOrigin=PUBLIC_ORIGIN){
   const origin=headers.get("access-control-allow-origin");
   const credentials=headers.get("access-control-allow-credentials");
-  return status(origin===PUBLIC_ORIGIN&&credentials==="true",
-    origin===PUBLIC_ORIGIN&&credentials==="true"?
+  return status(origin===expectedOrigin&&credentials==="true",
+    origin===expectedOrigin&&credentials==="true"?
       "Exact public-staging origin and credentials permitted":
       "Staging CORS must allow only the expected public-staging origin with credentials");
 }
 async function request(url,init={}){
   return fetch(url,{...init,redirect:"error",signal:AbortSignal.timeout(12000)});
 }
-export async function runPreflight(fetcher=request){
+export async function runPreflight(fetcher=request,profile="staging"){
+  if(profile!=="staging"&&profile!=="review")throw new Error("Unknown read-only preflight target");
+  const publicOrigin=profile==="review"?REVIEW_PUBLIC_ORIGIN:PUBLIC_ORIGIN;
+  const apiOrigin=profile==="review"?REVIEW_API_ORIGIN:API_ORIGIN;
   const results=[];
   async function check(title,fn){
     try{const r=await fn();results.push({title,...r});}
     catch{results.push({title,ok:false,message:"Request failed; check staging connectivity or TLS"});}
   }
   await check("Public staging read-only proxy",async()=>{
-    const r=await fetcher(PUBLIC_ORIGIN+"/api/public-community");
+    const r=await fetcher(publicOrigin+"/api/public-community");
     const d=await r.json();
     return status(r.ok&&d?.ok===true&&Array.isArray(d.threads),
       r.ok?"Public-only discussion response available":"Public community unavailable");
   });
   await check("Public API authentication requires sign-in",async()=>{
-    const r=await fetcher(API_ORIGIN+"/api/public-community/v1/member",{
-      headers:{Origin:PUBLIC_ORIGIN,Accept:"application/json"}
+    const r=await fetcher(apiOrigin+"/api/public-community/v1/member",{
+      headers:{Origin:publicOrigin,Accept:"application/json"}
     });
     return status(r.status===401,
       r.status===401?"Unauthenticated request correctly rejected":
       "Expected HTTP 401 from staging member probe (requires review backend)");
   });
   await check("CSRF cookie origin and attributes",async()=>{
-    const r=await fetcher(API_ORIGIN+"/api/csrf",{
-      headers:{Origin:PUBLIC_ORIGIN,Accept:"application/json"}
+    const r=await fetcher(apiOrigin+"/api/csrf",{
+      headers:{Origin:publicOrigin,Accept:"application/json"}
     });
     if(!r.ok)return status(false,"CSRF bootstrap unavailable");
     const cookie=cookieSafety(r.headers.get("set-cookie"));
-    const cors=corsSafety(r.headers);
+    const cors=corsSafety(r.headers,publicOrigin);
     return status(cookie.ok&&cors.ok,cookie.message+"; "+cors.message);
   });
   await check("CORS preflight for comment POST",async()=>{
-    const r=await fetcher(API_ORIGIN+"/api/public-community/v1/feedback",{
+    const r=await fetcher(apiOrigin+"/api/public-community/v1/feedback",{
       method:"OPTIONS",
-      headers:{Origin:PUBLIC_ORIGIN,
+      headers:{Origin:publicOrigin,
         "Access-Control-Request-Method":"POST",
         "Access-Control-Request-Headers":"content-type,x-csrf-token"}
     });
-    const cors=corsSafety(r.headers);
+    const cors=corsSafety(r.headers,publicOrigin);
     const allowedMethods=r.headers.get("access-control-allow-methods")||"";
     const allowedHeaders=r.headers.get("access-control-allow-headers")||"";
     const ok=r.ok&&cors.ok&&/\bPOST\b/i.test(allowedMethods)&&/x-csrf-token/i.test(allowedHeaders);
@@ -73,7 +78,8 @@ export async function runPreflight(fetcher=request){
   return results;
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
-  const checks=await runPreflight();
+  const profile=process.argv.includes("--review")?"review":"staging";
+  const checks=await runPreflight(request,profile);
   for(const check of checks){
     process.stdout.write((check.ok?"PASS ":"FAIL ")+check.title+": "+check.message+"\n");
   }
