@@ -50,3 +50,13 @@ test("the public site's own Next API route never accepts feedback writes",()=>{
  assert.ok(api.includes('storylines:Array.isArray(data.storylines)'));
  assert.ok(api.includes('"/api/public-community/v1"'));
 });
+
+test("public feedback writes fail closed on staging/production API mismatch",()=>{
+ assert.ok(ui.includes('function trustedFeedbackApi(base:string)'));
+ assert.ok(ui.includes('page==="nextscenes-public-staging.onrender.com"'));
+ assert.ok(ui.includes('target==="nextscenes-staging-backend.onrender.com"'));
+ assert.ok(ui.includes('page==="nextscenes.org"||page==="www.nextscenes.org"'));
+ assert.ok(ui.includes('target==="api.nextscenes.org"'));
+ assert.ok(ui.includes('if(!trustedFeedbackApi(apiBase))'));
+ assert.ok(!ui.includes("localStorage.getItem"));
+});
