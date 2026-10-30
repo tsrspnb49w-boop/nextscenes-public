@@ -11,8 +11,6 @@ function permittedUpstream(siteHost:string,apiBase:string){
     const host=siteHost.toLowerCase();
     if(host==="nextscenes-public-staging.onrender.com")
       return api.origin==="https://nextscenes-staging-backend.onrender.com";
-    if(host==="nextscenes-review-public-discussion.onrender.com")
-      return api.origin==="https://nextscenes-review-api-discussion.onrender.com";
     if(host==="nextscenes.org"||host==="www.nextscenes.org"||host==="nextscenes-public.onrender.com")
       return api.origin==="https://api.nextscenes.org";
     return false;
