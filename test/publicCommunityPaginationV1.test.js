@@ -92,7 +92,9 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
  assert.ok(ui.includes('if(active)setMemberStatus(result.ok?"member":result.status===401?"guest":"unavailable")'));
- assert.ok(ui.includes('memberStatus==="member"&&item.storyId&&<button'));
+ assert.ok(ui.includes('item.storyId&&<button'));
+ assert.ok(ui.includes('memberStatus!=="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('href={memberSignInUrl}'));
  assert.ok(ui.includes('memberStatus==="member"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('credentials:"include"'));
 });
