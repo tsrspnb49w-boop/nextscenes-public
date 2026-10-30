@@ -67,9 +67,7 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
          <h3>{title}</h3>
          {found?.author && item.key!=="sin" ? <p className={styles.author}>{found.author}</p>:null}
          <a href={link} className={styles.link}>{language==="fr"?"Découvrir l’histoire":"Explore story"} →</a>
-         {!found?.public && item.key!=="ugo" && <p className={styles.availability}>
-          {language==="fr"?"Aperçu public non disponible. Explorer dans l’application.":"Public preview unavailable. Explore in the app."}
-         </p>}
+
        </div>
      </article>;
    })}
