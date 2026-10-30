@@ -46,7 +46,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [postError,setPostError]=useState("");
  const [postSuccess,setPostSuccess]=useState("");
  const [memberStatus,setMemberStatus]=useState<"checking"|"member"|"guest"|"unavailable">("checking");
- const apiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||process.env.NEXT_PUBLIC_API_BASE||"").trim().replace(/\/+$/,"");
+ const configuredApiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||process.env.NEXT_PUBLIC_API_BASE||"").trim().replace(/\/+$/,"");
+ const isStagingPublic=typeof window!=="undefined"&&window.location.hostname==="nextscenes-public-staging.onrender.com";
+ // Keep staging sign-in and feedback within the staging environment.
+ const apiBase=isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase;
+ const memberSignInUrl=isStagingPublic?"https://nextscenes-staging-frontend.onrender.com/login":appUrl+"/login";
  const [connected,setConnected]=useState(false);
  const [loading,setLoading]=useState(true);
  const [updated,setUpdated]=useState("");
@@ -117,7 +121,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      }catch{if(active)setMemberStatus("unavailable");}
    };
    void probe();
-   return()=>{active=false;};
+   const recheck=()=>{if(document.visibilityState==="visible")void probe();};
+   window.addEventListener("focus",recheck);
+   document.addEventListener("visibilitychange",recheck);
+   return()=>{active=false;window.removeEventListener("focus",recheck);window.removeEventListener("visibilitychange",recheck);};
  },[apiBase]);
  const postPublic=async(text:string,storyId:string,parentId="")=>{
    if(memberStatus!=="member"||posting||!storyId||!text.trim())return;
@@ -240,7 +247,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    </>}
    {memberStatus==="guest"&&<p className={styles.bottomNote}>
     {isFR?"Connectez-vous à NextScenes pour commenter et répondre.":"Sign in to NextScenes to comment and reply."}{" "}
-    <a href={appUrl+"/login"}>{isFR?"Se connecter":"Sign in"}</a>
+    <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
    </p>}
    {memberStatus==="unavailable"&&<p className={styles.bottomNote}>
     {isFR?"Les réponses directes ne sont pas disponibles dans cette session. Ouvrez une histoire dans l’application pour participer.":"Direct replies are unavailable in this session. Open a story in the app to participate."}
