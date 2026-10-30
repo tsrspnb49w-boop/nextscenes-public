@@ -7,6 +7,7 @@ const root=path.resolve(__dirname,"..");
 const api=fs.readFileSync(path.join(root,"app/api/public-community/route.ts"),"utf8");
 const ui=fs.readFileSync(path.join(root,"components/PublicCommunityThreadsV1.tsx"),"utf8");
 const css=fs.readFileSync(path.join(root,"components/PublicCommunityThreadsV1.module.css"),"utf8");
+const developing=fs.readFileSync(path.join(root,"components/DevelopingStoriesV1.tsx"),"utf8");
 test("public read proxy does not expose private or direct feedback writes",()=>{
  assert.ok(api.includes('"/api/public-community/v1"'));
  assert.ok(!api.includes('origin + "/api/feedback/live"'));
@@ -97,4 +98,27 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('href={memberSignInUrl}'));
  assert.ok(ui.includes('memberStatus==="member"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('credentials:"include"'));
+});
+
+test("public feedback uses the existing shared replies endpoint for clicked comments and emoji",()=>{
+ assert.ok(ui.includes('const activateReply=(root:Thread,mention="")=>'));
+ assert.ok(ui.includes('onClick={()=>activateReply(item)}'));
+ assert.ok(ui.includes('onClick={()=>activateReply(item,"@"+reply.author+" ")}'));
+ assert.ok(ui.includes('const quickEmojis=["👍","❤️","😊","👏"]'));
+ assert.ok(ui.includes('void postPublic(emoji,root.storyId,root.id)'));
+ assert.ok(ui.includes('onClick={()=>addEmoji(item,emoji)}'));
+ assert.ok(ui.includes('memberStatus!=="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('memberStatus==="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
+ assert.ok(css.includes(".commentTrigger"));
+ assert.ok(css.includes(".replyCommentTrigger"));
+ assert.ok(css.includes(".emojiActions"));
+});
+test("both developing stories have Explore links that respect private reading permissions",()=>{
+ assert.ok(developing.includes('return directoryAppUrl+"/storylines"+(term?"?q="+encodeURIComponent(term):"");'));
+ assert.ok(developing.includes('key==="windows"?"52":key==="sin"?"S.I.N.":""'));
+ assert.ok(developing.includes('https://nextscenes-staging-frontend.onrender.com'));
+ assert.ok(developing.includes('item?.public && /^\\/reader-view'));
+ assert.ok(developing.includes('Public preview unavailable. Explore in the app.'));
+ assert.ok(!developing.includes(': <p className={styles.availability}'));
 });
