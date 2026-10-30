@@ -203,6 +203,37 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     </select>
    </label>
   </div>
+  <div className={styles.participation} aria-label={isFR?"Participer aux discussions":"Join public discussions"}>
+   {memberStatus==="member"&&<>
+    <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(commentText,commentStory)}}>
+     <strong>{isFR?"Écrire un commentaire public":"Write a public comment"}</strong>
+     <label className={styles.field}>
+      <span>{isFR?"Choisissez une histoire publique":"Choose a public storyline"}</span>
+      <select value={commentStory} onChange={e=>setCommentStory(e.target.value)}>
+       {storylines.map(story=><option key={story.id} value={story.id}>{story.title}</option>)}
+      </select>
+     </label>
+     <label className={styles.field}>
+      <span>{isFR?"Votre commentaire":"Your comment"}</span>
+      <textarea value={commentText} maxLength={2000} rows={3}
+       onChange={e=>setCommentText(e.target.value)}
+       placeholder={isFR?"Écrivez votre commentaire…":"Write your comment…"} />
+     </label>
+     <button type="submit" disabled={posting||!commentText.trim()||!commentStory}>
+      {posting?(isFR?"Publication…":"Posting…"):(isFR?"Publier le commentaire":"Post comment")}
+     </button>
+    </form>
+   </>}
+   {memberStatus==="guest"&&<p className={styles.bottomNote}>
+    {isFR?"Connectez-vous à NextScenes pour commenter et répondre.":"Sign in to NextScenes to comment and reply."}{" "}
+    <a href={appUrl+"/login"}>{isFR?"Se connecter":"Sign in"}</a>
+   </p>}
+   {memberStatus==="unavailable"&&<p className={styles.bottomNote}>
+    {isFR?"Les réponses directes ne sont pas disponibles dans cette session. Ouvrez une histoire dans l’application pour participer.":"Direct replies are unavailable in this session. Open a story in the app to participate."}
+   </p>}
+   {postError&&<p role="alert" className={styles.error}>{postError}</p>}
+   {postSuccess&&<p role="status" className={styles.success}>{postSuccess}</p>}
+  </div>
   <div className={styles.count} aria-live="polite">
     {connected ? `${t.showing} ${Math.min(visibleItems.length,filtered.length)} ${t.of} ${filtered.length}` : loading ? (isFR?"Chargement…":"Loading…") : t.unavail}
   </div>
@@ -234,12 +265,27 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      <div className={styles.entryActions}>
       <a href={safeStoryHref(appUrl,item)}>{t.open} →</a>
       <a href={safeStoryHref(appUrl,item).includes("?storyId=") ? `${safeStoryHref(appUrl,item)}&tab=participate` : safeStoryHref(appUrl,item)}>{t.discuss} →</a>
+      {memberStatus==="member"&&item.storyId&&<button type="button" className={styles.replyAction}
+       onClick={()=>{setReplyTo(replyTo===item.id?"":item.id);setReplyText("");}}>
+       {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre ici":"Reply here")}
+      </button>}
      </div>
+     {memberStatus==="member"&&replyTo===item.id&&item.storyId&&
+      <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id)}}>
+       <label className={styles.field}><span>{isFR?"Votre réponse":"Your reply"}</span>
+        <textarea value={replyText} maxLength={2000} rows={3}
+         onChange={e=>setReplyText(e.target.value)}
+         placeholder={isFR?"Écrivez votre réponse…":"Write your reply…"} />
+       </label>
+       <button type="submit" disabled={posting||!replyText.trim()}>
+        {posting?(isFR?"Publication…":"Posting…"):(isFR?"Publier la réponse":"Post reply")}
+       </button>
+      </form>}
    </article>)}
   </div>
   {nextBefore&&<button className={styles.more} type="button" disabled={loadingOlder}
    onClick={()=>void loadOlder()}>{loadingOlder?t.loadingMore:t.more}</button>}
   {olderError&&<p role="alert" className={styles.bottomNote}>{t.olderError}</p>}
-  <p className={styles.bottomNote}>{t.signIn}</p>
+  {memberStatus!=="member"&&<p className={styles.bottomNote}>{t.signIn}</p>}
  </section>;
 }
