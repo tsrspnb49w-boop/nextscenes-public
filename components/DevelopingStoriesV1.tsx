@@ -23,7 +23,12 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
  },[]);
  const safeHref=(item:Development|undefined,key:string)=>{
    if(key==="ugo")return appUrl+"/reader-view?storyId=6a2984a9e2727b95968cf87c";
-   return item?.public && /^\/reader-view\?storyId=[a-zA-Z0-9-]{12,64}$/.test(item.href||"") ? appUrl+item.href : "";
+   if(item?.public && /^\/reader-view\?storyId=[a-zA-Z0-9-]{12,64}$/.test(item.href||""))
+     return appUrl+item.href;
+   // No public preview? Link to the existing, permission-aware Storylines search
+   // rather than hiding Explore or inventing an unpublished manuscript URL.
+   const term=key==="windows"?"52 Windows":key==="sin"?"World of S.I.N.":"";
+   return appUrl+"/storylines"+(term?"?q="+encodeURIComponent(term):"");
  };
  const safeCover=(url:string)=>{
    if(url.startsWith("/"))return url;
@@ -55,8 +60,10 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
          <small className={styles.status}>{language==="fr"?"EN COURS DE CRÉATION":"IN DEVELOPMENT"}</small>
          <h3>{title}</h3>
          {found?.author && item.key!=="sin" ? <p className={styles.author}>{found.author}</p>:null}
-         {link ? <a href={link} className={styles.link}>{language==="fr"?"Découvrir l’histoire":"Explore story"} →</a>
-               : <p className={styles.availability}>{language==="fr"?"Aperçu public à venir":"Public preview not yet available"}</p>}
+         <a href={link} className={styles.link}>{language==="fr"?"Découvrir l’histoire":"Explore story"} →</a>
+         {!found?.public && item.key!=="ugo" && <p className={styles.availability}>
+          {language==="fr"?"Aperçu public non disponible. Explorer dans l’application.":"Public preview unavailable. Explore in the app."}
+         </p>}
        </div>
      </article>;
    })}
