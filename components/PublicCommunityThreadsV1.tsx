@@ -29,6 +29,7 @@ function trustedFeedbackApi(base:string){
     const page=window.location.hostname.toLowerCase();
     const target=api.hostname.toLowerCase();
     if(page==="nextscenes-public-staging.onrender.com")return target==="nextscenes-staging-backend.onrender.com";
+    if(page==="nextscenes-review-public-discussion.onrender.com")return target==="nextscenes-review-api-discussion.onrender.com";
     if(page==="nextscenes.org"||page==="www.nextscenes.org")return target==="api.nextscenes.org";
     if(page==="localhost"||page==="127.0.0.1")return target==="localhost"||target==="127.0.0.1";
     return false;
