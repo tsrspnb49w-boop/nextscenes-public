@@ -1,13 +1,31 @@
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:18px 0}
-.thread{display:flex;flex-direction:column;gap:9px;min-width:0;padding:19px;border:1px solid #cee4d7;background:#fff;border-radius:17px;min-height:225px}
-.thread h3{font-size:17px;color:#0b4b34;margin:0}
-.label{font-size:10px;letter-spacing:.1em;color:#06754d;font-weight:850}
-.meta{font-size:12px;color:#657669;margin:0}
-.comment{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.55;color:#273f36;margin:0}
-.empty{font-size:13px;line-height:1.6;color:#5a7368;margin:0}
-.link{font-size:13px;font-weight:800;color:#07663f;text-decoration:none;margin-top:auto}
-.replies{margin:3px 0;border-radius:12px;border:1px solid #d7e6dc;background:#f4faf6}
-.replies summary{padding:11px;cursor:pointer;font-size:13px;color:#075b37;font-weight:800}
-.reply{padding:10px 12px;border-top:1px solid #dbe8df}
-.reply p:last-child{white-space:pre-wrap;overflow-wrap:anywhere;margin:5px 0 0;color:#2c483b;font-size:13px;line-height:1.55}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.thread{min-height:130px}}
+.livePanel{border:1px solid #cfdfd4;border-radius:23px;padding:clamp(18px,2.5vw,30px);background:linear-gradient(130deg,#fffef9 0%,#f1f8f4 100%);box-shadow:0 12px 34px #0a503011}
+.liveHead{display:flex;gap:14px;justify-content:space-between;align-items:start;border-bottom:1px solid #d6e5da;padding-bottom:18px}
+.liveHead h3{font-family:Georgia,serif;font-size:clamp(23px,2.3vw,32px);margin:0 0 9px;color:#104a35}
+.liveHead p{font-size:14px;line-height:1.5;color:#567165;margin:0}
+.liveActions{display:flex;align-items:center;justify-content:flex-end;gap:13px;flex-wrap:wrap}
+.liveActions small{color:#546d62;font-size:12px}
+.liveActions button,.more{background:#fffdf5;color:#065538;border:1px solid #94bba5;border-radius:30px;padding:10px 16px;font-weight:750;cursor:pointer}
+.controls{display:grid;grid-template-columns:1fr 1.2fr 190px;gap:12px;margin-top:20px}
+.field{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#3d6552;font-weight:750}
+.field select,.field input{border:1px solid #c9ddd2;border-radius:11px;background:#fff;color:#163f2e;min-height:44px;padding:10px 12px;width:100%;font-size:14px}
+.count{font-size:12px;color:#637469;margin:15px 1px 9px}
+.feed{max-height:650px;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:12px;padding-right:5px}
+.entry{background:#f1f9f3;border:1px solid #cbe2d1;border-radius:18px;padding:18px 20px}
+.entryTop{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center;gap:9px;margin-bottom:12px}
+.studioBadge,.homeBadge{padding:5px 9px;border-radius:30px;font-size:11px;font-weight:850;border:1px solid #9fdfb8;background:#d8f4e1;color:#075338}
+.homeBadge{border-color:#b9cced;background:#e9f0fc;color:#254e93}
+.entryMeta{font-size:12px;color:#5b7066}
+.storyLine{color:#384e43;font-size:14px;margin:0 0 10px;line-height:1.55}
+.storyLine strong{color:#153b2a}
+.comment{font-size:15px;line-height:1.65;color:#273e32;white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 12px}
+.entryActions{display:flex;gap:14px;flex-wrap:wrap}
+.entryActions a{border:1px solid #9db9a7;background:#fffdf6;border-radius:24px;color:#064c34;font-size:13px;font-weight:800;padding:8px 14px;text-decoration:none}
+.replyToggle{border:0;background:transparent;text-decoration:underline;color:#02623d;cursor:pointer;font-size:13px;font-weight:800;padding:5px 0 11px}
+.replyList{margin-bottom:15px;padding-left:18px;border-left:3px solid #abd9bd}
+.reply{padding:12px;background:#fff;border:1px solid #d9e8dd;border-radius:10px;margin:7px 0}
+.replyMeta{color:#567266;font-size:12px}
+.reply p{color:#263f32;white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.6;margin:6px 0 0}
+.empty{font-size:14px;color:#567266;line-height:1.65;text-align:center;padding:35px 12px}
+.more{margin-top:16px}.bottomNote{font-size:12px;color:#64746a;margin:14px 0 0}
+@media(max-width:900px){.controls{grid-template-columns:1fr 1fr}.controls .field:last-child{grid-column:span 2}}
+@media(max-width:600px){.liveHead{flex-direction:column}.liveActions{justify-content:start}.controls{grid-template-columns:1fr}.controls .field:last-child{grid-column:auto}.entry{padding:14px}.feed{max-height:600px}}
