@@ -46,7 +46,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [posting,setPosting]=useState(false);
  const [postError,setPostError]=useState("");
  const [postSuccess,setPostSuccess]=useState("");
- const [memberStatus,setMemberStatus]=useState<"checking"|"member"|"guest"|"unavailable">("checking");
+ const [memberStatus,setMemberStatus]=useState<"checking"|"writer"|"reader"|"guest"|"unavailable">("checking");
  const configuredApiBase=String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE||process.env.NEXT_PUBLIC_API_BASE||"").trim().replace(/\/+$/,"");
  const isStagingPublic=typeof window!=="undefined"&&window.location.hostname==="nextscenes-public-staging.onrender.com";
  // Keep staging sign-in and feedback within the staging environment.
@@ -118,7 +118,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
        const result=await fetch(apiBase+"/api/public-community/v1/member",{
          cache:"no-store",credentials:"include",headers:{Accept:"application/json"}
        });
-       if(active)setMemberStatus(result.ok?"member":result.status===401?"guest":"unavailable");
+       if(result.ok){
+          const identity=await result.json();
+          if(active)setMemberStatus(identity?.canWrite===true?"writer":"reader");
+        }else if(active)setMemberStatus(result.status===401?"guest":"unavailable");
      }catch{if(active)setMemberStatus("unavailable");}
    };
    void probe();
@@ -128,7 +131,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    return()=>{active=false;window.removeEventListener("focus",recheck);document.removeEventListener("visibilitychange",recheck);};
  },[apiBase]);
  const postPublic=async(text:string,storyId:string,parentId="")=>{
-   if(memberStatus!=="member"||posting||!storyId||!text.trim())return;
+   if(memberStatus!=="writer"||posting||!storyId||!text.trim())return;
    setPosting(true);setPostError("");setPostSuccess("");
    try{
      if(!trustedFeedbackApi(apiBase))throw new Error("API unavailable");
@@ -146,6 +149,12 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      });
      if(!response.ok){
        if(response.status===401)setMemberStatus("guest");
+       if(response.status===403){
+         const denial=await response.json().catch(()=>({}));
+         const own=String(denial?.message||"").includes("own post");
+         if(!own)setMemberStatus("reader");
+         throw new Error(own?(isFR?"Vous ne pouvez pas répondre à votre propre message.":"You cannot reply to your own post."):(isFR?"Seuls les auteurs autorisés peuvent participer.":"Writer access is required to participate."));
+       }
        throw new Error("Feedback rejected");
      }
      const result=await response.json();
@@ -161,8 +170,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
        setCommentText("");setSelected("all");
        setLoading(true);await refresh({resetPaging:true});
      }
-   }catch{
-     setPostError(isFR?"Publication impossible. Vérifiez votre session.":"Could not post. Check your sign-in session.");
+   }catch(e){
+     const message=e instanceof Error?e.message:"";
+     setPostError(/own post|propre message|Writer access|auteurs autorisés/.test(message)?message:
+       (isFR?"Publication impossible. Vérifiez votre session.":"Could not post. Check your writer sign-in session."));
    }finally{setPosting(false);}
  };
  const activateReply=(root:Thread,mention="")=>{
@@ -172,11 +183,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    setPostSuccess("");
  };
  const addEmoji=(root:Thread,emoji:string)=>{
-   if(memberStatus==="member" && root.storyId && !posting){
+   if(memberStatus==="writer" && root.storyId && !posting){
      void postPublic(emoji,root.storyId,root.id);
      return;
    }
-   activateReply(root,emoji);
+   if(memberStatus==="writer")activateReply(root,emoji);
  };
  const storyTitles=useMemo(()=>Array.from(new Set(threads.map(t=>t.storyTitle))).sort(),[threads]);
  const filtered=useMemo(()=>{
@@ -239,7 +250,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    </label>
   </div>
   <div className={styles.participation} aria-label={isFR?"Participer aux discussions":"Join public discussions"}>
-   {memberStatus==="member"&&<>
+   {memberStatus==="writer"&&<>
     <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(commentText,commentStory)}}>
      <strong>{isFR?"Écrire un commentaire public":"Write a public comment"}</strong>
      <label className={styles.field}>
@@ -260,8 +271,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     </form>
    </>}
    {memberStatus==="guest"&&<p className={styles.bottomNote}>
-    {isFR?"Connectez-vous à NextScenes pour commenter et répondre.":"Sign in to NextScenes to comment and reply."}{" "}
+    {isFR?"Connectez-vous avec un compte auteur pour commenter ou répondre.":"Sign in with a writer account to comment or reply."}{" "}
     <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
+   </p>}
+   {memberStatus==="reader"&&<p className={styles.bottomNote}>
+    {isFR?"Lecture seule. Seuls les auteurs autorisés peuvent participer.":"Read-only access. Only authorised writers can post and reply."}
    </p>}
    {memberStatus==="unavailable"&&<p className={styles.bottomNote}>
     {isFR?"Les réponses directes ne sont pas disponibles dans cette session. Ouvrez une histoire dans l’application pour participer.":"Direct replies are unavailable in this session. Open a story in the app to participate."}
@@ -284,11 +298,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       <span className={styles.entryMeta}>{item.author} · {formatDate(item.createdAt,language)}</span>
      </div>
      <p className={styles.storyLine}><strong>{item.storyTitle}</strong>{item.forum?` · ${item.forum}`:""}</p>
-     <button type="button" className={styles.commentTrigger}
+     {memberStatus==="writer"?<button type="button" className={styles.commentTrigger}
        aria-label={isFR?"Répondre au commentaire de "+item.author:"Reply to comment by "+item.author}
-       onClick={()=>activateReply(item)}>
-       {item.text}
-     </button>
+       onClick={()=>activateReply(item)}>{item.text}</button>
+       :<p className={styles.comment}>{item.text}</p>}
      {Array.isArray(item.replies)&&item.replies.length>0&&<>
       <button className={styles.replyToggle} type="button" aria-expanded={!!expanded[item.id]}
        onClick={()=>setExpanded(prev=>({...prev,[item.id]:!prev[item.id]}))}>
@@ -297,22 +310,21 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       {expanded[item.id]&&<div className={styles.replyList}>
        {item.replies.map(reply=><div className={styles.reply} key={reply.id}>
         <span className={styles.replyMeta}>{reply.author} · {formatDate(reply.createdAt,language)}</span>
-        <button type="button" className={styles.replyCommentTrigger}
+        {memberStatus==="writer"?<button type="button" className={styles.replyCommentTrigger}
           aria-label={isFR?"Répondre à "+reply.author:"Reply to "+reply.author}
-          onClick={()=>activateReply(item,"@"+reply.author+" ")}>
-          {reply.text}
-        </button>
+          onClick={()=>activateReply(item,"@"+reply.author+" ")}>{reply.text}</button>
+          :<p>{reply.text}</p>}
        </div>)}
       </div>}
      </>}
      <div className={styles.entryActions}>
       <a href={safeStoryHref(appUrl,item)}>{t.open} →</a>
       <a href={safeStoryHref(appUrl,item).includes("?storyId=") ? `${safeStoryHref(appUrl,item)}&tab=participate` : safeStoryHref(appUrl,item)}>{t.discuss} →</a>
-      {item.storyId&&<button type="button" className={styles.replyAction}
+      {memberStatus==="writer"&&item.storyId&&<button type="button" className={styles.replyAction}
        onClick={()=>replyTo===item.id?setReplyTo(""):activateReply(item)}>
        {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
       </button>}
-      {item.storyId&&<div className={styles.emojiActions} role="group"
+      {memberStatus==="writer"&&item.storyId&&<div className={styles.emojiActions} role="group"
        aria-label={isFR?"Réactions rapides":"Quick emoji replies"}>
        {quickEmojis.map(emoji=><button type="button" key={emoji}
         onClick={()=>addEmoji(item,emoji)}
@@ -320,20 +332,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
         aria-label={(isFR?"Envoyer ":"Send ")+emoji}>{emoji}</button>)}
       </div>}
      </div>
-     {memberStatus!=="member"&&replyTo===item.id&&item.storyId&&
-      <div className={styles.composer}>
-       <label className={styles.field}>
-        <span>{isFR?"Votre réponse":"Your reply"}</span>
-        <textarea value={replyText} maxLength={2000} rows={3}
-         onChange={e=>setReplyText(e.target.value)}
-         placeholder={isFR?"Écrivez votre réponse…":"Write your reply…"} />
-       </label>
-       <p className={styles.bottomNote}>
-        {isFR?"Connectez-vous pour envoyer cette réponse.":"Sign in to send this reply."}{" "}
-        <a href={memberSignInUrl}>{isFR?"Se connecter":"Sign in"}</a>
-       </p>
-      </div>}
-     {memberStatus==="member"&&replyTo===item.id&&item.storyId&&
+     {memberStatus==="writer"&&replyTo===item.id&&item.storyId&&
       <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id)}}>
        <label className={styles.field}><span>{isFR?"Votre réponse":"Your reply"}</span>
         <textarea value={replyText} maxLength={2000} rows={3}
@@ -349,6 +348,6 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   {nextBefore&&<button className={styles.more} type="button" disabled={loadingOlder}
    onClick={()=>void loadOlder()}>{loadingOlder?t.loadingMore:t.more}</button>}
   {olderError&&<p role="alert" className={styles.bottomNote}>{t.olderError}</p>}
-  {memberStatus!=="member"&&<p className={styles.bottomNote}>{t.signIn}</p>}
+  {memberStatus==="guest"&&<p className={styles.bottomNote}>{isFR?"Les visiteurs peuvent lire. Connectez-vous en tant qu’auteur pour participer.":"Visitors can read. Sign in as a writer to participate."}</p>}
  </section>;
 }
