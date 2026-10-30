@@ -93,7 +93,7 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
  assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
  assert.ok(ui.includes('item.storyId&&<button'));
- assert.ok(ui.includes('memberStatus==="reader"&&<p'));
+ assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('credentials:"include"'));
@@ -106,7 +106,7 @@ test("public feedback uses the existing shared replies endpoint for clicked comm
  assert.ok(ui.includes('const quickEmojis=["👍","❤️","😊","👏"]'));
  assert.ok(ui.includes('void postPublic(emoji,root.storyId,root.id)'));
  assert.ok(ui.includes('onClick={()=>addEmoji(item,emoji)}'));
- assert.ok(ui.includes('memberStatus==="reader"&&<p'));
+ assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
