@@ -20,6 +20,20 @@ function safeStoryHref(appUrl:string,t:Thread){
  return /^\/reader-view\?storyId=[a-zA-Z0-9-]{12,64}$/.test(path)
    ? appUrl+path : appUrl+"/storylines";
 }
+// Fail closed if a staging page was accidentally configured to post to production.
+function trustedFeedbackApi(base:string){
+  if(typeof window==="undefined")return false;
+  try{
+    const api=new URL(base);
+    if(api.protocol!=="https:"||api.username||api.password||api.pathname!=="/"||api.search||api.hash)return false;
+    const page=window.location.hostname.toLowerCase();
+    const target=api.hostname.toLowerCase();
+    if(page==="nextscenes-public-staging.onrender.com")return target==="nextscenes-staging-backend.onrender.com";
+    if(page==="nextscenes.org"||page==="www.nextscenes.org")return target==="api.nextscenes.org";
+    if(page==="localhost"||page==="127.0.0.1")return target==="localhost"||target==="127.0.0.1";
+    return false;
+  }catch{return false;}
+}
 export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en"|"fr";appUrl:string}){
  const isFR=language==="fr";
  const [threads,setThreads]=useState<Thread[]>([]);
@@ -94,7 +108,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  useEffect(()=>{
    let active=true;
    const probe=async()=>{
-     if(!/^https:\/\/[^/]+$/i.test(apiBase)){if(active)setMemberStatus("unavailable");return;}
+     if(!trustedFeedbackApi(apiBase)){if(active)setMemberStatus("unavailable");return;}
      try{
        const result=await fetch(apiBase+"/api/public-community/v1/member",{
          cache:"no-store",credentials:"include",headers:{Accept:"application/json"}
@@ -109,7 +123,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    if(memberStatus!=="member"||posting||!storyId||!text.trim())return;
    setPosting(true);setPostError("");setPostSuccess("");
    try{
-     if(!/^https:\/\/[^/]+$/i.test(apiBase))throw new Error("API unavailable");
+     if(!trustedFeedbackApi(apiBase))throw new Error("API unavailable");
      const csrfResponse=await fetch(apiBase+"/api/csrf",{
        cache:"no-store",credentials:"include",headers:{Accept:"application/json"}
      });
