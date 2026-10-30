@@ -46,7 +46,7 @@ const copy = {
     covers: "Stories in progress & published books",
     communityEyebrow: "COMMUNITY CONVERSATIONS",
     communityTitle: "Stories come alive in conversation.",
-    communityLead: "Read real public comments, expand the replies and follow the conversation into the story. Private drafts and Beta Feedback never appear here.",
+    communityLead: "Live Feedback from public storylines and Writer Studio Reader Response. Read the comments, see replies and continue the discussion. Private and Beta Feedback remain protected.",
     joinCommunity: "Explore public storylines",
     discuss: "Open public story",
     motionEyebrow: "STORIES IN MOTION",
@@ -101,7 +101,7 @@ const copy = {
     covers: "Récits en cours et livres publiés",
     communityEyebrow: "DISCUSSIONS DE LA COMMUNAUTÉ",
     communityTitle: "Les histoires vivent dans les échanges.",
-    communityLead: "Lisez les échanges publics, ouvrez les réponses et poursuivez la conversation dans le récit. Les brouillons privés et retours bêta restent protégés.",
+    communityLead: "Retours en direct des récits publics et des réponses aux lecteurs dans Writer Studio. Consultez les commentaires et leurs réponses. Les échanges privés restent protégés.",
     joinCommunity: "Explorer les histoires publiques",
     discuss: "Ouvrir ce récit public",
     motionEyebrow: "RÉCITS EN MOUVEMENT",
@@ -303,7 +303,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.socialConversationLinks}>
             <a href="https://www.facebook.com/nextscenes" target="_blank" rel="noopener noreferrer">Facebook · {language === "fr" ? "Discussions publiques" : "Public discussions"} ↗</a>
             <a href="https://www.instagram.com/nextscenes/" target="_blank" rel="noopener noreferrer">Instagram · {language === "fr" ? "Publications et commentaires" : "Posts and comments"} ↗</a>
-            <span>{language === "fr" ? "X · Compte officiel à confirmer" : "X · Official account pending verification"}</span>
+            <a href="https://www.youtube.com/@NextScenesOfficial" target="_blank" rel="noopener noreferrer">YouTube · {language === "fr" ? "Vidéos et commentaires" : "Videos and comments"} ↗</a>
           </div>
         </div>
       </section>
