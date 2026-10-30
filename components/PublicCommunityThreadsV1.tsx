@@ -109,7 +109,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   <div className={styles.count} aria-live="polite">
     {connected ? `${t.showing} ${Math.min(visibleItems.length,filtered.length)} ${t.of} ${filtered.length}` : loading ? (isFR?"Chargement…":"Loading…") : t.unavail}
   </div>
-  <div className={styles.feed}>
+  <div className={styles.feed} tabIndex={0} role="region" aria-label={isFR?"Liste défilante des discussions publiques":"Scrollable public discussion list"}>
    {!visibleItems.length && <p className={styles.empty}>
     {connected?t.noComments:loading?(isFR?"Chargement des échanges…":"Loading public conversations…"):t.unavail}
    </p>}
