@@ -149,3 +149,12 @@
 .motionCard .textLink{display:inline-block;margin-top:10px}
 @media(max-width:900px){.activityGrid,.spotlightGrid,.motionGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.community,.spotlight,.motion{padding:36px 0}.activityGrid,.spotlightGrid,.motionGrid{grid-template-columns:1fr}.activityCard{min-height:155px}.motionCard{min-height:120px}}
+
+
+.socialConversation{padding:38px 0;background:#f1f7f2;border-bottom:1px solid #dbe8de}
+.socialConversation h2{font-family:Georgia,serif;color:#104735;margin:9px 0 8px;font-size:clamp(26px,2.5vw,35px)}
+.socialConversation p{color:#536c5f;max-width:900px;line-height:1.6;font-size:14px;margin-bottom:17px}
+.socialConversationLinks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.socialConversationLinks a,.socialConversationLinks span{border:1px solid #c7decd;border-radius:14px;padding:15px 17px;font-size:14px;color:#07553a;text-decoration:none;font-weight:700;background:white}
+.socialConversationLinks span{color:#687d70;background:#f9fbf9}
+@media(max-width:700px){.socialConversationLinks{grid-template-columns:1fr}}
