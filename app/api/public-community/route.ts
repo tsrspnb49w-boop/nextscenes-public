@@ -9,7 +9,9 @@ function trustedFeedbackOrigin(){
   const serviceId=String(process.env.RENDER_SERVICE_ID||"");
   const serviceName=String(process.env.RENDER_SERVICE_NAME||"");
   if(serviceId==="srv-dbi96qjbc2fs73af0i80"||serviceName==="nextscenes-public-staging")
-    return "https://nextscenes-staging-backend.onrender.com";
+    return process.env.NEXTSCENES_STAGING_SAMESITE_AUTH==="true"
+      ? "https://api.staging.nextscenes.org"
+      : "https://nextscenes-staging-backend.onrender.com";
   if(serviceId==="srv-d62fm2onputs73b2dr7g"||serviceName==="nextscenes-public")
     return "https://api.nextscenes.org";
   return "";
