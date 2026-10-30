@@ -11,7 +11,10 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
  const [live,setLive]=useState<Development[]>([]);
  const [directoryAppUrl,setDirectoryAppUrl]=useState(appUrl);
  useEffect(()=>{
-   if(window.location.hostname==="nextscenes-public-staging.onrender.com")
+   const hostname=window.location.hostname.toLowerCase();
+   if(hostname==="public.staging.nextscenes.org")
+     setDirectoryAppUrl("https://app.staging.nextscenes.org");
+   else if(hostname==="nextscenes-public-staging.onrender.com")
      setDirectoryAppUrl("https://nextscenes-staging-frontend.onrender.com");
    else setDirectoryAppUrl(appUrl);
  },[appUrl]);
