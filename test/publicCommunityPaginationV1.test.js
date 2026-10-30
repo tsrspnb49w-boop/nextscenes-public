@@ -82,3 +82,16 @@ test("Live Feedback has an actual bounded scrolling viewport even with a short p
  assert.ok(css.includes("overflow-y:auto"));
  assert.ok(ui.includes('aria-label={isFR?"Liste défilante des discussions publiques":"Scrollable public discussion list"}'));
 });
+
+test("member composer uses the staging login and API on staging and keeps production API unchanged",()=>{
+ assert.ok(ui.includes('window.location.hostname==="nextscenes-public-staging.onrender.com"'));
+ assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase'));
+ assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-frontend.onrender.com/login":appUrl+"/login"'));
+ assert.ok(ui.includes('window.addEventListener("focus",recheck)'));
+ assert.ok(ui.includes('window.addEventListener("visibilitychange",recheck)'));
+ assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
+ assert.ok(ui.includes('if(active)setMemberStatus(result.ok?"member":result.status===401?"guest":"unavailable")'));
+ assert.ok(ui.includes('memberStatus==="member"&&item.storyId&&<button'));
+ assert.ok(ui.includes('memberStatus==="member"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('credentials:"include"'));
+});
