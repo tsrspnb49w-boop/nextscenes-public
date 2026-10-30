@@ -47,3 +47,28 @@ test("read-only preflight checks precisely GET and OPTIONS and never POSTs",asyn
  assert.ok(calls.every(x=>x.url.includes("staging")&&!x.url.includes("api.nextscenes.org")));
  assert.ok(result.every(x=>x.ok),JSON.stringify(result));
 });
+
+test("isolated review preflight stays on review hosts and remains read only",async()=>{
+ const calls=[];
+ const origin="https://nextscenes-review-public-discussion.onrender.com";
+ const api="https://nextscenes-review-api-discussion.onrender.com";
+ const fetcher=async(url,init={})=>{
+   calls.push({url,method:init.method||"GET",origin:init.headers?.Origin});
+   const headers=new Headers({
+     "access-control-allow-origin":origin,
+     "access-control-allow-credentials":"true",
+     "access-control-allow-methods":"GET,POST,OPTIONS",
+     "access-control-allow-headers":"Content-Type,X-CSRF-Token",
+     "set-cookie":cookie,
+   });
+   const code=url.endsWith("/v1/member")?401:200;
+   return {ok:code===200,status:code,headers,json:async()=>({ok:true,threads:[]})};
+ };
+ const results=await runPreflight(fetcher,"review");
+ assert.ok(results.every(x=>x.ok),JSON.stringify(results));
+ assert.deepEqual(calls.map(x=>x.method),["GET","GET","GET","OPTIONS"]);
+ assert.ok(calls.every(x=>x.url.startsWith(origin)||x.url.startsWith(api)));
+ assert.ok(calls.some(x=>x.origin===origin));
+ assert.ok(calls.every(x=>!x.url.includes("api.nextscenes.org")&&!x.url.includes("nextscenes-staging-backend")));
+ await assert.rejects(runPreflight(fetcher,"production"),/Unknown read-only preflight target/);
+});
