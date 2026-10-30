@@ -17,4 +17,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node --test test/publicCommunityPaginationV1.test.js
+      - run: node --test test/publicFeedbackStagingPreflight.test.mjs
       - run: npm run build
