@@ -3,28 +3,20 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 // Server-to-server public-only read proxy. Never expose /api/feedback/live.
 const CURSOR = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z_[a-f0-9]{24}$/;
-// Separate staging and production public-only reads. Unknown origins fail closed.
-function permittedUpstream(siteHost:string,apiBase:string){
-  try{
-    const api=new URL(apiBase);
-    if(api.protocol!=="https:"||api.pathname!=="/"||api.search||api.hash||api.username||api.password)return false;
-    const host=siteHost.toLowerCase();
-    if(host==="nextscenes-public-staging.onrender.com")
-      return api.origin==="https://nextscenes-staging-backend.onrender.com";
-    if(host==="nextscenes.org"||host==="www.nextscenes.org"||host==="nextscenes-public.onrender.com")
-      return api.origin==="https://api.nextscenes.org";
-    return false;
-  }catch{return false;}
+// The Render service identity is server-owned, unlike proxy/Host headers.
+// A reverse proxy may supply localhost as request.nextUrl.hostname.
+function trustedFeedbackOrigin(){
+  const serviceId=String(process.env.RENDER_SERVICE_ID||"");
+  const serviceName=String(process.env.RENDER_SERVICE_NAME||"");
+  if(serviceId==="srv-dbi96qjbc2fs73af0i80"||serviceName==="nextscenes-public-staging")
+    return "https://nextscenes-staging-backend.onrender.com";
+  if(serviceId==="srv-d62fm2onputs73b2dr7g"||serviceName==="nextscenes-public")
+    return "https://api.nextscenes.org";
+  return "";
 }
 export async function GET(request: NextRequest) {
-  // This staging site must always read the staging backend, even if an older
-  // NEXT_PUBLIC_NEXTSCENES_API_BASE setting still points at production.
-  // The public feed contains PUBLIC storylines only; no private or general channels.
-  const siteHost = request.nextUrl.hostname.toLowerCase();
-  const configuredOrigin = String(process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE || "").replace(/\/+$/, "");
-  const origin = siteHost === "nextscenes-public-staging.onrender.com"
-    ? "https://nextscenes-staging-backend.onrender.com"
-    : configuredOrigin;
+  // Public reads only. Never use private, Beta or General Discussions.
+  const origin=trustedFeedbackOrigin();
   const fail = () => NextResponse.json(
     { ok:false, threads:[], development:[], nextBefore:"" },
     { status:503, headers:{"Cache-Control":"no-store"} }
@@ -35,7 +27,7 @@ export async function GET(request: NextRequest) {
       status:400,headers:{"Cache-Control":"no-store"}
     });
   }
-  if(!permittedUpstream(request.nextUrl.hostname,origin)) return fail();
+  if(!origin){console.error("Public community proxy: unknown Render service identity");return fail();}
   try {
     const upstream = await fetch(origin + "/api/public-community/v1" +
       (raw.length ? "?before="+encodeURIComponent(raw[0]) : ""), {
@@ -43,9 +35,9 @@ export async function GET(request: NextRequest) {
       headers:{"Accept":"application/json"},
       signal:AbortSignal.timeout(8000),
     });
-    if(!upstream.ok) return fail();
+    if(!upstream.ok){console.error("Public community proxy: backend HTTP",upstream.status);return fail();}
     const data = await upstream.json();
-    if(data?.ok !== true || !Array.isArray(data.threads) || !Array.isArray(data.development)) return fail();
+    if(data?.ok !== true || !Array.isArray(data.threads) || !Array.isArray(data.development)){console.error("Public community proxy: invalid public feed response");return fail();}
     const safeNext = typeof data.nextBefore === "string" && CURSOR.test(data.nextBefore) ? data.nextBefore : "";
     return NextResponse.json({
       ok:true, threads:data.threads.slice(0,raw.length?10:3),
@@ -53,5 +45,5 @@ export async function GET(request: NextRequest) {
       storylines:Array.isArray(data.storylines)?data.storylines.slice(0,300):[],
       nextBefore:safeNext
     },{headers:{"Cache-Control":"no-store"}});
-  } catch {return fail();}
+  } catch(e) {console.error("Public community proxy: upstream request failed",e instanceof Error?e.name:"unknown");return fail();}
 }
