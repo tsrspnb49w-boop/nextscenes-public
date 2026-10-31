@@ -1,0 +1,25 @@
+"use strict";
+const test=require("node:test");
+const assert=require("node:assert/strict");
+const fs=require("node:fs");
+const path=require("node:path");
+const source=fs.readFileSync(path.join(__dirname,"..","components","PublicCommunityThreadsV1.tsx"),"utf8");
+test("nested response submits addressed child while retaining root parent",()=>{
+ assert.ok(source.includes('activateReply(root,"@"+node.author+" ",node.id)'));
+ assert.ok(source.includes('postPublic(replyText,root.storyId||"",root.id,targetIsRoot?"":targetId)'));
+ assert.ok(source.includes('body:JSON.stringify({storyId,parentId,replyToId,text:text.trim()})'));
+});
+test("root response and emoji remain on original discussion",()=>{
+ assert.ok(source.includes('postPublic(emoji,root.storyId,root.id)'));
+ assert.ok(source.includes('activateReply(item)'));
+});
+test("editing replies and comments clears stale errors",()=>{
+ assert.ok(source.includes('setReplyText(event.target.value);setPostError("");setPostSuccess("");'));
+ assert.ok(source.includes('setCommentText(e.target.value);setPostError("");setPostSuccess("");'));
+});
+
+test("reply editor remains adjacent to the selected root or child, not detached at thread bottom",()=>{
+ assert.ok(source.includes('renderReplyEditor(item,item.id)'));
+ assert.ok(source.includes('renderReplyEditor(root,node.id)'));
+ assert.ok(source.includes('replyTo!==root.id||(replyTarget||root.id)!==targetId'));
+});

@@ -124,3 +124,37 @@
   .didieEdition{font-size:11px}
   .didieAction{grid-column:1/-1;justify-self:start;padding:12px 18px;font-size:13px}
 }
+
+
+/* V1C visitor consolidation: public-only content, compact and accessible. */
+.community,.spotlight,.motion{padding:51px 0;background:#fffef9;border-bottom:1px solid #dce8df}
+.community{background:linear-gradient(125deg,#f0f7f2,#fffefa)}
+.motion{background:#fffdf7}
+.spotlight{background:linear-gradient(115deg,#fffdf6,#eaf5ef)}
+.community h2,.motion h2,.spotlight h2{font-family:Georgia,serif;color:#0c4937;font-size:clamp(26px,2.75vw,38px);line-height:1.15;margin:10px 0 9px}
+.communityLead,.motion > .wrap > p{font-size:14px;color:#52685c;line-height:1.65;max-width:800px;margin:0 0 19px}
+.activityGrid,.spotlightGrid,.motionGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.activityCard,.spotlightCard,.motionCard{border:1px solid #d5e5d9;border-radius:18px;background:rgba(255,255,255,.86);padding:20px;min-width:0}
+.activityCard{display:flex;flex-direction:column;gap:10px;min-height:205px}
+.activityLabel{font-size:10px;color:#00754e;font-weight:850;letter-spacing:.09em}
+.activityCard h3,.spotlightCard h3,.motionCard h3{margin:0;color:#0c4f37;line-height:1.28;font-size:19px}
+.activityCard p,.spotlightCard p,.motionCard p{font-size:13px;line-height:1.55;color:#52685c;margin:0}
+.activityCard .textLink{margin-top:auto;align-self:flex-start}
+.spotlightCard{min-height:190px}
+.spotlightCard h3{font-family:Georgia,serif;margin:12px 0}
+.spotlightCard small{color:#60736b}
+.motionCard{display:flex;align-items:flex-start;gap:14px;min-height:145px}
+.motionCard img{width:74px;height:110px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.motionCard h3{font-size:16px;margin:0 0 7px}
+.motionCard .textLink{display:inline-block;margin-top:10px}
+@media(max-width:900px){.activityGrid,.spotlightGrid,.motionGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.community,.spotlight,.motion{padding:36px 0}.activityGrid,.spotlightGrid,.motionGrid{grid-template-columns:1fr}.activityCard{min-height:155px}.motionCard{min-height:120px}}
+
+
+.socialConversation{padding:38px 0;background:#f1f7f2;border-bottom:1px solid #dbe8de}
+.socialConversation h2{font-family:Georgia,serif;color:#104735;margin:9px 0 8px;font-size:clamp(26px,2.5vw,35px)}
+.socialConversation p{color:#536c5f;max-width:900px;line-height:1.6;font-size:14px;margin-bottom:17px}
+.socialConversationLinks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.socialConversationLinks a,.socialConversationLinks span{border:1px solid #c7decd;border-radius:14px;padding:15px 17px;font-size:14px;color:#07553a;text-decoration:none;font-weight:700;background:white}
+.socialConversationLinks span{color:#687d70;background:#f9fbf9}
+@media(max-width:700px){.socialConversationLinks{grid-template-columns:1fr}}

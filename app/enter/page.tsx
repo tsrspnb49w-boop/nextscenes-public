@@ -10,7 +10,7 @@ export default function EnterPage() {
   useEffect(() => {
 
     const t = setTimeout(() => {
-      window.location.href = APP_URL;
+      window.location.replace(`${APP_URL}/?lang=en`);
     }, 600);
 
     return () => clearTimeout(t);

@@ -7897,3 +7897,11 @@ div.ns-book-badge {
     min-width: 104px !important;
   }
 }
+
+
+/* NEXTSCENES · CONTROLLED SCROLL CONTINUITY V1
+   Native anchor/page transitions only; no JavaScript scroll interception. */
+html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
