@@ -1,0 +1,33 @@
+name: Public Staging · Next.js 16.4.3 Security Acceptance
+on:
+  push:
+    branches: [review/navigation-continuity-v1b-public-20261030]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  staging-security-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Verify exact patched dependencies in both manifest and lockfile
+        run: |
+          node -e 'const p=require("./package.json"),l=require("./package-lock.json").packages;for(const [n,v] of [["next","16.4.3"],["react","19.2.9"],["react-dom","19.2.9"]]){if(p.dependencies[n]!==v||l["node_modules/"+n]?.version!==v)process.exit(1)}if(p.devDependencies["eslint-config-next"]!=="16.4.3"||l["node_modules/eslint-config-next"]?.version!=="16.4.3"||l["node_modules/sharp"]?.version!=="0.35.5")process.exit(1)'
+      - name: Reproducible security-patched install
+        run: npm ci --no-fund
+      - name: Production dependency security gate
+        run: |
+          npm audit --omit=dev --json > /tmp/security-staging-audit.json || true
+          node -e 'const v=require("/tmp/security-staging-audit.json").metadata?.vulnerabilities;if(!v){console.error("Audit unavailable");process.exit(1)}console.log("STAGING PRODUCTION-DEPS AUDIT",JSON.stringify(v));if(v.critical||v.high)process.exit(1)'
+      - name: Preserve staging and production API isolation
+        run: |
+          node -e 'const fs=require("fs");const s=fs.readFileSync("app/api/public-community/route.ts","utf8");const c=fs.readFileSync("components/PublicCommunityThreadsV1.tsx","utf8");if(!s.includes("srv-dbi96qjbc2fs73af0i80")||!s.includes("srv-d62fm2onputs73b2dr7g")||!c.includes("https://api-staging.nextscenes.org")||!c.includes("https://api.nextscenes.org")||s.includes("export async function POST"))process.exit(1)'
+      - name: Public website feedback, privacy and UI regressions
+        run: node --test test/publicCommunityPaginationV1.test.js test/publicCommunityTargetedRepliesV1.test.js test/publicFeedbackHierarchyVisualPolishV1.test.js test/publicFeedbackReplyTreeV2.test.js test/productionPublicIntegrationV1.test.js
+      - name: Build exact staging deployment snapshot
+        run: npm run build
