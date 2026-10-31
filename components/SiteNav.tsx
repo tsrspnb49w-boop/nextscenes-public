@@ -135,16 +135,18 @@ export default function SiteNav() {
 
   const PRIMARY = useMemo(
     () => [
-      { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
-      { href: "/how-it-works", frHref: "/how-it-works", en: "How it works", fr: "Comment ça marche" },
-      { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
-      { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
+      { href: "/", frHref: "", en: "Home", fr: "Accueil" },
+      { href: "/help", frHref: "/help", en: "Help", fr: "Aide" },
+      { href: "/#community", frHref: "#community", en: "Community", fr: "Communauté" },
     ],
     []
   );
 
   const MORE = useMemo(
     () => [
+      { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
+      { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
+      { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
       { href: "/writers", frHref: "/auteurs", en: "For Writers", fr: "Pour les auteurs" },
       { href: "/clubs", frHref: "/clubs", en: "Clubs", fr: "Clubs" },
       { href: "/partners", frHref: "/partners", en: "Partners", fr: "Partenaires" },
@@ -312,8 +314,7 @@ export default function SiteNav() {
   }, [authHint, isFR]);
 
   const appCtaHref = useMemo(() => {
-    if (authHint === "authed") return `${APP_URL}/storylines`;
-    return isFR ? "/fr/enter" : "/enter";
+    return `${APP_URL}/?lang=${isFR ? "fr" : "en"}`;
   }, [authHint, isFR]);
 
   const languageSwitchLabel = isFR ? "🇫🇷 Français" : "🇬🇧 English";

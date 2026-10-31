@@ -1,0 +1,25 @@
+name: Production Selective Public Website Candidate (No Deploy)
+on:
+  push:
+    branches: [candidate/production-selective-public-20261031]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - name: Public feedback, reply targeting and visual regression
+        run: node --test test/publicCommunityPaginationV1.test.js test/publicCommunityTargetedRepliesV1.test.js test/publicFeedbackHierarchyVisualPolishV1.test.js test/publicFeedbackReplyTreeV2.test.js
+      - name: Guard production API routing, no staging redirect and CSRF proxy
+        run: |
+          node -e 'const fs=require("fs");const p=fs.readFileSync("app/api/public-community/route.ts","utf8");if(!p.includes("RENDER_SERVICE_ID")||!p.includes("https://api.nextscenes.org")||p.includes("export async function POST(")||fs.existsSync("proxy.ts"))process.exit(1)'
+      - name: Verify public Next.js production build
+        run: npm run build
