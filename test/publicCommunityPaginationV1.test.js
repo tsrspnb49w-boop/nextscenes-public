@@ -104,7 +104,7 @@ test("member composer uses the staging login and API on staging and keeps produc
 test("public feedback uses the existing shared replies endpoint for clicked comments and emoji",()=>{
  assert.ok(ui.includes('const activateReply=(root:Thread,mention="",addressedReplyId="")=>'));
  assert.ok(ui.includes('activateReply(item)'));
- assert.ok(ui.includes('activateReply(item,"@"+reply.author+" ",reply.id)'));
+ assert.ok(ui.includes('activateReply(root,"@"+node.author+" ",node.id)'));
  assert.ok(ui.includes('const quickEmojis=["👍","❤️","😊","👏"]'));
  assert.ok(ui.includes('void postPublic(emoji,root.storyId,root.id)'));
  assert.ok(ui.includes('onClick={()=>addEmoji(item,emoji)}'));
@@ -128,7 +128,7 @@ test("only verified writers see public feedback posting controls",()=>{
  assert.ok(ui.includes('useState<"checking"|"writer"|"reader"|"guest"|"unavailable">'));
  assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
  assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
- assert.ok(ui.includes('canInteract&&!owned.has(reply.id)&&item.storyId&&<button'));
+ assert.ok(ui.includes('canInteract&&!owned.has(node.id)&&root.storyId&&'));
  assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
  assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
  assert.ok(ui.includes('if(!canInteract||owned.has(root.id)||posting||!root.storyId)return;'));
@@ -178,8 +178,8 @@ test("server trusted origin uses opt-in and exact Render service identity",()=>{
 
 test("the public message itself stays plain text; only someone else's explicit Reply is interactive",()=>{
  assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
- assert.ok(ui.includes('renderReplyEditor(item,reply.id)'));
- assert.ok(ui.includes('canInteract&&!owned.has(reply.id)&&item.storyId&&<button'));
+ assert.ok(ui.includes('renderReplyEditor(root,node.id)'));
+ assert.ok(ui.includes('canInteract&&!owned.has(node.id)&&root.storyId&&'));
  assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
  assert.ok(ui.includes('setOwnerScanKey(visibleIdsKey)'));
  assert.ok(ui.includes('setOwnIds(ownership)'));
