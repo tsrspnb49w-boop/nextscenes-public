@@ -1,0 +1,49 @@
+name: Public Website Security Patch · Next.js 16.4.3 (Staging Only)
+on:
+  push:
+    branches: [security/public-nextjs-16-4-3-20261031]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  regenerate-test-and-commit-lock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Reconcile the npm lockfile without unrelated dependency upgrades
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Confirm patched framework, React, and eslint versions in the lockfile
+        run: |
+          node -e 'const p=require("./package-lock.json").packages;const expected={"node_modules/next":"16.4.3","node_modules/eslint-config-next":"16.4.3","node_modules/react":"19.2.9","node_modules/react-dom":"19.2.9"};for(const [name,version] of Object.entries(expected)){const actual=p[name]?.version;if(actual!==version){console.error(name,actual,"expected",version);process.exitCode=1;}else console.log("Verified",name,version)}'
+      - name: Clean reproducible install
+        run: npm ci --no-fund
+      - name: Check production dependency vulnerabilities after patch
+        run: |
+          npm audit --omit=dev --json > /tmp/nextscenes-public-production-audit.json || true
+          node -e 'const x=require("/tmp/nextscenes-public-production-audit.json");const v=x.metadata?.vulnerabilities;if(!v){console.error("Audit result unavailable");process.exit(1)}console.log("PRODUCTION AUDIT",JSON.stringify(v));if(v.critical>0||v.high>0){console.error("FAIL: remaining high/critical production dependencies");process.exit(1)}'
+      - name: Report full dependency audit without force-upgrading packages
+        run: |
+          npm audit --json > /tmp/nextscenes-public-full-audit.json || true
+          node -e 'const x=require("/tmp/nextscenes-public-full-audit.json");console.log("FULL AUDIT",JSON.stringify(x.metadata?.vulnerabilities||{}))'
+      - name: Public discussion, permission and site regression tests
+        run: node --test test/publicCommunityPaginationV1.test.js test/publicCommunityTargetedRepliesV1.test.js test/publicFeedbackHierarchyVisualPolishV1.test.js test/publicFeedbackReplyTreeV2.test.js test/productionPublicIntegrationV1.test.js
+      - name: Verify complete Next.js production build
+        run: npm run build
+      - name: Commit the npm-resolved lockfile to the isolated patch branch only
+        run: |
+          git add package-lock.json
+          if git diff --cached --quiet; then
+            echo "Package lockfile already synchronized"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "lock(security): resolve Next.js 16.4.3 and React 19.2.9"
+            git push origin HEAD:refs/heads/security/public-nextjs-16-4-3-20261031
+          fi
