@@ -1,0 +1,19 @@
+name: Public Feedback Inline Ownership V2 · Public Candidate
+on:
+  push:
+    branches: [candidate/public-feedback-inline-owner-public-v2-20261031]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  focused-public:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: node --test test/publicCommunityPaginationV1.test.js test/publicCommunityTargetedRepliesV1.test.js test/stagingCanonicalRedirectV1.test.js
+      - run: npm run build
