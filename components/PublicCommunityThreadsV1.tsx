@@ -42,6 +42,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [commentStory,setCommentStory]=useState("");
  const [commentText,setCommentText]=useState("");
  const [replyTo,setReplyTo]=useState("");
+ const [replyTarget,setReplyTarget]=useState("");
  const [replyText,setReplyText]=useState("");
  const quickEmojis=["👍","❤️","😊","👏"];
  const [posting,setPosting]=useState(false);
@@ -135,7 +136,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    document.addEventListener("visibilitychange",recheck);
    return()=>{active=false;window.removeEventListener("focus",recheck);document.removeEventListener("visibilitychange",recheck);};
  },[apiBase]);
- const postPublic=async(text:string,storyId:string,parentId="")=>{
+ const postPublic=async(text:string,storyId:string,parentId="",replyToId="")=>{
    if(memberStatus!=="writer"||posting||!storyId||!text.trim())return;
    setPosting(true);setPostError("");setPostSuccess("");
    try{
@@ -150,7 +151,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      const response=await fetch(apiBase+"/api/public-community/v1/feedback",{
        method:"POST",credentials:"include",cache:"no-store",
        headers:{"Content-Type":"application/json","Accept":"application/json","X-CSRF-Token":token},
-       body:JSON.stringify({storyId,parentId,text:text.trim()})
+       body:JSON.stringify({storyId,parentId,replyToId,text:text.trim()})
      });
      if(!response.ok){
        if(response.status===401)setMemberStatus("guest");
@@ -170,7 +171,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
          ...thread,replies:[...(thread.replies||[]),result.comment as Reply],
          replyCount:(thread.replyCount||0)+1
        }:thread));
-       setReplyTo("");setReplyText("");
+       setReplyTo("");setReplyTarget("");setReplyText("");
      }else{
        setCommentText("");setSelected("all");
        setLoading(true);await refresh({resetPaging:true});
@@ -181,8 +182,9 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
        (isFR?"Publication impossible. Vérifiez votre session.":"Could not post. Check your writer sign-in session."));
    }finally{setPosting(false);}
  };
- const activateReply=(root:Thread,mention="")=>{
+ const activateReply=(root:Thread,mention="",addressedReplyId="")=>{
    setReplyTo(root.id);
+   setReplyTarget(addressedReplyId);
    setReplyText(mention);
    setPostError("");
    setPostSuccess("");
@@ -266,7 +268,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      <label className={styles.field}>
       <span>{isFR?"Votre commentaire":"Your comment"}</span>
       <textarea value={commentText} maxLength={2000} rows={3}
-       onChange={e=>setCommentText(e.target.value)}
+       onChange={e=>{setCommentText(e.target.value);setPostError("");setPostSuccess("");}}
        placeholder={isFR?"Écrivez votre commentaire…":"Write your comment…"} />
      </label>
      <button type="submit" disabled={posting||!commentText.trim()||!commentStory}>
@@ -309,7 +311,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
         <span className={styles.replyMeta}>{reply.author} · {formatDate(reply.createdAt,language)}</span>
         {memberStatus==="writer"?<button type="button" className={styles.replyCommentTrigger}
           aria-label={isFR?"Répondre à "+reply.author:"Reply to "+reply.author}
-          onClick={()=>activateReply(item,"@"+reply.author+" ")}>{reply.text}</button>
+          onClick={()=>activateReply(item,"@"+reply.author+" ",reply.id)}>{reply.text}</button>
           :<p>{reply.text}</p>}
        </div>)}
       </div>}
@@ -318,7 +320,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       <a href={safeStoryHref(activeAppUrl,item)}>{t.open} →</a>
       <a href={safeStoryHref(activeAppUrl,item).includes("?storyId=") ? `${safeStoryHref(activeAppUrl,item)}&tab=participate` : safeStoryHref(activeAppUrl,item)}>{t.discuss} →</a>
       {memberStatus==="writer"&&item.storyId&&<button type="button" className={styles.replyAction}
-       onClick={()=>replyTo===item.id?setReplyTo(""):activateReply(item)}>
+       onClick={()=>replyTo===item.id?(setReplyTo(""),setReplyTarget(""),setPostError("")):activateReply(item)}>
        {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
       </button>}
       {memberStatus==="writer"&&item.storyId&&<div className={styles.emojiActions} role="group"
@@ -330,10 +332,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       </div>}
      </div>
      {memberStatus==="writer"&&replyTo===item.id&&item.storyId&&
-      <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id)}}>
+      <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id,replyTarget)}}>
        <label className={styles.field}><span>{isFR?"Votre réponse":"Your reply"}</span>
         <textarea value={replyText} maxLength={2000} rows={3}
-         onChange={e=>setReplyText(e.target.value)}
+         onChange={e=>{setReplyText(e.target.value);setPostError("");setPostSuccess("");}}
          placeholder={isFR?"Écrivez votre réponse…":"Write your reply…"} />
        </label>
        <button type="submit" disabled={posting||!replyText.trim()}>
