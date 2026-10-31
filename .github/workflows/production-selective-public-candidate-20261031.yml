@@ -21,5 +21,7 @@ jobs:
       - name: Guard production API routing, no staging redirect and CSRF proxy
         run: |
           node -e 'const fs=require("fs");const p=fs.readFileSync("app/api/public-community/route.ts","utf8");if(!p.includes("RENDER_SERVICE_ID")||!p.includes("https://api.nextscenes.org")||p.includes("export async function POST(")||fs.existsSync("proxy.ts"))process.exit(1)'
+      - name: Read-only live staging API and public proxy handshake
+        run: node test/stagingPublicLiveSmokeV1.mjs
       - name: Verify public Next.js production build
         run: npm run build
