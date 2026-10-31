@@ -42,7 +42,7 @@ test("live feedback client offers authenticated public root comment and inline r
  assert.ok(ui.includes('Post reply'));
  assert.ok(ui.includes('Publier le commentaire'));
  assert.ok(ui.includes('Publier la réponse'));
- assert.ok(ui.includes('parentId,text:text.trim()'));
+ assert.ok(ui.includes('parentId,replyToId,text:text.trim()'));
  assert.ok(ui.includes('data.storylines.filter('));
  assert.ok(ui.includes('storylines.map(story=>'));
 });
@@ -102,9 +102,9 @@ test("member composer uses the staging login and API on staging and keeps produc
 });
 
 test("public feedback uses the existing shared replies endpoint for clicked comments and emoji",()=>{
- assert.ok(ui.includes('const activateReply=(root:Thread,mention="")=>'));
+ assert.ok(ui.includes('const activateReply=(root:Thread,mention="",addressedReplyId="")=>'));
  assert.ok(ui.includes('onClick={()=>activateReply(item)}'));
- assert.ok(ui.includes('onClick={()=>activateReply(item,"@"+reply.author+" ")}'));
+ assert.ok(ui.includes('onClick={()=>activateReply(item,"@"+reply.author+" ",reply.id)}'));
  assert.ok(ui.includes('const quickEmojis=["👍","❤️","😊","👏"]'));
  assert.ok(ui.includes('void postPublic(emoji,root.storyId,root.id)'));
  assert.ok(ui.includes('onClick={()=>addEmoji(item,emoji)}'));
