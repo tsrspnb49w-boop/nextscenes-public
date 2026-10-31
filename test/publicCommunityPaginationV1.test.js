@@ -88,7 +88,8 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('pageHost==="nextscenes-public-staging.onrender.com"'));
  assert.ok(ui.includes('pageHost==="public-staging.nextscenes.org"'));
  assert.ok(ui.includes('isSameSiteStagingPublic?"https://api-staging.nextscenes.org":'));
- assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase'));
+ assert.ok(ui.includes('isStagingPublic?"https://nextscenes-staging-backend.onrender.com":'));
+ assert.ok(ui.includes('isProductionPublic?"https://api.nextscenes.org":configuredApiBase'));
  assert.ok(ui.includes('window.addEventListener("focus",recheck)'));
  assert.ok(ui.includes('document.addEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));

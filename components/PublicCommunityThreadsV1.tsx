@@ -57,8 +57,11 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const isStagingPublic=pageHost==="nextscenes-public-staging.onrender.com";
  const isSameSiteStagingPublic=pageHost==="public-staging.nextscenes.org";
  // Existing Render staging URLs remain unchanged until custom DNS is verified.
+ const isProductionPublic=pageHost==="nextscenes.org"||pageHost==="www.nextscenes.org";
+ // First-party production API is deterministic even when optional public env is absent.
  const apiBase=isSameSiteStagingPublic?"https://api-staging.nextscenes.org":
-   isStagingPublic?"https://nextscenes-staging-backend.onrender.com":configuredApiBase;
+   isStagingPublic?"https://nextscenes-staging-backend.onrender.com":
+   isProductionPublic?"https://api.nextscenes.org":configuredApiBase;
  const activeAppUrl=isSameSiteStagingPublic?"https://staging.nextscenes.org":
    isStagingPublic?"https://nextscenes-staging-frontend.onrender.com":appUrl;
  const [connected,setConnected]=useState(false);
