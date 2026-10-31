@@ -1,0 +1,46 @@
+name: Security Audit Inventory · Public Dev Dependencies (Read Only)
+on:
+  push:
+    branches: [audit/public-dev-dependency-inventory-20261031]
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Reproduce pinned dependency install
+        run: npm ci --no-audit --no-fund
+      - name: Collect npm audit without modifying packages
+        run: |
+          npm audit --json > /tmp/nextscenes-full-audit.json || true
+          npm audit --omit=dev --json > /tmp/nextscenes-runtime-audit.json || true
+          node <<'NODE'
+          const fs = require('fs');
+          const a=JSON.parse(fs.readFileSync('/tmp/nextscenes-full-audit.json','utf8'));
+          const b=JSON.parse(fs.readFileSync('/tmp/nextscenes-runtime-audit.json','utf8'));
+          console.log('RUNTIME_VULNERABILITY_COUNTS',JSON.stringify(b.metadata?.vulnerabilities||{}));
+          console.log('FULL_VULNERABILITY_COUNTS',JSON.stringify(a.metadata?.vulnerabilities||{}));
+          const vulns=Object.entries(a.vulnerabilities||{}).map(([name,v])=>({
+            name,
+            severity:v.severity,
+            isDirect:v.isDirect,
+            range:v.range,
+            via:(v.via||[]).map(z=>typeof z==='string'?{package:z}:{
+              package:z.name,
+              title:z.title,
+              severity:z.severity,
+              range:z.range,
+              advisory:z.url
+            }),
+            effects:v.effects||[],
+            nodes:v.nodes||[],
+            fixAvailable:v.fixAvailable
+          })).sort((a,b)=>({critical:4,high:3,moderate:2,low:1}[b.severity]||0)-({critical:4,high:3,moderate:2,low:1}[a.severity]||0));
+          for(const v of vulns)console.log('AUDIT_PACKAGE',JSON.stringify(v));
+          NODE
