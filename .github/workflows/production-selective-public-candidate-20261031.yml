@@ -17,7 +17,7 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: npm ci
       - name: Public feedback, reply targeting and visual regression
-        run: node --test test/publicCommunityPaginationV1.test.js test/publicCommunityTargetedRepliesV1.test.js test/publicFeedbackHierarchyVisualPolishV1.test.js test/publicFeedbackReplyTreeV2.test.js
+        run: node --test test/publicCommunityPaginationV1.test.js test/publicCommunityTargetedRepliesV1.test.js test/publicFeedbackHierarchyVisualPolishV1.test.js test/publicFeedbackReplyTreeV2.test.js test/productionPublicIntegrationV1.test.js
       - name: Guard production API routing, no staging redirect and CSRF proxy
         run: |
           node -e 'const fs=require("fs");const p=fs.readFileSync("app/api/public-community/route.ts","utf8");if(!p.includes("RENDER_SERVICE_ID")||!p.includes("https://api.nextscenes.org")||p.includes("export async function POST(")||fs.existsSync("proxy.ts"))process.exit(1)'
