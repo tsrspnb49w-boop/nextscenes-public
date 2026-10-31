@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - candidate/live-feedback-targeted-replies-public-20261031
+      - review/navigation-continuity-v1b-public-20261030
   workflow_dispatch:
 permissions:
   contents: read
