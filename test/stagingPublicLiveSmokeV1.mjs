@@ -22,14 +22,14 @@ function get(url){
   const reason=ret.stderr?.trim()||ret.error?.message||`exit ${ret.status}`;
   throw Error(`Staging ${label} is unreachable from GitHub runner: ${reason}`);
  }
- const marker=/\\nNS_STATUS:(\\d{3})\\s*$/m.exec(ret.stdout);
+ const marker=/\nNS_STATUS:(\d{3})\s*$/m.exec(ret.stdout);
  if(!marker)throw Error(`Missing HTTP status from ${label}`);
  const headers=readFileSync(headerPath,"utf8");
  return {status:Number(marker[1]),body:ret.stdout.slice(0,marker.index),headers};
 }
 function publicFeed(raw,label){
  assert.equal(raw.status,200,`${label}: public read must return 200`);
- assert.match(raw.headers,/cache-control:\\s*no-store/i);
+ assert.match(raw.headers,/cache-control:\s*no-store/i);
  const data=JSON.parse(raw.body);
  assert.equal(data.ok,true);
  for(const name of ["threads","development","storylines"])assert.ok(Array.isArray(data[name]),`${label} missing ${name}`);
