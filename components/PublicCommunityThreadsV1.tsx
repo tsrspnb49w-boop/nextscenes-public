@@ -1,8 +1,9 @@
 "use client";
 import {useCallback,useEffect,useMemo,useRef,useState} from "react";
 import styles from "./PublicCommunityThreadsV1.module.css";
+import {buildFeedbackReplyTree, type PublicFeedbackReplyNode} from "./publicFeedbackReplyTreeV2";
 
-type Reply={id:string;author:string;text:string;createdAt:string;parentId:string;source?:string};
+type Reply={id:string;author:string;text:string;createdAt:string;parentId:string;replyToId?:string;source?:string};
 type Thread={
  id:string;storyId?:string;storyTitle:string;author:string;text:string;createdAt:string;href:string;
  source?:string;forum?:string;replies:Reply[];replyCount:number;
@@ -204,7 +205,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      }
      const result=await response.json();
      if(!result?.ok)throw new Error("Feedback not confirmed");
-     setPostSuccess(isFR?"Message publié.":"Comment posted.");
+     setPostSuccess(parentId?(isFR?"Réponse publiée.":"Reply posted."):(isFR?"Message publié.":"Comment posted."));
      if(parentId&&result.comment){
        setThreads(prev=>prev.map(thread=>thread.id===parentId?{
          ...thread,replies:[...(thread.replies||[]),result.comment as Reply],
@@ -261,6 +262,30 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
      {postError&&<p role="alert" className={styles.error}>{postError}</p>}
    </form>;
  };
+ const renderReplyBranch=(root:Thread,node:PublicFeedbackReplyNode,depth:number):React.ReactNode=>(
+   <div className={styles.replyBranch} key={node.id}>
+    <div className={styles.reply}>
+     <div className={styles.replyHeading}>
+      <strong>{node.author}</strong> <span>· {formatDate(node.createdAt,language)}</span>
+     </div>
+     <div className={styles.replyContext}>
+      {isFR?"En réponse à":"Replying to"} <strong>{node.repliedTo}</strong>
+     </div>
+     <p>{node.text}</p>
+     {canInteract&&!owned.has(node.id)&&root.storyId&&
+      <button type="button" className={styles.replyAction}
+       onClick={()=>replyTo===root.id&&replyTarget===node.id?
+         (setReplyTo(""),setReplyTarget(""),setPostError("")):
+         activateReply(root,"@"+node.author+" ",node.id)}>
+       {replyTo===root.id&&replyTarget===node.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
+      </button>}
+     {renderReplyEditor(root,node.id)}
+    </div>
+    {node.children.length>0&&<div className={depth>=3?styles.compactChildReplies:styles.childReplies}>
+      {node.children.map(child=>renderReplyBranch(root,child,depth+1))}
+    </div>}
+   </div>
+ );
  const storyTitles=useMemo(()=>Array.from(new Set(threads.map(t=>t.storyTitle))).sort(),[threads]);
  const filtered=useMemo(()=>{
   const q=search.trim().toLocaleLowerCase();
@@ -379,15 +404,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       {expanded[item.id]?t.hide:t.replies} ({item.replies.length})
      </button>
      {expanded[item.id]&&<div className={styles.replyList}>
-      {item.replies.map(reply=><div className={styles.reply} key={reply.id}>
-       <span className={styles.replyMeta}>{reply.author} · {formatDate(reply.createdAt,language)}</span>
-       <p>{reply.text}</p>
-       {canInteract&&!owned.has(reply.id)&&item.storyId&&<button type="button" className={styles.replyAction}
-        onClick={()=>replyTo===item.id&&replyTarget===reply.id?(setReplyTo(""),setReplyTarget(""),setPostError("")):activateReply(item,"@"+reply.author+" ",reply.id)}>
-        {replyTo===item.id&&replyTarget===reply.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
-       </button>}
-       {renderReplyEditor(item,reply.id)}
-      </div>)}
+      {buildFeedbackReplyTree(item).map(reply=>renderReplyBranch(item,reply,1))}
      </div>}
     </>}
    </article>)}
