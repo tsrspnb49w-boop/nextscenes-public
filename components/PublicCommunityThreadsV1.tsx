@@ -44,6 +44,8 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const [replyTo,setReplyTo]=useState("");
  const [replyTarget,setReplyTarget]=useState("");
  const [replyText,setReplyText]=useState("");
+ const [ownIds,setOwnIds]=useState<string[]>([]);
+ const [ownerScanKey,setOwnerScanKey]=useState("");
  const quickEmojis=["👍","❤️","😊","👏"];
  const [posting,setPosting]=useState(false);
  const [postError,setPostError]=useState("");
@@ -70,6 +72,13 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  const pagingActive=useRef(false);
  const requestVersion=useRef(0);
  const [expanded,setExpanded]=useState<Record<string,boolean>>({});
+ // Request ownership for precisely the public messages on screen. The public
+ // feed contains no author IDs, just as in the existing Writer Studio model.
+ const visibleIdsKey=useMemo(()=>Array.from(new Set(threads.flatMap(root=>
+   [root.id,...(root.replies||[]).map(reply=>reply.id)]
+ ))).filter(id=>/^[a-f0-9]{24}$/i.test(id)).join(","),[threads]);
+ const owned=useMemo(()=>new Set(ownIds),[ownIds]);
+ const canInteract=memberStatus==="writer"&&ownerScanKey===visibleIdsKey;
  const refresh=useCallback(async({resetPaging=false}:{resetPaging?:boolean}={})=>{
    if(resetPaging) pagingActive.current=false;
    const version=++requestVersion.current;
@@ -118,26 +127,56 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  },[refresh]);
  useEffect(()=>{
    let active=true;
+   setMemberStatus("checking");
+   setOwnerScanKey("");
+   setOwnIds([]);
    const probe=async()=>{
-     if(!trustedFeedbackApi(apiBase)){if(active)setMemberStatus("unavailable");return;}
+     if(!trustedFeedbackApi(apiBase)){
+       if(active){setMemberStatus("unavailable");setOwnerScanKey("");setOwnIds([])}
+       return;
+     }
      try{
-       const result=await fetch(apiBase+"/api/public-community/v1/member",{
-         cache:"no-store",credentials:"include",headers:{Accept:"application/json"}
-       });
-       if(result.ok){
-          const identity=await result.json();
-          if(active)setMemberStatus(identity?.canWrite===true?"writer":"reader");
-        }else if(active)setMemberStatus(result.status===401?"guest":"unavailable");
-     }catch{if(active)setMemberStatus("unavailable");}
+       const all=visibleIdsKey?visibleIdsKey.split(","):[];
+       const batches:string[][]=[];
+       for(let index=0;index<all.length;index+=100)batches.push(all.slice(index,index+100));
+       if(!batches.length)batches.push([]);
+       const ownership:string[]=[];
+       let writer=false;
+       for(const ids of batches){
+         const url=apiBase+"/api/public-community/v1/member"+
+           (ids.length?"?ids="+encodeURIComponent(ids.join(",")):"");
+         const result=await fetch(url,{cache:"no-store",credentials:"include",headers:{Accept:"application/json"}});
+         if(!result.ok){
+           if(active){
+             setMemberStatus(result.status===401?"guest":"unavailable");
+             setOwnerScanKey("");setOwnIds([]);
+           }
+           return;
+         }
+         const identity=await result.json();
+         if(!identity?.ok||!Array.isArray(identity.ownIds))throw new Error("Ownership lookup unavailable");
+         writer=identity?.canWrite===true;
+         if(!writer)break;
+         ownership.push(...identity.ownIds.filter((id:unknown)=>typeof id==="string"));
+       }
+       if(active){
+         setOwnIds(ownership);
+         setOwnerScanKey(visibleIdsKey);
+         setMemberStatus(writer?"writer":"reader");
+       }
+     }catch{
+       if(active){setMemberStatus("unavailable");setOwnerScanKey("");setOwnIds([]);}
+     }
    };
    void probe();
    const recheck=()=>{if(document.visibilityState==="visible")void probe();};
    window.addEventListener("focus",recheck);
    document.addEventListener("visibilitychange",recheck);
    return()=>{active=false;window.removeEventListener("focus",recheck);document.removeEventListener("visibilitychange",recheck);};
- },[apiBase]);
+ },[apiBase,visibleIdsKey]);
  const postPublic=async(text:string,storyId:string,parentId="",replyToId="")=>{
-   if(memberStatus!=="writer"||posting||!storyId||!text.trim())return;
+   if(!canInteract||posting||!storyId||!text.trim()||
+      (parentId&&owned.has(replyToId||parentId)))return;
    setPosting(true);setPostError("");setPostSuccess("");
    try{
      if(!trustedFeedbackApi(apiBase))throw new Error("API unavailable");
@@ -171,6 +210,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
          ...thread,replies:[...(thread.replies||[]),result.comment as Reply],
          replyCount:(thread.replyCount||0)+1
        }:thread));
+       setExpanded(previous=>({...previous,[parentId]:true}));
        setReplyTo("");setReplyTarget("");setReplyText("");
      }else{
        setCommentText("");setSelected("all");
@@ -183,6 +223,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    }finally{setPosting(false);}
  };
  const activateReply=(root:Thread,mention="",addressedReplyId="")=>{
+   if(!canInteract||owned.has(addressedReplyId||root.id))return;
    setReplyTo(root.id);
    setReplyTarget(addressedReplyId);
    setReplyText(mention);
@@ -190,11 +231,35 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
    setPostSuccess("");
  };
  const addEmoji=(root:Thread,emoji:string)=>{
-   if(memberStatus==="writer" && root.storyId && !posting){
-     void postPublic(emoji,root.storyId,root.id);
-     return;
-   }
-   if(memberStatus==="writer")activateReply(root,emoji);
+   if(!canInteract||owned.has(root.id)||posting||!root.storyId)return;
+   void postPublic(emoji,root.storyId,root.id);
+ };
+ const renderReplyEditor=(root:Thread,targetId:string)=>{
+   const targetIsRoot=targetId===root.id;
+   if(!canInteract||owned.has(targetId)||!root.storyId||
+      replyTo!==root.id||(replyTarget||root.id)!==targetId)return null;
+   const targetAuthor=targetIsRoot?root.author:
+     root.replies.find(reply=>reply.id===targetId)?.author||"";
+   return <form className={styles.composer} onSubmit={event=>{
+     event.preventDefault();
+     void postPublic(replyText,root.storyId||"",root.id,targetIsRoot?"":targetId);
+   }}>
+     <label className={styles.field}>
+      <span>{isFR?"Répondre à":"Reply to"} {targetAuthor}</span>
+      <textarea value={replyText} maxLength={2000} rows={3}
+       onChange={event=>{setReplyText(event.target.value);setPostError("");setPostSuccess("");}}
+       placeholder={isFR?"Écrivez votre réponse…":"Write your reply…"} />
+     </label>
+     <div className={styles.entryActions}>
+      <button type="submit" disabled={posting||!replyText.trim()}>
+       {posting?(isFR?"Publication…":"Posting…"):(isFR?"Publier la réponse":"Post reply")}
+      </button>
+      <button type="button" disabled={posting} onClick={()=>{setReplyTo("");setReplyTarget("");setReplyText("");setPostError("");}}>
+       {isFR?"Annuler":"Cancel"}
+      </button>
+     </div>
+     {postError&&<p role="alert" className={styles.error}>{postError}</p>}
+   </form>;
  };
  const storyTitles=useMemo(()=>Array.from(new Set(threads.map(t=>t.storyTitle))).sort(),[threads]);
  const filtered=useMemo(()=>{
@@ -215,8 +280,6 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   search:isFR?"Rechercher des discussions et réponses…":"Search comments and replies…",
   newest:isFR?"Les plus récents":"Newest first",
   oldest:isFR?"Les plus anciens":"Oldest first",
-  open:isFR?"Ouvrir":"Open",
-  discuss:isFR?"Participer":"Discuss",
   replies:isFR?"Afficher les réponses":"Show replies",
   hide:isFR?"Masquer les réponses":"Hide replies",
   writer:isFR?"Writer Studio · Réponse des lecteurs":"Writer Studio · Reader Response",
@@ -279,7 +342,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
 
 
 
-   {postError&&<p role="alert" className={styles.error}>{postError}</p>}
+   {postError&&!replyTo&&<p role="alert" className={styles.error}>{postError}</p>}
    {postSuccess&&<p role="status" className={styles.success}>{postSuccess}</p>}
   </div>
   <div className={styles.count} aria-live="polite">
@@ -290,58 +353,43 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     {connected?t.noComments:loading?(isFR?"Chargement des échanges…":"Loading public conversations…"):t.unavail}
    </p>}
    {visibleItems.map(item=><article className={styles.entry} key={item.id}>
-     <div className={styles.entryTop}>
-      <span className={item.source==="WriterStudio"?styles.studioBadge:styles.homeBadge}>
-       {item.source==="WriterStudio"?t.writer:t.home}
-      </span>
-      <span className={styles.entryMeta}>{item.author} · {formatDate(item.createdAt,language)}</span>
+    <div className={styles.entryTop}>
+     <span className={item.source==="WriterStudio"?styles.studioBadge:styles.homeBadge}>
+      {item.source==="WriterStudio"?t.writer:t.home}
+     </span>
+     <span className={styles.entryMeta}>{item.author} · {formatDate(item.createdAt,language)}</span>
+    </div>
+    <p className={styles.storyLine}><strong>{item.storyTitle}</strong>{item.forum?` · ${item.forum}`:""}</p>
+    <p className={styles.comment}>{item.text}</p>
+    {canInteract&&!owned.has(item.id)&&item.storyId&&<div className={styles.entryActions}>
+     <button type="button" className={styles.replyAction}
+      onClick={()=>replyTo===item.id&&!replyTarget?(setReplyTo(""),setReplyTarget(""),setPostError("")):activateReply(item)}>
+      {replyTo===item.id&&!replyTarget?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
+     </button>
+     <div className={styles.emojiActions} role="group" aria-label={isFR?"Réactions rapides":"Quick emoji replies"}>
+      {quickEmojis.map(emoji=><button type="button" key={emoji}
+       onClick={()=>addEmoji(item,emoji)} disabled={posting}
+       aria-label={(isFR?"Envoyer ":"Send ")+emoji}>{emoji}</button>)}
      </div>
-     <p className={styles.storyLine}><strong>{item.storyTitle}</strong>{item.forum?` · ${item.forum}`:""}</p>
-     {memberStatus==="writer"?<button type="button" className={styles.commentTrigger}
-       aria-label={isFR?"Répondre au commentaire de "+item.author:"Reply to comment by "+item.author}
-       onClick={()=>activateReply(item)}>{item.text}</button>
-       :<p className={styles.comment}>{item.text}</p>}
-     {Array.isArray(item.replies)&&item.replies.length>0&&<>
-      <button className={styles.replyToggle} type="button" aria-expanded={!!expanded[item.id]}
-       onClick={()=>setExpanded(prev=>({...prev,[item.id]:!prev[item.id]}))}>
-       {expanded[item.id]?t.hide:t.replies} ({item.replies.length})
-      </button>
-      {expanded[item.id]&&<div className={styles.replyList}>
-       {item.replies.map(reply=><div className={styles.reply} key={reply.id}>
-        <span className={styles.replyMeta}>{reply.author} · {formatDate(reply.createdAt,language)}</span>
-        {memberStatus==="writer"?<button type="button" className={styles.replyCommentTrigger}
-          aria-label={isFR?"Répondre à "+reply.author:"Reply to "+reply.author}
-          onClick={()=>activateReply(item,"@"+reply.author+" ",reply.id)}>{reply.text}</button>
-          :<p>{reply.text}</p>}
-       </div>)}
-      </div>}
-     </>}
-     <div className={styles.entryActions}>
-      <a href={safeStoryHref(activeAppUrl,item)}>{t.open} →</a>
-      <a href={safeStoryHref(activeAppUrl,item).includes("?storyId=") ? `${safeStoryHref(activeAppUrl,item)}&tab=participate` : safeStoryHref(activeAppUrl,item)}>{t.discuss} →</a>
-      {memberStatus==="writer"&&item.storyId&&<button type="button" className={styles.replyAction}
-       onClick={()=>replyTo===item.id?(setReplyTo(""),setReplyTarget(""),setPostError("")):activateReply(item)}>
-       {replyTo===item.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
-      </button>}
-      {memberStatus==="writer"&&item.storyId&&<div className={styles.emojiActions} role="group"
-       aria-label={isFR?"Réactions rapides":"Quick emoji replies"}>
-       {quickEmojis.map(emoji=><button type="button" key={emoji}
-        onClick={()=>addEmoji(item,emoji)}
-        disabled={posting}
-        aria-label={(isFR?"Envoyer ":"Send ")+emoji}>{emoji}</button>)}
-      </div>}
-     </div>
-     {memberStatus==="writer"&&replyTo===item.id&&item.storyId&&
-      <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(replyText,item.storyId||"",item.id,replyTarget)}}>
-       <label className={styles.field}><span>{isFR?"Votre réponse":"Your reply"}</span>
-        <textarea value={replyText} maxLength={2000} rows={3}
-         onChange={e=>{setReplyText(e.target.value);setPostError("");setPostSuccess("");}}
-         placeholder={isFR?"Écrivez votre réponse…":"Write your reply…"} />
-       </label>
-       <button type="submit" disabled={posting||!replyText.trim()}>
-        {posting?(isFR?"Publication…":"Posting…"):(isFR?"Publier la réponse":"Post reply")}
-       </button>
-      </form>}
+    </div>}
+    {renderReplyEditor(item,item.id)}
+    {Array.isArray(item.replies)&&item.replies.length>0&&<>
+     <button className={styles.replyToggle} type="button" aria-expanded={!!expanded[item.id]}
+      onClick={()=>setExpanded(prev=>({...prev,[item.id]:!prev[item.id]}))}>
+      {expanded[item.id]?t.hide:t.replies} ({item.replies.length})
+     </button>
+     {expanded[item.id]&&<div className={styles.replyList}>
+      {item.replies.map(reply=><div className={styles.reply} key={reply.id}>
+       <span className={styles.replyMeta}>{reply.author} · {formatDate(reply.createdAt,language)}</span>
+       <p>{reply.text}</p>
+       {canInteract&&!owned.has(reply.id)&&item.storyId&&<button type="button" className={styles.replyAction}
+        onClick={()=>replyTo===item.id&&replyTarget===reply.id?(setReplyTo(""),setReplyTarget(""),setPostError("")):activateReply(item,"@"+reply.author+" ",reply.id)}>
+        {replyTo===item.id&&replyTarget===reply.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
+       </button>}
+       {renderReplyEditor(item,reply.id)}
+      </div>)}
+     </div>}
+    </>}
    </article>)}
   </div>
   {nextBefore&&<button className={styles.more} type="button" disabled={loadingOlder}
