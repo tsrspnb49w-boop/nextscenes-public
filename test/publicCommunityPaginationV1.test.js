@@ -32,7 +32,7 @@ test("scroll region is keyboard-operable and respects reduced motion",()=>{
 });
 
 test("live feedback client offers authenticated public root comment and inline replies",()=>{
- assert.ok(ui.includes('memberStatus==="writer"'));
+ assert.ok(ui.includes('canInteract=memberStatus==="writer"&&ownerScanKey===visibleIdsKey'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/member"'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
  assert.ok(ui.includes('apiBase+"/api/csrf"'));
@@ -93,24 +93,24 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('document.addEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
- assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
- assert.ok(ui.includes('item.storyId&&<button'));
- assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
+ assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
+ assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
- assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
  assert.ok(ui.includes('credentials:"include"'));
 });
 
 test("public feedback uses the existing shared replies endpoint for clicked comments and emoji",()=>{
  assert.ok(ui.includes('const activateReply=(root:Thread,mention="",addressedReplyId="")=>'));
- assert.ok(ui.includes('onClick={()=>activateReply(item)}'));
- assert.ok(ui.includes('onClick={()=>activateReply(item,"@"+reply.author+" ",reply.id)}'));
+ assert.ok(ui.includes('activateReply(item)'));
+ assert.ok(ui.includes('activateReply(item,"@"+reply.author+" ",reply.id)'));
  assert.ok(ui.includes('const quickEmojis=["👍","❤️","😊","👏"]'));
  assert.ok(ui.includes('void postPublic(emoji,root.storyId,root.id)'));
  assert.ok(ui.includes('onClick={()=>addEmoji(item,emoji)}'));
- assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
+ assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
- assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
  assert.ok(ui.includes('apiBase+"/api/public-community/v1/feedback"'));
  assert.ok(css.includes(".commentTrigger"));
  assert.ok(css.includes(".replyCommentTrigger"));
@@ -126,12 +126,12 @@ test("both developing stories have Explore links that respect private reading pe
 
 test("only verified writers see public feedback posting controls",()=>{
  assert.ok(ui.includes('useState<"checking"|"writer"|"reader"|"guest"|"unavailable">'));
- assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
- assert.ok(ui.includes('memberStatus==="writer"?<button'));
- assert.ok(ui.includes('memberStatus==="writer"&&item.storyId&&<button'));
- assert.ok(ui.includes('memberStatus==="writer"&&item.storyId&&<div'));
- assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
- assert.ok(ui.includes('if(memberStatus==="writer")activateReply(root,emoji)'));
+ assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
+ assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('canInteract&&!owned.has(reply.id)&&item.storyId&&<button'));
+ assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
+ assert.ok(ui.includes('if(!canInteract||owned.has(root.id)||posting||!root.storyId)return;'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('You cannot reply to your own post.'));
  assert.ok(ui.includes('Writer access is required to participate.'));
@@ -147,8 +147,8 @@ test("Live Feedback and developing-story cards contain no redundant instructiona
  ])assert.ok(!ui.includes(copy),copy);
  assert.ok(!developing.includes("Public preview unavailable. Explore in the app."));
  assert.ok(!developing.includes("Aperçu public non disponible. Explorer dans l’application."));
- assert.ok(ui.includes('identity?.canWrite===true?"writer":"reader"'));
- assert.ok(ui.includes('memberStatus==="writer"&&replyTo===item.id&&item.storyId&&'));
+ assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
+ assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
 });
 
 test("staging custom host is paired only with its own staging API and app",()=>{
@@ -174,4 +174,21 @@ test("server trusted origin uses opt-in and exact Render service identity",()=>{
    NEXTSCENES_STAGING_SAMESITE_AUTH:"true"}),"https://api.nextscenes.org");
  assert.equal(probe({RENDER_SERVICE_ID:"unknown",
    NEXTSCENES_STAGING_SAMESITE_AUTH:"true"}),"");
+});
+
+test("the public message itself stays plain text; only someone else's explicit Reply is interactive",()=>{
+ assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
+ assert.ok(ui.includes('renderReplyEditor(item,reply.id)'));
+ assert.ok(ui.includes('canInteract&&!owned.has(reply.id)&&item.storyId&&<button'));
+ assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('setOwnerScanKey(visibleIdsKey)'));
+ assert.ok(ui.includes('setOwnIds(ownership)'));
+ assert.ok(ui.includes('setOwnerScanKey("")'));
+ assert.ok(ui.includes('owned.has(addressedReplyId||root.id)'));
+ assert.ok(ui.includes('replyTo!==root.id||(replyTarget||root.id)!==targetId'));
+ assert.ok(!ui.includes('className={styles.commentTrigger}'));
+ assert.ok(!ui.includes('className={styles.replyCommentTrigger}'));
+ assert.ok(!ui.includes('<a href={safeStoryHref('));
+ assert.ok(!ui.includes('{t.open}'));
+ assert.ok(!ui.includes('{t.discuss}'));
 });
