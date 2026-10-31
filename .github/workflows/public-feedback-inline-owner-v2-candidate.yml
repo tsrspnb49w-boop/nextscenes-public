@@ -1,7 +1,7 @@
 name: Public Feedback Inline Ownership V2 · Public Candidate
 on:
   push:
-    branches: [candidate/public-feedback-inline-owner-public-v2-20261031]
+    branches: [candidate/public-feedback-inline-owner-public-v2-20261031, review/navigation-continuity-v1b-public-20261030]
   workflow_dispatch:
 permissions:
   contents: read
