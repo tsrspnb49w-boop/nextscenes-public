@@ -57,3 +57,21 @@
 .emojiActions button:hover{background:#e5f4ea}
 .emojiActions button:focus-visible{outline:2px solid #147a53;outline-offset:2px}
 .emojiActions button:disabled{opacity:.6;cursor:not-allowed}
+
+/* Reply ancestry uses NextScenes' existing Feedback parentId/replyToId.
+   The connector and modest indentation make the person being answered clear. */
+.replyBranch{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.replyHeading{display:flex;gap:5px;align-items:baseline;flex-wrap:wrap;color:#365b47;font-size:13px}
+.replyHeading strong{color:#163f2e}
+.replyHeading span{font-size:12px;color:#5b7567}
+.replyContext{color:#4f7460;font-size:12px;margin:5px 0 3px}
+.replyContext strong{font-weight:750;color:#24583d}
+.childReplies{margin:0 0 5px clamp(10px,1.8vw,20px);padding-left:clamp(9px,1.3vw,16px);border-left:2px solid #b5d9c2}
+.compactChildReplies{margin:0 0 5px 4px;padding-left:8px;border-left:2px solid #b5d9c2}
+.reply .replyAction{margin-top:9px}
+@media(max-width:600px){
+ .replyList{padding-left:8px}
+ .childReplies{margin-left:8px;padding-left:8px}
+ .compactChildReplies{margin-left:2px;padding-left:6px}
+ .reply{padding:10px}
+}
