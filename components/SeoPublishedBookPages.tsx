@@ -22,7 +22,7 @@ export function SeoPublishedBooksIndex({ locale }: { locale: PublicBookLocale })
       <div className="ns-grid-3">
         <article className="ns-card">
           <Link href={didieHref} aria-label={fr ? "Découvrir The Story of Didie" : "Discover The Story of Didie"}>
-            <Image src="/images/books/didie/approved-front.webp" alt="The Story of Didie book cover" width={180} height={270} sizes="180px" style={{ width: 145, height: 218, objectFit: "cover" }} />
+            <Image src="/images/books/didie/approved-front.webp" alt="The Story of Didie book cover" width={180} height={270} sizes="145px" priority style={{ width: 145, height: 218, objectFit: "cover" }} />
           </Link>
           <h2 className="ns-h3">The Story of Didie</h2>
           <p className="ns-p">{fr
@@ -31,10 +31,10 @@ export function SeoPublishedBooksIndex({ locale }: { locale: PublicBookLocale })
           <p className="ns-p">{fr ? "Auteur : Goddy Oguzie · Langue : anglais" : "Author: Goddy Oguzie · Language: English"}</p>
           <Link href={didieHref}>{fr ? "Découvrir le livre" : "Discover the book"}</Link>
         </article>
-        {books.map((book) => (
+        {books.map((book, index) => (
           <article key={book.id} className="ns-card">
             <Link href={book.href} aria-label={(fr ? "Découvrir " : "Discover ") + book.title}>
-              <Image src={book.cover} alt={book.title + " book cover"} width={180} height={250} sizes="180px" style={{ width: 145, height: 202, objectFit: "cover" }} />
+              <Image src={book.cover} alt={book.title + " book cover"} width={180} height={250} sizes="145px" loading={index < 2 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} style={{ width: 145, height: 202, objectFit: "cover" }} />
             </Link>
             <h2 className="ns-h3">{book.title}</h2>
             <p className="ns-p">{book.summary}</p>
