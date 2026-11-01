@@ -1,10 +1,12 @@
 // app/faq/page.tsx
-// Build: 2026-02-beta-faq-v1
+import { buildMetadata } from "@/app/seo";
 
-export const metadata = {
-  title: "FAQ | NextScenes",
-  description: "Frequently asked questions about the NextScenes beta program.",
-};
+export const metadata = buildMetadata({
+  title: "Frequently Asked Questions | Writing and Reading | NextScenes",
+  description: "Find clear answers about writing, reading, collaboration, project privacy, and getting started with NextScenes.",
+  path: "/faq",
+  languages: { en: "/faq", fr: "/fr/faq" },
+});
 
 export default function FAQPage() {
   return (
@@ -12,27 +14,29 @@ export default function FAQPage() {
       <h1 className="ns-h1">Frequently Asked Questions</h1>
 
       <p className="ns-subtitle">
-        Clear answers about the NextScenes beta program.
+        Clear answers about reading, writing, collaboration and using NextScenes.
       </p>
 
       <section className="ns-section ns-paper" style={{ marginTop: 18 }}>
         <h2 className="ns-h2">What is NextScenes?</h2>
         <p className="ns-p">
-          NextScenes is a structured storytelling platform where stories are built using
-          defined writing modes and governance rules. It is designed for serious,
-          coherent, and collaborative storytelling.
+          NextScenes is a workspace for writing, editing, organising and formatting books.
+          Authors can work independently or collaborate according to clear roles and
+          decisions, while readers can explore stories made publicly available.
         </p>
 
-        <h2 className="ns-h2">Is this a public release?</h2>
+        <h2 className="ns-h2">Can I visit NextScenes now?</h2>
         <p className="ns-p">
-          No. The platform is currently operating in a limited beta phase.
-          Features may change, improve, or be removed as the system evolves.
+          Yes. The public website is available to visitors. The writing application is
+          in an early-access period, with ongoing improvements as writers test
+          its features.
         </p>
 
-        <h2 className="ns-h2">Who can access the beta?</h2>
+        <h2 className="ns-h2">Who can write or contribute?</h2>
         <p className="ns-p">
-          Access is currently limited to invited testers. Registration is controlled
-          and may be restricted during this phase.
+          Writing, commenting and contributing require a registered account with writer
+          permissions. Access to individual projects also depends on their
+          visibility, membership and writing mode.
         </p>
 
         <h2 className="ns-h2">What are writing modes?</h2>
@@ -50,30 +54,30 @@ export default function FAQPage() {
           Each mode establishes clear decision rules and responsibility structures.
         </p>
 
-        <h2 className="ns-h2">Is my work private?</h2>
+        <h2 className="ns-h2">Are my projects private?</h2>
         <p className="ns-p">
-          Privacy depends on the story’s configuration and writing mode.
-          Beta testers should not treat the platform as a private storage system.
-          Always keep personal backups of important work.
+          Privacy depends on each project's visibility, membership and writing mode.
+          Material shared in a public project may be visible to other readers.
+          Keep independent copies of important manuscripts.
         </p>
 
-        <h2 className="ns-h2">Can I lose my content?</h2>
+        <h2 className="ns-h2">Should I keep backups of my writing?</h2>
         <p className="ns-p">
-          While unlikely, beta systems may experience instability.
-          Users are encouraged to maintain independent backups of important content.
+          Yes. Keep your own copies of important manuscripts, just as you would with
+          work prepared in any other writing software.
         </p>
 
         <h2 className="ns-h2">How do I report issues?</h2>
         <p className="ns-p">
-          Use the Beta Feedback feature inside the application or contact the
-          beta support email provided in your invitation.
+          Use the Contact page on the public website to report problems or
+          ask for assistance.
         </p>
 
         <h2 className="ns-h2">What is Mystery250?</h2>
         <p className="ns-p">
-          Mystery250 is a structured narrative challenge hosted within NextScenes.
-          It explores disciplined storytelling within defined creative constraints.
-          Details may expand as the beta progresses.
+          Mystery250 offers short mystery stories and reading puzzles that encourage
+          observation, reasoning and imagination. Some activities are still
+          being developed.
         </p>
       </section>
     </main>
