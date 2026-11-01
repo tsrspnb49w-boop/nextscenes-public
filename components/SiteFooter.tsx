@@ -67,6 +67,9 @@ export default function SiteFooter() {
             <a href={`${APP_URL}/storylines`} className="ns-footer-link">
               {isFR ? "Histoires" : "Storylines"}
             </a>
+            <Link href={isFR ? "/fr/books" : "/books"} className="ns-footer-link">
+              {isFR ? "Livres publiés" : "Published books"}
+            </Link>
             <Link href={writersHref} className="ns-footer-link">
               {isFR ? "Pour les auteurs" : "For Writers"}
             </Link>
