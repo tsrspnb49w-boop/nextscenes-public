@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/app/seo";
+import { publicPublishedBooks } from "@/app/lib/seoPublishedBooks";
 
 const routes = [
   { path: "/", priority: 1.0, changeFrequency: "weekly" },
@@ -46,9 +47,23 @@ const routes = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({
+  const existingPages = routes.map((route) => ({
     url: `${SITE_URL}${route.path}`,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+  const publishedBookPages = [
+    ...publicPublishedBooks.en,
+    ...publicPublishedBooks.fr,
+  ].map((book) => ({
+    url: `${SITE_URL}${book.href}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+  return [
+    ...existingPages,
+    { url: `${SITE_URL}/books`, changeFrequency: "monthly", priority: 0.85 },
+    { url: `${SITE_URL}/fr/books`, changeFrequency: "monthly", priority: 0.85 },
+    ...publishedBookPages,
+  ];
 }
