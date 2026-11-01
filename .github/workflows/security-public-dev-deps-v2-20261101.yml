@@ -1,0 +1,108 @@
+name: NextScenes Public Dev Security V2 - Isolated Candidate
+on:
+  push:
+    branches: [security/public-dev-deps-v2-20261101]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nextscenes-public-dev-v2-candidate
+  cancel-in-progress: false
+jobs:
+  verify-and-prepare-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Verify pinned source and untouched security baseline
+        run: |
+          node <<'NODE'
+          const p=require('./package.json');
+          const l=require('./package-lock.json').packages;
+          for(const [name,version] of [['next','16.4.3'],['react','19.2.9'],['react-dom','19.2.9']]){
+            if(p.dependencies[name]!==version||l['node_modules/'+name]?.version!==version)throw Error('Core version changed: '+name);
+          }
+          if(p.devDependencies['eslint-config-next']!=='16.4.3'||l['node_modules/eslint-config-next']?.version!=='16.4.3'||l['node_modules/sharp']?.version!=='0.35.5')throw Error('Baseline mismatch');
+          NODE
+          test "$(git hash-object package-lock.json)" = "723a98bfee8f7f5fc0ac77c1248544b04980dc31"
+      - name: Reproduce baseline install and vulnerability inventory
+        run: |
+          npm ci --no-audit --no-fund
+          npm audit --json > /tmp/ns-before.json || true
+          npm audit --omit=dev --json > /tmp/ns-runtime-before.json || true
+          node <<'NODE'
+          for(const path of ['/tmp/ns-before.json','/tmp/ns-runtime-before.json']){
+            const x=require(path);
+            if(!x.metadata?.vulnerabilities)throw Error('Missing original audit result: '+path);
+            console.log('BASELINE_AUDIT',path,JSON.stringify(x.metadata.vulnerabilities));
+          }
+          NODE
+      - name: Resolve compatible transitive fixes only, never force
+        run: |
+          npm update brace-expansion flatted js-yaml minimatch picomatch ajv @humanfs/node --package-lock-only --ignore-scripts --no-audit --no-fund
+          git diff --stat
+      - name: Reject unrelated or production changes in lockfile
+        run: |
+          git diff --exit-code -- package.json
+          node <<'NODE'
+          const fs=require('fs');
+          const cp=require('child_process');
+          const a=JSON.parse(cp.execFileSync('git',['show','HEAD:package-lock.json'],{encoding:'utf8'}));
+          const b=JSON.parse(fs.readFileSync('package-lock.json','utf8'));
+          const allowed=new Set(['brace-expansion','flatted','js-yaml','minimatch','picomatch','ajv','@humanfs/node']);
+          if(a.lockfileVersion!==b.lockfileVersion||JSON.stringify(a.packages[''])!==JSON.stringify(b.packages['']))throw Error('Root metadata changed');
+          let changed=[];
+          for(const path of new Set([...Object.keys(a.packages),...Object.keys(b.packages)])){
+            const old=a.packages[path],now=b.packages[path];
+            if(JSON.stringify(old)===JSON.stringify(now))continue;
+            if(!path||!path.includes('node_modules/'))throw Error('Unexpected lockfile path '+path);
+            const name=path.slice(path.lastIndexOf('node_modules/')+'node_modules/'.length);
+            if(!allowed.has(name))throw Error('Non-target dependency changed: '+path);
+            if(!old?.dev||!now?.dev)throw Error('Runtime dependency or removed dependency changed: '+path);
+            changed.push({path,old:old.version,next:now.version});
+          }
+          if(!changed.length)throw Error('No development security updates resolved');
+          console.log('ALLOWED_DEV_DEPENDENCY_CHANGES',JSON.stringify(changed));
+          NODE
+          test "$(git diff --name-only | grep -v '^package-lock.json$' | wc -l | tr -d ' ')" = "0"
+          git diff --quiet -- package-lock.json && exit 1 || true
+      - name: Verify reproducible patched lockfile
+        run: npm ci --no-audit --no-fund
+      - name: Compare production and full vulnerability counts
+        run: |
+          npm audit --json > /tmp/ns-after.json || true
+          npm audit --omit=dev --json > /tmp/ns-runtime-after.json || true
+          node <<'NODE'
+          const before=require('/tmp/ns-before.json');
+          const after=require('/tmp/ns-after.json');
+          const prod=require('/tmp/ns-runtime-after.json');
+          const b=before.metadata?.vulnerabilities,a=after.metadata?.vulnerabilities,p=prod.metadata?.vulnerabilities;
+          if(!a||!b||!p)throw Error('Missing audit result');
+          console.log('BEFORE_FULL',JSON.stringify(b));
+          console.log('AFTER_FULL',JSON.stringify(a));
+          console.log('AFTER_PRODUCTION',JSON.stringify(p));
+          for(const [name,v] of Object.entries(after.vulnerabilities||{}))console.log('REMAINING_FINDING',JSON.stringify({name,severity:v.severity,via:v.via,fixAvailable:v.fixAvailable}));
+          if(p.total!==0||p.high!==0||p.critical!==0)throw Error('Production dependency regression');
+          if(a.critical||a.high>=b.high||a.total>=b.total)throw Error('No proven reduction in vulnerabilities');
+          NODE
+      - name: Run all existing public website regression tests
+        run: node --test test/*.test.js
+      - name: Complete production build on isolated branch
+        run: npm run build
+      - name: Commit verified lockfile only on isolated branch
+        run: |
+          test "$GITHUB_REF_NAME" = "security/public-dev-deps-v2-20261101"
+          git diff --exit-code -- package.json
+          test "$(git diff --name-only | grep -v '^package-lock.json$' | wc -l | tr -d ' ')" = "0"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- package-lock.json
+          git commit -m "security(public): patch compatible development transitive dependencies"
+          git push origin HEAD:refs/heads/security/public-dev-deps-v2-20261101
