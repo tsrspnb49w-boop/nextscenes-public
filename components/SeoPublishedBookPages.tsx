@@ -34,7 +34,7 @@ export function SeoPublishedBooksIndex({ locale }: { locale: PublicBookLocale })
         {books.map((book, index) => (
           <article key={book.id} className="ns-card">
             <Link href={book.href} aria-label={(fr ? "Découvrir " : "Discover ") + book.title}>
-              <Image src={book.cover} alt={book.title + " book cover"} width={180} height={250} sizes="145px" loading={index < 2 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} style={{ width: 145, height: 202, objectFit: "cover" }} />
+              <Image src={book.cover} alt={book.title + " book cover"} width={180} height={book.id === "ugo-dog-en" ? 180 : 250} sizes="145px" loading={index < 2 ? "eager" : "lazy"} fetchPriority={index === 0 ? "high" : "auto"} style={{ width: 145, height: 202, objectFit: book.id === "ugo-dog-en" ? "contain" : "cover" }} />
             </Link>
             <h2 className="ns-h3">{book.title}</h2>
             <p className="ns-p">{book.summary}</p>
@@ -80,7 +80,7 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
             src={book.cover}
             alt={book.title + " cover"}
             width={300}
-            height={420}
+            height={book.id === "ugo-dog-en" ? 300 : 420}
             sizes="(max-width: 640px) 75vw, 300px"
             priority
             style={{ width: "100%", height: "auto", maxWidth: 300, borderRadius: 7, margin: "0 auto" }}

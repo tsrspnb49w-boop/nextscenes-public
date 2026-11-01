@@ -34,7 +34,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       language: "en",
       href: "/books/ugo-and-her-pet-dog",
       alternateHref: "/fr/books/ugo-et-son-petit-chien",
-      cover: "/images/covers/featured-flat/ugo-her-pet-dog.webp",
+      cover: "/images/covers/ugo-her-pet-dog-flat-2d.webp",
       summary: "A children's story celebrating loyalty, friendship, kindness and the bond between a girl and her dog.",
       themes: "Loyalty, friendship, courage and kindness",
       amazonSearchUrl: "https://www.amazon.com/s?k=ugo+and+her+pet+dog+book",
