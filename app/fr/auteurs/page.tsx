@@ -1,12 +1,15 @@
 import Link from "next/link";
+import { buildMetadata } from "@/app/seo";
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
 
-export const metadata = {
-  title: "Pour les auteurs | NextScenes",
-  description:
-    "Écrivez avec confiance sur NextScenes. Découvrez comment la propriété, le Canon, les propositions, le crédit des contributeurs et la génération de manuscrit sont encadrés.",
-};
+export const metadata = buildMetadata({
+  title: "Écrire, réviser et mettre en page des livres | NextScenes pour les auteurs",
+  description: "Découvrez NextScenes pour écrire, réviser des scènes, organiser les chapitres, collaborer et préparer la mise en page d’un livre en vue de sa publication.",
+  path: "/fr/auteurs",
+  locale: "fr",
+  languages: { en: "/writers", fr: "/fr/auteurs" },
+});
 
 const confidencePoints = [
   "Votre histoire originale reste sous votre autorité.",
