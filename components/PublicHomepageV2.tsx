@@ -5,6 +5,16 @@ import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
 import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import styles from "./PublicHomepageV2.module.css";
 
+// Next.js can safely resize local assets and the two configured external image hosts.
+// Unknown external image hosts retain the existing direct-download behavior.
+function canOptimizePublicImage(src: string): boolean {
+  const value = String(src || "");
+  return (
+    (value.startsWith("/") && !value.startsWith("//")) ||
+    /^https:\/\/(?:images\.unsplash\.com|grkvsllcpotylcvbecuj\.supabase\.co)\//i.test(value)
+  );
+}
+
 type Language = "en" | "fr";
 type Mystery = {
   ref: string;
@@ -231,7 +241,11 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.artStage} aria-label={t.covers}>
             {heroCovers.map((story, i) => (
               <Image key={story.id} src={story.cover} alt={`${story.title} cover`}
-                width={300} height={440} unoptimized
+                width={300} height={440}
+                sizes="(max-width: 720px) 151px, 228px"
+                loading="eager"
+                fetchPriority={i === 1 ? "high" : "auto"}
+                unoptimized={!canOptimizePublicImage(story.cover)}
                 className={`${styles.artCover} ${i===0 ? styles.leftCover : i===1 ? styles.middleCover : styles.rightCover}`} />
             ))}
             <span className={styles.visualLabel}>{t.covers}</span>
@@ -252,7 +266,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               return (
                 <article key={story.id} className={styles.bookCard}>
                   <Link href={story.href} className={styles.bookImageLink} aria-label={`${t.openStory}: ${story.title}`}>
-                    <Image src={story.cover} alt={`${story.title} cover`} width={180} height={250} unoptimized className={styles.bookCover} />
+                    <Image src={story.cover} alt={`${story.title} cover`} width={180} height={250} sizes="(max-width: 390px) 155px, (max-width: 720px) 125px, 146px" unoptimized={!canOptimizePublicImage(story.cover)} className={styles.bookCover} />
                   </Link>
                   <h3>{story.title}</h3>
                   <p className={styles.bookDescription}>{story.hook}</p>
@@ -270,7 +284,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           </div>
           <aside className={styles.didieFeature} aria-label={t.didieEyebrow}>
             <Link href={language === "fr" ? "/fr/books/didie" : "/books/didie"} className={styles.didieArt} aria-label={t.didieCta}>
-              <Image src="/images/books/didie/approved-front.webp" alt="The Story of Didie book cover" width={112} height={168} unoptimized className={styles.didieCover} />
+              <Image src="/images/books/didie/approved-front.webp" alt="The Story of Didie book cover" width={112} height={168} sizes="(max-width: 500px) 86px, 112px" className={styles.didieCover} />
             </Link>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>{t.didieEyebrow}</div>
@@ -369,7 +383,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 <Link href={mysteryHref}>{t.tryMystery} →</Link>
               </div>
               <div className={styles.spotImage}>
-                <Image src={mystery.imageSrc} alt={mystery.imageAlt || mystery.title} width={410} height={320} unoptimized />
+                <Image src={mystery.imageSrc} alt={mystery.imageAlt || mystery.title} width={410} height={320} sizes="(max-width: 720px) 34vw, 30vw" unoptimized={!canOptimizePublicImage(mystery.imageSrc)} />
               </div>
             </article>
             <article className={`${styles.spot} ${styles.spotReading}`}>
@@ -380,7 +394,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 {reading.href ? <Link href={reading.href}>{reading.cta || t.discoverReading} →</Link> : <Link href={storiesHref}>{t.discovery} →</Link>}
               </div>
               <div className={styles.readingImage}>
-                {reading.cover ? <Image src={reading.cover} alt={reading.imageAlt || reading.title} width={180} height={255} unoptimized /> : <span>{language === "fr" ? "Un livre à partager" : "A book worth sharing"}</span>}
+                {reading.cover ? <Image src={reading.cover} alt={reading.imageAlt || reading.title} width={180} height={255} sizes="180px" unoptimized={!canOptimizePublicImage(reading.cover)} /> : <span>{language === "fr" ? "Un livre à partager" : "A book worth sharing"}</span>}
               </div>
             </article>
           </div>
