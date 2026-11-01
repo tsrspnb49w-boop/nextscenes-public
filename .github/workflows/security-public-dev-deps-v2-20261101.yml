@@ -92,7 +92,12 @@ jobs:
           console.log('AFTER_PRODUCTION',JSON.stringify(p));
           for(const [name,v] of Object.entries(after.vulnerabilities||{}))console.log('REMAINING_FINDING',JSON.stringify({name,severity:v.severity,via:v.via,fixAvailable:v.fixAvailable}));
           if(p.total!==0||p.high!==0||p.critical!==0)throw Error('Production dependency regression');
-          if(a.critical||a.high>=b.high||a.total>=b.total)throw Error('No proven reduction in vulnerabilities');
+          const directAdvisories=x=>new Set(Object.values(x.vulnerabilities||{}).flatMap(v=>v.via||[]).filter(v=>typeof v==='object'&&v.url).map(v=>v.url));
+          const original=directAdvisories(before),remaining=directAdvisories(after);
+          console.log('UNIQUE_ADVISORIES_BEFORE',original.size,JSON.stringify([...original]));
+          console.log('UNIQUE_ADVISORIES_AFTER',remaining.size,JSON.stringify([...remaining]));
+          if([...remaining].some(url=>!original.has(url)))throw Error('New underlying advisory introduced');
+          if(a.critical!==0||a.high!==0||remaining.size>=original.size)throw Error('Severity or root advisory reduction gate failed');
           NODE
       - name: Run all existing public website regression tests
         run: node --test test/*.test.js
