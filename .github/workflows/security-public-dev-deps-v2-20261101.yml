@@ -68,7 +68,7 @@ jobs:
             const name=path.slice(path.lastIndexOf('node_modules/')+'node_modules/'.length);
             if(!allowed.has(name))throw Error('Non-target dependency changed: '+path);
             if((old&&!old.dev)||!now?.dev)throw Error('Runtime dependency or removed dependency changed: '+path);
-            changed.push({path,old:old.version,next:now.version});
+            changed.push({path,old:old?.version,next:now?.version});
           }
           if(!changed.length)throw Error('No development security updates resolved');
           console.log('ALLOWED_DEV_DEPENDENCY_CHANGES',JSON.stringify(changed));
