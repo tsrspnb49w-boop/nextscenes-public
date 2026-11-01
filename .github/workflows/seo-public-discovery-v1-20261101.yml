@@ -1,0 +1,56 @@
+name: Public SEO V1 - Guarded Candidate No Deploy
+on:
+  push:
+    branches: [seo/public-discovery-v1-20261101]
+permissions:
+  contents: read
+jobs:
+  seo-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Fail closed on unrelated changes
+        run: |
+          node <<'NODE'
+          const cp=require('node:child_process');
+          const baseline='91758724ff2d5de38967490c36e4e3eb00e7123c';
+          const files=cp.execFileSync('git',['diff','--name-only',baseline,'HEAD'],{encoding:'utf8'}).trim().split('\n').sort();
+          const allowed=['app/faq/page.tsx','app/fr/faq/page.tsx','app/books/didie/page.tsx','app/sitemap.ts','.github/workflows/seo-public-discovery-v1-20261101.yml'].sort();
+          if(JSON.stringify(files)!==JSON.stringify(allowed))throw Error('Unexpected SEO scope: '+JSON.stringify(files));
+          NODE
+      - name: Exact SEO and content integrity guards
+        run: |
+          node <<'NODE'
+          const fs=require('node:fs');
+          const en=fs.readFileSync('app/faq/page.tsx','utf8');
+          const fr=fs.readFileSync('app/fr/faq/page.tsx','utf8');
+          const book=fs.readFileSync('app/books/didie/page.tsx','utf8');
+          const sitemap=fs.readFileSync('app/sitemap.ts','utf8');
+          const robots=fs.readFileSync('app/robots.ts','utf8');
+          const seo=fs.readFileSync('app/seo.ts','utf8');
+          const assert=(value,message)=>{if(!value)throw Error(message)};
+          assert(en.includes('path: "/faq"')&&en.includes('fr: "/fr/faq"')&&en.includes('en: "/faq"'), 'English FAQ metadata/hreflang');
+          assert(fr.includes('path: "/fr/faq"')&&fr.includes('locale: "fr"')&&fr.includes('en: "/faq"'), 'French FAQ metadata/hreflang');
+          assert(!en.includes('limited beta phase')&&!fr.includes('phase bêta limitée'), 'Old FAQ content');
+          assert(book.includes('"@type": "Book"')&&book.includes('Goddy Oguzie')&&book.includes('application/ld+json'), 'Book identity data');
+          assert(book.includes('JSON.stringify(didieBookData)'),'Safe book markup serialization');
+          assert(!sitemap.includes('new Date()')&&!sitemap.includes('lastModified'),'Sitemap must avoid fabricated update dates');
+          assert(robots.includes('sitemap:')&&seo.includes('canonical'),'Existing search discovery foundations preserved');
+          console.log('SEO_CONTENT_GUARDS_PASS');
+          NODE
+      - name: Reproducible installation and runtime audit
+        run: |
+          npm ci --no-fund --no-audit
+          npm audit --omit=dev --audit-level=moderate
+      - name: Existing public regressions
+        run: node --test test/*.test.js
+      - name: Complete production build
+        run: npm run build
