@@ -14,7 +14,7 @@ export type PublicBook = {
   author: string;
 };
 
-export const publicChildrensBooks: Record<PublicBookLocale, PublicBook[]> = {
+export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
   en: [
     {
       id: "ugo-butterfly-en",
@@ -50,6 +50,30 @@ export const publicChildrensBooks: Record<PublicBookLocale, PublicBook[]> = {
       summary: "A children's story about Ugo and her friend Awa, celebrating friendship, kindness and understanding.",
       themes: "Friendship, kindness and understanding",
       amazonSearchUrl: "https://www.amazon.com/s?k=ugo+and+her+friend+awa",
+      author: "Goddy Oguzie",
+    },
+    {
+      id: "tarllus-en",
+      title: "The Trials of Tarllus",
+      language: "en",
+      href: "/books/the-trials-of-tarllus",
+      alternateHref: "/fr/books/les-epreuves-de-tarllus",
+      cover: "/images/covers/featured-flat/trials-of-tarllus-en.webp",
+      summary: "A novel exploring the trials, moral choices and consequences that shape Tarllus's journey.",
+      themes: "Moral choices, responsibility and human character",
+      amazonSearchUrl: "https://www.amazon.com/s?k=the+trials+of+tarllus+goddy+oguzie",
+      author: "Goddy Oguzie",
+    },
+    {
+      id: "wayfarer-en",
+      title: "Reflections of the Wayfarer",
+      language: "en",
+      href: "/books/reflections-of-the-wayfarer",
+      alternateHref: "/fr/books/reflexions-dun-voyageur",
+      cover: "/images/covers/featured-flat/reflections-wayfarer.webp",
+      summary: "Thoughtful reflections on life's choices, human values, character and the search for meaning.",
+      themes: "Life, character, choices and reflection",
+      amazonSearchUrl: "https://www.amazon.com/s?k=reflections+of+the+wayfarer+goddy+oguzie",
       author: "Goddy Oguzie",
     },
   ],
@@ -90,11 +114,35 @@ export const publicChildrensBooks: Record<PublicBookLocale, PublicBook[]> = {
       amazonSearchUrl: "https://www.amazon.com/s?k=ugo+et+son+amie+awa",
       author: "Goddy Oguzie",
     },
+    {
+      id: "tarllus-fr",
+      title: "Les Épreuves de Tarllus",
+      language: "fr",
+      href: "/fr/books/les-epreuves-de-tarllus",
+      alternateHref: "/books/the-trials-of-tarllus",
+      cover: "/images/covers/featured-flat/trials-of-tarllus-fr.webp",
+      summary: "Un roman sur les épreuves, les choix moraux et les conséquences qui façonnent le parcours de Tarllus.",
+      themes: "Choix moraux, responsabilité et caractère humain",
+      amazonSearchUrl: "https://www.amazon.com/s?k=les+epreuves+de+tarllus+goddy+oguzie",
+      author: "Goddy Oguzie",
+    },
+    {
+      id: "wayfarer-fr",
+      title: "Réflexions d’un Voyageur",
+      language: "fr",
+      href: "/fr/books/reflexions-dun-voyageur",
+      alternateHref: "/books/reflections-of-the-wayfarer",
+      cover: "/images/covers/featured-flat/reflexions-voyageur.webp",
+      summary: "Des réflexions sur les choix de la vie, les valeurs humaines, le caractère et la quête de sens.",
+      themes: "Vie, caractère, choix et réflexion",
+      amazonSearchUrl: "https://www.amazon.com/s?k=reflexions+d+un+voyageur+goddy+oguzie",
+      author: "Goddy Oguzie",
+    },
   ],
 };
 
 export function getPublicBook(locale: PublicBookLocale, id: string): PublicBook {
-  const book = publicChildrensBooks[locale].find((entry) => entry.id === id);
+  const book = publicPublishedBooks[locale].find((entry) => entry.id === id);
   if (!book) throw new Error("Unknown public book record: " + id);
   return book;
 }
