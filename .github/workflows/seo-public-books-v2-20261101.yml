@@ -1,0 +1,96 @@
+name: Public Books SEO V2 - Review Only No Deploy
+on:
+  push:
+    branches: [seo/public-books-and-writers-v2-20261101]
+permissions:
+  contents: read
+jobs:
+  seo-books-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Confirm narrow review scope and exactly three Ugo titles
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),cp=require('child_process');
+          const baseline='618a1f1c6212781834f1eb19f63a18f14cf74347';
+          const changed=cp.execFileSync('git',['diff','--name-only',baseline,'HEAD'],{encoding:'utf8'}).trim().split('\n').sort();
+          const allowed=[
+            '.github/workflows/seo-public-books-v2-20261101.yml',
+            'app/lib/seoPublishedBooks.ts','components/SeoPublishedBookPages.tsx',
+            'app/books/page.tsx','app/fr/books/page.tsx',
+            'app/books/[slug]/page.tsx','app/fr/books/[slug]/page.tsx',
+            'app/sitemap.ts','components/SiteFooter.tsx',
+            'app/writers/page.tsx','app/fr/auteurs/page.tsx'
+          ].sort();
+          if(JSON.stringify(changed)!==JSON.stringify(allowed))throw Error('Unexpected SEO changes: '+JSON.stringify(changed));
+          const data=fs.readFileSync('app/lib/seoPublishedBooks.ts','utf8');
+          const en=data.split('  en: [')[1].split('\n  ],')[0];
+          const fr=data.split('  fr: [')[1].split('\n  ],')[0];
+          for(const [loc,source] of [['en',en],['fr',fr]]){
+            const count=(source.match(/title: /g)||[]).length;
+            const ugo=(source.match(/id: "ugo-[^"]+"/g)||[]).length;
+            if(count!==5||ugo!==3)throw Error('Wrong '+loc+' catalogue count: '+count+' with '+ugo+' Ugo titles');
+            if(!source.includes('Tarllus')||!source.includes('Voyageur')&&loc==='fr'||!source.includes('Wayfarer')&&loc==='en')throw Error('Missing confirmed published works for '+loc);
+          }
+          const all=Array.from(data.matchAll(/cover: "([^"]+)"/g)).map(x=>x[1]);
+          for(const src of all){
+            if(!src.startsWith('/')||!fs.existsSync('public'+src))throw Error('Cover missing: '+src);
+          }
+          for(const s of ['app/books/page.tsx','app/fr/books/page.tsx','app/books/[slug]/page.tsx','app/fr/books/[slug]/page.tsx'])if(!fs.existsSync(s))throw Error('Missing route: '+s);
+          const sitemap=fs.readFileSync('app/sitemap.ts','utf8'),foot=fs.readFileSync('components/SiteFooter.tsx','utf8');
+          if(!sitemap.includes('publicPublishedBooks.en')||!sitemap.includes('publicPublishedBooks.fr')||!sitemap.includes('url: '))throw Error('Book sitemap entries missing');
+          if(!foot.includes('Published books')||!foot.includes('Livres publiés'))throw Error('Sitewide catalogue link missing');
+          if(!fs.readFileSync('app/writers/page.tsx','utf8').includes('path: "/writers"'))throw Error('EN writer canonical missing');
+          if(!fs.readFileSync('app/fr/auteurs/page.tsx','utf8').includes('path: "/fr/auteurs"'))throw Error('FR writer canonical missing');
+          console.log('SEO_BOOKS_V2_SCOPE_AND_CONTENT_PASS',JSON.stringify({englishPublishedBooks:6,frenchPublishedBookPresentations:6,confirmedUgoTitlesPerLanguage:3}));
+          NODE
+      - name: Reproducible dependency install
+        run: npm ci --no-audit --no-fund
+      - name: Production dependency security
+        run: npm audit --omit=dev --audit-level=moderate
+      - name: Public website regression suite
+        run: node --test test/*.test.js
+      - name: Full Next.js production build and static book routes
+        run: npm run build
+      - name: Server-rendered metadata and sitemap smoke test
+        run: |
+          npm run start -- --hostname 127.0.0.1 --port 3000 > /tmp/next-seo2.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" >/dev/null 2>&1 || true' EXIT
+          OK=0
+          for i in $(seq 1 35); do
+            if curl --silent --max-time 3 -o /dev/null http://127.0.0.1:3000/books; then OK=1; break; fi
+            sleep 1
+          done
+          if [ "$OK" != "1" ]; then cat /tmp/next-seo2.log; exit 1; fi
+          node <<'NODE'
+          const paths=[
+            '/books','/fr/books',
+            '/books/ugo-and-the-butterfly-woman','/books/ugo-and-her-pet-dog','/books/ugo-and-her-friend-awa',
+            '/books/the-trials-of-tarllus','/books/reflections-of-the-wayfarer',
+            '/fr/books/ugo-et-la-femme-papillon','/fr/books/ugo-et-son-petit-chien','/fr/books/ugo-et-son-amie-awa',
+            '/fr/books/les-epreuves-de-tarllus','/fr/books/reflexions-dun-voyageur'
+          ];
+          const assert=require('node:assert/strict');
+          (async()=>{
+            for(const path of paths){
+              const resp=await fetch('http://127.0.0.1:3000'+path);
+              const body=await resp.text();
+              assert.equal(resp.status,200,'Book page status '+path);
+              assert(body.includes('<title>')&&body.includes('rel="canonical"'),'Missing SEO metadata '+path);
+              if(!['/books','/fr/books'].includes(path))assert(body.includes('application/ld+json')&&body.includes('Goddy Oguzie'),'Missing book schema '+path);
+            }
+            const site=await (await fetch('http://127.0.0.1:3000/sitemap.xml')).text();
+            for(const path of paths)assert(site.includes('https://www.nextscenes.org'+path),'Sitemap missing '+path);
+            console.log('SEO_BOOKS_V2_PRODUCTION_HTTP_PASS',paths.length+' pages');
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
