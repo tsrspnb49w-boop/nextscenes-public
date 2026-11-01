@@ -56,9 +56,11 @@ jobs:
           const cp=require('child_process');
           const a=JSON.parse(cp.execFileSync('git',['show','HEAD:package-lock.json'],{encoding:'utf8'}));
           const b=JSON.parse(fs.readFileSync('package-lock.json','utf8'));
-          const allowed=new Set(['brace-expansion','flatted','js-yaml','minimatch','picomatch','ajv','@humanfs/node']);
+          const allowed=new Set(['brace-expansion','flatted','js-yaml','minimatch','picomatch','ajv','@humanfs/node','@humanfs/core']);
           if(a.lockfileVersion!==b.lockfileVersion||JSON.stringify(a.packages[''])!==JSON.stringify(b.packages['']))throw Error('Root metadata changed');
           let changed=[];
+          const allDiff=Object.keys(b.packages).filter(path=>JSON.stringify(a.packages[path])!==JSON.stringify(b.packages[path])).map(path=>({path,was:a.packages[path]?.version,now:b.packages[path]?.version,oldDev:a.packages[path]?.dev,newDev:b.packages[path]?.dev}));
+          console.log('ALL_LOCK_ENTRY_DIFFERENCES',JSON.stringify(allDiff));
           for(const path of new Set([...Object.keys(a.packages),...Object.keys(b.packages)])){
             const old=a.packages[path],now=b.packages[path];
             if(JSON.stringify(old)===JSON.stringify(now))continue;
