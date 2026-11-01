@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { absoluteUrl } from "@/app/seo";
 import {
-  publicChildrensBooks,
+  publicPublishedBooks,
   type PublicBook,
   type PublicBookLocale,
 } from "@/app/lib/seoPublishedBooks";
@@ -10,14 +10,14 @@ import {
 export function SeoPublishedBooksIndex({ locale }: { locale: PublicBookLocale }) {
   const fr = locale === "fr";
   const didieHref = fr ? "/fr/books/didie" : "/books/didie";
-  const books = publicChildrensBooks[locale];
+  const books = publicPublishedBooks[locale];
   return (
     <div className="ns-page ns-compact" lang={locale}>
       <h1 className="ns-h1">{fr ? "Livres publiés" : "Published books"}</h1>
       <p className="ns-p">
         {fr
-          ? "Découvrez les livres de Goddy Oguzie, dont trois histoires pour enfants autour de la bonté, du courage et de l’amitié. Chaque édition est présentée dans sa langue."
-          : "Explore books by Goddy Oguzie, including three children's stories about friendship, courage and kindness. Each edition is clearly identified."}
+          ? "Découvrez les livres de Goddy Oguzie, dont des histoires pour enfants sur la bonté et l’amitié, des romans et des réflexions sur la vie. Chaque édition est présentée dans sa langue."
+          : "Explore books by Goddy Oguzie, including children's stories about friendship, courage and kindness, alongside fiction and reflections on life. Each edition is clearly identified."}
       </p>
       <div className="ns-grid-3">
         <article className="ns-card">
