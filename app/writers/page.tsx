@@ -1,12 +1,14 @@
 import Link from "next/link";
+import { buildMetadata } from "@/app/seo";
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
 
-export const metadata = {
-  title: "For Writers | NextScenes",
-  description:
-    "Write with confidence on NextScenes. Learn how story ownership, Canon, proposals, contributor credit, and manuscript generation are handled.",
-};
+export const metadata = buildMetadata({
+  title: "Write, Edit, Collaborate and Format Books | NextScenes for Writers",
+  description: "Discover the NextScenes workspace for writing, reviewing scenes, organising chapters, collaborating with contributors and preparing book interiors for publication.",
+  path: "/writers",
+  languages: { en: "/writers", fr: "/fr/auteurs" },
+});
 
 const confidencePoints = [
   "Your original story remains under your authority.",
