@@ -26,6 +26,13 @@ function normalizePath(pathname: string) {
 
 const ROUTE_PAIRS: Array<[string, string]> = [
   ["/", "/fr"],
+  ["/books", "/fr/books"],
+  ["/books/didie", "/fr/books/didie"],
+  ["/books/ugo-and-the-butterfly-woman", "/fr/books/ugo-et-la-femme-papillon"],
+  ["/books/ugo-and-her-pet-dog", "/fr/books/ugo-et-son-petit-chien"],
+  ["/books/ugo-and-her-friend-awa", "/fr/books/ugo-et-son-amie-awa"],
+  ["/books/the-trials-of-tarllus", "/fr/books/les-epreuves-de-tarllus"],
+  ["/books/reflections-of-the-wayfarer", "/fr/books/reflexions-dun-voyageur"],
 
   ["/about", "/fr/about"],
   ["/clubs", "/fr/clubs"],
@@ -144,6 +151,7 @@ export default function SiteNav() {
 
   const MORE = useMemo(
     () => [
+      { href: "/books", frHref: "/books", en: "Published books", fr: "Livres publiés" },
       { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
       { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },

@@ -71,6 +71,7 @@ const copy = {
     booksEyebrow: "OPEN A STORY",
     booksTitle: "Discover something worth reading.",
     browse: "Browse all stories",
+    publishedCatalogue: "Published books",
     published: "Published",
     inDevelopment: "In development",
     publicationLink: "View publication",
@@ -126,6 +127,7 @@ const copy = {
     booksEyebrow: "OUVRIR UNE HISTOIRE",
     booksTitle: "Découvrez des histoires qui valent la lecture.",
     browse: "Explorer toutes les histoires",
+    publishedCatalogue: "Livres publiés",
     published: "Publié",
     inDevelopment: "En développement",
     publicationLink: "Voir la publication",
@@ -257,7 +259,10 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
         <div className={styles.wrap}>
           <div className={styles.sectionHeading}>
             <div><div className={styles.eyebrow}>{t.booksEyebrow}</div><h2>{t.booksTitle}</h2></div>
-            <Link className={styles.textLink} href={storiesHref}>{t.browse} →</Link>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "12px 22px", alignItems: "center" }}>
+              <Link className={styles.textLink} href={language === "fr" ? "/fr/books" : "/books"}>{t.publishedCatalogue} →</Link>
+              <Link className={styles.textLink} href={storiesHref}>{t.browse} →</Link>
+            </div>
           </div>
           <div className={styles.bookGrid}>
             {featured.map(story => {
