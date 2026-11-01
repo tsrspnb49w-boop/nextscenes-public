@@ -97,7 +97,7 @@ export const FEATURED_STORIES: FeaturedStory[] = [
     hook: "A published children’s book about loyal friendship, kindness, courage, and learning that a true friend may speak without words.",
     cta: "Read preview",
     href: "https://app.nextscenes.org/reader-view",
-    cover: "/images/covers/featured-flat/ugo-her-pet-dog.webp",
+    cover: "/images/covers/ugo-her-pet-dog-flat-2d.webp",
     badge: "Published on Amazon",
     badgeTone: "published-amazon",
     developmentStatus: "showcaseOnly",
