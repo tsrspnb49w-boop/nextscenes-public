@@ -56,7 +56,7 @@ jobs:
           const cp=require('child_process');
           const a=JSON.parse(cp.execFileSync('git',['show','HEAD:package-lock.json'],{encoding:'utf8'}));
           const b=JSON.parse(fs.readFileSync('package-lock.json','utf8'));
-          const allowed=new Set(['brace-expansion','flatted','js-yaml','minimatch','picomatch','ajv','@humanfs/node','@humanfs/core']);
+          const allowed=new Set(['brace-expansion','flatted','js-yaml','minimatch','picomatch','ajv','@humanfs/node','@humanfs/core','@humanfs/types']);
           if(a.lockfileVersion!==b.lockfileVersion||JSON.stringify(a.packages[''])!==JSON.stringify(b.packages['']))throw Error('Root metadata changed');
           let changed=[];
           const allDiff=Object.keys(b.packages).filter(path=>JSON.stringify(a.packages[path])!==JSON.stringify(b.packages[path])).map(path=>({path,was:a.packages[path]?.version,now:b.packages[path]?.version,oldDev:a.packages[path]?.dev,newDev:b.packages[path]?.dev}));
@@ -67,7 +67,7 @@ jobs:
             if(!path||!path.includes('node_modules/'))throw Error('Unexpected lockfile path '+path);
             const name=path.slice(path.lastIndexOf('node_modules/')+'node_modules/'.length);
             if(!allowed.has(name))throw Error('Non-target dependency changed: '+path);
-            if(!old?.dev||!now?.dev)throw Error('Runtime dependency or removed dependency changed: '+path);
+            if((old&&!old.dev)||!now?.dev)throw Error('Runtime dependency or removed dependency changed: '+path);
             changed.push({path,old:old.version,next:now.version});
           }
           if(!changed.length)throw Error('No development security updates resolved');
