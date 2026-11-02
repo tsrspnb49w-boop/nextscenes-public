@@ -94,3 +94,25 @@
  .feed{width:100%;height:min(570px,65vh);min-height:280px;max-height:75vh;max-width:100%;resize:none;overflow-y:auto}
  .resizeHint{display:none}
 }
+
+/* Community Courtesy stays calm and visible to every reader, not just writers. */
+.courtesy {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 17px 0 11px;
+  padding: 11px 13px;
+  border-left: 3px solid #97bfa7;
+  border-radius: 5px 10px 10px 5px;
+  background: #f2f7f2;
+  color: #4b6756;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.courtesy strong { color: #1b5e3f; font-weight: 800; white-space: nowrap; }
+.courtesy span { flex: 1 1 320px; }
+@media(max-width:600px) {
+ .courtesy { align-items: start; gap: 3px 9px; }
+ .courtesy span { flex-basis: 100%; }
+}
