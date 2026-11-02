@@ -1,4 +1,5 @@
 import PublicHomepageV2 from "@/components/PublicHomepageV2";
+import { getPublishedEditorialSpotlight } from "@/app/lib/publicEditorialSpotlight";
 import Image from "next/image";
 import Link from "next/link";
 import { HOME_FEATURES } from "@/app/lib/homeFeatures";
@@ -446,6 +447,7 @@ function FeaturedReadingCard({ reading }: { reading: FeaturedReading }) {
 
 export default async function HomePage() {
   const homepageData = await getPublicHomepageData("fr");
+  const spotlight = await getPublishedEditorialSpotlight();
   const weeklyMystery = homepageData.weeklyMystery;
   const weeklyMysteryAppHref = getWeeklyMysteryAppHref(weeklyMystery);
   const featuredStories = homepageData.featuredStories;
@@ -459,6 +461,7 @@ export default async function HomePage() {
       mystery={weeklyMystery}
       mysteryHref={weeklyMysteryAppHref}
       reading={featuredReading}
+      spotlight={spotlight}
       storiesHref={`${APP_URL.replace(/\/+$/, "")}/storylines`}
     />
   );
