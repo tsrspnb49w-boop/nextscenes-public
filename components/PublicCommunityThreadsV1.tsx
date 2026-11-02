@@ -83,6 +83,14 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
  ))).filter(id=>/^[a-f0-9]{24}$/i.test(id)).join(","),[threads]);
  const owned=useMemo(()=>new Set(ownIds),[ownIds]);
  const canInteract=memberStatus==="writer"&&ownerScanKey===visibleIdsKey;
+ // Keep public discussion controls visible even when a session is read-only.
+ // Permission and same-author restrictions remain enforced by the API.
+ const participationTip=isFR
+   ?"Seuls les auteurs connectés peuvent répondre. Vous ne pouvez pas répondre à votre propre message."
+   :"Only signed-in writers can reply. You cannot reply to your own post.";
+ const courtesyText=isFR
+   ?"Nous accueillons la liberté d’expression et les désaccords réfléchis. Merci de garder vos commentaires et réponses respectueux et constructifs. Les propos injurieux, offensants, menaçants ou les sous-entendus déplacés ne sont pas autorisés."
+   :"We welcome freedom of expression and thoughtful disagreement. Please keep comments and replies respectful and constructive. Abusive, offensive, threatening, or inappropriate suggestive language is not permitted.";
  const refresh=useCallback(async({resetPaging=false}:{resetPaging?:boolean}={})=>{
    if(resetPaging) pagingActive.current=false;
    const version=++requestVersion.current;
@@ -275,13 +283,14 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
       {isFR?"En réponse à":"Replying to"} <strong>{node.repliedTo}</strong>
      </div>
      <p>{node.text}</p>
-     {canInteract&&!owned.has(node.id)&&root.storyId&&
-      <button type="button" className={styles.replyAction}
-       onClick={()=>replyTo===root.id&&replyTarget===node.id?
-         (setReplyTo(""),setReplyTarget(""),setPostError("")):
-         activateReply(root,"@"+node.author+" ",node.id)}>
-       {replyTo===root.id&&replyTarget===node.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
-      </button>}
+     <button type="button" className={styles.replyAction}
+      disabled={!canInteract||owned.has(node.id)||!root.storyId||posting}
+      title={owned.has(node.id)?(isFR?"Vous ne pouvez pas répondre à votre propre message.":"You cannot reply to your own post."):participationTip}
+      onClick={()=>replyTo===root.id&&replyTarget===node.id?
+        (setReplyTo(""),setReplyTarget(""),setPostError("")):
+        activateReply(root,"@"+node.author+" ",node.id)}>
+      {replyTo===root.id&&replyTarget===node.id?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
+     </button>
      {renderReplyEditor(root,node.id)}
     </div>
     {node.children.length>0&&<div className={depth>=3?styles.compactChildReplies:styles.childReplies}>
@@ -346,6 +355,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     </select>
    </label>
   </div>
+  <div className={styles.courtesy} role="note" aria-label={isFR?"Courtoisie communautaire":"Community Courtesy"}>
+   <strong>{isFR?"Courtoisie communautaire":"Community Courtesy"}</strong>
+   <span>{courtesyText}</span>
+  </div>
   <div className={styles.participation} aria-label={isFR?"Participer aux discussions":"Join public discussions"}>
    {memberStatus==="writer"&&<>
     <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(commentText,commentStory)}}>
@@ -390,17 +403,21 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     </div>
     <p className={styles.storyLine}><strong>{item.storyTitle}</strong>{item.forum?` · ${item.forum}`:""}</p>
     <p className={styles.comment}>{item.text}</p>
-    {canInteract&&!owned.has(item.id)&&item.storyId&&<div className={styles.entryActions}>
+    <div className={styles.entryActions}>
      <button type="button" className={styles.replyAction}
+      disabled={!canInteract||owned.has(item.id)||!item.storyId||posting}
+      title={owned.has(item.id)?(isFR?"Vous ne pouvez pas répondre à votre propre message.":"You cannot reply to your own post."):participationTip}
       onClick={()=>replyTo===item.id&&!replyTarget?(setReplyTo(""),setReplyTarget(""),setPostError("")):activateReply(item)}>
       {replyTo===item.id&&!replyTarget?(isFR?"Fermer":"Close"):(isFR?"Répondre":"Reply")}
      </button>
      <div className={styles.emojiActions} role="group" aria-label={isFR?"Réactions rapides":"Quick emoji replies"}>
       {quickEmojis.map(emoji=><button type="button" key={emoji}
-       onClick={()=>addEmoji(item,emoji)} disabled={posting}
+       disabled={!canInteract||owned.has(item.id)||!item.storyId||posting}
+       title={owned.has(item.id)?(isFR?"Vous ne pouvez pas répondre à votre propre message.":"You cannot reply to your own post."):participationTip}
+       onClick={()=>addEmoji(item,emoji)}
        aria-label={(isFR?"Envoyer ":"Send ")+emoji}>{emoji}</button>)}
      </div>
-    </div>}
+    </div>
     {renderReplyEditor(item,item.id)}
     {Array.isArray(item.replies)&&item.replies.length>0&&<>
      <button className={styles.replyToggle} type="button" aria-expanded={!!expanded[item.id]}
