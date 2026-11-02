@@ -19,7 +19,7 @@ export async function getPublishedEditorialSpotlight(): Promise<EditorialSpotlig
     process.env.NEXT_PUBLIC_NEXTSCENES_API_BASE ||
     process.env.NEXT_PUBLIC_API_BASE ||
     "https://api.nextscenes.org"
-  ).trim().replace(/\\/+$/, "");
+  ).trim().replace(/[/]+$/, "");
   try {
     const response = await fetch(`${apiBase}/api/home/spotlight`, {
       next: { revalidate: 60 },
