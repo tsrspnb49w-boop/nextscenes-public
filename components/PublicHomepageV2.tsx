@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { EditorialSpotlight } from "@/app/lib/publicEditorialSpotlight";
 import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
 import DevelopingStoriesV1 from "./DevelopingStoriesV1";
@@ -42,6 +43,7 @@ type Props = {
   mysteryHref: string;
   reading: Reading;
   storiesHref: string;
+  spotlight?: EditorialSpotlight | null;
 };
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org";
@@ -217,7 +219,7 @@ function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedS
 }
 
 
-export default function PublicHomepageV2({language, stories, mystery, mysteryHref, reading, storiesHref}: Props) {
+export default function PublicHomepageV2({language, stories, mystery, mysteryHref, reading, storiesHref, spotlight}: Props) {
   const t = copy[language];
   const featured = selectFeatured(stories, language);
   const heroCovers = [
@@ -341,19 +343,19 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.spotlightGrid}>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.authorMonth}</div>
-              <h3>Mariama Bâ</h3>
-              <p>{language === "fr" ? "Une voix sénégalaise qui explore la dignité, la famille et la place des femmes." : "A Senegalese writer whose work examines dignity, family and women's lives."}</p>
+              <h3>{spotlight?.writer?.name || "Mariama Bâ"}</h3>
+              <p>{language === "fr" ? (spotlight?.writer?.teaserFr || spotlight?.writer?.teaser || "Une voix sénégalaise qui explore la dignité, la famille et la place des femmes.") : (spotlight?.writer?.teaser || "A Senegalese writer whose work examines dignity, family and women's lives.")}</p>
             </article>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.bookMonth}</div>
-              <h3>{language === "fr" ? "Une si longue lettre" : "So Long a Letter"}</h3>
-              <p>{language === "fr" ? "Un roman épistolaire sur l'amitié, le mariage et le choix." : "A novel told through a letter about friendship, marriage and choice."}</p>
+              <h3>{language === "fr" ? (spotlight?.book?.titleFr || spotlight?.book?.title || "Une si longue lettre") : (spotlight?.book?.title || "So Long a Letter")}</h3>
+              <p>{language === "fr" ? (spotlight?.book?.teaserFr || spotlight?.book?.teaser || "Un roman épistolaire sur l'amitié, le mariage et le choix.") : (spotlight?.book?.teaser || "A novel told through a letter about friendship, marriage and choice.")}</p>
             </article>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.wordsTitle}</div>
               <h3>{language === "fr" ? "Pensée à méditer" : "A thought worth keeping"}</h3>
-              <p>{language === "fr" ? "La dignité se protège par la vérité, le courage et la justice." : "Dignity is protected through truth, courage and justice."}</p>
-              <small>NextScenes</small>
+              <p>{language === "fr" ? (spotlight?.daily?.quoteFr || spotlight?.daily?.quote || "La dignité se protège par la vérité, le courage et la justice.") : (spotlight?.daily?.quote || "Dignity is protected through truth, courage and justice.")}</p>
+              <small>{spotlight?.daily?.author || "NextScenes"}</small>
             </article>
           </div>
         </div>
