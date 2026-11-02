@@ -1,0 +1,25 @@
+name: Public Live Feedback Controls and Courtesy V1 (No Deploy)
+on:
+  push:
+    branches:
+      - candidate/public-feedback-controls-courtesy-v2-20261102
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - name: Preserve replies, emojis, writer permissions, bilingual courtesy and sizing
+        run: node --test test/publicCommunityCourtesyV1.test.js test/publicFeedbackResizableV1.test.js
+      - name: Typecheck public frontend
+        run: npx tsc --noEmit
+      - name: Build staging public frontend (no deploy)
+        run: npm run build
