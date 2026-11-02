@@ -346,6 +346,10 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
     </select>
    </label>
   </div>
+  <aside className={styles.courtesy} role="note" aria-label={isFR ? "Courtoisie communautaire" : "Community Courtesy"}>
+   <strong>{isFR ? "Courtoisie communautaire" : "Community Courtesy"}</strong>
+   <p>{isFR ? "NextScenes respecte la liberté d’expression et encourage des échanges réfléchis et respectueux. Les opinions différentes sont les bienvenues, mais chacun doit respecter les autres participants. Les propos offensants, injurieux ou dégradants ne sont pas autorisés." : "NextScenes values freedom of expression and encourages thoughtful, respectful discussions. We welcome different opinions, but ask everyone to use courteous language and respect fellow participants. Offensive, abusive, or degrading language is not permitted."}</p>
+  </aside>
   <div className={styles.participation} aria-label={isFR?"Participer aux discussions":"Join public discussions"}>
    {memberStatus==="writer"&&<>
     <form className={styles.composer} onSubmit={e=>{e.preventDefault();void postPublic(commentText,commentStory)}}>
