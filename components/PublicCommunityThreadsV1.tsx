@@ -375,6 +375,7 @@ export default function PublicCommunityThreadsV1({language,appUrl}:{language:"en
   </div>
   <div className={styles.count} aria-live="polite">
     {connected ? `${t.showing} ${Math.min(visibleItems.length,filtered.length)} ${t.of} ${filtered.length}` : loading ? (isFR?"Chargement…":"Loading…") : t.unavail}
+    <span className={styles.resizeHint}> · {isFR?"Agrandissez la fenêtre en tirant son coin inférieur droit.":"Drag the lower-right corner to expand this window."}</span>
   </div>
   <div className={styles.feed} tabIndex={0} role="region" aria-label={isFR?"Liste défilante des discussions publiques":"Scrollable public discussion list"}>
    {!visibleItems.length && <p className={styles.empty}>
