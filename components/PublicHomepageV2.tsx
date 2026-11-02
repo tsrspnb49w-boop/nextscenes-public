@@ -341,18 +341,18 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.spotlightGrid}>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.authorMonth}</div>
-              <h3>Mariama Bâ</h3>
-              <p>{language === "fr" ? "Une voix sénégalaise qui explore la dignité, la famille et la place des femmes." : "A Senegalese writer whose work examines dignity, family and women's lives."}</p>
+              <h3>Chinua Achebe</h3>
+              <p>{language === "fr" ? "Un romancier nigérian qui explore la tradition, la responsabilité et les bouleversements d’une société." : "A Nigerian novelist whose work examines tradition, responsibility, and a society facing profound change."}</p>
             </article>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.bookMonth}</div>
-              <h3>{language === "fr" ? "Une si longue lettre" : "So Long a Letter"}</h3>
-              <p>{language === "fr" ? "Un roman épistolaire sur l'amitié, le mariage et le choix." : "A novel told through a letter about friendship, marriage and choice."}</p>
+              <h3>{language === "fr" ? "Le Monde s’effondre" : "Things Fall Apart"}</h3>
+              <p>{language === "fr" ? "Un roman sur la communauté, la dignité et les tensions entre tradition et changement." : "A novel about community, dignity, and the tensions between tradition and change."}</p>
             </article>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.wordsTitle}</div>
-              <h3>{language === "fr" ? "Pensée à méditer" : "A thought worth keeping"}</h3>
-              <p>{language === "fr" ? "La dignité se protège par la vérité, le courage et la justice." : "Dignity is protected through truth, courage and justice."}</p>
+              <h3>{language === "fr" ? "Le mot du jour : Intégrité" : "Word of the Day: Integrity"}</h3>
+              <p>{language === "fr" ? "L’intégrité consiste à faire ce qui est juste, même lorsque personne ne regarde." : "Integrity means doing what is right even when no one is watching."}</p>
               <small>NextScenes</small>
             </article>
           </div>
