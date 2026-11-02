@@ -1,0 +1,21 @@
+name: Selective Live Feedback V5 production validation (no deploy)
+on:
+  push:
+    branches:
+      - candidate/production-live-feedback-v5-selective-20261102
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - run: node --test test/publicCommunityCourtesyV1.test.js test/publicFeedbackResizableV1.test.js
+      - run: npx tsc --noEmit
+      - run: npm run build
