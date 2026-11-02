@@ -9,7 +9,7 @@
 .field{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#3d6552;font-weight:750}
 .field select,.field input{border:1px solid #c9ddd2;border-radius:11px;background:#fff;color:#163f2e;min-height:44px;padding:10px 12px;width:100%;font-size:14px}
 .count{font-size:12px;color:#637469;margin:15px 1px 9px}
-.feed{height:min(440px,55vh);min-height:260px;max-height:min(650px,65vh);overflow-y:auto;scrollbar-gutter:stable;overscroll-behavior:contain;display:flex;flex-direction:column;gap:14px;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8bbda4 #e5f1e8;scroll-behavior:smooth;scroll-padding-block:12px;-webkit-overflow-scrolling:touch}
+.feed{width:100%;height:min(580px,70vh);min-width:min(320px,100%);max-width:min(1800px,calc(100vw - 32px));min-height:270px;max-height:min(94vh,1400px);box-sizing:border-box;resize:both;overflow:auto;scrollbar-gutter:stable;overscroll-behavior:contain;display:flex;flex-direction:column;gap:14px;padding-right:10px;scrollbar-width:thin;scrollbar-color:#8bbda4 #e5f1e8;scroll-behavior:smooth;scroll-padding-block:12px;-webkit-overflow-scrolling:touch}
 .feed::-webkit-scrollbar{width:10px}
 .feed::-webkit-scrollbar-track{background:#e5f1e8;border-radius:9px}
 .feed::-webkit-scrollbar-thumb{background:#8bbda4;border:2px solid #e5f1e8;border-radius:9px}
@@ -85,4 +85,34 @@
  .reply{padding:10px 11px}
  .replyList>.replyBranch::before,.childReplies>.replyBranch::before{left:-11px;width:8px}
  .compactChildReplies>.replyBranch::before{left:-8px;width:6px}
+}
+
+/* Manual sizing stays in the discussion pane, not the entire homepage.
+   Desktop users can pull its lower-right corner horizontally or vertically. */
+.resizeHint{font-size:11px;color:#648171;font-weight:500;white-space:normal}
+@media(max-width:600px){
+ .feed{width:100%;height:min(570px,65vh);min-height:280px;max-height:75vh;max-width:100%;resize:none;overflow-y:auto}
+ .resizeHint{display:none}
+}
+
+/* Community Courtesy stays calm and visible to every reader, not just writers. */
+.courtesy {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 17px 0 11px;
+  padding: 11px 13px;
+  border-left: 3px solid #97bfa7;
+  border-radius: 5px 10px 10px 5px;
+  background: #f2f7f2;
+  color: #4b6756;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+.courtesy strong { color: #1b5e3f; font-weight: 800; white-space: nowrap; }
+.courtesy span { flex: 1 1 320px; }
+@media(max-width:600px) {
+ .courtesy { align-items: start; gap: 3px 9px; }
+ .courtesy span { flex-basis: 100%; }
 }
