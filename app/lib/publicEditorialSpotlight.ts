@@ -59,14 +59,25 @@ export async function getPublishedEditorialSpotlight(): Promise<EditorialSpotlig
     if (!response.ok) return null;
     const data = (await response.json()) as SpotlightResponse;
     const doc = data?.spotlight;
-    // The API creates a legacy placeholder on first read. Only publish records
-    // that have actually been saved through the authenticated editorial editor.
-    if (!data?.ok || !clean(doc?.updatedBy?.id, 100)) return null;
+    // The API creates a legacy placeholder on first read. Writer and Book
+    // Spotlight still require an authenticated editorial save. An approved
+    // Calendar entry, however, can be public before anyone saves Spotlight.
+    // Only the server-generated scheduled Daily Words shape includes sourceType
+    // plus both localized date labels. Legacy unscheduled words do not.
+    const manuallyPublished = Boolean(clean(doc?.updatedBy?.id, 100));
+    const scheduledDaily = Boolean(
+      clean(doc?.daily?.quote) &&
+      clean(doc?.daily?.quoteFr) &&
+      clean(doc?.daily?.dateLabel) &&
+      clean(doc?.daily?.dateLabelFr) &&
+      ["original", "quotation"].includes(clean(doc?.daily?.sourceType, 30))
+    );
+    if (!data?.ok || (!manuallyPublished && !scheduledDaily)) return null;
     const writerName = clean(doc?.writer?.name, 120);
     const bookTitle = clean(doc?.book?.title, 140);
     const dailyQuote = clean(doc?.daily?.quote, 850);
     return {
-      writer: writerName && clean(doc?.writer?.teaser) ? {
+      writer: manuallyPublished && writerName && clean(doc?.writer?.teaser) ? {
         name: writerName,
         monthLabel: clean(doc?.writer?.monthLabel, 60),
         imageUrl: safePublicUrl(doc?.writer?.imageUrl),
@@ -78,7 +89,7 @@ export async function getPublishedEditorialSpotlight(): Promise<EditorialSpotlig
           ? doc.writer.works.map((item) => clean(item, 200)).filter(Boolean).slice(0, 12)
           : [],
       } : undefined,
-      book: bookTitle && !/placeholder/i.test(bookTitle) && clean(doc?.book?.teaser) ? {
+      book: manuallyPublished && bookTitle && !/placeholder/i.test(bookTitle) && clean(doc?.book?.teaser) ? {
         title: bookTitle,
         titleFr: clean(doc?.book?.titleFr, 140),
         author: clean(doc?.book?.author, 120),
