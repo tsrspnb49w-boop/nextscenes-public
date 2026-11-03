@@ -11,7 +11,11 @@ export type EditorialSpotlight = {
     coverUrl?: string; coverUrlFr?: string; linkUrl?: string;
     teaser?: string; teaserFr?: string; fullText?: string; fullTextFr?: string;
   };
-  daily?: { quote?: string; quoteFr?: string; author?: string; dateLabel?: string };
+  daily?: {
+    quote?: string; quoteFr?: string; author?: string; dateLabel?: string; dateLabelFr?: string;
+    sourceTitle?: string; sourceReference?: string; sourceUrl?: string; sourceType?: string;
+    translationCredit?: string; reflection?: string; reflectionFr?: string;
+  };
 };
 
 type SpotlightResponse = {
@@ -60,7 +64,7 @@ export async function getPublishedEditorialSpotlight(): Promise<EditorialSpotlig
     if (!data?.ok || !clean(doc?.updatedBy?.id, 100)) return null;
     const writerName = clean(doc?.writer?.name, 120);
     const bookTitle = clean(doc?.book?.title, 140);
-    const dailyQuote = clean(doc?.daily?.quote, 600);
+    const dailyQuote = clean(doc?.daily?.quote, 850);
     return {
       writer: writerName && clean(doc?.writer?.teaser) ? {
         name: writerName,
@@ -91,6 +95,14 @@ export async function getPublishedEditorialSpotlight(): Promise<EditorialSpotlig
         quoteFr: clean(doc?.daily?.quoteFr),
         author: clean(doc?.daily?.author, 120),
         dateLabel: clean(doc?.daily?.dateLabel, 60),
+        dateLabelFr: clean(doc?.daily?.dateLabelFr, 60),
+        sourceTitle: clean(doc?.daily?.sourceTitle, 200),
+        sourceReference: clean(doc?.daily?.sourceReference, 200),
+        sourceUrl: safePublicUrl(doc?.daily?.sourceUrl, "link"),
+        sourceType: clean(doc?.daily?.sourceType, 30),
+        translationCredit: clean(doc?.daily?.translationCredit, 120),
+        reflection: clean(doc?.daily?.reflection, 500),
+        reflectionFr: clean(doc?.daily?.reflectionFr, 500),
       } : undefined,
     };
   } catch {
