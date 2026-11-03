@@ -5,6 +5,7 @@ import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app
 import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
 import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import EditorialSpotlightImage from "./EditorialSpotlightImage";
+import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
 import styles from "./PublicHomepageV2.module.css";
 
 // Next.js can safely resize local assets and the two configured external image hosts.
@@ -331,9 +332,14 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.eyebrow}>{language === "fr" ? "COMMUNAUTÉ SUR LES RÉSEAUX" : "SOCIAL CONVERSATIONS"}</div>
           <h2>{language === "fr" ? "La conversation continue ailleurs." : "The conversation continues beyond our pages."}</h2>
           <div className={styles.socialConversationLinks}>
-            <a href="https://www.facebook.com/nextscenes" target="_blank" rel="noopener noreferrer">Facebook · {language === "fr" ? "Discussions publiques" : "Public discussions"} ↗</a>
-            <a href="https://www.instagram.com/nextscenes/" target="_blank" rel="noopener noreferrer">Instagram · {language === "fr" ? "Publications et commentaires" : "Posts and comments"} ↗</a>
-            <a href="https://www.youtube.com/@NextScenesOfficial" target="_blank" rel="noopener noreferrer">YouTube · {language === "fr" ? "Vidéos et commentaires" : "Videos and comments"} ↗</a>
+            {SOCIAL_CHANNELS.map((channel) => (
+              <a key={channel.id} href={channel.url} target="_blank" rel="noopener noreferrer"
+                aria-label={language === "fr" ? "NextScenes sur " + channel.name : "NextScenes on " + channel.name}>
+                <SocialPlatformIcon platform={channel.id} className={styles.socialConversationIcon} />
+                <span>{channel.name} · {language === "fr" ? channel.fr : channel.en}</span>
+                <span aria-hidden="true" className={styles.socialExternal}>↗</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
