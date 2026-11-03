@@ -2,15 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
 
-const SOCIAL = {
-  facebook: "https://www.facebook.com/nextscenes",
-  youtube: "https://www.youtube.com/@NextScenesOfficial",
-  instagram: "https://www.instagram.com/nextscenes/",
-  x: "",
-};
 
 function normalizePath(p: string) {
   if (!p) return "/";
@@ -138,51 +133,15 @@ export default function SiteFooter() {
             {isFR ? "Communauté" : "Community"}
           </div>
           <div className="ns-footer-links ns-footer-links-stack">
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.facebook}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="NextScenes on Facebook"
-            >
-              Facebook
-            </a>
-
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.youtube}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="NextScenes on YouTube"
-            >
-              YouTube
-            </a>
-
-            <a
-              className="ns-footer-link"
-              href={SOCIAL.instagram}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="NextScenes on Instagram"
-            >
-              Instagram
-            </a>
-
-            {SOCIAL.x ? (
-              <a
-                className="ns-footer-link"
-                href={SOCIAL.x}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="NextScenes on X"
-              >
-                X
+            {SOCIAL_CHANNELS.map((channel) => (
+              <a key={channel.id} className="ns-footer-link ns-social-link"
+                style={{ display: "inline-flex", alignItems: "center", gap: 9 }}
+                href={channel.url} target="_blank" rel="noopener noreferrer"
+                aria-label={isFR ? "NextScenes sur " + channel.name : "NextScenes on " + channel.name}>
+                <SocialPlatformIcon platform={channel.id} className="ns-social-icon" style={{ width: 18, height: 18, flexShrink: 0 }} />
+                <span>{channel.name}</span>
               </a>
-            ) : (
-              <span className="ns-footer-link ns-footer-link-disabled" aria-label="X link pending">
-                X
-              </span>
-            )}
+            ))}
           </div>
         </div>
       </div>
