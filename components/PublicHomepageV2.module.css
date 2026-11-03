@@ -185,3 +185,9 @@
   .spotlightCover{width:66px;height:96px}
   .spotlightExpanded{max-height:320px}
 }
+
+/* V1A: credited Daily Words. Keep the existing three-card composition. */
+.spotlightDailyQuote{white-space:pre-line}
+.spotlightDailySource{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:12px;padding-top:10px;border-top:1px solid #dfebe2;font-size:12px;line-height:1.55;color:#536c5d}
+.spotlightDailySource a{color:#07583c;font-weight:760;text-decoration:underline;text-underline-offset:3px}
+.spotlightDailySource small{font-size:11px;color:#697c71}
