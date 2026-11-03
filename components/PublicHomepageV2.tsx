@@ -424,7 +424,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 </div>
               ) : null}
               {(language === "fr" ? spotlight?.daily?.reflectionFr : spotlight?.daily?.reflection) ? (
-                <details className={styles.spotlightDetails}>
+                <details className={styles.spotlightDetails} open>
                   <summary>{language === "fr" ? "Une pensée à approfondir" : "A thought to consider"}</summary>
                   <div className={styles.spotlightExpanded}>
                     <p>{language === "fr" ? spotlight?.daily?.reflectionFr : spotlight?.daily?.reflection}</p>
