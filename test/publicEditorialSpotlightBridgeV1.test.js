@@ -55,3 +55,21 @@ test("writer and book cards expose full text and images, retaining 3-card biling
   assert.match(styles, /@media\(max-width:600px\)/);
   assert.match(image, /onError=\{\(\) => setFailed\(true\)\}/);
 });
+
+
+test("Daily Wisdom shows verified source and French translation credit with optional reflections",()=>{
+ const bridge=read("app/lib/publicEditorialSpotlight.ts");
+ const component=read("components/PublicHomepageV2.tsx");
+ const css=read("components/PublicHomepageV2.module.css");
+ for(const key of ["sourceTitle","sourceReference","sourceUrl","sourceType","translationCredit",
+                   "reflection","reflectionFr","dateLabelFr"]){
+  assert.ok(bridge.includes(key),"Missing bridge field "+key);
+  assert.ok(component.includes(key),"Missing public presentation field "+key);
+ }
+ assert.match(component,/Discover the work/);
+ assert.match(component,/Découvrir l'œuvre/);
+ assert.match(component,/A thought to consider/);
+ assert.match(component,/Une pensée à approfondir/);
+ assert.match(css,/white-space:pre-line/);
+ assert.equal((component.match(/className=\{styles\.spotlightCard\}/g)||[]).length,3);
+});
