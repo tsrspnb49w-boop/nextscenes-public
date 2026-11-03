@@ -407,9 +407,30 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.wordsTitle}</div>
               <h3>{language === "fr" ? "Pensée à méditer" : "A thought worth keeping"}</h3>
-              <p>{language === "fr" ? (spotlight?.daily?.quoteFr || spotlight?.daily?.quote || "La dignité se protège par la vérité, le courage et la justice.") : (spotlight?.daily?.quote || "Dignity is protected through truth, courage and justice.")}</p>
+              <p className={styles.spotlightDailyQuote}>{language === "fr" ? (spotlight?.daily?.quoteFr || spotlight?.daily?.quote || "La dignité se protège par la vérité, le courage et la justice.") : (spotlight?.daily?.quote || "Dignity is protected through truth, courage and justice.")}</p>
               <small>{spotlight?.daily?.author || "NextScenes"}</small>
-              {spotlight?.daily?.dateLabel ? <small className={styles.spotlightDate}>{spotlight.daily.dateLabel}</small> : null}
+              {spotlight?.daily?.dateLabel ? <small className={styles.spotlightDate}>{language === "fr" ? (spotlight.daily.dateLabelFr || spotlight.daily.dateLabel) : spotlight.daily.dateLabel}</small> : null}
+              {spotlight?.daily?.sourceTitle ? (
+                <div className={styles.spotlightDailySource}>
+                  <span>{language === "fr" ? "Source : " : "From: "}{spotlight.daily.sourceTitle}{spotlight.daily.sourceReference ? `, ${spotlight.daily.sourceReference}` : ""}</span>
+                  {spotlight.daily.sourceUrl ? (
+                    <a href={spotlight.daily.sourceUrl} rel="noopener noreferrer" target="_blank">
+                      {language === "fr" ? "Découvrir l'œuvre" : "Discover the work"} ↗
+                    </a>
+                  ) : null}
+                  {language === "fr" && spotlight.daily.translationCredit ? (
+                    <small>{language === "fr" ? "Traduction : " : "Translation: "}{spotlight.daily.translationCredit}</small>
+                  ) : null}
+                </div>
+              ) : null}
+              {(language === "fr" ? spotlight?.daily?.reflectionFr : spotlight?.daily?.reflection) ? (
+                <details className={styles.spotlightDetails}>
+                  <summary>{language === "fr" ? "Une pensée à approfondir" : "A thought to consider"}</summary>
+                  <div className={styles.spotlightExpanded}>
+                    <p>{language === "fr" ? spotlight?.daily?.reflectionFr : spotlight?.daily?.reflection}</p>
+                  </div>
+                </details>
+              ) : null}
             </article>
           </div>
         </div>
