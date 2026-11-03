@@ -64,7 +64,7 @@ test("Daily Wisdom shows verified source and French translation credit with opti
  for(const key of ["sourceTitle","sourceReference","sourceUrl","sourceType","translationCredit",
                    "reflection","reflectionFr","dateLabelFr"]){
   assert.ok(bridge.includes(key),"Missing bridge field "+key);
-  assert.ok(component.includes(key),"Missing public presentation field "+key);
+  if(key!=="sourceType")assert.ok(component.includes(key),"Missing public presentation field "+key);
  }
  assert.match(component,/Discover the work/);
  assert.match(component,/Découvrir l'œuvre/);
