@@ -4,6 +4,7 @@ import type { EditorialSpotlight } from "@/app/lib/publicEditorialSpotlight";
 import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
 import DevelopingStoriesV1 from "./DevelopingStoriesV1";
+import EditorialSpotlightImage from "./EditorialSpotlightImage";
 import styles from "./PublicHomepageV2.module.css";
 
 // Next.js can safely resize local assets and the two configured external image hosts.
@@ -221,6 +222,16 @@ function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedS
 
 export default function PublicHomepageV2({language, stories, mystery, mysteryHref, reading, storiesHref, spotlight}: Props) {
   const t = copy[language];
+  const writerFullText = language === "fr"
+    ? (spotlight?.writer?.fullTextFr || spotlight?.writer?.fullText || "")
+    : (spotlight?.writer?.fullText || "");
+  const bookFullText = language === "fr"
+    ? (spotlight?.book?.fullTextFr || spotlight?.book?.fullText || "")
+    : (spotlight?.book?.fullText || "");
+  const bookCover = language === "fr"
+    ? (spotlight?.book?.coverUrlFr || spotlight?.book?.coverUrl || "")
+    : (spotlight?.book?.coverUrl || "");
+
   const featured = selectFeatured(stories, language);
   const heroCovers = [
     { ...featured[0], title: "The Kingdom Beneath the Baobab", cover: "/images/covers/v1c-approved/kingdom-beneath-baobab.webp" },
@@ -344,18 +355,61 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.authorMonth}</div>
               <h3>{spotlight?.writer?.name || "Mariama Bâ"}</h3>
-              <p>{language === "fr" ? (spotlight?.writer?.teaserFr || spotlight?.writer?.teaser || "Une voix sénégalaise qui explore la dignité, la famille et la place des femmes.") : (spotlight?.writer?.teaser || "A Senegalese writer whose work examines dignity, family and women's lives.")}</p>
+              {spotlight?.writer?.monthLabel ? <small className={styles.spotlightMeta}>{spotlight.writer.monthLabel}</small> : null}
+              <div className={styles.spotlightIntro}>
+                <EditorialSpotlightImage
+                  src={spotlight?.writer?.imageUrl}
+                  alt={language === "fr" ? "Portrait de " + (spotlight?.writer?.name || "") : "Portrait of " + (spotlight?.writer?.name || "")}
+                  className={styles.spotlightPortrait}
+                />
+                <p>{language === "fr" ? (spotlight?.writer?.teaserFr || spotlight?.writer?.teaser || "Une voix sénégalaise qui explore la dignité, la famille et la place des femmes.") : (spotlight?.writer?.teaser || "A Senegalese writer whose work examines dignity, family and women's lives.")}</p>
+              </div>
+              {(writerFullText || spotlight?.writer?.works?.length) ? (
+                <details className={styles.spotlightDetails}>
+                  <summary>{language === "fr" ? "Lire le portrait complet" : "Read full profile"}</summary>
+                  <div className={styles.spotlightExpanded}>
+                    {writerFullText ? <p>{writerFullText}</p> : null}
+                    {spotlight?.writer?.works?.length ? (
+                      <>
+                        <h4>{language === "fr" ? "Œuvres choisies" : "Selected works"}</h4>
+                        <ul>{spotlight.writer.works.map((work, i) => <li key={i}>{work}</li>)}</ul>
+                      </>
+                    ) : null}
+                  </div>
+                </details>
+              ) : null}
             </article>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.bookMonth}</div>
               <h3>{language === "fr" ? (spotlight?.book?.titleFr || spotlight?.book?.title || "Une si longue lettre") : (spotlight?.book?.title || "So Long a Letter")}</h3>
-              <p>{language === "fr" ? (spotlight?.book?.teaserFr || spotlight?.book?.teaser || "Un roman épistolaire sur l'amitié, le mariage et le choix.") : (spotlight?.book?.teaser || "A novel told through a letter about friendship, marriage and choice.")}</p>
+              {spotlight?.book?.author ? <small className={styles.spotlightMeta}>{language === "fr" ? "De " : "By "}{spotlight.book.author}</small> : null}
+              <div className={styles.spotlightIntro}>
+                <EditorialSpotlightImage
+                  src={bookCover}
+                  alt={language === "fr" ? "Couverture de " + (spotlight?.book?.titleFr || spotlight?.book?.title || "") : "Cover of " + (spotlight?.book?.title || "")}
+                  className={styles.spotlightCover}
+                  cover
+                />
+                <p>{language === "fr" ? (spotlight?.book?.teaserFr || spotlight?.book?.teaser || "Un roman épistolaire sur l'amitié, le mariage et le choix.") : (spotlight?.book?.teaser || "A novel told through a letter about friendship, marriage and choice.")}</p>
+              </div>
+              {bookFullText ? (
+                <details className={styles.spotlightDetails}>
+                  <summary>{language === "fr" ? "En savoir plus sur ce livre" : "Read more about this book"}</summary>
+                  <div className={styles.spotlightExpanded}><p>{bookFullText}</p></div>
+                </details>
+              ) : null}
+              {spotlight?.book?.linkUrl ? (
+                <a className={styles.spotlightMoreLink} href={spotlight.book.linkUrl} target="_blank" rel="noopener noreferrer">
+                  {language === "fr" ? "Découvrir le livre" : "Explore the book"} ↗
+                </a>
+              ) : null}
             </article>
             <article className={styles.spotlightCard}>
               <div className={styles.eyebrow}>{t.wordsTitle}</div>
               <h3>{language === "fr" ? "Pensée à méditer" : "A thought worth keeping"}</h3>
               <p>{language === "fr" ? (spotlight?.daily?.quoteFr || spotlight?.daily?.quote || "La dignité se protège par la vérité, le courage et la justice.") : (spotlight?.daily?.quote || "Dignity is protected through truth, courage and justice.")}</p>
               <small>{spotlight?.daily?.author || "NextScenes"}</small>
+              {spotlight?.daily?.dateLabel ? <small className={styles.spotlightDate}>{spotlight.daily.dateLabel}</small> : null}
             </article>
           </div>
         </div>
