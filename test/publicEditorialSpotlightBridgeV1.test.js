@@ -25,3 +25,33 @@ test("existing public homepage English and French maintain defaults until editor
     assert.match(src, /spotlight=\{spotlight\}/);
   }
 });
+
+
+test("published editorial bridge includes every saved content field, but rejects unsafe URLs", () => {
+  const bridge = read("app/lib/publicEditorialSpotlight.ts");
+  for (const field of [
+    "monthLabel", "imageUrl", "fullText", "fullTextFr", "works",
+    "author", "coverUrl", "coverUrlFr", "linkUrl", "dateLabel"
+  ]) assert.ok(bridge.includes(field), "missing canonical editor field: " + field);
+  assert.match(bridge, /safePublicUrl/);
+  assert.match(bridge, /parsed\.protocol === "https:"/);
+  assert.match(bridge, /!parsed\.username && !parsed\.password/);
+  assert.match(bridge, /!clean\(doc\?\.updatedBy\?\.id, 100\)/);
+});
+
+test("writer and book cards expose full text and images, retaining 3-card bilingual homepage", () => {
+  const comp = read("components/PublicHomepageV2.tsx");
+  const styles = read("components/PublicHomepageV2.module.css");
+  const image = read("components/EditorialSpotlightImage.tsx");
+  for (const field of ["fullTextFr", "fullText", "imageUrl", "coverUrlFr", "coverUrl", "works", "linkUrl", "dateLabel"])
+    assert.ok(comp.includes(field), "missing rendered field " + field);
+  assert.match(comp, /Read full profile/);
+  assert.match(comp, /Lire le portrait complet/);
+  assert.match(comp, /Read more about this book/);
+  assert.match(comp, /En savoir plus sur ce livre/);
+  assert.equal((comp.match(/className=\{styles\.spotlightCard\}/g) || []).length, 3);
+  assert.match(comp, /<details className=\{styles\.spotlightDetails\}>/);
+  assert.match(styles, /max-height:270px/);
+  assert.match(styles, /@media\(max-width:600px\)/);
+  assert.match(image, /onError=\{\(\) => setFailed\(true\)\}/);
+});

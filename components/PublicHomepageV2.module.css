@@ -158,3 +158,31 @@
 .socialConversationLinks a,.socialConversationLinks span{border:1px solid #c7decd;border-radius:14px;padding:15px 17px;font-size:14px;color:#07553a;text-decoration:none;font-weight:700;background:white}
 .socialConversationLinks span{color:#687d70;background:#f9fbf9}
 @media(max-width:700px){.socialConversationLinks{grid-template-columns:1fr}}
+
+
+/* Content Steward V1: full editor content in existing bilingual cards.
+   The compact previews remain readable; full copy is opt-in and scrollable. */
+.spotlightIntro{display:flex;align-items:flex-start;gap:12px;min-width:0}
+.spotlightIntro p{flex:1;min-width:0}
+.spotlightPortrait,.spotlightCover{
+  display:block;flex:none;object-fit:cover;width:76px;height:96px;
+  border:1px solid #d6e5da;border-radius:5px;background:#f7f9f5;
+}
+.spotlightCover{width:72px;height:106px;object-fit:contain}
+.spotlightMeta{display:block;margin:-6px 0 9px;color:#60736b;font-size:12px}
+.spotlightDetails{margin-top:15px;padding-top:10px;border-top:1px solid #dbe9df}
+.spotlightDetails summary{cursor:pointer;color:#07583c;font-size:13px;font-weight:780;line-height:1.5}
+.spotlightDetails summary:hover{text-decoration:underline}
+.spotlightExpanded{margin-top:12px;padding:11px;border:1px solid #dbe9df;border-radius:9px;background:#fffefa;max-height:270px;overflow-y:auto}
+.spotlightExpanded p{font-size:13px;line-height:1.7;white-space:pre-line;margin:0;color:#465d51}
+.spotlightExpanded h4{font-size:13px;margin:14px 0 7px;color:#164e38}
+.spotlightExpanded ul{margin:0;padding-left:19px;color:#465d51;font-size:13px;line-height:1.75}
+.spotlightMoreLink{display:inline-block;align-self:flex-start;margin-top:12px;color:#07583c;font-weight:780;font-size:13px}
+.spotlightMoreLink:hover{text-decoration:underline}
+.spotlightDate{display:block;margin-top:6px;color:#60736b}
+@media(max-width:600px){
+  .spotlightIntro{gap:10px}
+  .spotlightPortrait{width:66px;height:84px}
+  .spotlightCover{width:66px;height:96px}
+  .spotlightExpanded{max-height:320px}
+}
