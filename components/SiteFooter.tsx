@@ -138,7 +138,7 @@ export default function SiteFooter() {
                 style={{ display: "inline-flex", alignItems: "center", gap: 9 }}
                 href={channel.url} target="_blank" rel="noopener noreferrer"
                 aria-label={isFR ? "NextScenes sur " + channel.name : "NextScenes on " + channel.name}>
-                <SocialPlatformIcon platform={channel.id} className="ns-social-icon" style={{ width: 18, height: 18, flexShrink: 0 }} />
+                <SocialPlatformIcon platform={channel.id} className="ns-social-icon" style={{ width: 23, height: 23, flexShrink: 0 }} />
                 <span>{channel.name}</span>
               </a>
             ))}

@@ -155,12 +155,12 @@
 .socialConversation h2{font-family:Georgia,serif;color:#104735;margin:9px 0 8px;font-size:clamp(26px,2.5vw,35px)}
 .socialConversation p{color:#536c5f;max-width:900px;line-height:1.6;font-size:14px;margin-bottom:17px}
 .socialConversationLinks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.socialConversationLinks a,.socialConversationLinks span{border:1px solid #c7decd;border-radius:14px;padding:15px 17px;font-size:14px;color:#07553a;text-decoration:none;font-weight:700;background:white}
+.socialConversationLinks a{border:1px solid #c7decd;border-radius:14px;padding:15px 17px;font-size:14px;color:#07553a;text-decoration:none;font-weight:700;background:white}
 .socialConversationLinks a{display:flex;align-items:center;gap:10px;min-height:54px;transition:background 150ms ease,border-color 150ms ease,transform 150ms ease}
 .socialConversationLinks a:hover{background:#f9fcf9;border-color:#84ae90;transform:translateY(-1px)}
 .socialConversationLinks a:focus-visible{outline:3px solid #e4b52b;outline-offset:3px}
-.socialConversationLinks a span{background:transparent;color:inherit}
-.socialConversationIcon{width:21px;height:21px;flex:none;color:#125f3d}
+.socialConversationLinks a span{background:transparent;color:inherit;border:0;border-radius:0;padding:0}
+.socialConversationIcon{width:34px;height:34px;flex:none}
 .socialConversationLinks .socialExternal{margin-left:auto;font-size:16px;font-weight:600}
 
 @media(max-width:700px){.socialConversationLinks{grid-template-columns:1fr}}

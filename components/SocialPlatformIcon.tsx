@@ -31,25 +31,38 @@ type Props = Omit<SVGProps<SVGSVGElement>, "children"> & {
   platform: SocialPlatform;
 };
 
-export default function SocialPlatformIcon({ platform, ...props }: Props) {
+// Display the recognizable official platform marks with their native brand colours.
+// The same accessible SVG assets are shared by the EN/FR homepage and footer.
+export default function SocialPlatformIcon({ platform, style, ...props }: Props) {
+  const instagram = platform === "instagram";
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-      width="20" height="20" fill="none" stroke="currentColor"
-      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
-      aria-hidden="true" focusable="false" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
+      width="32" height="32" aria-hidden="true" focusable="false"
+      style={{
+        ...(instagram ? {
+          background: "linear-gradient(36deg, #FEDA75 0%, #FA7E1E 23%, #D62976 51%, #962FBF 77%, #4F5BD5 100%)",
+          borderRadius: "8px",
+        } : {}),
+        ...style,
+      }}
+      {...props}>
       {platform === "facebook" ? (
-        <path fill="currentColor" stroke="none"
-          d="M14.1 21v-7.7h2.6l.4-3h-3V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.25C16.9 4.1 15.94 4 14.83 4c-2.33 0-3.93 1.42-3.93 4.02v2.28H8.3v3h2.6V21h3.2Z"/>
-      ) : platform === "instagram" ? (
         <>
-          <rect x="3" y="3" width="18" height="18" rx="5" />
-          <circle cx="12" cy="12" r="4.1" />
-          <circle cx="17.6" cy="6.5" r="1" fill="currentColor" stroke="none" />
+          <circle cx="16" cy="16" r="15.5" fill="#1877F2" />
+          <path fill="#FFFFFF" d="M18.71 31V18.12h4.03l.61-5.02h-4.64V9.91c0-1.46.41-2.45 2.5-2.45h2.49V2.99a34 34 0 0 0-3.67-.19c-3.7 0-6.22 2.26-6.22 6.43v3.87H9.63v5.02h4.18V31z"/>
+        </>
+      ) : instagram ? (
+        <>
+          <rect x="7.4" y="7.4" width="17.2" height="17.2" rx="5.2"
+            fill="none" stroke="#FFFFFF" strokeWidth="2.6"/>
+          <circle cx="16" cy="16" r="4.1" fill="none"
+            stroke="#FFFFFF" strokeWidth="2.6"/>
+          <circle cx="21.4" cy="10.7" r="1.65" fill="#FFFFFF"/>
         </>
       ) : (
         <>
-          <rect x="2" y="5.1" width="20" height="13.8" rx="4.4" />
-          <path d="m10 9 5.4 3-5.4 3V9Z" fill="currentColor" stroke="none" />
+          <rect x="1" y="6" width="30" height="20" rx="6" fill="#FF0033"/>
+          <path d="m13 11 10 5-10 5z" fill="#FFFFFF"/>
         </>
       )}
     </svg>
