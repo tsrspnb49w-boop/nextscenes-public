@@ -157,8 +157,7 @@ export default function SiteFooter() {
             {isFR ? "Mention légale : " : "Legal notice: "}
             NextScenes {isFR ? "est détenu et exploité par " : "is owned and operated by "}
             <strong>GINCO GROUP SARL</strong>.{" "}
-            {isFR ? "Siège social : " : "Registered office: "}
-            Quartier HAMDALLAYE ACI 2000, Immeuble PACIFIC, Bamako, Mali.
+            {isFR ? "Bureau : Bamako, Mali" : "Office: Bamako, Mali"}
           </p>
         </div>
       </div>
