@@ -1,6 +1,7 @@
 "use client";
 import {useEffect,useState} from "react";
 import styles from "./DevelopingStoriesV1.module.css";
+import { resolvePublicStoryHref, type PublicStoryOption } from "@/app/lib/publicStoryDestinations";
 type Development={key:string;public:boolean;title?:string;author?:string;coverUrl?:string;href?:string};
 const definitions=[
  {key:"windows",title:"The 52 Windows",cover:""},
@@ -9,6 +10,7 @@ const definitions=[
 ] as const;
 export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr";appUrl:string}) {
  const [live,setLive]=useState<Development[]>([]);
+ const [storylines,setStorylines]=useState<PublicStoryOption[]>([]);
  const [directoryAppUrl,setDirectoryAppUrl]=useState(appUrl);
  useEffect(()=>{
    const hostname=window.location.hostname.toLowerCase();
@@ -24,20 +26,18 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
      try {
        const r=await fetch("/api/public-community",{cache:"no-store"});
        const j=await r.json();
-       if(active) setLive(r.ok && j?.ok && Array.isArray(j.development) ? j.development : []);
-     }catch {if(active)setLive([]);}
+       if(active) {
+         setLive(r.ok && j?.ok && Array.isArray(j.development) ? j.development : []);
+         setStorylines(r.ok && j?.ok && Array.isArray(j.storylines) ? j.storylines : []);
+       }
+     }catch {if(active){setLive([]);setStorylines([]);}}
    };
    void load();const timer=window.setInterval(load,45000);
    return ()=>{active=false;window.clearInterval(timer)};
  },[]);
- const safeHref=(item:Development|undefined,key:string)=>{
+ const safeHref=(key:string)=>{
    if(key==="ugo")return directoryAppUrl+"/reader-view?storyId=6a2984a9e2727b95968cf87c";
-   if(item?.public && /^\/reader-view\?storyId=[a-zA-Z0-9-]{12,64}$/.test(item.href||""))
-     return directoryAppUrl+item.href;
-   // No public preview? Link to the existing, permission-aware Storylines search
-   // rather than hiding Explore or inventing an unpublished manuscript URL.
-   const term=key==="windows"?"52":key==="sin"?"S.I.N.":"";
-   return directoryAppUrl+"/storylines"+(term?"?q="+encodeURIComponent(term):"");
+   return resolvePublicStoryHref(key==="windows"?"windows":"sin",language,directoryAppUrl,storylines,live);
  };
  const safeCover=(url:string)=>{
    if(url.startsWith("/"))return url;
@@ -55,7 +55,7 @@ export default function DevelopingStoriesV1({language,appUrl}:{language:"en"|"fr
            : "/images/covers/v1c-approved/the-52-windows-en.webp")
          : safeCover(found?.coverUrl || item.cover);
      const title=item.key==="windows" && language==="fr" ? "Les 52 Fenêtres" : item.title;
-     const link=safeHref(found,item.key);
+     const link=safeHref(item.key);
      return <article className={styles.card} key={item.key}>
        <div className={styles.coverFrame}>
          {cover ?
