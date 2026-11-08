@@ -4,6 +4,7 @@ import type { EditorialSpotlight } from "@/app/lib/publicEditorialSpotlight";
 import { FEATURED_STORIES, FEATURED_STORIES_FR, type FeaturedStory } from "@/app/lib/featuredStories";
 import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
 import DevelopingStoriesV1 from "./DevelopingStoriesV1";
+import ResolvedPublicStoryLink from "./ResolvedPublicStoryLink";
 import EditorialSpotlightImage from "./EditorialSpotlightImage";
 import styles from "./PublicHomepageV2.module.css";
 
@@ -190,7 +191,7 @@ function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedS
     title: "Shadows of the Harbour",
     author: "Ugochukwu Ezeji",
     hook: language === "fr" ? "Une enquête sur un réseau de stupéfiants." : "A drugs bust investigation.",
-    cta: "Find story", href: appUrl + "/storylines",
+    cta: "Find story", href: appUrl + "/storylines?q=Shadows%20of%20the%20Harbour",
     cover: "/images/covers/v1c-approved/shadows-of-the-harbour.webp",
     badge: "On NextScenes", badgeTone: "featured", publicationStatus: "notPublished",
   };
@@ -204,6 +205,10 @@ function selectFeatured(stories: FeaturedStory[], language: Language): FeaturedS
     }),
     publicationStatus: "publishedAmazon",
     publicationUrl: undefined,
+    title: language === "fr" ? "Réflexions d’un Voyageur" : "Reflections of the Wayfarer",
+    author: "Goddy Oguzie",
+    cover: language === "fr" ? "/images/covers/featured-flat/reflexions-voyageur.webp" : "/images/covers/featured-flat/reflections-wayfarer.webp",
+    href: language === "fr" ? "/fr/books/reflexions-dun-voyageur" : "/books/reflections-of-the-wayfarer",
   };
   const didie: FeaturedStory = {
     id: "the-story-of-didie-published",
@@ -283,9 +288,15 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               const link = published && story.publicationUrl ? story.publicationUrl : story.href;
               return (
                 <article key={story.id} className={styles.bookCard}>
-                  <Link href={story.href} className={styles.bookImageLink} aria-label={`${t.openStory}: ${story.title}`}>
-                    <Image src={story.cover} alt={`${story.title} cover`} width={180} height={250} sizes="(max-width: 390px) 155px, (max-width: 720px) 125px, 146px" unoptimized={!canOptimizePublicImage(story.cover)} className={styles.bookCover} />
-                  </Link>
+                  {story.id === "shadows-harbour-v1c-review" ? (
+                    <ResolvedPublicStoryLink storyKey="shadows" language={language} appUrl={appUrl} className={styles.bookImageLink} ariaLabel={`${t.openStory}: ${story.title}`}>
+                      <Image src={story.cover} alt={`${story.title} cover`} width={180} height={250} sizes="(max-width: 390px) 155px, (max-width: 720px) 125px, 146px" unoptimized={!canOptimizePublicImage(story.cover)} className={styles.bookCover} />
+                    </ResolvedPublicStoryLink>
+                  ) : (
+                    <Link href={story.href} className={styles.bookImageLink} aria-label={`${t.openStory}: ${story.title}`}>
+                      <Image src={story.cover} alt={`${story.title} cover`} width={180} height={250} sizes="(max-width: 390px) 155px, (max-width: 720px) 125px, 146px" unoptimized={!canOptimizePublicImage(story.cover)} className={styles.bookCover} />
+                    </Link>
+                  )}
                   <h3>{story.title}</h3>
                   <p className={styles.bookDescription}>{story.hook}</p>
                   <div className={styles.bookBottom}>
@@ -293,7 +304,9 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                     {published && story.publicationUrl ? (
                       <a className={styles.textLink} href={link} target="_blank" rel="noopener noreferrer">{t.publicationLink} →</a>
                     ) : (
-                      <Link className={styles.textLink} href={link}>{t.openStory} →</Link>
+                      story.id === "shadows-harbour-v1c-review" ?
+                        <ResolvedPublicStoryLink storyKey="shadows" language={language} appUrl={appUrl} className={styles.textLink}>{t.openStory} →</ResolvedPublicStoryLink> :
+                        <Link className={styles.textLink} href={link}>{t.openStory} →</Link>
                     )}
                   </div>
                 </article>
