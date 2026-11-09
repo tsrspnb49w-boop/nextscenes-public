@@ -191,3 +191,31 @@
 .spotlightDailySource{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:12px;padding-top:10px;border-top:1px solid #dfebe2;font-size:12px;line-height:1.55;color:#536c5d}
 .spotlightDailySource a{color:#07583c;font-weight:760;text-decoration:underline;text-underline-offset:3px}
 .spotlightDailySource small{font-size:11px;color:#697c71}
+
+
+/* Guest-author book discovery: compact and visually secondary to Didie. */
+.guestFeature {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 18px 22px;
+  margin-top: 16px;
+  border: 1px solid #d7e4d8;
+  border-left: 4px solid #4b8064;
+  border-radius: 17px;
+  background: linear-gradient(108deg, #f5faf5, #fffefa);
+}
+.guestCover { display: block; width: 90px; height: auto; border-radius: 5px; box-shadow: 0 5px 13px #283c2a26; }
+.guestDetails { min-width: 0; }
+.guestEyebrow { color: #356b51; font: 800 10px/1.5 Arial, sans-serif; letter-spacing: .13em; }
+.guestDetails h3 { font: 700 22px/1.25 Georgia, serif; color: #174333; margin: 4px 0 5px; }
+.guestDetails p { font: 400 14px/1.55 Arial, sans-serif; color: #4a6255; margin: 0 0 8px; }
+.guestDetails a { color: #075d40; font-size: 13px; font-weight: 750; text-underline-offset: 3px; }
+@media (max-width: 600px) {
+  .guestFeature { grid-template-columns: 70px minmax(0, 1fr); gap: 13px; padding: 16px 13px; }
+  .guestCover { width: 70px; }
+  .guestDetails h3 { font-size: 19px; }
+  .guestDetails p { font-size: 13px; }
+  .guestEyebrow { letter-spacing: .07em; }
+}

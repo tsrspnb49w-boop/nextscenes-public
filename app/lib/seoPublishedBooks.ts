@@ -121,6 +121,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       themes: "Amour, traditions, amitié, fidélité et liberté de choisir",
       amazonSearchUrl: "https://www.amazon.com/dp/B0HQY8VBGM",
       author: "Kola King",
+      authorBio: "Kola King est un écrivain et conteur qui s’intéresse à l’histoire, aux cultures africaines et aux conséquences de la colonisation sur la vie des populations.",
       overview: [
         "Situé à Tekota, dans le pays imaginaire de Songhaland, A Place in the Sun raconte un amour mis à l’épreuve par les règles sociales et les obligations coutumières dans l’Afrique coloniale.",
         "Zakka aime profondément Matta, mais le chemin vers une vie commune reste entravé par un mariage non résolu. La famille de Matta n’a pas encore restitué le prix de la fiancée à Gora, son époux dont elle est séparée. Aux yeux de la tradition, elle demeure son épouse.",
