@@ -76,3 +76,17 @@ test("A Place in the Sun uses a Didie-style literary book page while preserving 
   assert.match(css, /\.guestFeature/);
   assert.match(homepage, /didieFeature/);
 });
+
+test("the Didie and Kola King homepage feature cards share the same size and cover angle", () => {
+  const homepage = read("components/PublicHomepageV2.tsx");
+  const css = read("components/PublicHomepageV2.module.css");
+  assert.match(homepage, /className=\{\x60\$\{styles.didieFeature\} \$\{styles.guestFeature\}\x60\}/);
+  assert.match(homepage, /className=\{styles.didieArt\}/);
+  assert.match(homepage, /className=\{styles.didieCover\}/);
+  assert.match(homepage, /className=\{styles.didieDetails\}/);
+  assert.match(homepage, /\$\{styles.didieAction\}/);
+  assert.match(css, /\.didieCover\s*\{/);
+  assert.match(css, /transform:rotate\(-1\.4deg\)/);
+  assert.match(css, /\.guestFeature\s*\{/);
+  assert.doesNotMatch(css, /\.guestCover\s*\{/);
+});
