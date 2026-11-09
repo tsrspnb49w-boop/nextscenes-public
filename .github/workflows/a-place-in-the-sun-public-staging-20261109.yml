@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - feature/a-place-in-the-sun-book-page-20261109
+      - fix/a-place-in-the-sun-direct-amazon-20261109
   workflow_dispatch:
 permissions:
   contents: read
