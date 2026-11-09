@@ -115,3 +115,17 @@ test("sharp cover retains the artwork approved by the author", async () => {
   assert.ok(changedBits <= 16,
     "The cover differs too much from the author's approved original; changed bits: " + changedBits);
 });
+
+test("Kola King's independently authored manuscript is accurately credited to NextScenes for publication preparation only", () => {
+  const homepage = read("components/PublicHomepageV2.tsx");
+  const dedicated = read("components/APlaceInTheSunBookPage.tsx");
+
+  assert.match(homepage, /Prepared for Amazon KDP with NextScenes/);
+  assert.match(homepage, /Préparé pour Amazon KDP avec l’appui de NextScenes/);
+  assert.match(dedicated, /Kola King wrote A Place in the Sun independently/);
+  assert.match(dedicated, /Kola King a écrit A Place in the Sun indépendamment/);
+  assert.match(dedicated, /professionally formatted interior and cover/);
+  assert.match(dedicated, /mise en page professionnelle de l’intérieur et la réalisation de la couverture/);
+  assert.match(dedicated, /publication through Amazon KDP/);
+  assert.doesNotMatch(dedicated, /written on NextScenes|created on NextScenes|publié par NextScenes|published by NextScenes/);
+});
