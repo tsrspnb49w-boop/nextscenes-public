@@ -112,7 +112,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       href: "/fr/books/a-place-in-the-sun",
       alternateHref: "/books/a-place-in-the-sun",
       cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
-      summary: "Dans la ville fictive de Tekota, en Afrique de l’Ouest à l’époque coloniale, l’amour de Zakka et Matta se heurte aux obligations du mariage, à la question de la dot matrimoniale et aux revendications d’un époux dont Matta est séparée.",
+      summary: "Dans la ville fictive de Tekota, en Afrique de l’Ouest à l’époque coloniale, l’amour de Zakka et Matta se heurte aux obligations du mariage, à la restitution du prix de la fiancée et aux revendications d’un époux dont Matta est séparée.",
       themes: "Amour, traditions, amitié, fidélité et liberté de choisir",
       amazonSearchUrl: "https://www.amazon.com/s?k=9798140593759",
       author: "Kola King",
