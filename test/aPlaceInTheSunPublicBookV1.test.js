@@ -90,3 +90,28 @@ test("the Didie and Kola King homepage feature cards share the same size and cov
   assert.match(css, /\.guestFeature\s*\{/);
   assert.doesNotMatch(css, /\.guestCover\s*\{/);
 });
+
+test("sharp cover retains the artwork approved by the author", async () => {
+  const sharp = require("sharp");
+  const { data, info } = await sharp(coverPath)
+    .greyscale()
+    .resize(9, 8, { kernel: "lanczos3" })
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  assert.equal(info.channels, 1);
+  let fingerprint = 0n;
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      fingerprint = (fingerprint << 1n)
+        | (data[y * 9 + x] > data[y * 9 + x + 1] ? 1n : 0n);
+    }
+  }
+  let distance = fingerprint ^ 0x899c8e880969434bn;
+  let changedBits = 0;
+  while (distance) {
+    changedBits += Number(distance & 1n);
+    distance >>= 1n;
+  }
+  assert.ok(changedBits <= 11,
+    "The cover differs too much from the author's approved original; changed bits: " + changedBits);
+});
