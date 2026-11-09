@@ -66,7 +66,7 @@ test("A Place in the Sun uses a Didie-style literary book page while preserving 
   assert.match(dedicated, /book\.amazonSearchUrl/);
   assert.match(dedicated, /book\.overview \|\| \[\]/);
   assert.match(dedicated, /book\.authorBio/);
-  assert.match(dedicated, /Amazon KDP/);
+  assert.match(dedicated, /Prepared for publication at NextScenes/);
   assert.match(dedicated, /fr: \{/);
   assert.match(dedicated, /en: \{/);
   assert.doesNotMatch(dedicated, /édition française disponible/i);
