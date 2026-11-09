@@ -5,6 +5,10 @@ export type PublicBook = {
   id: string;
   title: string;
   language: PublicBookLocale;
+  bookLanguage?: PublicBookLocale;
+  format?: string;
+  pages?: number;
+  overview?: string[];
   href: string;
   alternateHref: string;
   cover: string;
@@ -16,6 +20,26 @@ export type PublicBook = {
 
 export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
   en: [
+    {
+      id: "a-place-in-the-sun-en",
+      title: "A Place in the Sun",
+      language: "en",
+      bookLanguage: "en",
+      format: "Paperback · 6 × 9 in",
+      pages: 288,
+      href: "/books/a-place-in-the-sun",
+      alternateHref: "/fr/books/a-place-in-the-sun",
+      cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
+      summary: "In colonial-era Tekota, a fictional West African setting, Zakka and Matta's love is tested by marriage obligations, an unpaid bride price and the claims of Matta's estranged husband.",
+      themes: "Love, tradition, friendship, loyalty and personal freedom",
+      amazonSearchUrl: "https://www.amazon.com/s?k=9798140593759",
+      author: "Kola King",
+      overview: [
+        "Set in Tekota, in the fictional country of Songhaland, A Place in the Sun follows a love story shaped by the tensions between personal choice and customary obligation in colonial Africa.",
+        "Zakka falls deeply in love with Matta, but their hopes for a future together encounter an unresolved marriage. Matta's family has yet to return the bride price to her estranged husband, Gora. Under the tradition that governs their community, she is still considered Gora's wife.",
+        "As Gora seeks to reclaim Matta, the three are drawn into a difficult struggle over love, loyalty and the weight of tradition. A story of friendship, love and tragedy asks what it takes for people to find a place of their own."
+      ],
+    },
     {
       id: "ugo-butterfly-en",
       title: "Ugo and the Butterfly Woman",
@@ -78,6 +102,26 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
     },
   ],
   fr: [
+    {
+      id: "a-place-in-the-sun-fr",
+      title: "A Place in the Sun",
+      language: "fr",
+      bookLanguage: "en",
+      format: "Broché · 6 × 9 pouces",
+      pages: 288,
+      href: "/fr/books/a-place-in-the-sun",
+      alternateHref: "/books/a-place-in-the-sun",
+      cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
+      summary: "Dans la ville fictive de Tekota, en Afrique de l’Ouest à l’époque coloniale, l’amour de Zakka et Matta se heurte aux obligations du mariage, à la question de la dot matrimoniale et aux revendications d’un époux dont Matta est séparée.",
+      themes: "Amour, traditions, amitié, fidélité et liberté de choisir",
+      amazonSearchUrl: "https://www.amazon.com/s?k=9798140593759",
+      author: "Kola King",
+      overview: [
+        "Situé à Tekota, dans le pays imaginaire de Songhaland, A Place in the Sun raconte un amour mis à l’épreuve par les règles sociales et les obligations coutumières dans l’Afrique coloniale.",
+        "Zakka aime profondément Matta, mais le chemin vers une vie commune reste entravé par un mariage non résolu. La famille de Matta n’a pas encore restitué le prix de la fiancée à Gora, son époux dont elle est séparée. Aux yeux de la tradition, elle demeure son épouse.",
+        "Lorsque Gora cherche à la reconquérir, les personnages se retrouvent confrontés à des choix difficiles entre amour, loyauté et coutume. Ce roman explore aussi l’amitié, la tragédie et la recherche d’une place à soi."
+      ],
+    },
     {
       id: "ugo-butterfly-fr",
       title: "Ugo et la Femme-Papillon",
