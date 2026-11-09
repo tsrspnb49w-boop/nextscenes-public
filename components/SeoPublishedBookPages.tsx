@@ -109,6 +109,12 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
             </section>
           ) : null}
           <p className="ns-p">{fr ? "Thèmes" : "Themes"} : {book.themes}</p>
+          {book.authorBio ? (
+            <section aria-label={fr ? "À propos de l’auteur" : "About the author"}>
+              <h3 className="ns-h3">{fr ? "À propos de l’auteur" : "About the author"}</h3>
+              <p className="ns-p">{book.authorBio}</p>
+            </section>
+          ) : null}
           <div className="ns-actions" style={{ justifyContent: "flex-start" }}>
             <a className="ns-btn ns-btn-primary" href={book.amazonSearchUrl} target="_blank" rel="noopener noreferrer">
               {fr ? "Rechercher ce livre sur Amazon" : "Find this book on Amazon"}
