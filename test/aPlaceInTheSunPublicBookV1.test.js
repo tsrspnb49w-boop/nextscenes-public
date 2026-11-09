@@ -54,3 +54,25 @@ test("SEO title, sitemap and static pages include the client's book without a fa
   assert.equal((books.match(/https:\/\/www\.amazon\.com\/dp\/B0HQY8VBGM/g) || []).length, 2);
   assert.doesNotMatch(books, /https:\/\/www\.amazon\.com\/s\?k=9798140593759/);
 });
+
+test("A Place in the Sun uses a Didie-style literary book page while preserving existing titles", () => {
+  const dedicated = read("components/APlaceInTheSunBookPage.tsx");
+  const homepage = read("components/PublicHomepageV2.tsx");
+  const css = read("components/PublicHomepageV2.module.css");
+  assert.match(profile, /import APlaceInTheSunBookPage/);
+  assert.match(profile, /book\.id\.startsWith\("a-place-in-the-sun"\)/);
+  assert.match(profile, /<APlaceInTheSunBookPage book=\{book\}/);
+  assert.match(dedicated, /DidieBookPage\.module\.css/);
+  assert.match(dedicated, /book\.amazonSearchUrl/);
+  assert.match(dedicated, /book\.overview \|\| \[\]/);
+  assert.match(dedicated, /book\.authorBio/);
+  assert.match(dedicated, /Amazon KDP/);
+  assert.match(dedicated, /"fr"/);
+  assert.match(dedicated, /"en"/);
+  assert.doesNotMatch(dedicated, /édition française disponible/i);
+  assert.match(homepage, /guestFeature/);
+  assert.match(homepage, /\/fr\/books\/a-place-in-the-sun/);
+  assert.match(homepage, /\/books\/a-place-in-the-sun/);
+  assert.match(css, /\.guestFeature/);
+  assert.match(homepage, /didieFeature/);
+});
