@@ -54,6 +54,9 @@ for page in PAGES:
         if hi != url and hi not in IMAGE_CANDIDATES:
             IMAGE_CANDIDATES.append(hi)
     print("HTML_IMAGES", len(discovered))
+    for token in ["m.media-amazon.com", "images/I/", "landingImage", "hiRes", "data-a-dynamic-image"]:
+        pos = doc.find(token)
+        print("HTML_MARKER", token, pos, doc[max(0, pos - 80):pos + 200] if pos >= 0 else "")
 
 old = Image.open(TARGET).convert("RGB").resize((96, 144), Image.Resampling.LANCZOS)
 matches = []
@@ -65,6 +68,7 @@ for url in IMAGE_CANDIDATES[:70]:
         im = Image.open(io.BytesIO(raw))
         im.load()
         im = im.convert("RGB")
+        print("CANDIDATE_IMAGE", im.size, url[:125])
         if im.width < 650 or im.height < 900 or abs(im.width / im.height - 2/3) > 0.085:
             continue
         score = sum(ImageStat.Stat(ImageChops.difference(im.resize((96,144), Image.Resampling.LANCZOS), old)).mean)/3
