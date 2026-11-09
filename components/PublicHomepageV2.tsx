@@ -328,6 +328,42 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               {t.didieCta} →
             </Link>
           </aside>
+          <aside className={`${styles.didieFeature} ${styles.guestFeature}`} aria-label={language === "fr" ? "Nouvelle publication de Kola King" : "New release by Kola King"}>
+            <Link
+              href={language === "fr" ? "/fr/books/a-place-in-the-sun" : "/books/a-place-in-the-sun"}
+              className={styles.didieArt}
+              aria-label={language === "fr" ? "Découvrir A Place in the Sun" : "Discover A Place in the Sun"}
+            >
+              <Image
+                src="/images/covers/featured-flat/a-place-in-the-sun-sharp.webp"
+                alt="A Place in the Sun by Kola King, book cover"
+                width={112}
+                height={168}
+                sizes="(max-width: 500px) 86px, 112px"
+                className={styles.didieCover}
+              />
+            </Link>
+            <div className={styles.didieDetails}>
+              <div className={styles.eyebrow}>
+                {language === "fr" ? "NOUVELLE PUBLICATION · KOLA KING" : "NEW PUBLICATION · KOLA KING"}
+              </div>
+              <h3>A Place in the Sun</h3>
+              <p>{language === "fr"
+                ? "Un roman sur l’amour, les traditions et la liberté de choisir. Édition publiée en anglais."
+                : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
+              <span className={styles.didieEdition}>
+                {language === "fr"
+                  ? "Préparé pour publication avec NextScenes"
+                  : "Prepared for publication at NextScenes"}
+              </span>
+            </div>
+            <Link
+              className={`${styles.button} ${styles.didieAction}`}
+              href={language === "fr" ? "/fr/books/a-place-in-the-sun" : "/books/a-place-in-the-sun"}
+            >
+              {language === "fr" ? "Découvrir le roman" : "Explore the novel"} →
+            </Link>
+          </aside>
         </div>
       </section>
 
