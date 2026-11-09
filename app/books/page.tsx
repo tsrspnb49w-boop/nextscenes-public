@@ -3,7 +3,7 @@ import { SeoPublishedBooksIndex } from "@/components/SeoPublishedBookPages";
 
 export const metadata = buildMetadata({
   title: "Published Books | African Fiction, Reflections and Children's Stories | NextScenes",
-  description: "Explore books by Goddy Oguzie: The Story of Didie, the Ugo children's stories, The Trials of Tarllus and Reflections of the Wayfarer.",
+  description: "Explore published works by Goddy Oguzie and Kola King, including A Place in the Sun, The Story of Didie, children's stories and thoughtful fiction.",
   path: "/books",
   languages: { en: "/books", fr: "/fr/books" },
 });
