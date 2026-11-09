@@ -1,0 +1,26 @@
+name: A Place in the Sun - Selective Public Production Candidate (No Deploy)
+on:
+  push:
+    branches:
+      - release/a-place-in-the-sun-public-prod-20261109
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install
+        run: npm ci
+      - name: Regression tests
+        run: node --test test/aPlaceInTheSunPublicBookV1.test.js
+      - name: TypeScript check
+        run: npx tsc --noEmit
+      - name: Public site build
+        run: npm run build
