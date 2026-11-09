@@ -334,7 +334,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               aria-label={language === "fr" ? "Découvrir A Place in the Sun" : "Discover A Place in the Sun"}
             >
               <Image
-                src="/images/covers/featured-flat/a-place-in-the-sun.webp"
+                src="/images/covers/featured-flat/a-place-in-the-sun.webp?v=20261109-sharp"
                 alt="A Place in the Sun by Kola King, book cover"
                 width={112}
                 height={168}
