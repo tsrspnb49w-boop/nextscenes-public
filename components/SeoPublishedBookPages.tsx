@@ -1,4 +1,5 @@
 import Image from "next/image";
+import APlaceInTheSunBookPage from "./APlaceInTheSunBookPage";
 import Link from "next/link";
 import { absoluteUrl } from "@/app/seo";
 import {
@@ -16,8 +17,8 @@ export function SeoPublishedBooksIndex({ locale }: { locale: PublicBookLocale })
       <h1 className="ns-h1">{fr ? "Livres publiés" : "Published books"}</h1>
       <p className="ns-p">
         {fr
-          ? "Découvrez les livres de Goddy Oguzie, dont des histoires pour enfants sur la bonté et l’amitié, des romans et des réflexions sur la vie. Chaque édition est présentée dans sa langue."
-          : "Explore books by Goddy Oguzie, including children's stories about friendship, courage and kindness, alongside fiction and reflections on life. Each edition is clearly identified."}
+          ? "Découvrez des romans, des histoires pour enfants et des réflexions sur la vie, notamment des œuvres de Goddy Oguzie et de Kola King. La langue de chaque livre est clairement indiquée."
+          : "Discover novels, children's stories and reflections on life, including works by Goddy Oguzie and Kola King. The language of each book is clearly identified."}
       </p>
       <div className="ns-grid-3">
         <article className="ns-card">
@@ -38,7 +39,7 @@ export function SeoPublishedBooksIndex({ locale }: { locale: PublicBookLocale })
             </Link>
             <h2 className="ns-h3">{book.title}</h2>
             <p className="ns-p">{book.summary}</p>
-            <p className="ns-p">{fr ? "Auteur : " : "Author: "}{book.author} · {fr ? "Langue : français" : "Language: English"}</p>
+            <p className="ns-p">{fr ? "Auteur : " : "Author: "}{book.author} · {fr ? "Langue : " : "Language: "}{(book.bookLanguage || book.language) === "fr" ? (fr ? "français" : "French") : (fr ? "anglais" : "English")}</p>
             <Link href={book.href}>{fr ? "Découvrir le livre" : "Discover the book"}</Link>
           </article>
         ))}
@@ -64,8 +65,20 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
     author: { "@type": "Person", name: book.author },
     image: absoluteUrl(book.cover),
     description: book.summary,
-    inLanguage: book.language,
+    inLanguage: book.bookLanguage || book.language,
+    isbn: book.isbn || undefined,
   };
+  if (book.id.startsWith("a-place-in-the-sun")) {
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(bookData).replace(/</g, "\\u003c") }}
+        />
+        <APlaceInTheSunBookPage book={book} />
+      </>
+    );
+  }
   return (
     <div className="ns-page ns-compact" lang={book.language}>
       <script
@@ -90,15 +103,43 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
           <h2 className="ns-h2">{fr ? "À propos du livre" : "About the book"}</h2>
           <p className="ns-p">{book.summary}</p>
           <p className="ns-p">{fr ? "Auteur" : "Author"} : <strong>{book.author}</strong></p>
-          <p className="ns-p">{fr ? "Langue du livre : français" : "Book language: English"}</p>
+          <p className="ns-p">
+            {fr ? "Langue du livre : " : "Book language: "}
+            {(book.bookLanguage || book.language) === "fr"
+              ? (fr ? "français" : "French")
+              : (fr ? "anglais" : "English")}
+          </p>
+          {book.format ? <p className="ns-p">{fr ? "Format" : "Format"} : {book.format}</p> : null}
+          {book.pages ? <p className="ns-p">{fr ? "Nombre de pages" : "Pages"} : {book.pages}</p> : null}
+          {book.isbn ? <p className="ns-p">ISBN : {book.isbn}</p> : null}
+          {book.overview?.length ? (
+            <section aria-label={fr ? "L’histoire" : "The story"}>
+              <h3 className="ns-h3">{fr ? "L’histoire" : "The story"}</h3>
+              {book.overview.map((paragraph, index) => (
+                <p key={index} className="ns-p">{paragraph}</p>
+              ))}
+            </section>
+          ) : null}
           <p className="ns-p">{fr ? "Thèmes" : "Themes"} : {book.themes}</p>
+          {book.authorBio ? (
+            <section aria-label={fr ? "À propos de l’auteur" : "About the author"}>
+              <h3 className="ns-h3">{fr ? "À propos de l’auteur" : "About the author"}</h3>
+              <p className="ns-p">{book.authorBio}</p>
+            </section>
+          ) : null}
           <div className="ns-actions" style={{ justifyContent: "flex-start" }}>
             <a className="ns-btn ns-btn-primary" href={book.amazonSearchUrl} target="_blank" rel="noopener noreferrer">
-              {fr ? "Rechercher ce livre sur Amazon" : "Find this book on Amazon"}
+              {book.id.startsWith("a-place-in-the-sun")
+                ? (fr ? "Voir le livre sur Amazon" : "View paperback on Amazon")
+                : (fr ? "Rechercher ce livre sur Amazon" : "Find this book on Amazon")}
             </a>
           </div>
           <p className="ns-p" style={{ marginTop: 16 }}>
-            <Link href={book.alternateHref}>{fr ? "Voir l’édition en anglais" : "View the French edition"}</Link>
+            <Link href={book.alternateHref}>
+              {book.bookLanguage && book.bookLanguage === "en" && book.id.startsWith("a-place-in-the-sun")
+                ? (fr ? "Lire cette présentation en anglais" : "Read this presentation in French")
+                : (fr ? "Voir l’édition en anglais" : "View the French edition")}
+            </Link>
           </p>
           <p className="ns-p">
             <Link href={fr ? "/fr/books" : "/books"}>{fr ? "Tous les livres publiés" : "Browse all published books"}</Link>

@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = findBook(slug);
   if (!book) return { title: "Livre introuvable | NextScenes", robots: { index: false } };
   return buildMetadata({
-    title: book.title + " de Goddy Oguzie | Livre publié | NextScenes",
-    description: book.summary + " Découvrez l'édition française de Goddy Oguzie.",
+    title: book.title + " de " + book.author + " | Livre publié | NextScenes",
+    description: book.summary + " Présentation en français du livre de " + book.author + ".",
     path: book.href,
     image: book.cover,
     locale: "fr",

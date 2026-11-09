@@ -19,8 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = findBook(slug);
   if (!book) return { title: "Book not found | NextScenes", robots: { index: false } };
   return buildMetadata({
-    title: book.title + " by Goddy Oguzie | Published Book | NextScenes",
-    description: book.summary + " Discover the English edition by Goddy Oguzie.",
+    title: book.title + " by " + book.author + " | Published Book | NextScenes",
+    description: book.summary + " Discover the book by " + book.author + ".",
     path: book.href,
     image: book.cover,
     languages: { en: book.href, fr: book.alternateHref },
