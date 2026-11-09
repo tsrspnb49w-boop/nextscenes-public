@@ -1,0 +1,26 @@
+name: A Place in the Sun Public Book Page - Staging Validation (No Deploy)
+on:
+  push:
+    branches:
+      - feature/a-place-in-the-sun-book-page-20261109
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  book-page:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Install site dependencies
+        run: npm ci
+      - name: Check new author/book pages and front cover
+        run: node --test test/aPlaceInTheSunPublicBookV1.test.js
+      - name: Check TypeScript and routes
+        run: npx tsc --noEmit
+      - name: Build public Next.js site
+        run: npm run build
