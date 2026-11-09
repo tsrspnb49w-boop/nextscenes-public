@@ -9,7 +9,7 @@ const profile = read("components/SeoPublishedBookPages.tsx");
 const enPage = read("app/books/[slug]/page.tsx");
 const frPage = read("app/fr/books/[slug]/page.tsx");
 const sitemap = read("app/sitemap.ts");
-const coverPath = path.join(__dirname, "..", "public/images/covers/featured-flat/a-place-in-the-sun.webp");
+const coverPath = path.join(__dirname, "..", "public/images/covers/featured-flat/a-place-in-the-sun-sharp.webp");
 
 test("Kola King has distinct EN and FR book presentations for an English-language paperback", () => {
   assert.match(books, /id: "a-place-in-the-sun-en"/);
@@ -29,7 +29,7 @@ test("the approved front artwork is packaged locally, not a missing or remote im
   assert.ok(cover.length > 100_000, "Use the full-resolution cover, not a compressed preview");
   assert.equal(cover.toString("ascii", 0, 4), "RIFF");
   assert.equal(cover.toString("ascii", 8, 12), "WEBP");
-  assert.match(books, /\/images\/covers\/featured-flat\/a-place-in-the-sun\.webp/);
+  assert.match(books, /\/images\/covers\/featured-flat\/a-place-in-the-sun-sharp\.webp/);
 });
 
 test("both catalogues use the recorded author and correct actual book language", () => {
