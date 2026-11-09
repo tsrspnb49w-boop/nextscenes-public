@@ -64,7 +64,8 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
     author: { "@type": "Person", name: book.author },
     image: absoluteUrl(book.cover),
     description: book.summary,
-    inLanguage: book.language,
+    inLanguage: book.bookLanguage || book.language,
+    isbn: book.isbn || undefined,
   };
   return (
     <div className="ns-page ns-compact" lang={book.language}>
@@ -98,6 +99,7 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
           </p>
           {book.format ? <p className="ns-p">{fr ? "Format" : "Format"} : {book.format}</p> : null}
           {book.pages ? <p className="ns-p">{fr ? "Nombre de pages" : "Pages"} : {book.pages}</p> : null}
+          {book.isbn ? <p className="ns-p">ISBN : {book.isbn}</p> : null}
           {book.overview?.length ? (
             <section aria-label={fr ? "L’histoire" : "The story"}>
               <h3 className="ns-h3">{fr ? "L’histoire" : "The story"}</h3>
