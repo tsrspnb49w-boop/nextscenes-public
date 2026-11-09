@@ -31,7 +31,7 @@ IMAGE_CANDIDATES = [
 
 def get(url):
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=HEADERS), timeout=15) as r:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=HEADERS), timeout=6) as r:
             content = r.read(6_000_000)
             print("FETCH", r.status, len(content), r.headers.get("Content-Type"), url[:140])
             return content
@@ -44,7 +44,7 @@ for page in PAGES:
     if not raw:
         continue
     doc = html.unescape(raw.decode("utf-8", "ignore")).replace("\\/", "/")
-    discovered = re.findall(r'https?://(?:m\.media-amazon\.com|images-na\.ssl-images-amazon\.com)/images/[IWP]/[^"'<>\s\\]+', doc)
+    discovered = re.findall(r"https?://(?:m\\.media-amazon\\.com|images-na\\.ssl-images-amazon\\.com)/images/[IWP]/[A-Za-z0-9_.%+-]+", doc)
     for url in discovered[:50]:
         url = url.split("?")[0].rstrip(",")
         if url not in IMAGE_CANDIDATES:
@@ -57,7 +57,7 @@ for page in PAGES:
 
 old = Image.open(TARGET).convert("RGB").resize((96, 144), Image.Resampling.LANCZOS)
 matches = []
-for url in IMAGE_CANDIDATES[:65]:
+for url in IMAGE_CANDIDATES[:20]:
     raw = get(url)
     if len(raw) < 12_000:
         continue
