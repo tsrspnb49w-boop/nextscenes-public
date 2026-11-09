@@ -8,6 +8,7 @@ export type PublicBook = {
   bookLanguage?: PublicBookLocale;
   format?: string;
   pages?: number;
+  isbn?: string;
   overview?: string[];
   href: string;
   alternateHref: string;
@@ -27,6 +28,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       bookLanguage: "en",
       format: "Paperback · 6 × 9 in",
       pages: 288,
+      isbn: "9798140593759",
       href: "/books/a-place-in-the-sun",
       alternateHref: "/fr/books/a-place-in-the-sun",
       cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
@@ -109,6 +111,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       bookLanguage: "en",
       format: "Broché · 6 × 9 pouces",
       pages: 288,
+      isbn: "9798140593759",
       href: "/fr/books/a-place-in-the-sun",
       alternateHref: "/books/a-place-in-the-sun",
       cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
