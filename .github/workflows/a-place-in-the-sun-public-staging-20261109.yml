@@ -7,6 +7,7 @@ on:
       - feature/a-place-in-the-sun-feature-page-v2-20261109
       - fix/feature-cards-cover-consistency-20261109
       - fix/kola-king-publishing-support-credit-20261109
+      - fix/kola-king-short-publication-credit-20261109
   workflow_dispatch:
 permissions:
   contents: read
