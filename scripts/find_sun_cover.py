@@ -44,7 +44,7 @@ for page in PAGES:
     if not raw:
         continue
     doc = html.unescape(raw.decode("utf-8", "ignore")).replace("\\/", "/")
-    discovered = re.findall(r"https?://(?:m\.media-amazon\.com|images-na\.ssl-images-amazon\.com)/images/[IWP]/[A-Za-z0-9_.%+-]+", doc)
+    discovered = re.findall(r"https?://(?:m\.media-amazon\.com|images-na\.ssl-images-amazon\.com)/images/[IWP]/[A-Za-z0-9._%+-]+\.(?:jpe?g|png|webp)", doc, flags=re.I)
     for url in discovered[:80]:
         url = url.split("?")[0].rstrip(",")
         if url not in IMAGE_CANDIDATES:
@@ -54,6 +54,10 @@ for page in PAGES:
         if hi != url and hi not in IMAGE_CANDIDATES:
             IMAGE_CANDIDATES.append(hi)
     print("HTML_IMAGES", len(discovered))
+    for marker in ["landingImage", "imgBlkFront", "data-a-dynamic-image", "imageBlock", "mainImage", "ebooksImgBlkFront"]:
+        pos = doc.find(marker)
+        if pos >= 0:
+            print("HTML_MARKER", marker, doc[max(0, pos-90):pos+350].replace("\\n", " ")[:440])
     for token in ["m.media-amazon.com", "images/I/", "landingImage", "hiRes", "data-a-dynamic-image"]:
         pos = doc.find(token)
         print("HTML_MARKER", token, pos, doc[max(0, pos - 80):pos + 200] if pos >= 0 else "")
