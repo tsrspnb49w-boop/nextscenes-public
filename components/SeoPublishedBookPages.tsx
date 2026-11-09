@@ -117,7 +117,9 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
           ) : null}
           <div className="ns-actions" style={{ justifyContent: "flex-start" }}>
             <a className="ns-btn ns-btn-primary" href={book.amazonSearchUrl} target="_blank" rel="noopener noreferrer">
-              {fr ? "Rechercher ce livre sur Amazon" : "Find this book on Amazon"}
+              {book.id.startsWith("a-place-in-the-sun")
+                ? (fr ? "Voir le livre sur Amazon" : "View paperback on Amazon")
+                : (fr ? "Rechercher ce livre sur Amazon" : "Find this book on Amazon")}
             </a>
           </div>
           <p className="ns-p" style={{ marginTop: 16 }}>
