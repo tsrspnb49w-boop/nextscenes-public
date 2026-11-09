@@ -114,7 +114,7 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
           </div>
           <p className="ns-p" style={{ marginTop: 16 }}>
             <Link href={book.alternateHref}>
-              {book.bookLanguage && book.bookLanguage !== book.language
+              {book.bookLanguage && book.bookLanguage === "en" && book.id.startsWith("a-place-in-the-sun")
                 ? (fr ? "Lire cette présentation en anglais" : "Read this presentation in French")
                 : (fr ? "Voir l’édition en anglais" : "View the French edition")}
             </Link>
