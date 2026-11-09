@@ -24,6 +24,9 @@ PAGES = [
     f"https://www.amazon.co.uk/dp/{ASIN}",
 ]
 IMAGE_CANDIDATES = [
+    f"https://images-na.ssl-images-amazon.com/images/P/{ASIN}.01._SL1500_.jpg",
+    f"https://images-na.ssl-images-amazon.com/images/P/{ASIN}.01._SY1200_.jpg",
+    f"https://m.media-amazon.com/images/P/{ASIN}.01._SY1200_.jpg",
     f"https://images-na.ssl-images-amazon.com/images/P/{ASIN}.01.L.jpg",
     f"https://m.media-amazon.com/images/P/{ASIN}.01._SCLZZZZZZZ_.jpg",
     f"https://images-na.ssl-images-amazon.com/images/P/{ASIN}.01._SCLZZZZZZZ_.jpg",
@@ -53,6 +56,53 @@ for page in PAGES:
         hi = re.sub(r'\._[^/.]+_\.(jpg|jpeg|png|webp)$', r'.\1', url, flags=re.I)
         if hi != url and hi not in IMAGE_CANDIDATES:
             IMAGE_CANDIDATES.append(hi)
+    # Main product image can occur late in Amazon's full HTML, after site assets.
+    pos = doc.find('id="landingImage"')
+    if pos >= 0:
+        segment = doc[max(0, pos-800):pos+5000]
+        hero_urls = re.findall(r'https?://m\\.media-amazon\\.com/images/I/[A-Za-z0-9_.%+-]+', segment)
+        print("MAIN_IMAGE_CANDIDATES", hero_urls[:8])
+        for url in reversed(hero_urls[:8]):
+            clean = re.sub(r'\\._[^/.]+_\\.(jpg|jpeg|png|webp)
+    for marker in ["landingImage", "imgBlkFront", "data-a-dynamic-image", "imageBlock", "mainImage", "ebooksImgBlkFront"]:
+        pos = doc.find(marker)
+        if pos >= 0:
+            print("HTML_MARKER", marker, doc[max(0, pos-90):pos+350].replace("\\n", " ")[:440])
+    for token in ["m.media-amazon.com", "images/I/", "landingImage", "hiRes", "data-a-dynamic-image"]:
+        pos = doc.find(token)
+        print("HTML_MARKER", token, pos, doc[max(0, pos - 80):pos + 200] if pos >= 0 else "")
+
+old = Image.open(TARGET).convert("RGB").resize((96, 144), Image.Resampling.LANCZOS)
+matches = []
+for url in IMAGE_CANDIDATES[:70]:
+    raw = get(url)
+    if len(raw) < 12_000:
+        continue
+    try:
+        im = Image.open(io.BytesIO(raw))
+        im.load()
+        im = im.convert("RGB")
+        print("CANDIDATE_IMAGE", im.size, url[:125])
+        if im.width < 650 or im.height < 900 or abs(im.width / im.height - 2/3) > 0.085:
+            continue
+        score = sum(ImageStat.Stat(ImageChops.difference(im.resize((96,144), Image.Resampling.LANCZOS), old)).mean)/3
+        print("IMAGE", im.size, "comparison", round(score, 2), url[:125])
+        if score < 30:
+            matches.append((score, im, url))
+    except Exception as exc:
+        print("NOT_IMAGE", type(exc).__name__)
+
+if not matches:
+    print("NO VERIFIED HIGH-RES COVER FOUND; retaining old asset until supplied original can be uploaded.")
+    sys.exit(1)
+
+score, cover, url = min(matches, key=lambda x: x[0])
+cover.save(TARGET, format="WEBP", quality=87, method=6)
+print("COVER_REPLACED", cover.size, "source", url, "comparison", score)
+, r'.\\1', url, flags=re.I)
+            for candidate in [clean, url]:
+                if candidate not in IMAGE_CANDIDATES:
+                    IMAGE_CANDIDATES.insert(0, candidate)
     print("HTML_IMAGES", len(discovered))
     for marker in ["landingImage", "imgBlkFront", "data-a-dynamic-image", "imageBlock", "mainImage", "ebooksImgBlkFront"]:
         pos = doc.find(marker)
