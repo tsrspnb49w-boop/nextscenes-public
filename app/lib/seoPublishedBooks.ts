@@ -35,7 +35,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
       summary: "In colonial-era Tekota, a fictional West African setting, Zakka and Matta's love is tested by marriage obligations, an unpaid bride price and the claims of Matta's estranged husband.",
       themes: "Love, tradition, friendship, loyalty and personal freedom",
-      amazonSearchUrl: "https://www.amazon.com/s?k=9798140593759",
+      amazonSearchUrl: "https://www.amazon.com/dp/B0HQY8VBGM",
       author: "Kola King",
       authorBio: "Kola King is a writer and storyteller whose work explores African history, culture and the far-reaching impact of colonialism on the lives of ordinary people.",
       overview: [
@@ -119,7 +119,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       cover: "/images/covers/featured-flat/a-place-in-the-sun.webp",
       summary: "Dans la ville fictive de Tekota, en Afrique de l’Ouest à l’époque coloniale, l’amour de Zakka et Matta se heurte aux obligations du mariage, à la restitution du prix de la fiancée et aux revendications d’un époux dont Matta est séparée.",
       themes: "Amour, traditions, amitié, fidélité et liberté de choisir",
-      amazonSearchUrl: "https://www.amazon.com/s?k=9798140593759",
+      amazonSearchUrl: "https://www.amazon.com/dp/B0HQY8VBGM",
       author: "Kola King",
       overview: [
         "Situé à Tekota, dans le pays imaginaire de Songhaland, A Place in the Sun raconte un amour mis à l’épreuve par les règles sociales et les obligations coutumières dans l’Afrique coloniale.",
