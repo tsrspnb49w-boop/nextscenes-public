@@ -51,5 +51,6 @@ test("SEO title, sitemap and static pages include the client's book without a fa
   assert.match(frPage, /generateStaticParams/);
   assert.match(sitemap, /publicPublishedBooks\.en/);
   assert.match(sitemap, /publicPublishedBooks\.fr/);
-  assert.match(books, /https:\/\/www\.amazon\.com\/s\?k=9798140593759/);
+  assert.equal((books.match(/https:\/\/www\.amazon\.com\/dp\/B0HQY8VBGM/g) || []).length, 2);
+  assert.doesNotMatch(books, /https:\/\/www\.amazon\.com\/s\?k=9798140593759/);
 });
