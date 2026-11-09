@@ -26,7 +26,7 @@ test("Kola King has distinct EN and FR book presentations for an English-languag
 test("the approved front artwork is packaged locally, not a missing or remote image", () => {
   assert.ok(fs.existsSync(coverPath), "The cover must be packaged with the site");
   const cover = fs.readFileSync(coverPath);
-  assert.ok(cover.length > 1000);
+  assert.ok(cover.length > 100_000, "Use the full-resolution cover, not a compressed preview");
   assert.equal(cover.toString("ascii", 0, 4), "RIFF");
   assert.equal(cover.toString("ascii", 8, 12), "WEBP");
   assert.match(books, /\/images\/covers\/featured-flat\/a-place-in-the-sun\.webp/);
