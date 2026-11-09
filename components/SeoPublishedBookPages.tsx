@@ -1,4 +1,5 @@
 import Image from "next/image";
+import APlaceInTheSunBookPage from "./APlaceInTheSunBookPage";
 import Link from "next/link";
 import { absoluteUrl } from "@/app/seo";
 import {
@@ -67,6 +68,17 @@ export function SeoPublishedBookProfile({ book }: { book: PublicBook }) {
     inLanguage: book.bookLanguage || book.language,
     isbn: book.isbn || undefined,
   };
+  if (book.id.startsWith("a-place-in-the-sun")) {
+    return (
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(bookData).replace(/</g, "\\u003c") }}
+        />
+        <APlaceInTheSunBookPage book={book} />
+      </>
+    );
+  }
   return (
     <div className="ns-page ns-compact" lang={book.language}>
       <script
