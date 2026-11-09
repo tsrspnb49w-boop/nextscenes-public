@@ -352,8 +352,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
               <span className={styles.didieEdition}>
                 {language === "fr"
-                  ? "Préparé pour Amazon KDP avec l’appui de NextScenes · Broché en anglais sur Amazon"
-                  : "Prepared for Amazon KDP with NextScenes’ support · English paperback on Amazon"}
+                  ? "Préparé pour publication avec NextScenes"
+                  : "Prepared for publication at NextScenes"}
               </span>
             </div>
             <Link
