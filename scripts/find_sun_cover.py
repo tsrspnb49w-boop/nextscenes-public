@@ -65,11 +65,11 @@ for url in IMAGE_CANDIDATES[:20]:
         im = Image.open(io.BytesIO(raw))
         im.load()
         im = im.convert("RGB")
-        if im.width < 400 or im.height < 550:
+        if im.width < 650 or im.height < 900 or abs(im.width / im.height - 2/3) > 0.085:
             continue
         score = sum(ImageStat.Stat(ImageChops.difference(im.resize((96,144), Image.Resampling.LANCZOS), old)).mean)/3
         print("IMAGE", im.size, "comparison", round(score, 2), url[:125])
-        if score < 43:
+        if score < 30:
             matches.append((score, im, url))
     except Exception as exc:
         print("NOT_IMAGE", type(exc).__name__)
