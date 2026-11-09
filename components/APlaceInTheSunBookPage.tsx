@@ -85,7 +85,7 @@ export default function APlaceInTheSunBookPage({ book }: { book: PublicBook }) {
   const catalogue = fr ? "/fr/books" : "/books";
 
   return (
-    <main className={styles.page} lang={book.language}>
+    <div className={styles.page} lang={book.language}>
       <section className={styles.hero} aria-label={book.title}>
         <div className={styles.wrap}>
           <div className={styles.heroGrid}>
@@ -192,6 +192,6 @@ export default function APlaceInTheSunBookPage({ book }: { book: PublicBook }) {
           <p className={styles.returnLink}><Link href={catalogue}>{t.catalogue}</Link></p>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
