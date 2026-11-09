@@ -199,3 +199,17 @@
 .spotlightDailySource{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-top:12px;padding-top:10px;border-top:1px solid #dfebe2;font-size:12px;line-height:1.55;color:#536c5d}
 .spotlightDailySource a{color:#07583c;font-weight:760;text-decoration:underline;text-underline-offset:3px}
 .spotlightDailySource small{font-size:11px;color:#697c71}
+
+/* Featured guest novel: inherit all Didie dimensions, typography, book tilt,
+   responsive breakpoints and CTA alignment. Only the palette distinguishes it. */
+.guestFeature {
+  margin-top: 16px;
+  background: linear-gradient(112deg, #f4f8f3 0%, #f6f9f4 54%, #fcfdf9 100%);
+  border-color: #bed8c8;
+  border-left-color: #38795b;
+}
+.guestFeature .eyebrow {
+  background: #e8f4eb;
+  border-color: #b9d9c5;
+  color: #276746;
+}
