@@ -44,8 +44,8 @@ for page in PAGES:
     if not raw:
         continue
     doc = html.unescape(raw.decode("utf-8", "ignore")).replace("\\/", "/")
-    discovered = re.findall(r"https?://(?:m\\.media-amazon\\.com|images-na\\.ssl-images-amazon\\.com)/images/[IWP]/[A-Za-z0-9_.%+-]+", doc)
-    for url in discovered[:50]:
+    discovered = re.findall(r"https?://(?:m\.media-amazon\.com|images-na\.ssl-images-amazon\.com)/images/[IWP]/[A-Za-z0-9_.%+-]+", doc)
+    for url in discovered[:80]:
         url = url.split("?")[0].rstrip(",")
         if url not in IMAGE_CANDIDATES:
             IMAGE_CANDIDATES.append(url)
@@ -57,7 +57,7 @@ for page in PAGES:
 
 old = Image.open(TARGET).convert("RGB").resize((96, 144), Image.Resampling.LANCZOS)
 matches = []
-for url in IMAGE_CANDIDATES[:20]:
+for url in IMAGE_CANDIDATES[:70]:
     raw = get(url)
     if len(raw) < 12_000:
         continue
