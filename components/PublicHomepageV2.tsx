@@ -327,6 +327,28 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               {t.didieCta} →
             </Link>
           </aside>
+          <aside className={styles.guestFeature} aria-label={language === "fr" ? "Nouvelle publication de Kola King" : "New release by Kola King"}>
+            <Link href={language === "fr" ? "/fr/books/a-place-in-the-sun" : "/books/a-place-in-the-sun"} aria-label={language === "fr" ? "Découvrir A Place in the Sun" : "Discover A Place in the Sun"}>
+              <Image
+                src="/images/covers/featured-flat/a-place-in-the-sun.webp"
+                alt="A Place in the Sun by Kola King, book cover"
+                width={90}
+                height={135}
+                sizes="(max-width: 600px) 70px, 90px"
+                className={styles.guestCover}
+              />
+            </Link>
+            <div className={styles.guestDetails}>
+              <div className={styles.guestEyebrow}>{language === "fr" ? "NOUVELLE PUBLICATION · KOLA KING" : "NEW PUBLICATION · KOLA KING"}</div>
+              <h3>A Place in the Sun</h3>
+              <p>{language === "fr"
+                ? "Un roman sur l’amour, les traditions et la liberté de choisir. Édition publiée en anglais."
+                : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
+              <Link href={language === "fr" ? "/fr/books/a-place-in-the-sun" : "/books/a-place-in-the-sun"}>
+                {language === "fr" ? "Découvrir ce roman" : "Explore the novel"} →
+              </Link>
+            </div>
+          </aside>
         </div>
       </section>
 
