@@ -10,6 +10,7 @@ export type PublicBook = {
   pages?: number;
   isbn?: string;
   overview?: string[];
+  authorBio?: string;
   href: string;
   alternateHref: string;
   cover: string;
@@ -36,6 +37,7 @@ export const publicPublishedBooks: Record<PublicBookLocale, PublicBook[]> = {
       themes: "Love, tradition, friendship, loyalty and personal freedom",
       amazonSearchUrl: "https://www.amazon.com/s?k=9798140593759",
       author: "Kola King",
+      authorBio: "Kola King is a writer and storyteller whose work explores African history, culture and the far-reaching impact of colonialism on the lives of ordinary people.",
       overview: [
         "Set in Tekota, in the fictional country of Songhaland, A Place in the Sun follows a love story shaped by the tensions between personal choice and customary obligation in colonial Africa.",
         "Zakka falls deeply in love with Matta, but their hopes for a future together encounter an unresolved marriage. Matta's family has yet to return the bride price to her estranged husband, Gora. Under the tradition that governs their community, she is still considered Gora's wife.",
