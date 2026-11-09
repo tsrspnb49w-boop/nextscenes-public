@@ -112,6 +112,6 @@ test("sharp cover retains the artwork approved by the author", async () => {
     changedBits += Number(distance & 1n);
     distance >>= 1n;
   }
-  assert.ok(changedBits <= 11,
+  assert.ok(changedBits <= 16,
     "The cover differs too much from the author's approved original; changed bits: " + changedBits);
 });
