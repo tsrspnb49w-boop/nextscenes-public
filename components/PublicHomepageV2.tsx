@@ -72,6 +72,7 @@ const copy = {
     bookMonth: "Book Spotlight",
     wordsTitle: "Daily Words",
     helpCta: "New here? Get help when you need it",
+    installCta: "Install NextScenes on your phone",
     booksEyebrow: "OPEN A STORY",
     booksTitle: "Discover something worth reading.",
     browse: "Browse all stories",
@@ -128,6 +129,7 @@ const copy = {
     bookMonth: "Un livre à découvrir",
     wordsTitle: "Pensée du jour",
     helpCta: "Besoin d'aide ? Consultez nos guides",
+    installCta: "Installer NextScenes sur votre téléphone",
     booksEyebrow: "OUVRIR UNE HISTOIRE",
     booksTitle: "Découvrez des histoires qui valent la lecture.",
     browse: "Explorer toutes les histoires",
@@ -257,6 +259,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             </div>
             <p className={styles.confidence}>✓ {t.confidence}</p>
             <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
+            <Link className={styles.textLink} href={language === "fr" ? "/fr/help#install" : "/help#install"}>{t.installCta} →</Link>
           </div>
           <div className={styles.artStage} aria-label={t.covers}>
             {heroCovers.map((story, i) => (
