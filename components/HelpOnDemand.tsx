@@ -77,8 +77,51 @@ const guides: Record<Language, Guide> = {
   },
 };
 
+
+const installCopy = {
+  en: {
+    eyebrow: "NEXTSCENES ON YOUR PHONE",
+    title: "Install NextScenes in a few taps",
+    lead: "Put NextScenes on your Home Screen for convenient reading and writing. No app store is needed.",
+    open: "Open NextScenes to install",
+    iphone: "iPhone or iPad",
+    android: "Android phone",
+    iosSteps: [
+      "Open app.nextscenes.org in Safari.",
+      "Tap Share (or Page Menu, then Share) and choose Add to Home Screen.",
+      "Keep Open as Web App enabled, then tap Add."
+    ],
+    androidSteps: [
+      "Open app.nextscenes.org in Chrome.",
+      "Tap the three-dot menu (⋮), then Install app or Add to Home screen.",
+      "Confirm Install or Add. Open NextScenes from your phone."
+    ],
+    note: "Important: use the application address, not the public website. Installing a staging or test address creates a separate test app.",
+  },
+  fr: {
+    eyebrow: "NEXTSCENES SUR VOTRE TÉLÉPHONE",
+    title: "Installez NextScenes en quelques gestes",
+    lead: "Retrouvez NextScenes sur votre écran d’accueil pour lire et écrire facilement. Aucun magasin d’applications n’est nécessaire.",
+    open: "Ouvrir NextScenes pour l’installer",
+    iphone: "iPhone ou iPad",
+    android: "Téléphone Android",
+    iosSteps: [
+      "Ouvrez app.nextscenes.org dans Safari.",
+      "Touchez Partager (ou Menu de la page, puis Partager), puis Sur l’écran d’accueil.",
+      "Laissez Ouvrir comme app activé, puis touchez Ajouter."
+    ],
+    androidSteps: [
+      "Ouvrez app.nextscenes.org dans Chrome.",
+      "Touchez le menu à trois points (⋮), puis Installer l’application ou Ajouter à l’écran d’accueil.",
+      "Confirmez Installer ou Ajouter. Ouvrez NextScenes depuis votre téléphone."
+    ],
+    note: "Important : utilisez l’adresse de l’application et non le site public. Une installation depuis une adresse de test crée une application de test distincte.",
+  },
+} as const;
+
 export default function HelpOnDemand({language}: {language: Language}) {
   const t = guides[language];
+  const install = installCopy[language];
   return <div className={styles.page}>
     <div className={styles.wrap}>
       <p className={styles.eyebrow}>{t.eyebrow}</p>
@@ -88,6 +131,23 @@ export default function HelpOnDemand({language}: {language: Language}) {
         <a href={APP_URL} className={styles.primary}>{t.app} →</a>
         <Link href={language === "fr" ? "/fr/privacy" : "/privacy"}>{t.privacy} →</Link>
       </div>
+      <section id="install" className={styles.install} aria-labelledby="ns-install-title">
+        <p className={styles.eyebrow}>{install.eyebrow}</p>
+        <h2 id="ns-install-title">{install.title}</h2>
+        <p>{install.lead}</p>
+        <div className={styles.installCards}>
+          <article>
+            <h3>{install.iphone}</h3>
+            <ol>{install.iosSteps.map((step, i) => <li key={i}>{step}</li>)}</ol>
+          </article>
+          <article>
+            <h3>{install.android}</h3>
+            <ol>{install.androidSteps.map((step, i) => <li key={i}>{step}</li>)}</ol>
+          </article>
+        </div>
+        <a className={styles.installButton} href={APP_URL + "/?install=1&lang=" + language}>{install.open} →</a>
+        <p className={styles.installNote}>{install.note}</p>
+      </section>
       <div className={styles.topics}>
         {t.topics.map(topic => <details className={styles.topic} key={topic.title}>
           <summary>{topic.title}</summary>
