@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prebuild": "node scripts/build-public-image-variants.cjs"
   },
   "dependencies": {
     "framer-motion": "^12.34.4",
