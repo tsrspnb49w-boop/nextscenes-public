@@ -17,7 +17,41 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: node --test test/*.test.js
+      - name: Check out exact deployed baseline
+        uses: actions/checkout@v4
+        with:
+          ref: a730410ecb196a10edbad4431a02c7da88235b0b
+          path: baseline
+      - name: Install baseline dependencies
+        working-directory: baseline
+        run: npm ci
+      - name: Compare complete test suite with deployed baseline
+        run: |
+          set +e
+          (cd baseline && node --test test/*.test.js) > /tmp/baseline-tests.log 2>&1
+          baseline_status=$?
+          node --test test/*.test.js > /tmp/candidate-tests.log 2>&1
+          candidate_status=$?
+          set -e
+          cat /tmp/baseline-tests.log
+          cat /tmp/candidate-tests.log
+          node - <<'NODE'
+          const fs=require("node:fs"),assert=require("node:assert/strict");
+          function read(p){
+            const raw=fs.readFileSync(p,"utf8");
+            const failed=[...raw.matchAll(/^not ok \d+ - (.+)$/gm)].map(m=>m[1]).sort();
+            const count=Number(raw.match(/^# tests (\d+)$/m)?.[1]);
+            assert.ok(count>40,"Full suite did not execute");
+            assert.equal(failed.length,Number(raw.match(/^# fail (\d+)$/m)?.[1]),"Unaccounted test failures");
+            return {failed,count};
+          }
+          const base=read("/tmp/baseline-tests.log"),candidate=read("/tmp/candidate-tests.log");
+          assert.deepEqual(candidate.failed,base.failed,"Candidate changes regression failure set");
+          assert.ok(candidate.count>=base.count+2,"New image tests missing");
+          console.log("Regression parity verified",JSON.stringify({base,candidate}));
+          NODE
+          node --test test/publicImageMemoryV1.test.js
+          rm -rf baseline
       - run: npx tsc --noEmit
       - run: npm run build
       - name: Verify built production server serves static variants and rejects on-demand image resizing
