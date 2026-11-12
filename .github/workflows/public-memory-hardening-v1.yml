@@ -1,0 +1,30 @@
+name: Public Website Memory Hardening V1 (No Deploy)
+on:
+  push:
+    branches: [release/public-memory-hardening-v1-20261112]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: node --test test/*.test.js
+      - run: npx tsc --noEmit
+      - run: npm run build
+      - name: Verify built production server serves static variants and rejects on-demand image resizing
+        run: |
+          set -eu
+          npm run start -- --port 3100 > /tmp/public-server.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true; cat /tmp/public-server.log' EXIT
+          for i in $(seq 1 30); do if curl -fsS http://localhost:3100/ >/tmp/home.html; then break; fi; sleep 1; done
+          node scripts/verify-public-image-memory.cjs
