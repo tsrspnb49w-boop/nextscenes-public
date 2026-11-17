@@ -348,7 +348,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             </Link>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
-                {language === "fr" ? "NOUVELLE PUBLICATION · KOLA KING" : "NEW PUBLICATION · KOLA KING"}
+                {language === "fr" ? "NOUVELLE ÉDITION BROCHÉE · KOLA KING" : "NEW PAPERBACK EDITION · KOLA KING"}
               </div>
               <h3>A Place in the Sun</h3>
               <p>{language === "fr"
