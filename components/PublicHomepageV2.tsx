@@ -114,7 +114,7 @@ const copy = {
     lede: "Découvrez des livres, suivez des récits qui prennent forme ou commencez votre propre aventure.",
     read: "Explorer les histoires",
     write: "Commencer à écrire",
-    confidence: "Participation de base gratuite · Aucun parcours imposé · Explorez à votre rythme",
+    confidence: "Explorez et inscrivez-vous gratuitement · Certains livres sont vendus par des libraires",
     covers: "Récits en cours et livres publiés",
     communityEyebrow: "DISCUSSIONS DE LA COMMUNAUTÉ",
     communityTitle: "Les histoires vivent dans les échanges.",
