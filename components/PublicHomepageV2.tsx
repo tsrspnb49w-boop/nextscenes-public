@@ -57,7 +57,7 @@ const copy = {
     lede: "Discover books, follow stories as they grow, or begin something entirely your own.",
     read: "Explore stories",
     write: "Start writing",
-    confidence: "Free core participation · No tour required · Explore at your own pace",
+    confidence: "Explore and join for free · Published books may be sold by retailers",
     covers: "Stories in progress & published books",
     communityEyebrow: "COMMUNITY CONVERSATIONS",
     communityTitle: "Stories come alive in conversation.",
@@ -256,7 +256,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.heroLede}>{t.lede}</p>
             <div className={styles.heroActions}>
               <Link className={`${styles.button} ${styles.gold}`} href={storiesHref}>{t.read} →</Link>
-              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/?lang=${language}`}>{t.write} →</a>
+              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/register?lang=${language}&intent=writer`}>{t.write} →</a>
             </div>
             <p className={styles.confidence}>✓ {t.confidence}</p>
             <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
@@ -356,8 +356,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
               <span className={styles.didieEdition}>
                 {language === "fr"
-                  ? "Préparé pour publication avec NextScenes"
-                  : "Prepared for publication at NextScenes"}
+                  ? "Publié en anglais · Disponible sur Amazon"
+                  : "Published in English · Available on Amazon"}
               </span>
             </div>
             <Link
