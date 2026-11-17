@@ -18,6 +18,8 @@ test("joining for free is distinct from buying published books", () => {
 test("A Place in the Sun is shown as published, not awaiting publication", () => {
   assert.ok(homepage.includes('"Published in English · Available on Amazon"'));
   assert.ok(homepage.includes('"Publié en anglais · Disponible sur Amazon"'));
+  assert.ok(homepage.includes('"NEW PAPERBACK EDITION · KOLA KING"'));
+  assert.ok(homepage.includes('"NOUVELLE ÉDITION BROCHÉE · KOLA KING"'));
   assert.equal(homepage.includes("Prepared for publication at NextScenes"), false);
   assert.equal(homepage.includes("Préparé pour publication avec NextScenes"), false);
 });
