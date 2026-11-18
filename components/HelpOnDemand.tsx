@@ -30,6 +30,15 @@ const guides: Record<Language, Guide> = {
         { question: "Where are chapters and book pages?", answer: "Book Workspace holds Book Setup, chapters, Front Matter, Back Matter, and review. Writer Studio supports drafting and editing." },
         { question: "Can I publish immediately?", answer: "Book preparation and publication approval are separate stages. Approval is controlled and may be unavailable while features are under review." },
       ]},
+      { title: "First Reads", questions: [
+        { question: "Who can join First Reads?", answer: "Authors with completed manuscripts. A NextScenes writer account is required. First Reads is a separate Project Hub pathway for Solo work, without voting or scene proposals." },
+        { question: "Do I have to upload the entire book?", answer: "No, not for the initial pilot. The author provides the complete first chapter and chosen recent reading parts. No unpublished pages may become public without approval." },
+        { question: "What will readers see?", answer: "The full first chapter, a transition page, and up to five recent author-approved scenes. NextScenes can assist with a suitable book cover and Royal Edition background." },
+        { question: "Will I receive payment or give up copyright?", answer: "No. First Reads serialization is voluntary and unpaid. The manuscript remains the author's intellectual property. The specific permission to display text and artwork must be agreed before release." },
+        { question: "When does serialization end?", answer: "The author reviews the commercial publishing plan around the manuscript's midpoint. The proposed release ceiling is approximately two-thirds of the complete work, counting all material already released. Publication may stop earlier." },
+        { question: "Can I later publish on Amazon KDP?", answer: "Yes, subject to the chosen publishing terms. Before enrolling in an exclusivity programme such as KDP Select, the author and NextScenes must review and if necessary withdraw public digital excerpts." },
+        { question: "Is First Reads accepting manuscripts now?", answer: "Not yet. The staging pilot tests the author journey and privacy safeguards. A manuscript cannot be submitted or published through the current pilot." },
+      ]},
       { title: "Collaboration", questions: [
         { question: "How does collaboration work?", answer: "Eligible project owners invite contributors, review proposals and decide what becomes part of the official story." },
         { question: "How do I join a private group?", answer: "Follow the invitation link from the owner. Ordinary registration does not require a code." },
@@ -63,6 +72,15 @@ const guides: Record<Language, Guide> = {
         { question: "À quoi sert le Centre de projets ?", answer: "À retrouver vos projets et à commencer un nouveau livre." },
         { question: "Où sont les chapitres et les pages ?", answer: "L’Espace Livre contient la préparation, les chapitres, les pages liminaires et finales ainsi que la relecture. Writer Studio sert à rédiger et modifier." },
         { question: "Puis-je publier immédiatement ?", answer: "La préparation et la validation finale sont distinctes. L’approbation peut être indisponible pendant les vérifications." },
+      ]},
+      { title: "First Reads", questions: [
+        { question: "Qui peut participer à First Reads ?", answer: "Les auteurs de manuscrits achevés, avec un compte auteur NextScenes. C'est un parcours distinct dans le Centre de projets, sans vote ni propositions de scènes." },
+        { question: "Dois-je téléverser tout mon manuscrit ?", answer: "Non, pas pour le pilote initial. L’auteur fournit le premier chapitre complet et les extraits récents choisis. Aucune partie non autorisée ne sera diffusée." },
+        { question: "Que verront les lecteurs ?", answer: "Le premier chapitre entier, une page de transition et jusqu’à cinq scènes récentes approuvées. NextScenes peut aider à préparer la couverture et l’ambiance visuelle du Royal Edition." },
+        { question: "First Reads est-il rémunéré ?", answer: "Non. La sérialisation est volontaire et non rémunérée. L’auteur conserve ses droits sur le manuscrit. L’autorisation précise concernant les textes et images doit être acceptée avant diffusion." },
+        { question: "Quand la sérialisation s’arrête-t-elle ?", answer: "La stratégie de publication est réexaminée vers la moitié du manuscrit. Le plafond envisagé est d'environ deux tiers de l’œuvre complète, en comptant les contenus déjà publiés. L’auteur peut s’arrêter avant." },
+        { question: "Puis-je ensuite publier sur Amazon KDP ?", answer: "Oui, sous réserve des conditions de publication choisies. Avant une inscription à KDP Select, les extraits numériques publics devront être examinés et retirés si nécessaire." },
+        { question: "Les soumissions sont-elles ouvertes ?", answer: "Pas encore. Le pilote en staging vérifie le parcours des auteurs et la confidentialité ; aucun dépôt ou publication n'est activé." },
       ]},
       { title: "Collaboration", questions: [
         { question: "Comment collaborer ?", answer: "Les propriétaires de projets admissibles invitent des contributeurs, examinent les propositions et décident du contenu officiel." },
@@ -149,7 +167,9 @@ export default function HelpOnDemand({language}: {language: Language}) {
         <p className={styles.installNote}>{install.note}</p>
       </section>
       <div className={styles.topics}>
-        {t.topics.map(topic => <details className={styles.topic} key={topic.title}>
+        {t.topics.map(topic => <details className={styles.topic} key={topic.title}
+          id={topic.title === "First Reads" ? "first-reads" : undefined}
+          open={topic.title === "First Reads" ? true : undefined}>
           <summary>{topic.title}</summary>
           <div className={styles.questions}>
             {topic.questions.map(item => <div className={styles.answer} key={item.question}>
