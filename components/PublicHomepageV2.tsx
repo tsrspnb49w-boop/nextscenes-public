@@ -6,6 +6,7 @@ import PublicCommunityThreadsV1 from "./PublicCommunityThreadsV1";
 import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import ResolvedPublicStoryLink from "./ResolvedPublicStoryLink";
 import EditorialSpotlightImage from "./EditorialSpotlightImage";
+import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
 import styles from "./PublicHomepageV2.module.css";
 
 // Next.js can safely resize local assets and the two configured external image hosts.
@@ -56,7 +57,7 @@ const copy = {
     lede: "Discover books, follow stories as they grow, or begin something entirely your own.",
     read: "Explore stories",
     write: "Start writing",
-    confidence: "Free core participation · No tour required · Explore at your own pace",
+    confidence: "Explore and join for free · Published books may be sold by retailers",
     covers: "Stories in progress & published books",
     communityEyebrow: "COMMUNITY CONVERSATIONS",
     communityTitle: "Stories come alive in conversation.",
@@ -91,6 +92,7 @@ const copy = {
     journeyLine: "Write. Edit. Organise. Format. Prepare to publish.",
     journeyParagraph: "NextScenes brings the book-creation journey together in one workspace. Develop your story, refine your writing, organise your chapters, and transform your manuscript into a professionally formatted book interior designed for publication.",
     journeyClosing: "More than a writing platform. A place to bring your book to life.",
+    firstReadsEntry: "Already completed a manuscript? Explore First Reads",
     stepsTitle: "YOUR BOOK · ONE CONNECTED WORKSPACE",
     steps: ["Write your story", "Edit and refine", "Organise chapters", "Format the book interior", "Prepare for publication"],
     stepsFoot: "A real book interior—not just a stack of draft pages.",
@@ -113,7 +115,7 @@ const copy = {
     lede: "Découvrez des livres, suivez des récits qui prennent forme ou commencez votre propre aventure.",
     read: "Explorer les histoires",
     write: "Commencer à écrire",
-    confidence: "Participation de base gratuite · Aucun parcours imposé · Explorez à votre rythme",
+    confidence: "Explorez et inscrivez-vous gratuitement · Certains livres sont vendus par des libraires",
     covers: "Récits en cours et livres publiés",
     communityEyebrow: "DISCUSSIONS DE LA COMMUNAUTÉ",
     communityTitle: "Les histoires vivent dans les échanges.",
@@ -148,6 +150,7 @@ const copy = {
     journeyLine: "Écrivez. Révisez. Organisez. Mettez en page. Préparez la publication.",
     journeyParagraph: "NextScenes réunit les étapes de création d’un livre dans un même espace. Développez votre histoire, affinez votre texte, organisez vos chapitres et transformez votre manuscrit en un intérieur de livre mis en page professionnellement, conçu pour la publication.",
     journeyClosing: "Plus qu’une plateforme d’écriture. Un espace pour donner vie à votre livre.",
+    firstReadsEntry: "Manuscrit déjà achevé ? Découvrez First Reads",
     stepsTitle: "VOTRE LIVRE · UN ESPACE UNIQUE",
     steps: ["Écrire votre histoire", "Réviser et affiner", "Organiser les chapitres", "Mettre en page l’intérieur du livre", "Préparer la publication"],
     stepsFoot: "Un véritable intérieur de livre, pas simplement des pages de brouillon.",
@@ -255,7 +258,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.heroLede}>{t.lede}</p>
             <div className={styles.heroActions}>
               <Link className={`${styles.button} ${styles.gold}`} href={storiesHref}>{t.read} →</Link>
-              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/?lang=${language}`}>{t.write} →</a>
+              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/register?lang=${language}&intent=writer`}>{t.write} →</a>
             </div>
             <p className={styles.confidence}>✓ {t.confidence}</p>
             <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
@@ -347,7 +350,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             </Link>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
-                {language === "fr" ? "NOUVELLE PUBLICATION · KOLA KING" : "NEW PUBLICATION · KOLA KING"}
+                {language === "fr" ? "NOUVELLE ÉDITION BROCHÉE · KOLA KING" : "NEW PAPERBACK EDITION · KOLA KING"}
               </div>
               <h3>A Place in the Sun</h3>
               <p>{language === "fr"
@@ -355,8 +358,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
               <span className={styles.didieEdition}>
                 {language === "fr"
-                  ? "Préparé pour publication avec NextScenes"
-                  : "Prepared for publication at NextScenes"}
+                  ? "Publié en anglais · Disponible sur Amazon"
+                  : "Published in English · Available on Amazon"}
               </span>
             </div>
             <Link
@@ -383,9 +386,14 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           <div className={styles.eyebrow}>{language === "fr" ? "COMMUNAUTÉ SUR LES RÉSEAUX" : "SOCIAL CONVERSATIONS"}</div>
           <h2>{language === "fr" ? "La conversation continue ailleurs." : "The conversation continues beyond our pages."}</h2>
           <div className={styles.socialConversationLinks}>
-            <a href="https://www.facebook.com/nextscenes" target="_blank" rel="noopener noreferrer">Facebook · {language === "fr" ? "Discussions publiques" : "Public discussions"} ↗</a>
-            <a href="https://www.instagram.com/nextscenes/" target="_blank" rel="noopener noreferrer">Instagram · {language === "fr" ? "Publications et commentaires" : "Posts and comments"} ↗</a>
-            <a href="https://www.youtube.com/@NextScenesOfficial" target="_blank" rel="noopener noreferrer">YouTube · {language === "fr" ? "Vidéos et commentaires" : "Videos and comments"} ↗</a>
+            {SOCIAL_CHANNELS.map((channel) => (
+              <a key={channel.id} href={channel.url} target="_blank" rel="noopener noreferrer"
+                aria-label={language === "fr" ? "NextScenes sur " + channel.name : "NextScenes on " + channel.name}>
+                <SocialPlatformIcon platform={channel.id} className={styles.socialConversationIcon} />
+                <span>{channel.name} · {language === "fr" ? channel.fr : channel.en}</span>
+                <span aria-hidden="true" className={styles.socialExternal}>↗</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
@@ -496,6 +504,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.journeyLine}>{t.journeyLine}</p>
             <p>{t.journeyParagraph}</p>
             <strong>{t.journeyClosing}</strong>
+            <p style={{marginTop:16}}><Link href={language === "fr" ? "/fr/first-reads" : "/first-reads"} className={styles.textLink}>{t.firstReadsEntry}</Link></p>
           </div>
           <div className={styles.stepsCard}>
             <div className={styles.eyebrow}>{t.stepsTitle}</div>
