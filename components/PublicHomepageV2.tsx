@@ -92,6 +92,7 @@ const copy = {
     journeyLine: "Write. Edit. Organise. Format. Prepare to publish.",
     journeyParagraph: "NextScenes brings the book-creation journey together in one workspace. Develop your story, refine your writing, organise your chapters, and transform your manuscript into a professionally formatted book interior designed for publication.",
     journeyClosing: "More than a writing platform. A place to bring your book to life.",
+    firstReadsEntry: "Already completed a manuscript? Explore First Reads",
     stepsTitle: "YOUR BOOK · ONE CONNECTED WORKSPACE",
     steps: ["Write your story", "Edit and refine", "Organise chapters", "Format the book interior", "Prepare for publication"],
     stepsFoot: "A real book interior—not just a stack of draft pages.",
@@ -149,6 +150,7 @@ const copy = {
     journeyLine: "Écrivez. Révisez. Organisez. Mettez en page. Préparez la publication.",
     journeyParagraph: "NextScenes réunit les étapes de création d’un livre dans un même espace. Développez votre histoire, affinez votre texte, organisez vos chapitres et transformez votre manuscrit en un intérieur de livre mis en page professionnellement, conçu pour la publication.",
     journeyClosing: "Plus qu’une plateforme d’écriture. Un espace pour donner vie à votre livre.",
+    firstReadsEntry: "Manuscrit déjà achevé ? Découvrez First Reads",
     stepsTitle: "VOTRE LIVRE · UN ESPACE UNIQUE",
     steps: ["Écrire votre histoire", "Réviser et affiner", "Organiser les chapitres", "Mettre en page l’intérieur du livre", "Préparer la publication"],
     stepsFoot: "Un véritable intérieur de livre, pas simplement des pages de brouillon.",
@@ -502,6 +504,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.journeyLine}>{t.journeyLine}</p>
             <p>{t.journeyParagraph}</p>
             <strong>{t.journeyClosing}</strong>
+            <p style={{marginTop:16}}><Link href={language === "fr" ? "/fr/first-reads" : "/first-reads"} className={styles.textLink}>{t.firstReadsEntry}</Link></p>
           </div>
           <div className={styles.stepsCard}>
             <div className={styles.eyebrow}>{t.stepsTitle}</div>
