@@ -369,6 +369,35 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               {language === "fr" ? "Découvrir le roman" : "Explore the novel"} →
             </Link>
           </aside>
+          <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
+            aria-label={language === "fr" ? "Découvrir First Reads" : "Discover First Reads"}>
+            <a className={styles.didieArt} href="https://staging.nextscenes.org/my-projects?firstReads=1"
+              aria-label={language === "fr" ? "Ouvrir First Reads dans NextScenes" : "Open First Reads in NextScenes"}>
+              <span className={styles.firstReadsCover} role="img"
+                aria-label="First Reads · provisional NextScenes-branded cover concept">
+                <span className={styles.firstReadsCoverBrand}>NEXTSCENES</span>
+                <span className={styles.firstReadsCoverMark}>✧</span>
+                <strong>FIRST<br/>READS</strong>
+                <small>{language === "fr" ? "Des livres à découvrir" : "Discover a new story"}</small>
+              </span>
+            </a>
+            <div className={styles.didieDetails}>
+              <div className={styles.eyebrow}>
+                {language === "fr" ? "POUR LES AUTEURS · PREMIÈRES LECTURES" : "FOR AUTHORS · COMPLETED MANUSCRIPTS"}
+              </div>
+              <h3>First Reads</h3>
+              <p>{language === "fr"
+                ? "Vous avez terminé votre livre ? Présentez des extraits choisis à nos lecteurs, avec l'aide de NextScenes pour la couverture et la présentation."
+                : "Already written your book? Introduce selected reading parts to our readers, with NextScenes cover and presentation support."}</p>
+              <span className={styles.didieEdition}>
+                {language === "fr" ? "Vos droits restent les vôtres · Pilote en staging" : "You retain your rights · Staging pilot"}
+              </span>
+            </div>
+            <a className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
+              href="https://staging.nextscenes.org/my-projects?firstReads=1">
+              {language === "fr" ? "Découvrir First Reads" : "Explore First Reads"} →
+            </a>
+          </aside>
         </div>
       </section>
 
@@ -504,7 +533,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.journeyLine}>{t.journeyLine}</p>
             <p>{t.journeyParagraph}</p>
             <strong>{t.journeyClosing}</strong>
-            <p style={{marginTop:16}}><Link href={language === "fr" ? "/fr/first-reads" : "/first-reads"} className={styles.textLink}>{t.firstReadsEntry}</Link></p>
+
           </div>
           <div className={styles.stepsCard}>
             <div className={styles.eyebrow}>{t.stepsTitle}</div>
