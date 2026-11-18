@@ -371,8 +371,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           </aside>
           <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
             aria-label={language === "fr" ? "Découvrir First Reads" : "Discover First Reads"}>
-            <a className={styles.didieArt} href="https://staging.nextscenes.org/my-projects?firstReads=1"
-              aria-label={language === "fr" ? "Ouvrir First Reads dans NextScenes" : "Open First Reads in NextScenes"}>
+            <Link className={styles.didieArt} href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}
+              aria-label={language === "fr" ? "Explorer First Reads" : "Explore First Reads"}>
               <span className={styles.firstReadsCover} role="img"
                 aria-label="First Reads · provisional NextScenes-branded cover concept">
                 <span className={styles.firstReadsCoverBrand}>NEXTSCENES</span>
@@ -380,7 +380,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 <strong>FIRST<br/>READS</strong>
                 <small>{language === "fr" ? "Des livres à découvrir" : "Discover a new story"}</small>
               </span>
-            </a>
+            </Link>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
                 {language === "fr" ? "POUR LES AUTEURS · PREMIÈRES LECTURES" : "FOR AUTHORS · COMPLETED MANUSCRIPTS"}
@@ -393,10 +393,10 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 {language === "fr" ? "Vos droits restent les vôtres · Pilote en staging" : "You retain your rights · Staging pilot"}
               </span>
             </div>
-            <a className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
-              href="https://staging.nextscenes.org/my-projects?firstReads=1">
+            <Link className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
+              href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}>
               {language === "fr" ? "Découvrir First Reads" : "Explore First Reads"} →
-            </a>
+            </Link>
           </aside>
         </div>
       </section>
