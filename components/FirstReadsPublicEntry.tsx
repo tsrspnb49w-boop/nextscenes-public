@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 
 // Staging-only public doorway. Registration and identity verification are
 // handled by the existing NextScenes app, never by this public website.
@@ -49,7 +50,7 @@ export default function FirstReadsPublicEntry({ language }: Props) {
     back: "Back to homepage",
     note: "These links open the NextScenes application, where the existing account registration and login processes apply.",
   };
-  const buttons: React.CSSProperties = {
+  const buttons: CSSProperties = {
     display:"inline-flex",alignItems:"center",justifyContent:"center",
     minHeight:48,padding:"12px 18px",borderRadius:12,fontWeight:760,
     textDecoration:"none",textAlign:"center",flex:"1 1 200px"
