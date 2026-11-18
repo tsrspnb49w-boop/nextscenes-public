@@ -1,11 +1,7 @@
-import FirstReadsPublicEntry from "@/components/FirstReadsPublicEntry";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "First Reads · Completed Manuscript Pathway | NextScenes Staging",
-  description: "Learn about the NextScenes First Reads programme for completed manuscripts. A private, author-controlled staging pilot.",
-  robots: { index: false, follow: false },
-};
-
-export default function FirstReadsPage() {
-  return <FirstReadsPublicEntry language="en" />;
+// Keep existing bookmarks working without maintaining a duplicate First Reads
+// introduction. Readers and authors share the one Explore destination.
+export default function FirstReadsRedirect() {
+  redirect("/first-reads/explore");
 }
