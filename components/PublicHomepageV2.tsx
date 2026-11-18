@@ -57,7 +57,7 @@ const copy = {
     lede: "Discover books, follow stories as they grow, or begin something entirely your own.",
     read: "Explore stories",
     write: "Start writing",
-    confidence: "Free core participation · No tour required · Explore at your own pace",
+    confidence: "Explore and join for free · Published books may be sold by retailers",
     covers: "Stories in progress & published books",
     communityEyebrow: "COMMUNITY CONVERSATIONS",
     communityTitle: "Stories come alive in conversation.",
@@ -92,6 +92,7 @@ const copy = {
     journeyLine: "Write. Edit. Organise. Format. Prepare to publish.",
     journeyParagraph: "NextScenes brings the book-creation journey together in one workspace. Develop your story, refine your writing, organise your chapters, and transform your manuscript into a professionally formatted book interior designed for publication.",
     journeyClosing: "More than a writing platform. A place to bring your book to life.",
+    firstReadsEntry: "Already completed a manuscript? Explore First Reads",
     stepsTitle: "YOUR BOOK · ONE CONNECTED WORKSPACE",
     steps: ["Write your story", "Edit and refine", "Organise chapters", "Format the book interior", "Prepare for publication"],
     stepsFoot: "A real book interior—not just a stack of draft pages.",
@@ -114,7 +115,7 @@ const copy = {
     lede: "Découvrez des livres, suivez des récits qui prennent forme ou commencez votre propre aventure.",
     read: "Explorer les histoires",
     write: "Commencer à écrire",
-    confidence: "Participation de base gratuite · Aucun parcours imposé · Explorez à votre rythme",
+    confidence: "Explorez et inscrivez-vous gratuitement · Certains livres sont vendus par des libraires",
     covers: "Récits en cours et livres publiés",
     communityEyebrow: "DISCUSSIONS DE LA COMMUNAUTÉ",
     communityTitle: "Les histoires vivent dans les échanges.",
@@ -149,6 +150,7 @@ const copy = {
     journeyLine: "Écrivez. Révisez. Organisez. Mettez en page. Préparez la publication.",
     journeyParagraph: "NextScenes réunit les étapes de création d’un livre dans un même espace. Développez votre histoire, affinez votre texte, organisez vos chapitres et transformez votre manuscrit en un intérieur de livre mis en page professionnellement, conçu pour la publication.",
     journeyClosing: "Plus qu’une plateforme d’écriture. Un espace pour donner vie à votre livre.",
+    firstReadsEntry: "Manuscrit déjà achevé ? Découvrez First Reads",
     stepsTitle: "VOTRE LIVRE · UN ESPACE UNIQUE",
     steps: ["Écrire votre histoire", "Réviser et affiner", "Organiser les chapitres", "Mettre en page l’intérieur du livre", "Préparer la publication"],
     stepsFoot: "Un véritable intérieur de livre, pas simplement des pages de brouillon.",
@@ -256,7 +258,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.heroLede}>{t.lede}</p>
             <div className={styles.heroActions}>
               <Link className={`${styles.button} ${styles.gold}`} href={storiesHref}>{t.read} →</Link>
-              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/?lang=${language}`}>{t.write} →</a>
+              <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/register?lang=${language}&intent=writer`}>{t.write} →</a>
             </div>
             <p className={styles.confidence}>✓ {t.confidence}</p>
             <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
@@ -348,7 +350,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             </Link>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
-                {language === "fr" ? "NOUVELLE PUBLICATION · KOLA KING" : "NEW PUBLICATION · KOLA KING"}
+                {language === "fr" ? "NOUVELLE ÉDITION BROCHÉE · KOLA KING" : "NEW PAPERBACK EDITION · KOLA KING"}
               </div>
               <h3>A Place in the Sun</h3>
               <p>{language === "fr"
@@ -356,8 +358,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
               <span className={styles.didieEdition}>
                 {language === "fr"
-                  ? "Préparé pour publication avec NextScenes"
-                  : "Prepared for publication at NextScenes"}
+                  ? "Publié en anglais · Disponible sur Amazon"
+                  : "Published in English · Available on Amazon"}
               </span>
             </div>
             <Link
@@ -365,6 +367,35 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               href={language === "fr" ? "/fr/books/a-place-in-the-sun" : "/books/a-place-in-the-sun"}
             >
               {language === "fr" ? "Découvrir le roman" : "Explore the novel"} →
+            </Link>
+          </aside>
+          <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
+            aria-label={language === "fr" ? "Découvrir First Reads" : "Discover First Reads"}>
+            <Link className={styles.didieArt} href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}
+              aria-label={language === "fr" ? "Explorer First Reads" : "Explore First Reads"}>
+              <span className={styles.firstReadsCover} role="img"
+                aria-label="First Reads · provisional NextScenes-branded cover concept">
+                <span className={styles.firstReadsCoverBrand}>NEXTSCENES</span>
+                <span className={styles.firstReadsCoverMark}>✧</span>
+                <strong>FIRST<br/>READS</strong>
+                <small>{language === "fr" ? "Des livres à découvrir" : "Discover a new story"}</small>
+              </span>
+            </Link>
+            <div className={styles.didieDetails}>
+              <div className={styles.eyebrow}>
+                {language === "fr" ? "POUR LES AUTEURS · PREMIÈRES LECTURES" : "FOR AUTHORS · COMPLETED MANUSCRIPTS"}
+              </div>
+              <h3>First Reads</h3>
+              <p>{language === "fr"
+                ? "Vous avez terminé votre livre ? Présentez des extraits choisis à nos lecteurs, avec l'aide de NextScenes pour la couverture et la présentation."
+                : "Already written your book? Introduce selected reading parts to our readers, with NextScenes cover and presentation support."}</p>
+              <span className={styles.didieEdition}>
+                {language === "fr" ? "Vos droits restent les vôtres · Pilote en staging" : "You retain your rights · Staging pilot"}
+              </span>
+            </div>
+            <Link className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
+              href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}>
+              {language === "fr" ? "Découvrir First Reads" : "Explore First Reads"} →
             </Link>
           </aside>
         </div>
@@ -502,6 +533,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.journeyLine}>{t.journeyLine}</p>
             <p>{t.journeyParagraph}</p>
             <strong>{t.journeyClosing}</strong>
+
           </div>
           <div className={styles.stepsCard}>
             <div className={styles.eyebrow}>{t.stepsTitle}</div>

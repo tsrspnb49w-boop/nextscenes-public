@@ -1,0 +1,26 @@
+name: First Reads single Explore journey (staging)
+on:
+  push:
+    branches:
+      - feature/first-reads-single-explore-entry-20261118
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unified-explore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Verify public path and bilingual page content
+        run: node scripts/check-first-reads-explore.mjs
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Compile both First Reads public routes
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: npm run build

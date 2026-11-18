@@ -1,0 +1,24 @@
+name: First Reads Explore staging page isolated build
+on:
+  push:
+    branches:
+      - feature/first-reads-explore-collection-20261118
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-first-reads-explore:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install public app
+        run: npm ci --no-audit --no-fund
+      - name: Compile bilingual First Reads Explore pages
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: npm run build
