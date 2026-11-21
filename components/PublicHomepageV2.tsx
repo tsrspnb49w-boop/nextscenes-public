@@ -259,8 +259,10 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               <a className={`${styles.button} ${styles.outline}`} href={`${appUrl}/?lang=${language}`}>{t.write} →</a>
             </div>
             <p className={styles.confidence}>✓ {t.confidence}</p>
-            <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
-            <Link className={styles.textLink} href={language === "fr" ? "/fr/help#install" : "/help#install"}>{t.installCta} →</Link>
+            <div className={styles.heroHelpLinks}>
+              <Link className={styles.textLink} href={language === "fr" ? "/fr/help" : "/help"}>{t.helpCta} →</Link>
+              <Link className={styles.textLink} href={language === "fr" ? "/fr/help#install" : "/help#install"}>{t.installCta} →</Link>
+            </div>
           </div>
           <div className={styles.artStage} aria-label={t.covers}>
             {heroCovers.map((story, i) => (

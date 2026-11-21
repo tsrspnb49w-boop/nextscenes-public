@@ -257,3 +257,60 @@
   .firstReadsCover strong{font-size:15px}
   .firstReadsCover small{font-size:7px}
 }
+
+/* Homepage mobile preflight: the hero must never inherit an unbreakable
+   min-content width from adjacent help links or absolutely layered covers. */
+.heroInner { grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); }
+.heroCopy, .artStage { min-width: 0; max-width: 100%; }
+.heroCopy h1, .heroLede { max-width: 100%; overflow-wrap: break-word; }
+.heroHelpLinks {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 9px 18px;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 11px;
+}
+.heroHelpLinks .textLink {
+  display: inline-block;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+@media (max-width: 720px) {
+  .heroInner { grid-template-columns: minmax(0, 1fr); }
+  .heroCopy { width: 100%; }
+  .artStage { width: 100%; margin-inline: auto; }
+  .visualLabel { max-width: calc(100% - 12px); white-space: normal; }
+}
+@media (max-width: 390px) {
+  .heroCopy h1 { font-size: clamp(31px, 9vw, 36px); }
+  .artStage { min-height: 245px; }
+  .artStage .leftCover {
+    width: 106px;
+    height: 150px;
+    transform: translate(-72px, 12px) rotate(-9deg);
+  }
+  .artStage .rightCover {
+    width: 106px;
+    height: 150px;
+    transform: translate(72px, 12px) rotate(9deg);
+  }
+  .artStage .middleCover { width: 140px; height: 192px; }
+}
+@media (max-width: 350px) {
+  .artStage .leftCover {
+    width: 93px;
+    height: 136px;
+    transform: translate(-62px, 12px) rotate(-8deg);
+  }
+  .artStage .rightCover {
+    width: 93px;
+    height: 136px;
+    transform: translate(62px, 12px) rotate(8deg);
+  }
+  .artStage .middleCover { width: 124px; height: 176px; }
+  .artStage { min-height: 220px; }
+}
