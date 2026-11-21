@@ -27,6 +27,8 @@ function normalizePath(pathname: string) {
 const ROUTE_PAIRS: Array<[string, string]> = [
   ["/", "/fr"],
   ["/books", "/fr/books"],
+  ["/first-reads", "/fr/first-reads"],
+  ["/first-reads/explore", "/fr/first-reads/explore"],
   ["/books/didie", "/fr/books/didie"],
   ["/books/ugo-and-the-butterfly-woman", "/fr/books/ugo-et-la-femme-papillon"],
   ["/books/ugo-and-her-pet-dog", "/fr/books/ugo-et-son-petit-chien"],
@@ -156,6 +158,7 @@ export default function SiteNav() {
       { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
       { href: "/writers", frHref: "/auteurs", en: "For Writers", fr: "Pour les auteurs" },
+      { href: "/first-reads", frHref: "/first-reads", en: "First Reads", fr: "Premières lectures" },
       { href: "/clubs", frHref: "/clubs", en: "Clubs", fr: "Clubs" },
       { href: "/partners", frHref: "/partners", en: "Partners", fr: "Partenaires" },
       { href: "/ai-principles", frHref: "/principes-ia", en: "AI Principles", fr: "Principes IA" },
