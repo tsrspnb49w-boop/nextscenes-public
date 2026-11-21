@@ -27,7 +27,10 @@ test("First Reads has one localized public destination and correct SEO metadata"
 test("public First Reads never sends readers or authors to staging or unavailable intake", () => {
   assert.ok(collection.includes('NEXT_PUBLIC_APP_URL'));
   assert.ok(collection.includes('href={appEntry}'));
-  assert.ok(collection.includes('href={books}'));
+  assert.ok(collection.includes('href={collection}'));
+  assert.ok(collection.includes('View First Reads Collection'));
+  assert.ok(collection.includes('Voir la collection First Reads'));
+  assert.equal(collection.includes('Explore published books'), false);
   assert.ok(collection.includes('href={register}'));
   assert.ok(collection.includes('href={login}'));
   assert.equal(collection.includes('https://staging.nextscenes.org'), false);
@@ -53,4 +56,24 @@ test("First Reads has a bilingual homepage entry and does not alter published bo
   assert.ok(homepage.includes("Published in English · Available on Amazon"));
   assert.equal(homepage.includes("Prepared for publication at NextScenes"), false);
   assert.equal(homepage.includes("Staging pilot"), false);
+});
+
+test("First Reads books have their own unpublished placeholder collection", () => {
+  const firstReadsBooks = read("components/FirstReadsBookCollection.tsx");
+  const english = read("app/first-reads/books/page.tsx");
+  const french = read("app/fr/first-reads/books/page.tsx");
+  const css = read("components/FirstReadsBookCollection.module.css");
+  assert.ok(english.includes('language="en"'));
+  assert.ok(french.includes('language="fr"'));
+  assert.ok(english.includes("noIndex: true"));
+  assert.ok(french.includes("noIndex: true"));
+  assert.ok(firstReadsBooks.includes('data-first-reads-placeholder="true"'));
+  assert.ok(firstReadsBooks.includes("distincte de notre catalogue de livres déjà publiés"));
+  assert.ok(firstReadsBooks.includes("separate from our catalogue of previously published books"));
+  assert.ok(firstReadsBooks.includes("Preview card only."));
+  assert.equal(firstReadsBooks.includes('href="/books"'), false);
+  assert.equal(firstReadsBooks.includes("Queen Amina"), false);
+  assert.equal(firstReadsBooks.includes("Kola King"), false);
+  assert.ok(css.includes(".placeholderCard"));
+  assert.ok(nav.includes('["/first-reads/books", "/fr/first-reads/books"]'));
 });

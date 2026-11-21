@@ -1,0 +1,119 @@
+.main {
+  width: 100%;
+  max-width: 1080px;
+  margin: clamp(20px, 3vw, 38px) auto 65px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+.shell {
+  background: #fff;
+  padding: clamp(22px, 4vw, 42px);
+  border: 1px solid #c8dfcf;
+  border-radius: 22px;
+  box-shadow: 0 15px 42px rgba(17, 66, 45, .07);
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 900;
+  color: #15704b;
+  letter-spacing: .12em;
+  margin: 0;
+}
+.shell h1 {
+  color: #0c4937;
+  font: 600 clamp(29px, 4vw, 42px)/1.15 Georgia, serif;
+  margin: 13px 0 11px;
+}
+.lead {
+  color: #435d50;
+  line-height: 1.65;
+  font-size: 16px;
+  max-width: 760px;
+  margin: 0 0 22px;
+}
+.nav { display: flex; gap: 11px; flex-wrap: wrap; }
+.primaryLink, .secondaryLink {
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 11px 18px;
+  min-height: 46px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+}
+.primaryLink { background: #0b6246; color: #fff; }
+.secondaryLink { border: 1px solid #b9d5c3; color: #0b5e42; background: white; }
+.primaryLink:hover { background: #094b37; }
+.secondaryLink:hover { background: #f0f8f2; }
+.primaryLink:focus-visible, .secondaryLink:focus-visible {
+  outline: 3px solid #d6a734;
+  outline-offset: 3px;
+}
+.divider { border-top: 1px solid #dce8df; margin: 27px 0 26px; }
+.shell h2 { font: 600 clamp(23px, 3vw, 29px)/1.3 Georgia, serif; color: #0d4a38; margin: 0 0 10px; }
+.description { color: #4c6758; font-size: 14px; line-height: 1.65; max-width: 760px; margin: 0 0 21px; }
+.previewShelf {
+  padding: clamp(15px, 3vw, 23px);
+  background: #f2f9f4;
+  border: 1px dashed #b2d3bc;
+  border-radius: 19px;
+}
+.placeholderCard {
+  background: #fffefa;
+  border: 1px solid #d6e6d9;
+  border-radius: 17px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(17px, 3vw, 29px);
+  padding: clamp(17px, 3vw, 26px);
+  max-width: 800px;
+}
+.cover {
+  width: 160px;
+  aspect-ratio: 2 / 3;
+  box-sizing: border-box;
+  padding: 16px 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  flex: 0 0 auto;
+  border: 4px solid #f0e2bb;
+  border-radius: 7px;
+  color: #fff8e9;
+  background: radial-gradient(circle at 50% 67%, rgba(221, 180, 99, .26), transparent 39%), linear-gradient(150deg, #12654b, #0c4336 60%, #092a24);
+  box-shadow: 5px 11px 26px rgba(20, 54, 39, .18);
+}
+.coverBrand { font: bold 11px Georgia, serif; color: #ebd59f; letter-spacing: .1em; }
+.coverMark { color: #e6c37c; font-size: 35px; line-height: 1; }
+.cover strong { font: 600 26px/1.06 Georgia, serif; }
+.cover small { font-size: 10px; line-height: 1.3; }
+.cardCopy { flex: 1 1 230px; min-width: 0; }
+.status { color: #246d4d; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+.cardCopy h3 { font: 600 clamp(21px, 2.8vw, 30px)/1.25 Georgia, serif; color: #0c4a36; margin: 9px 0 10px; }
+.cardCopy p { font-size: 14px; color: #465f51; line-height: 1.65; margin: 0 0 17px; }
+.waiting {
+  display: inline-block;
+  border-radius: 30px;
+  padding: 8px 12px;
+  background: #ecf4ed;
+  color: #285e42;
+  font-weight: 750;
+  font-size: 12px;
+}
+.disclaimer { color: #607266; font-size: 12px; line-height: 1.6; margin: 14px 0 0; }
+@media (max-width: 480px) {
+  .placeholderCard { align-items: flex-start; }
+  .cover { width: 114px; padding: 12px 6px; border-width: 3px; }
+  .coverBrand { font-size: 9px; }
+  .coverMark { font-size: 28px; }
+  .cover strong { font-size: 19px; }
+  .cover small { font-size: 8px; }
+  .cardCopy { flex-basis: 145px; }
+}

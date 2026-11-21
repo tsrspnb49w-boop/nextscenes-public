@@ -29,6 +29,7 @@ const ROUTE_PAIRS: Array<[string, string]> = [
   ["/books", "/fr/books"],
   ["/first-reads", "/fr/first-reads"],
   ["/first-reads/explore", "/fr/first-reads/explore"],
+  ["/first-reads/books", "/fr/first-reads/books"],
   ["/books/didie", "/fr/books/didie"],
   ["/books/ugo-and-the-butterfly-woman", "/fr/books/ugo-et-la-femme-papillon"],
   ["/books/ugo-and-her-pet-dog", "/fr/books/ugo-et-son-petit-chien"],

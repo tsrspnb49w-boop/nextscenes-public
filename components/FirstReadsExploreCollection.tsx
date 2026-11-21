@@ -15,7 +15,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
   const appEntry = APP_URL + "/?lang=" + language;
   const register = APP_URL + "/register?intent=writer&lang=" + language;
   const login = APP_URL + "/login?lang=" + language;
-  const books = fr ? "/fr/books" : "/books";
+  const collection = fr ? "/fr/first-reads/books" : "/first-reads/books";
   const t = fr ? {
     eyebrow: "NEXTSCENES · FIRST READS",
     heading: "Explorer First Reads",
@@ -25,7 +25,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     shelf: "Livres à découvrir",
     emptyTitle: "De nouvelles lectures arrivent",
     empty: "Les premières sélections de lecture approuvées par leurs auteurs seront présentées ici dès leur ouverture au public.",
-    browseBooks: "Découvrir les livres publiés",
+    browseBooks: "Voir la collection First Reads",
     authorTitle: "Votre manuscrit est déjà terminé ?",
     authorIntro: "First Reads permettra aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
     steps: [
@@ -48,7 +48,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     shelf: "Books to discover",
     emptyTitle: "New reading adventures are coming",
     empty: "The first author-approved reading selections will appear here when First Reads opens to readers.",
-    browseBooks: "Explore published books",
+    browseBooks: "View First Reads Collection",
     authorTitle: "Already completed your manuscript?",
     authorIntro: "First Reads will let authors of completed books share selected readings while retaining ownership of their work.",
     steps: [
@@ -108,7 +108,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
             <strong style={{display:"block",color:"#0a4937",font:"600 20px Georgia,serif",
               marginBottom:8}}>{t.emptyTitle}</strong>
             <p style={{color:"#4b6758",margin:"0 0 13px",lineHeight:1.55}}>{t.empty}</p>
-            <Link href={books} style={textLink}>{t.browseBooks}</Link>
+            <Link href={collection} style={textLink}>{t.browseBooks}</Link>
           </div>
         </section>
 
