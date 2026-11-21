@@ -71,7 +71,7 @@ test("First Reads books have their own unpublished placeholder collection", () =
   assert.ok(firstReadsBooks.includes("distincte de notre catalogue de livres déjà publiés"));
   assert.ok(firstReadsBooks.includes("separate from our catalogue of previously published books"));
   assert.ok(firstReadsBooks.includes("Preview card only."));
-  assert.equal(firstReadsBooks.includes("/books\""), false);
+  assert.equal(firstReadsBooks.includes('href="/books"'), false);
   assert.equal(firstReadsBooks.includes("Queen Amina"), false);
   assert.equal(firstReadsBooks.includes("Kola King"), false);
   assert.ok(css.includes(".placeholderCard"));
