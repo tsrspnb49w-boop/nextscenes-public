@@ -213,3 +213,47 @@
   border-color: #b9d9c5;
   color: #276746;
 }
+
+/* First Reads discovery: same editorial proportions as the featured books.
+   The cover is a temporary branded concept; a final design requires approval. */
+.firstReadsFeature{
+  border-color:#b8d5c3;border-left-color:#12684b;
+  background:radial-gradient(ellipse 40% 110% at 7% 45%,rgba(197,228,202,.47),transparent 86%),
+    linear-gradient(112deg,#f5fbf5 0%,#fffef9 60%,#edf7f0 100%);
+}
+.firstReadsFeature .didieDetails .eyebrow{
+  color:#185d42;background:#e8f5eb;border-color:#c1ddcd;
+}
+.firstReadsCover{
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+  width:135px;max-width:100%;aspect-ratio:2/3;min-height:0;overflow:hidden;
+  padding:13px 8px 15px;text-align:center;line-height:1.17;
+  color:#fff7e6;border:3px solid #f6e8c6;border-radius:7px;
+  background:radial-gradient(circle at 50% 69%,rgba(199,161,77,.22),transparent 40%),
+    linear-gradient(155deg,#0c6149,#0d4b3c 58%,#082d28);
+  box-shadow:5px 16px 26px rgba(29,62,45,.23);
+  transform:rotate(-1.4deg);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.firstReadsFeature .didieArt:hover .firstReadsCover{
+  transform:rotate(0) translateY(-4px);
+  box-shadow:4px 20px 29px rgba(29,62,45,.26);
+}
+.firstReadsCoverBrand{
+  font-family:Georgia,serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:#ebd49a;
+}
+.firstReadsCoverMark{font-size:34px;color:#e6c37c;line-height:1}
+.firstReadsCover strong{font-family:Georgia,serif;font-size:22px;letter-spacing:.02em;line-height:1.04}
+.firstReadsCover small{font-size:9px;color:#f8eedc;line-height:1.3}
+.firstReadsAction{background:#0d664a;border-color:#09563e;color:#fff;box-shadow:0 9px 20px rgba(19,105,74,.14)}
+.firstReadsAction:hover{box-shadow:0 12px 24px rgba(19,105,74,.24)}
+@media(max-width:900px){
+  .firstReadsCover{width:110px}
+}
+@media(max-width:500px){
+  .firstReadsCover{width:86px;padding:9px 4px 10px;border-width:2px}
+  .firstReadsCoverBrand{font-size:7px}
+  .firstReadsCoverMark{font-size:22px}
+  .firstReadsCover strong{font-size:15px}
+  .firstReadsCover small{font-size:7px}
+}

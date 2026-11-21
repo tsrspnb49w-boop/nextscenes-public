@@ -356,8 +356,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
                 : "A novel about love, tradition and the freedom to choose. English-language paperback."}</p>
               <span className={styles.didieEdition}>
                 {language === "fr"
-                  ? "Préparé pour publication avec NextScenes"
-                  : "Prepared for publication at NextScenes"}
+                  ? "Publié en anglais · Disponible sur Amazon"
+                  : "Published in English · Available on Amazon"}
               </span>
             </div>
             <Link
@@ -365,6 +365,37 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               href={language === "fr" ? "/fr/books/a-place-in-the-sun" : "/books/a-place-in-the-sun"}
             >
               {language === "fr" ? "Découvrir le roman" : "Explore the novel"} →
+            </Link>
+          </aside>
+          <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
+            aria-label={language === "fr" ? "Découvrir First Reads" : "Discover First Reads"}>
+            <Link className={styles.didieArt} href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}
+              aria-label={language === "fr" ? "Explorer First Reads" : "Explore First Reads"}>
+              <span className={styles.firstReadsCover} role="img"
+                aria-label="NextScenes First Reads collection">
+                <span className={styles.firstReadsCoverBrand}>NEXTSCENES</span>
+                <span className={styles.firstReadsCoverMark}>✧</span>
+                <strong>FIRST<br/>READS</strong>
+                <small>{language === "fr" ? "Des livres à découvrir" : "Discover a new story"}</small>
+              </span>
+            </Link>
+            <div className={styles.didieDetails}>
+              <div className={styles.eyebrow}>
+                {language === "fr" ? "POUR LES AUTEURS · PREMIÈRES LECTURES" : "FOR AUTHORS · COMPLETED MANUSCRIPTS"}
+              </div>
+              <h3>First Reads</h3>
+              <p>{language === "fr"
+                ? "Vous avez terminé votre livre ? Découvrez comment partager des extraits approuvés, avec l’accompagnement éditorial de NextScenes."
+                : "Already completed your book? Discover how author-approved reading selections will reach NextScenes readers."}</p>
+              <span className={styles.didieEdition}>
+                {language === "fr"
+                  ? "Vos droits sont préservés · Premières lectures à venir"
+                  : "Your rights are protected · First readings coming soon"}
+              </span>
+            </div>
+            <Link className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
+              href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}>
+              {language === "fr" ? "Découvrir First Reads" : "Explore First Reads"} →
             </Link>
           </aside>
         </div>
