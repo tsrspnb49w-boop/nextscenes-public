@@ -11,6 +11,8 @@ const routes = [
   { path: "/fr/about", priority: 0.9, changeFrequency: "monthly" },
   { path: "/how-it-works", priority: 0.9, changeFrequency: "monthly" },
   { path: "/fr/how-it-works", priority: 0.9, changeFrequency: "monthly" },
+  { path: "/first-reads/explore", priority: 0.65, changeFrequency: "monthly" },
+  { path: "/fr/first-reads/explore", priority: 0.65, changeFrequency: "monthly" },
   { path: "/writers", priority: 0.85, changeFrequency: "monthly" },
   { path: "/fr/auteurs", priority: 0.85, changeFrequency: "monthly" },
   { path: "/clubs", priority: 0.8, changeFrequency: "monthly" },
