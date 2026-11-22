@@ -10,9 +10,9 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
   const fr = language === "fr";
   const home = fr ? "/fr" : "/";
   const help = "#how-first-reads-works";
-  // The production app does not yet expose the staging-only First Reads
-  // manuscript intake. This is a general app entry, never an intake promise.
-  const appEntry = APP_URL + "/?lang=" + language;
+  // Launch-only entry: the app still checks the writer's authentication
+  // and server-side ownership. Opening this link never publishes a book.
+  const appEntry = APP_URL + "/?firstReads=1&lang=" + language;
   const register = APP_URL + "/register?intent=writer&lang=" + language;
   const login = APP_URL + "/login?lang=" + language;
   const collection = fr ? "/fr/first-reads/books" : "/first-reads/books";
@@ -27,7 +27,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     empty: "Les premières sélections de lecture approuvées par leurs auteurs seront présentées ici dès leur ouverture au public.",
     browseBooks: "Voir la collection First Reads",
     authorTitle: "Votre manuscrit est déjà terminé ?",
-    authorIntro: "First Reads permettra aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
+    authorIntro: "First Reads permet aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
     steps: [
       ["1", "Préparer le livre", "Créez votre compte et complétez Book Setup."],
       ["2", "Relire votre livre", "Vérifiez le texte, la couverture et les lectures proposées."],
@@ -37,8 +37,8 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     create: "Créer un compte auteur",
     signin: "J'ai déjà un compte",
     help: "Comment fonctionne First Reads ?",
-    status: "Le parcours First Reads est en préparation. L’envoi de manuscrits et la diffusion ne sont pas encore ouverts dans l’application publique.",
-    accountNote: "Un compte NextScenes donne accès à l’application, mais n’inscrit pas encore votre livre à First Reads.",
+    status: "First Reads accueille les manuscrits achevés. Chaque auteur prépare son livre en privé et autorise explicitement chaque diffusion.",
+    accountNote: "Votre compte NextScenes ne publie aucun manuscrit automatiquement. Vous choisissez les lectures que vous autorisez.",
   } : {
     eyebrow: "NEXTSCENES · FIRST READS",
     heading: "Explore First Reads",
@@ -50,7 +50,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     empty: "The first author-approved reading selections will appear here when First Reads opens to readers.",
     browseBooks: "View First Reads Collection",
     authorTitle: "Already completed your manuscript?",
-    authorIntro: "First Reads will let authors of completed books share selected readings while retaining ownership of their work.",
+    authorIntro: "First Reads lets authors of completed books share selected readings while retaining ownership of their work.",
     steps: [
       ["1", "Prepare your book", "Create your account and complete Book Setup."],
       ["2", "Review Your Book", "Check the text, cover artwork and proposed reading selections."],
@@ -60,8 +60,8 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     create: "Create a writer account",
     signin: "I already have an account",
     help: "How does First Reads work?",
-    status: "First Reads is being prepared. Manuscript submissions and public releases are not yet available in the production application.",
-    accountNote: "A NextScenes account provides general access to the app; it does not yet submit your book to First Reads.",
+    status: "First Reads welcomes completed manuscripts. Authors prepare their books privately and approve every public release.",
+    accountNote: "A NextScenes account does not publish your manuscript automatically. You choose exactly what readers may see.",
   };
 
   const linkButton: CSSProperties = {
