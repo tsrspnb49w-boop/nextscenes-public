@@ -13,6 +13,8 @@ const routes = [
   { path: "/fr/how-it-works", priority: 0.9, changeFrequency: "monthly" },
   { path: "/first-reads/explore", priority: 0.65, changeFrequency: "monthly" },
   { path: "/fr/first-reads/explore", priority: 0.65, changeFrequency: "monthly" },
+  { path: "/first-reads/books", priority: 0.65, changeFrequency: "weekly" },
+  { path: "/fr/first-reads/books", priority: 0.65, changeFrequency: "weekly" },
   { path: "/writers", priority: 0.85, changeFrequency: "monthly" },
   { path: "/fr/auteurs", priority: 0.85, changeFrequency: "monthly" },
   { path: "/clubs", priority: 0.8, changeFrequency: "monthly" },
