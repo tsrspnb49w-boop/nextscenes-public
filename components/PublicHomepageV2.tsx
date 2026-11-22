@@ -375,7 +375,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
               aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
-                width={135} height={180} unoptimized className={styles.didieCover} />
+                width={135} height={203} unoptimized className={styles.didieCover} />
             </a>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
@@ -383,10 +383,10 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               </div>
               <h3>{QUEEN_AMINA_FIRST_READS.title}</h3>
               <p>{language === "fr"
-                ? "Découvrez le premier chapitre de ce roman de Kola King dans notre Édition Royale. Lecture en anglais, sans inscription."
-                : "Discover the opening chapter of Kola King's novel in our Royal Reader. Free to read, with no account required."}</p>
+                ? "Découvrez le roman de Kola King dans notre Édition Royale. Texte en anglais."
+                : "Discover Kola King's novel in the Royal Reader."}</p>
               <span className={styles.didieEdition}>
-                {language === "fr" ? "Par Kola King · Seul le chapitre autorisé est public" : "By Kola King · Only authorized reading is public"}
+                {language === "fr" ? "Par Kola King" : "By Kola King"}
               </span>
               <p style={{marginTop:9,marginBottom:0}}>
                 <Link href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}
@@ -395,7 +395,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             </div>
             <a className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
               href={queenAminaPublicReadingUrl(appUrl)}>
-              {language === "fr" ? "Lire le chapitre 1" : "Read Chapter One"} →
+              {language === "fr" ? "Lire le livre" : "Read the Book"} →
             </a>
           </aside>
         </div>

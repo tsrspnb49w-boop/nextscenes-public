@@ -121,7 +121,7 @@
 /* Actual approved First Reads title; do not reuse the conceptual placeholder cover. */
 .realCoverLink { display:block; flex:0 0 auto; width:160px; max-width:100%; line-height:0; }
 .realCover {
-  display:block; width:100%; height:auto; aspect-ratio:144 / 190;
+  display:block; width:100%; height:auto; aspect-ratio:2 / 3;
   object-fit:cover; border:3px solid #faf1d9; border-radius:7px;
   box-shadow:5px 11px 26px rgba(20,54,39,.18);
 }
