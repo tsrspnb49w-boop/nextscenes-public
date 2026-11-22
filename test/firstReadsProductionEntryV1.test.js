@@ -48,9 +48,9 @@ test("publication and full manuscript remain author-gated", () => {
   assert.ok(collection.includes("latest five authorized serials"));
   assert.ok(collection.includes("Breadcrumbs"));
   assert.ok(collection.includes("aucun manuscrit automatiquement"));
-  assert.ok(collection.includes('data-first-reads-empty-collection="true"'));
-  assert.equal(collection.includes("Queen Amina"), false);
-  assert.equal(collection.includes("6b015cd165e47e1c7a8b31f5"), false);
+  assert.ok(collection.includes('data-first-reads-featured-book="queen-amina"'));
+  assert.ok(collection.includes("queenAminaPublicReadingUrl"));
+  assert.ok(collection.includes("The full manuscript remains private."));
   assert.ok(collection.includes('id="how-first-reads-works"'));
 });
 
@@ -63,22 +63,30 @@ test("First Reads has a bilingual homepage entry and does not alter published bo
   assert.equal(homepage.includes("Staging pilot"), false);
 });
 
-test("First Reads books have their own unpublished placeholder collection", () => {
+test("First Reads collection features only approved Queen Amina Chapter One, not private manuscripts", () => {
   const firstReadsBooks = read("components/FirstReadsBookCollection.tsx");
   const english = read("app/first-reads/books/page.tsx");
   const french = read("app/fr/first-reads/books/page.tsx");
   const css = read("components/FirstReadsBookCollection.module.css");
   assert.ok(english.includes('language="en"'));
   assert.ok(french.includes('language="fr"'));
-  assert.ok(english.includes("noIndex: true"));
-  assert.ok(french.includes("noIndex: true"));
-  assert.ok(firstReadsBooks.includes('data-first-reads-placeholder="true"'));
-  assert.ok(firstReadsBooks.includes("distincte de notre catalogue de livres déjà publiés"));
-  assert.ok(firstReadsBooks.includes("separate from our catalogue of previously published books"));
-  assert.ok(firstReadsBooks.includes("Preview card only."));
+  assert.equal(english.includes("noIndex: true"), false);
+  assert.equal(french.includes("noIndex: true"), false);
+  assert.ok(firstReadsBooks.includes('data-first-reads-approved-book="queen-amina"'));
+  assert.ok(firstReadsBooks.includes("QUEEN_AMINA_FIRST_READS"));
+  assert.ok(firstReadsBooks.includes("distincte du catalogue des éditions commerciales de NextScenes"));
+  assert.ok(firstReadsBooks.includes("separate from the NextScenes catalogue of commercially available editions"));
+  assert.ok(firstReadsBooks.includes("Only Chapter One has been approved for public reading."));
   assert.equal(firstReadsBooks.includes('href="/books"'), false);
-  assert.equal(firstReadsBooks.includes("Queen Amina"), false);
-  assert.equal(firstReadsBooks.includes("Kola King"), false);
-  assert.ok(css.includes(".placeholderCard"));
+  assert.ok(firstReadsBooks.includes("queenAminaPublicReadingUrl"));
+  assert.ok(css.includes(".realCover"));
+  const approved = read("app/lib/firstReadsApprovedBooks.ts");
+  assert.ok(approved.includes('id: "6b031e6fa85e87384e4e27a5"'));
+  assert.ok(approved.includes("Queen Amina: Soldier on Horseback"));
+  assert.ok(approved.includes('author: "Kola King"'));
+  assert.ok(approved.includes('&openBook=1'));
+  assert.equal(approved.includes('/my-projects'), false);
+  assert.equal(firstReadsBooks.includes('data-first-reads-placeholder="true"'), false);
+  assert.ok(sitemap.includes('path: "/first-reads/books"'));
   assert.ok(nav.includes('["/first-reads/books", "/fr/first-reads/books"]'));
 });

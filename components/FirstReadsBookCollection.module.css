@@ -117,3 +117,14 @@
   .cover small { font-size: 8px; }
   .cardCopy { flex-basis: 145px; }
 }
+
+/* Actual approved First Reads title; do not reuse the conceptual placeholder cover. */
+.realCoverLink { display:block; flex:0 0 auto; width:160px; max-width:100%; line-height:0; }
+.realCover {
+  display:block; width:100%; height:auto; aspect-ratio:144 / 190;
+  object-fit:cover; border:3px solid #faf1d9; border-radius:7px;
+  box-shadow:5px 11px 26px rgba(20,54,39,.18);
+}
+.realCoverLink:focus-visible { outline:3px solid #d6a734; outline-offset:4px; border-radius:7px; }
+.realCoverLink:hover .realCover { box-shadow:5px 15px 30px rgba(20,54,39,.25); }
+@media(max-width:480px){.realCoverLink{width:114px}}
