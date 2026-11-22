@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
 import type { CSSProperties } from "react";
 
 // One bilingual First Reads destination for readers and prospective authors.
@@ -16,6 +18,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
   const register = APP_URL + "/register?intent=writer&lang=" + language;
   const login = APP_URL + "/login?lang=" + language;
   const collection = fr ? "/fr/first-reads/books" : "/first-reads/books";
+  const readingUrl = queenAminaPublicReadingUrl(APP_URL);
   const t = fr ? {
     eyebrow: "NEXTSCENES · FIRST READS",
     heading: "Explorer First Reads",
@@ -23,8 +26,9 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     projectHub: "Entrer dans l’application",
     home: "Retour à l'accueil",
     shelf: "Livres à découvrir",
-    emptyTitle: "De nouvelles lectures arrivent",
-    empty: "Les premières sélections approuvées par leurs auteurs apparaîtront ici après leur diffusion autorisée.",
+    bookStatus: "CHAPITRE 1 DISPONIBLE",
+    bookSummary: "Par Kola King. Premier chapitre disponible gratuitement en anglais ; le reste du manuscrit demeure privé.",
+    readBook: "Lire le chapitre 1",
     browseBooks: "Voir la collection First Reads",
     authorTitle: "Votre manuscrit est déjà terminé ?",
     authorIntro: "First Reads permet aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
@@ -48,8 +52,9 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     projectHub: "Enter the App",
     home: "Back to homepage",
     shelf: "Books to discover",
-    emptyTitle: "New reading adventures are coming",
-    empty: "The first author-approved reading selections will appear here once they have been explicitly released.",
+    bookStatus: "CHAPTER ONE AVAILABLE",
+    bookSummary: "By Kola King. The opening chapter is free to read; the remaining manuscript stays private.",
+    readBook: "Read Chapter One",
     browseBooks: "View First Reads Collection",
     authorTitle: "Already completed your manuscript?",
     authorIntro: "First Reads lets authors of completed books share selected readings while retaining ownership of their work.",
@@ -107,16 +112,28 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
         <section aria-labelledby="first-reads-shelf" style={{marginTop:29}}>
           <h2 id="first-reads-shelf" style={{font:"600 24px/1.25 Georgia,serif",
             color:"#0c4b37",margin:"0 0 13px"}}>{t.shelf}</h2>
-          {/* Never render staging manuscript drafts or guessed book records here.
-              Approved books require a separate vetted public catalog integration. */}
-          <div data-first-reads-empty-collection="true" style={{
-            border:"1px dashed #b7d5c0",background:"#f3f9f4",
-            borderRadius:15,padding:"25px clamp(12px,3vw,24px)",
-            textAlign:"center"}}>
-            <strong style={{display:"block",color:"#0a4937",font:"600 20px Georgia,serif",
-              marginBottom:8}}>{t.emptyTitle}</strong>
-            <p style={{color:"#4b6758",margin:"0 0 13px",lineHeight:1.55}}>{t.empty}</p>
-            <Link href={collection} style={textLink}>{t.browseBooks}</Link>
+          {/* Only an explicitly authorized public First Reads release may be featured. */}
+          <div data-first-reads-featured-book="queen-amina" style={{
+            display:"flex",alignItems:"center",flexWrap:"wrap",gap:"clamp(16px,3vw,26px)",
+            border:"1px solid #b7d5c0",background:"#f3f9f4",
+            borderRadius:15,padding:"clamp(16px,3vw,24px)"}}>
+            <a href={readingUrl} aria-label={t.readBook} style={{display:"block",lineHeight:0}}>
+              <Image src={QUEEN_AMINA_FIRST_READS.cover}
+                alt="Queen Amina: Soldier on Horseback book cover"
+                width={125} height={165} unoptimized
+                style={{width:125,height:"auto",borderRadius:6,boxShadow:"4px 9px 20px rgba(17,66,45,.18)"}}/>
+            </a>
+            <div style={{flex:"1 1 230px",minWidth:0}}>
+              <strong style={{fontSize:11,letterSpacing:".09em",color:"#146746"}}>{t.bookStatus}</strong>
+              <h3 style={{font:"600 22px/1.25 Georgia,serif",color:"#0a4937",margin:"8px 0"}}>
+                {QUEEN_AMINA_FIRST_READS.title}
+              </h3>
+              <p style={{fontSize:14,color:"#4b6758",lineHeight:1.55,margin:"0 0 15px"}}>{t.bookSummary}</p>
+              <div style={{display:"flex",alignItems:"center",flexWrap:"wrap",gap:13}}>
+                <a href={readingUrl} style={{...linkButton,color:"#fff",background:"#0b6246"}}>{t.readBook}</a>
+                <Link href={collection} style={textLink}>{t.browseBooks}</Link>
+              </div>
+            </div>
           </div>
         </section>
 
