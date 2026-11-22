@@ -21,8 +21,8 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
     heading: "Livres First Reads",
     description: "Cette collection présente des lectures autorisées de manuscrits achevés. Elle est distincte du catalogue des éditions commerciales de NextScenes.",
     status: "CHAPITRE 1 DISPONIBLE",
-    synopsis: "Découvrez Queen Amina: Soldier on Horseback de Kola King. Le premier chapitre est disponible gratuitement dans l’Édition Royale, en anglais.",
-    action: "Lire le chapitre 1",
+    synopsis: "Découvrez Queen Amina: Soldier on Horseback de Kola King. Découvrez cette œuvre en anglais dans notre Édition Royale.",
+    action: "Lire le livre",
     note: "Seul le premier chapitre a été autorisé pour la lecture publique. Le manuscrit complet reste privé, et chaque nouvel épisode doit être autorisé séparément.",
   } : {
     eyebrow: "NEXTSCENES · FIRST READS",
@@ -33,8 +33,8 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
     heading: "First Reads Books",
     description: "This collection presents author-approved readings from completed manuscripts. It is separate from the NextScenes catalogue of commercially available editions.",
     status: "CHAPTER ONE AVAILABLE",
-    synopsis: "Discover Queen Amina: Soldier on Horseback by Kola King. Read its complete opening chapter free in the Royal Reader, without creating an account.",
-    action: "Read Chapter One",
+    synopsis: "Discover Queen Amina: Soldier on Horseback by Kola King. Begin reading in our Royal Reader.",
+    action: "Read the Book",
     note: "Only Chapter One has been approved for public reading. The complete manuscript remains private, and each later serial requires separate authorization.",
   };
 
