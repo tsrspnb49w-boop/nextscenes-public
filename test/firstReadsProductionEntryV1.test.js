@@ -74,8 +74,8 @@ test("First Reads collection features only approved Queen Amina Chapter One, not
   assert.equal(french.includes("noIndex: true"), false);
   assert.ok(firstReadsBooks.includes('data-first-reads-approved-book="queen-amina"'));
   assert.ok(firstReadsBooks.includes("QUEEN_AMINA_FIRST_READS"));
-  assert.ok(firstReadsBooks.includes("distincte de notre catalogue de livres déjà publiés"));
-  assert.ok(firstReadsBooks.includes("separate from our catalogue of previously published books"));
+  assert.ok(firstReadsBooks.includes("distincte du catalogue des éditions commerciales de NextScenes"));
+  assert.ok(firstReadsBooks.includes("separate from the NextScenes catalogue of commercially available editions"));
   assert.ok(firstReadsBooks.includes("Only Chapter One has been approved for public reading."));
   assert.equal(firstReadsBooks.includes('href="/books"'), false);
   assert.ok(firstReadsBooks.includes("queenAminaPublicReadingUrl"));
