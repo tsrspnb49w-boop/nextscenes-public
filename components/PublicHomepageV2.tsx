@@ -375,7 +375,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
               aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
-                width={135} height={180} unoptimized className={styles.didieCover} />
+                width={135} height={203} unoptimized className={styles.didieCover} />
             </a>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
