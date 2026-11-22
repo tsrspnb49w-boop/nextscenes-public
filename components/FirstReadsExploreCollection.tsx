@@ -120,7 +120,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
             <a href={readingUrl} aria-label={t.readBook} style={{display:"block",lineHeight:0}}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover}
                 alt="Queen Amina: Soldier on Horseback book cover"
-                width={125} height={165} unoptimized
+                width={125} height={188} unoptimized
                 style={{width:125,height:"auto",borderRadius:6,boxShadow:"4px 9px 20px rgba(17,66,45,.18)"}}/>
             </a>
             <div style={{flex:"1 1 230px",minWidth:0}}>
