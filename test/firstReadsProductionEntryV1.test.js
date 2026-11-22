@@ -24,7 +24,7 @@ test("First Reads has one localized public destination and correct SEO metadata"
   assert.ok(read("app/fr/first-reads/page.tsx").includes('redirect("/fr/first-reads/explore")'));
 });
 
-test("public First Reads never sends readers or authors to staging or unavailable intake", () => {
+test("public First Reads routes to the approved app rather than staging or private manuscripts", () => {
   assert.ok(collection.includes('NEXT_PUBLIC_APP_URL'));
   assert.ok(collection.includes('href={appEntry}'));
   assert.ok(collection.includes('href={collection}'));
@@ -34,7 +34,7 @@ test("public First Reads never sends readers or authors to staging or unavailabl
   assert.ok(collection.includes('href={register}'));
   assert.ok(collection.includes('href={login}'));
   assert.equal(collection.includes('https://staging.nextscenes.org'), false);
-  assert.equal(collection.includes('my-projects?firstReads=1'), false);
+  assert.ok(collection.includes('/?firstReads=1&lang='));
   assert.equal(collection.includes('Staging pilot:'), false);
   assert.equal(collection.includes('NextScenes Staging'), false);
 });
@@ -42,7 +42,9 @@ test("public First Reads never sends readers or authors to staging or unavailabl
 test("publication and full manuscript remain author-gated", () => {
   assert.ok(collection.includes("The full manuscript remains private."));
   assert.ok(collection.includes("Cover artwork and About the Author require author approval"));
-  assert.ok(collection.includes("not yet available in the production application"));
+  assert.ok(collection.includes("First Reads welcomes completed manuscripts."));
+  assert.ok(collection.includes("approve every public release."));
+  assert.ok(collection.includes("aucun manuscrit automatiquement"));
   assert.ok(collection.includes('data-first-reads-empty-collection="true"'));
   assert.equal(collection.includes("Queen Amina"), false);
   assert.equal(collection.includes("6b015cd165e47e1c7a8b31f5"), false);
