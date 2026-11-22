@@ -383,8 +383,8 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               </div>
               <h3>{QUEEN_AMINA_FIRST_READS.title}</h3>
               <p>{language === "fr"
-                ? "Découvrez le premier chapitre de ce roman de Kola King dans notre Édition Royale. Lecture en anglais."
-                : "Discover the opening chapter of Kola King's novel in our Royal Reader. Read in our Royal Reader."}</p>
+                ? "Découvrez le roman de Kola King dans notre Édition Royale. Texte en anglais."
+                : "Discover Kola King's novel in the Royal Reader."}</p>
               <span className={styles.didieEdition}>
                 {language === "fr" ? "Par Kola King" : "By Kola King"}
               </span>
