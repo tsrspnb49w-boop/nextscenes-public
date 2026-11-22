@@ -7,6 +7,7 @@ import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import ResolvedPublicStoryLink from "./ResolvedPublicStoryLink";
 import EditorialSpotlightImage from "./EditorialSpotlightImage";
 import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
 import styles from "./PublicHomepageV2.module.css";
 
 // Next.js can safely resize local assets and the two configured external image hosts.
@@ -370,35 +371,32 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             </Link>
           </aside>
           <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
-            aria-label={language === "fr" ? "Découvrir First Reads" : "Discover First Reads"}>
-            <Link className={styles.didieArt} href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}
-              aria-label={language === "fr" ? "Explorer First Reads" : "Explore First Reads"}>
-              <span className={styles.firstReadsCover} role="img"
-                aria-label="NextScenes First Reads collection">
-                <span className={styles.firstReadsCoverBrand}>NEXTSCENES</span>
-                <span className={styles.firstReadsCoverMark}>✧</span>
-                <strong>FIRST<br/>READS</strong>
-                <small>{language === "fr" ? "Des livres à découvrir" : "Discover a new story"}</small>
-              </span>
-            </Link>
+            aria-label={language === "fr" ? "First Reads : Queen Amina" : "First Reads: Queen Amina"}>
+            <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
+              aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
+              <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
+                width={135} height={180} unoptimized className={styles.didieCover} />
+            </a>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
-                {language === "fr" ? "POUR LES AUTEURS · PREMIÈRES LECTURES" : "FOR AUTHORS · COMPLETED MANUSCRIPTS"}
+                {language === "fr" ? "FIRST READS · PREMIER CHAPITRE DISPONIBLE" : "FIRST READS · CHAPTER ONE AVAILABLE"}
               </div>
-              <h3>First Reads</h3>
+              <h3>{QUEEN_AMINA_FIRST_READS.title}</h3>
               <p>{language === "fr"
-                ? "Vous avez terminé votre livre ? Découvrez comment partager des extraits approuvés, avec l’accompagnement éditorial de NextScenes."
-                : "Already completed your book? Discover how author-approved reading selections will reach NextScenes readers."}</p>
+                ? "Découvrez le premier chapitre de ce roman de Kola King dans notre Édition Royale. Lecture en anglais, sans inscription."
+                : "Discover the opening chapter of Kola King's novel in our Royal Reader. Free to read, with no account required."}</p>
               <span className={styles.didieEdition}>
-                {language === "fr"
-                  ? "Vos droits sont préservés · Premières lectures à venir"
-                  : "Your rights are protected · First readings coming soon"}
+                {language === "fr" ? "Par Kola King · Seul le chapitre autorisé est public" : "By Kola King · Only authorized reading is public"}
               </span>
+              <p style={{marginTop:9,marginBottom:0}}>
+                <Link href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}
+                  className={styles.textLink}>{language === "fr" ? "Explorer First Reads" : "Explore First Reads"}</Link>
+              </p>
             </div>
-            <Link className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
-              href={language === "fr" ? "/fr/first-reads/explore" : "/first-reads/explore"}>
-              {language === "fr" ? "Découvrir First Reads" : "Explore First Reads"} →
-            </Link>
+            <a className={styles.button + " " + styles.didieAction + " " + styles.firstReadsAction}
+              href={queenAminaPublicReadingUrl(appUrl)}>
+              {language === "fr" ? "Lire le chapitre 1" : "Read Chapter One"} →
+            </a>
           </aside>
         </div>
       </section>
