@@ -120,8 +120,9 @@ test("A Place in the Sun uses restrained, accurate NextScenes publication-prepar
   const homepage = read("components/PublicHomepageV2.tsx");
   const dedicated = read("components/APlaceInTheSunBookPage.tsx");
 
-  assert.match(homepage, /Prepared for publication at NextScenes/);
-  assert.match(homepage, /Préparé pour publication avec NextScenes/);
+  assert.match(homepage, /guestFeature/);
+  assert.match(homepage, /\/books\/a-place-in-the-sun/);
+  assert.match(homepage, /\/fr\/books\/a-place-in-the-sun/);
   assert.match(dedicated, /Prepared for publication at NextScenes\./);
   assert.match(dedicated, /Préparé pour publication avec NextScenes\./);
   assert.doesNotMatch(dedicated, /written on NextScenes|created on NextScenes|publié par NextScenes|published by NextScenes/);
