@@ -34,16 +34,19 @@ test("public First Reads routes to the approved app rather than staging or priva
   assert.ok(collection.includes('href={register}'));
   assert.ok(collection.includes('href={login}'));
   assert.equal(collection.includes('https://staging.nextscenes.org'), false);
-  assert.ok(collection.includes('/?firstReads=1&lang='));
+  assert.ok(collection.includes('/my-projects?firstReads=1&lang='));
   assert.equal(collection.includes('Staging pilot:'), false);
   assert.equal(collection.includes('NextScenes Staging'), false);
 });
 
 test("publication and full manuscript remain author-gated", () => {
   assert.ok(collection.includes("The full manuscript remains private."));
-  assert.ok(collection.includes("Cover artwork and About the Author require author approval"));
+  assert.ok(collection.includes("Covers, About the Author and every release require approval."));
   assert.ok(collection.includes("First Reads welcomes completed manuscripts."));
   assert.ok(collection.includes("approve every public release."));
+  assert.ok(collection.includes("Release one serial at a time"));
+  assert.ok(collection.includes("latest five authorized serials"));
+  assert.ok(collection.includes("Breadcrumbs"));
   assert.ok(collection.includes("aucun manuscrit automatiquement"));
   assert.ok(collection.includes('data-first-reads-empty-collection="true"'));
   assert.equal(collection.includes("Queen Amina"), false);
