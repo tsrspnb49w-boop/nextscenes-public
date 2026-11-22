@@ -5,7 +5,7 @@ export const QUEEN_AMINA_FIRST_READS = {
   title: "Queen Amina: Soldier on Horseback",
   author: "Kola King",
   available: "Chapter One",
-  cover: "/images/first-reads/queen-amina-cover-thumb.svg",
+  cover: "/images/first-reads/queen-amina-front.jpg",
 } as const;
 
 export function queenAminaPublicReadingUrl(appBase = process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org"): string {
