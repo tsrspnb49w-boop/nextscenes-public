@@ -46,7 +46,8 @@ jobs:
             return {failed,count};
           }
           const base=read("/tmp/baseline-tests.log"),candidate=read("/tmp/candidate-tests.log");
-          assert.deepEqual(candidate.failed,base.failed,"Candidate changes regression failure set");
+          assert.ok(candidate.failed.every(name=>base.failed.includes(name)),"Candidate introduced a new regression failure: "+JSON.stringify(candidate.failed.filter(name=>!base.failed.includes(name))));
+          assert.equal(candidate.failed.length,0,"All current public-site regression tests must pass");
           assert.ok(candidate.count>=base.count+2,"New image tests missing");
           console.log("Regression parity verified",JSON.stringify({base,candidate}));
           NODE

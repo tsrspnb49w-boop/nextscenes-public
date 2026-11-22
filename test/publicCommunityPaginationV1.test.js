@@ -78,7 +78,7 @@ test("public read proxy chooses an exact API by server-owned Render identity, no
  assert.ok(!api.includes('origin + "/api/feedback/live"'));
 });
 test("Live Feedback has an actual bounded scrolling viewport even with a short preview",()=>{
- assert.ok(css.includes("height:min(440px,55vh)"));
+ assert.ok(css.includes("height:min(580px,70vh)"));
  assert.ok(css.includes("scrollbar-gutter:stable"));
  assert.ok(css.includes("overflow-y:auto"));
  assert.ok(ui.includes('aria-label={isFR?"Liste défilante des discussions publiques":"Scrollable public discussion list"}'));
@@ -95,7 +95,7 @@ test("member composer uses the staging login and API on staging and keeps produc
  assert.ok(ui.includes('document.removeEventListener("visibilitychange",recheck)'));
  assert.ok(ui.includes('window.removeEventListener("focus",recheck)'));
  assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
- assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('disabled={!canInteract||owned.has(item.id)||!item.storyId||posting}'));
  assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
  assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
@@ -118,19 +118,23 @@ test("public feedback uses the existing shared replies endpoint for clicked comm
  assert.ok(css.includes(".emojiActions"));
 });
 test("both developing stories have Explore links that respect private reading permissions",()=>{
- assert.ok(developing.includes('return directoryAppUrl+"/storylines"+(term?"?q="+encodeURIComponent(term):"");'));
- assert.ok(developing.includes('key==="windows"?"52":key==="sin"?"S.I.N.":""'));
+ assert.ok(developing.includes('resolvePublicStoryHref(key==="windows"?"windows":"sin",language,directoryAppUrl,storylines,live)'));
+ const resolver=fs.readFileSync(path.join(root,"app/lib/publicStoryDestinations.ts"),"utf8");
+ assert.ok(resolver.includes('isMatchingPublicStory(key, language, String(row?.title || ""))'));
+ assert.ok(resolver.includes('row?.public === true && row?.key === key'));
+ assert.ok(resolver.includes('return base + "/storylines?q=" + encodeURIComponent(publicStorySearchTitle(key, language))'));
+ assert.ok(resolver.includes('if (uniqueIds.length === 1)'));
  assert.ok(developing.includes('https://nextscenes-staging-frontend.onrender.com'));
- assert.ok(developing.includes('item?.public && /^\\/reader-view'));
+ assert.ok(developing.includes('return resolvePublicStoryHref('));
  assert.ok(!developing.includes(': <p className={styles.availability}'));
 });
 
 test("only verified writers see public feedback posting controls",()=>{
  assert.ok(ui.includes('useState<"checking"|"writer"|"reader"|"guest"|"unavailable">'));
  assert.ok(ui.includes('setMemberStatus(writer?"writer":"reader")'));
- assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
- assert.ok(ui.includes('canInteract&&!owned.has(node.id)&&root.storyId&&'));
- assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('disabled={!canInteract||owned.has(item.id)||!item.storyId||posting}'));
+ assert.ok(ui.includes('disabled={!canInteract||owned.has(node.id)||!root.storyId||posting}'));
+ assert.ok(ui.includes('disabled={!canInteract||owned.has(item.id)||!item.storyId||posting}'));
  assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
  assert.ok(ui.includes('if(!canInteract||owned.has(root.id)||posting||!root.storyId)return;'));
  assert.ok(!ui.includes('memberStatus!=="writer"&&replyTo===item.id&&item.storyId&&'));
@@ -180,8 +184,8 @@ test("server trusted origin uses opt-in and exact Render service identity",()=>{
 test("the public message itself stays plain text; only someone else's explicit Reply is interactive",()=>{
  assert.ok(ui.includes('renderReplyEditor(item,item.id)'));
  assert.ok(ui.includes('renderReplyEditor(root,node.id)'));
- assert.ok(ui.includes('canInteract&&!owned.has(node.id)&&root.storyId&&'));
- assert.ok(ui.includes('canInteract&&!owned.has(item.id)&&item.storyId&&<div'));
+ assert.ok(ui.includes('disabled={!canInteract||owned.has(node.id)||!root.storyId||posting}'));
+ assert.ok(ui.includes('disabled={!canInteract||owned.has(item.id)||!item.storyId||posting}'));
  assert.ok(ui.includes('setOwnerScanKey(visibleIdsKey)'));
  assert.ok(ui.includes('setOwnIds(ownership)'));
  assert.ok(ui.includes('setOwnerScanKey("")'));

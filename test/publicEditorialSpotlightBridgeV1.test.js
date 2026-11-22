@@ -36,7 +36,11 @@ test("published editorial bridge includes every saved content field, but rejects
   assert.match(bridge, /safePublicUrl/);
   assert.match(bridge, /parsed\.protocol === "https:"/);
   assert.match(bridge, /!parsed\.username && !parsed\.password/);
-  assert.match(bridge, /!clean\(doc\?\.updatedBy\?\.id, 100\)/);
+  assert.match(bridge, /const manuallyPublished = Boolean\(clean\(doc\?\.updatedBy\?\.id, 100\)\)/);
+  assert.match(bridge, /\(!manuallyPublished && !scheduledDaily\)/);
+  assert.match(bridge, /writer: manuallyPublished && writerName/);
+  assert.match(bridge, /book: manuallyPublished && bookTitle/);
+  assert.match(bridge, /\["original", "quotation"\]\.includes/);
 });
 
 test("writer and book cards expose full text and images, retaining 3-card bilingual homepage", () => {

@@ -24,7 +24,7 @@ test("nested children have connecting lines, compact gaps and bounded indentatio
 });
 test("visual polish retains the existing reply-target and ownership logic",()=>{
   assert.ok(ui.includes("buildFeedbackReplyTree(item).map(reply=>renderReplyBranch(item,reply,1))"));
-  assert.ok(ui.includes("canInteract&&!owned.has(node.id)&&root.storyId&&"));
+  assert.ok(ui.includes("disabled={!canInteract||owned.has(node.id)||!root.storyId||posting}"));
   assert.ok(ui.includes("renderReplyEditor(root,node.id)"));
   assert.ok(ui.includes('body:JSON.stringify({storyId,parentId,replyToId,text:text.trim()})'));
   assert.ok(tree.includes("replyToId"));
