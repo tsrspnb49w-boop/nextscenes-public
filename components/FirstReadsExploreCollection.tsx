@@ -24,7 +24,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     home: "Retour à l'accueil",
     shelf: "Livres à découvrir",
     emptyTitle: "De nouvelles lectures arrivent",
-    empty: "Les premières sélections approuvées par leurs auteurs apparaîtront ici après leur diffusion autorisée."
+    empty: "Les premières sélections approuvées par leurs auteurs apparaîtront ici après leur diffusion autorisée.",
     browseBooks: "Voir la collection First Reads",
     authorTitle: "Votre manuscrit est déjà terminé ?",
     authorIntro: "First Reads permet aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
@@ -49,7 +49,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     home: "Back to homepage",
     shelf: "Books to discover",
     emptyTitle: "New reading adventures are coming",
-    empty: "The first author-approved reading selections will appear here once they have been explicitly released."
+    empty: "The first author-approved reading selections will appear here once they have been explicitly released.",
     browseBooks: "View First Reads Collection",
     authorTitle: "Already completed your manuscript?",
     authorIntro: "First Reads lets authors of completed books share selected readings while retaining ownership of their work.",
