@@ -33,23 +33,16 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     authorTitle: "Votre manuscrit est déjà terminé ?",
     authorIntro: "First Reads permet aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
     steps: [
-      ["1", "Créer votre compte auteur", "Depuis Explorer First Reads, inscrivez-vous ou connectez-vous. Dans le Centre de projets, ouvrez First Reads et créez votre livre. Rien n'est publié à cette étape."],
-      ["2", "Compléter Book Setup", "Renseignez le titre, la langue, le nom de plume figurant sur le livre, le résumé et la présentation. Enregistrez les informations avant de continuer."],
-      ["3", "Importer le livre complet", "Dans l'Espace Livre existant, choisissez votre manuscrit Word (.docx) pour un nouveau livre vide. Vérifiez les chapitres détectés et le nombre de mots, confirmez puis enregistrez en privé."],
-      ["4", "Relire le manuscrit", "Utilisez Chapters, Write et Full Manuscript Review pour vérifier tous les chapitres, la mise en forme et les sauts de page. Le manuscrit privé reste l'unique source de référence."],
-      ["5", "Préparer les éléments du livre", "Vérifiez la couverture, la quatrième de couverture, la présentation de l'auteur et les pages liminaires. Leur enregistrement privé ne les rend pas publics ; leur diffusion exige une validation distincte."],
-      ["6", "Prévisualiser le chapitre 1", "Dans Review, ouvrez Preview My Reading Selection. Lisez le premier chapitre entier, puis utilisez Confirm This Preview. Vérifiez le texte et les droits avant toute autorisation."],
-      ["7", "Autoriser la première lecture", "Cliquez sur Authorize This Reading seulement après vérification. Le chapitre 1 devient public dans le Royal Reader, suivi de sa page d'évaluation puis d'une page de transition."],
-      ["8", "Préparer et publier les épisodes", "Dans Authorize the Next Serial, cliquez sur Preview Next Serial. Prévoyez normalement deux ou trois épisodes par chapitre, d'environ 1 200 mots chacun (de préférence 1 000 à 1 500), en respectant les coupures naturelles. Vérifiez et autorisez un seul épisode à la fois."],
-      ["9", "Partager et suivre les réactions", "Partagez uniquement le lien public autorisé. Chaque épisode possède sa page d'évaluation. Le chapitre 1 reste permanent ; seuls les cinq derniers épisodes sont visibles. Arrêtez la diffusion vers les deux tiers du manuscrit."],
+      ["1", "Créer le livre", "Connectez-vous, ouvrez First Reads depuis le Centre de projets, puis complétez Book Setup."],
+      ["2", "Importer le manuscrit", "Dans l’Espace Livre, importez votre fichier Word (.docx), vérifiez les chapitres et enregistrez en privé."],
+      ["3", "Vérifier le livre", "Relisez le manuscrit complet, les couvertures, la mise en page et vos droits de publication."],
+      ["4", "Autoriser le chapitre 1", "Dans Review, prévisualisez le chapitre entier, confirmez le texte, puis autorisez sa publication."],
+      ["5", "Publier un feuilleton à la fois", "Utilisez Preview Next Serial : normalement 2 à 3 épisodes par chapitre, autour de 1 200 mots (de préférence 1 000 à 1 500). Autorisez-les séparément."],
+      ["6", "Partager et suivre les réactions", "Partagez le lien public. Le chapitre 1 reste visible ; seuls les cinq derniers épisodes restent accessibles. Arrêtez-vous vers les deux tiers du livre."],
     ],
-    rights: "Participation volontaire et non rémunérée. Aucun vote ni proposition de scène. Le manuscrit complet reste privé. Le chapitre 1 demeure accessible après autorisation. Les feuilletons suivants peuvent ne pas suivre immédiatement la chronologie du chapitre 1 : la page de transition le précise. Partage public limité aux lectures autorisées. Couverture, présentation de l’auteur et chaque diffusion exigent son accord.",
-    readerTitle: "Ce que voient les lecteurs",
-    readerSteps: [
-      "Le lecteur accède uniquement au livre public autorisé. Le manuscrit privé et les épisodes non diffusés restent invisibles.",
-      "Il lit le chapitre 1, répond à son évaluation, puis découvre une page de transition qui précise que les épisodes suivants peuvent ne pas suivre immédiatement la chronologie du premier chapitre.",
-      "Chaque nouvel épisode est suivi de sa propre évaluation. Après le cinquième, l'épisode le plus ancien quitte la fenêtre de lecture ; le chapitre 1 reste disponible.",
-    ],
+    rights: "Participation volontaire et non rémunérée, sans vote ni proposition de scène. Le manuscrit reste privé ; seuls les éléments expressément autorisés sont publics. L'auteur garde ses droits.",
+    readerTitle: "Pour les lecteurs",
+    readerNote: "Chapitre 1 → évaluation → page de transition → derniers épisodes autorisés, chacun suivi de son évaluation. Les épisodes suivants ne prolongent pas forcément immédiatement le chapitre 1.",
     create: "Créer un compte auteur",
     signin: "J'ai déjà un compte",
     help: "Comment fonctionne First Reads ?",
@@ -69,23 +62,16 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     authorTitle: "Already completed your manuscript?",
     authorIntro: "First Reads lets authors of completed books share selected readings while retaining ownership of their work.",
     steps: [
-      ["1", "Create a writer account", "From Explore First Reads, register or sign in. Open First Reads in Project Hub and create your book. Starting a draft never publishes your manuscript."],
-      ["2", "Complete Book Setup", "Enter the book title, language, printed author name, synopsis and teaser. Save the book details before continuing."],
-      ["3", "Import the complete manuscript", "In the existing Book Workspace, choose a Word (.docx) manuscript for a new, empty book. Review detected chapters and word count, confirm the selection, then save it privately."],
-      ["4", "Review the full manuscript", "Use Chapters, Write and Full Manuscript Review to check all chapters, formatting and page breaks. The private full manuscript remains the single source of truth."],
-      ["5", "Prepare the book details", "Check the front and back covers, About the Author and front matter. Saving these privately does not publish them; each public update needs a separate confirmation."],
-      ["6", "Preview Chapter One", "In Review, open Preview My Reading Selection. Read the entire first chapter and use Confirm This Preview. Verify the exact text and your publication rights before authorizing."],
-      ["7", "Authorize the first public reading", "Choose Authorize This Reading only after checking the preview. Chapter One appears in the public Royal Reader, followed by an Evaluation Page and a transition page."],
-      ["8", "Preview and authorize each serial", "In Authorize the Next Serial, select Preview Next Serial. Normally plan two or three substantial serials per source chapter, aiming for 1,200 words each (preferably 1,000–1,500) at natural narrative breaks. Review and authorize only one serial at a time."],
-      ["9", "Share and follow reader feedback", "Share only the authorized public Reader link. Every serial has an Evaluation Page. Chapter One stays public; only the latest five serials remain visible. End serialization around two thirds of the manuscript."],
+      ["1", "Create your book", "Sign in, open First Reads from Project Hub, and complete Book Setup."],
+      ["2", "Import your manuscript", "In Book Workspace, import your complete Word (.docx) file, check its chapters and save privately."],
+      ["3", "Check your book", "Review the full manuscript, covers, formatting and your publication rights."],
+      ["4", "Authorize Chapter One", "In Review, preview the entire chapter, confirm the text, then authorize its publication."],
+      ["5", "Release one serial at a time", "Use Preview Next Serial: normally 2–3 per chapter, around 1,200 words (preferably 1,000–1,500). Authorize each separately."],
+      ["6", "Share and follow feedback", "Share the public link. Chapter One stays available; only the latest five serials remain visible. Stop around two thirds of the book."],
     ],
-    rights: "Participation is voluntary and unpaid, with no voting or scene proposals. The full manuscript remains private. Chapter One stays accessible once authorized. Later serial installments may not immediately follow Chapter One in narrative order, as the buffer page explains. Public sharing opens authorized reading only. Covers, About the Author and every release require approval.",
-    readerTitle: "What readers see",
-    readerSteps: [
-      "Readers open only the authorized public book. The private manuscript and unreleased serials remain inaccessible.",
-      "They read Chapter One, reach its Evaluation Page, then see a transition explaining that later serials may not immediately follow Chapter One in narrative order.",
-      "Every newly authorized serial has its own Evaluation Page. After five serials are visible, the oldest rotates out while Chapter One remains accessible.",
-    ],
+    rights: "Participation is voluntary and unpaid, with no voting or scene proposals. The full manuscript remains private. Only authorized reading is public. Covers, About the Author and every release require approval.",
+    readerTitle: "For readers",
+    readerNote: "Chapter One → evaluation → transition page → latest authorized serials, each followed by an evaluation. Later serials may not immediately follow Chapter One.",
     create: "Create a writer account",
     signin: "I already have an account",
     help: "How First Reads works",
@@ -181,13 +167,11 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
               </div>
             ))}
           </div>
-          <section aria-label={t.readerTitle}
-            style={{marginTop:20,border:"1px solid #d5e7db",background:"#f7fbf8",borderRadius:13,padding:"16px 18px"}}>
-            <h4 style={{font:"600 19px/1.3 Georgia,serif",color:"#124936",margin:"0 0 10px"}}>{t.readerTitle}</h4>
-            <ol style={{margin:0,paddingLeft:21,color:"#476152",fontSize:14,lineHeight:1.65}}>
-              {t.readerSteps.map((step,index)=><li key={index} style={{marginBottom:7}}>{step}</li>)}
-            </ol>
-          </section>
+          <p role="note" style={{margin:"15px 0 10px",padding:"11px 13px",
+            border:"1px solid #d5e7db",borderRadius:10,background:"#f7fbf8",
+            fontSize:13,lineHeight:1.55,color:"#476152"}}>
+            <strong>{t.readerTitle}:</strong> {t.readerNote}
+          </p>
           <p style={{fontSize:13,lineHeight:1.55,color:"#456152",margin:"15px 0"}}>
             {t.rights}
           </p>
