@@ -55,7 +55,7 @@ test("publication and full manuscript remain author-gated", () => {
 });
 
 test("First Reads author guide is concise, bilingual, and uses approved serial lengths", () => {
-  assert.equal((collection.match(/\\["[1-6]",/g) || []).length, 12);
+  assert.equal(Array.from({ length: 6 }, (_, i) => collection.split('["' + (i + 1) + '",').length - 1).reduce((sum, n) => sum + n, 0), 12);
   assert.ok(collection.includes("normally 2–3 per chapter, around 1,200 words (preferably 1,000–1,500)"));
   assert.ok(collection.includes("normalement 2 à 3 épisodes par chapitre, autour de 1 200 mots"));
   assert.ok(collection.includes("latest five authorized serials"));
