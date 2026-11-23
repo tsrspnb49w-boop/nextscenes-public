@@ -33,13 +33,23 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     authorTitle: "Votre manuscrit est déjà terminé ?",
     authorIntro: "First Reads permet aux auteurs de livres achevés de partager des lectures choisies, tout en conservant leurs droits.",
     steps: [
-      ["1", "Préparer le manuscrit", "Depuis le Centre de projets, ouvrez First Reads, créez votre livre et importez le manuscrit complet dans l’Espace Livre privé."],
-      ["2", "Vérifier le livre", "Relisez le texte, la mise en page, la couverture et les pages liminaires. Le manuscrit complet reste la source de référence."],
-      ["3", "Autoriser le premier chapitre", "Prévisualisez et autorisez le premier chapitre entier. Une page d’évaluation suit, puis la page « L’histoire continue »."],
-      ["4", "Diffuser un feuilleton à la fois", "Chaque feuilleton, d’environ un cinquième du chapitre suivant, exige une nouvelle autorisation et se termine par une page d’évaluation."],
-      ["5", "Respecter la sélection", "Seuls les cinq derniers feuilletons autorisés restent visibles ; la diffusion s’arrête vers les deux tiers du livre."],
+      ["1", "Créer votre compte auteur", "Depuis Explorer First Reads, inscrivez-vous ou connectez-vous. Dans le Centre de projets, ouvrez First Reads et créez votre livre. Rien n'est publié à cette étape."],
+      ["2", "Compléter Book Setup", "Renseignez le titre, la langue, le nom de plume figurant sur le livre, le résumé et la présentation. Enregistrez les informations avant de continuer."],
+      ["3", "Importer le livre complet", "Dans l'Espace Livre existant, choisissez votre manuscrit Word (.docx) pour un nouveau livre vide. Vérifiez les chapitres détectés et le nombre de mots, confirmez puis enregistrez en privé."],
+      ["4", "Relire le manuscrit", "Utilisez Chapters, Write et Full Manuscript Review pour vérifier tous les chapitres, la mise en forme et les sauts de page. Le manuscrit privé reste l'unique source de référence."],
+      ["5", "Préparer les éléments du livre", "Vérifiez la couverture, la quatrième de couverture, la présentation de l'auteur et les pages liminaires. Leur enregistrement privé ne les rend pas publics ; leur diffusion exige une validation distincte."],
+      ["6", "Prévisualiser le chapitre 1", "Dans Review, ouvrez Preview My Reading Selection. Lisez le premier chapitre entier, puis utilisez Confirm This Preview. Vérifiez le texte et les droits avant toute autorisation."],
+      ["7", "Autoriser la première lecture", "Cliquez sur Authorize This Reading seulement après vérification. Le chapitre 1 devient public dans le Royal Reader, suivi de sa page d'évaluation puis d'une page de transition."],
+      ["8", "Préparer et publier les épisodes", "Dans Authorize the Next Serial, cliquez sur Preview Next Serial. Prévoyez normalement deux ou trois épisodes par chapitre, d'environ 1 200 mots chacun (de préférence 1 000 à 1 500), en respectant les coupures naturelles. Vérifiez et autorisez un seul épisode à la fois."],
+      ["9", "Partager et suivre les réactions", "Partagez uniquement le lien public autorisé. Chaque épisode possède sa page d'évaluation. Le chapitre 1 reste permanent ; seuls les cinq derniers épisodes sont visibles. Arrêtez la diffusion vers les deux tiers du manuscrit."],
     ],
     rights: "Participation volontaire et non rémunérée. Aucun vote ni proposition de scène. Le manuscrit complet reste privé. Le chapitre 1 demeure accessible après autorisation. Les feuilletons suivants peuvent ne pas suivre immédiatement la chronologie du chapitre 1 : la page de transition le précise. Partage public limité aux lectures autorisées. Couverture, présentation de l’auteur et chaque diffusion exigent son accord.",
+    readerTitle: "Ce que voient les lecteurs",
+    readerSteps: [
+      "Le lecteur accède uniquement au livre public autorisé. Le manuscrit privé et les épisodes non diffusés restent invisibles.",
+      "Il lit le chapitre 1, répond à son évaluation, puis découvre une page de transition qui précise que les épisodes suivants peuvent ne pas suivre immédiatement la chronologie du premier chapitre.",
+      "Chaque nouvel épisode est suivi de sa propre évaluation. Après le cinquième, l'épisode le plus ancien quitte la fenêtre de lecture ; le chapitre 1 reste disponible.",
+    ],
     create: "Créer un compte auteur",
     signin: "J'ai déjà un compte",
     help: "Comment fonctionne First Reads ?",
@@ -59,13 +69,23 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     authorTitle: "Already completed your manuscript?",
     authorIntro: "First Reads lets authors of completed books share selected readings while retaining ownership of their work.",
     steps: [
-      ["1", "Prepare your manuscript", "From Project Hub, open First Reads, set up your book and import the complete manuscript into your private Book Workspace."],
-      ["2", "Review the full book", "Check text, layout, cover and front matter. The full manuscript remains the single source of truth."],
-      ["3", "Authorize Chapter One", "Preview and authorize the complete first chapter. Its Evaluation Page is followed by the Story Continues buffer."],
-      ["4", "Release one serial at a time", "Each installment, approximately one fifth of the next chapter, needs fresh author authorization and its own Evaluation Page."],
-      ["5", "Maintain the reading window", "Only the latest five authorized serials remain visible; serialization ends around two thirds of the manuscript."],
+      ["1", "Create a writer account", "From Explore First Reads, register or sign in. Open First Reads in Project Hub and create your book. Starting a draft never publishes your manuscript."],
+      ["2", "Complete Book Setup", "Enter the book title, language, printed author name, synopsis and teaser. Save the book details before continuing."],
+      ["3", "Import the complete manuscript", "In the existing Book Workspace, choose a Word (.docx) manuscript for a new, empty book. Review detected chapters and word count, confirm the selection, then save it privately."],
+      ["4", "Review the full manuscript", "Use Chapters, Write and Full Manuscript Review to check all chapters, formatting and page breaks. The private full manuscript remains the single source of truth."],
+      ["5", "Prepare the book details", "Check the front and back covers, About the Author and front matter. Saving these privately does not publish them; each public update needs a separate confirmation."],
+      ["6", "Preview Chapter One", "In Review, open Preview My Reading Selection. Read the entire first chapter and use Confirm This Preview. Verify the exact text and your publication rights before authorizing."],
+      ["7", "Authorize the first public reading", "Choose Authorize This Reading only after checking the preview. Chapter One appears in the public Royal Reader, followed by an Evaluation Page and a transition page."],
+      ["8", "Preview and authorize each serial", "In Authorize the Next Serial, select Preview Next Serial. Normally plan two or three substantial serials per source chapter, aiming for 1,200 words each (preferably 1,000–1,500) at natural narrative breaks. Review and authorize only one serial at a time."],
+      ["9", "Share and follow reader feedback", "Share only the authorized public Reader link. Every serial has an Evaluation Page. Chapter One stays public; only the latest five serials remain visible. End serialization around two thirds of the manuscript."],
     ],
     rights: "Participation is voluntary and unpaid, with no voting or scene proposals. The full manuscript remains private. Chapter One stays accessible once authorized. Later serial installments may not immediately follow Chapter One in narrative order, as the buffer page explains. Public sharing opens authorized reading only. Covers, About the Author and every release require approval.",
+    readerTitle: "What readers see",
+    readerSteps: [
+      "Readers open only the authorized public book. The private manuscript and unreleased serials remain inaccessible.",
+      "They read Chapter One, reach its Evaluation Page, then see a transition explaining that later serials may not immediately follow Chapter One in narrative order.",
+      "Every newly authorized serial has its own Evaluation Page. After five serials are visible, the oldest rotates out while Chapter One remains accessible.",
+    ],
     create: "Create a writer account",
     signin: "I already have an account",
     help: "How First Reads works",
@@ -161,6 +181,13 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
               </div>
             ))}
           </div>
+          <section aria-label={t.readerTitle}
+            style={{marginTop:20,border:"1px solid #d5e7db",background:"#f7fbf8",borderRadius:13,padding:"16px 18px"}}>
+            <h4 style={{font:"600 19px/1.3 Georgia,serif",color:"#124936",margin:"0 0 10px"}}>{t.readerTitle}</h4>
+            <ol style={{margin:0,paddingLeft:21,color:"#476152",fontSize:14,lineHeight:1.65}}>
+              {t.readerSteps.map((step,index)=><li key={index} style={{marginBottom:7}}>{step}</li>)}
+            </ol>
+          </section>
           <p style={{fontSize:13,lineHeight:1.55,color:"#456152",margin:"15px 0"}}>
             {t.rights}
           </p>
