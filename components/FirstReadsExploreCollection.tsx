@@ -67,7 +67,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
       ["3", "Check your book", "Review the full manuscript, covers, formatting and your publication rights."],
       ["4", "Authorize Chapter One", "In Review, preview the entire chapter, confirm the text, then authorize its publication."],
       ["5", "Release one serial at a time", "Use Preview Next Serial: normally 2–3 per chapter, around 1,200 words (preferably 1,000–1,500). Authorize each separately."],
-      ["6", "Share and follow feedback", "Share the public link. Chapter One stays available; only the latest five serials remain visible. Stop around two thirds of the book."],
+      ["6", "Share and follow feedback", "Share the public link. Chapter One stays available; only the latest five authorized serials remain visible. Stop around two thirds of the book."],
     ],
     rights: "Participation is voluntary and unpaid, with no voting or scene proposals. The full manuscript remains private. Only authorized reading is public. Covers, About the Author and every release require approval.",
     readerTitle: "For readers",
