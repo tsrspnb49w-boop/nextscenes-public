@@ -54,6 +54,16 @@ test("publication and full manuscript remain author-gated", () => {
   assert.ok(collection.includes('id="how-first-reads-works"'));
 });
 
+test("First Reads author guide is concise, bilingual, and uses approved serial lengths", () => {
+  assert.equal((collection.match(/\\["[1-6]",/g) || []).length, 12);
+  assert.ok(collection.includes("normally 2–3 per chapter, around 1,200 words (preferably 1,000–1,500)"));
+  assert.ok(collection.includes("normalement 2 à 3 épisodes par chapitre, autour de 1 200 mots"));
+  assert.ok(collection.includes("latest five authorized serials"));
+  assert.ok(collection.includes("readerNote:"));
+  assert.equal(collection.includes("one fifth of the next chapter"), false);
+  assert.equal(collection.includes("un cinquième du chapitre suivant"), false);
+});
+
 test("First Reads has a bilingual homepage entry and does not alter published book status", () => {
   assert.ok(homepage.includes("Explore First Reads"));
   assert.ok(homepage.includes('"/first-reads/explore"'));
