@@ -11,7 +11,6 @@ const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org"
 export default function FirstReadsExploreCollection({ language }: { language: "en" | "fr" }) {
   const fr = language === "fr";
   const home = fr ? "/fr" : "/";
-  const help = "#how-first-reads-works";
   // Launch-only entry: the app still checks the writer's authentication
   // and server-side ownership. Opening this link never publishes a book.
   const appEntry = APP_URL + "/my-projects?firstReads=1&lang=" + language;
@@ -27,7 +26,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     home: "Retour à l'accueil",
     shelf: "Livres à découvrir",
     bookStatus: "CHAPITRE 1 DISPONIBLE",
-    bookSummary: "Par Kola King. Découvrez ce roman en anglais dans notre Édition Royale.",
+    bookSummary: "Par Kola King. Découvrez ce roman historique en anglais dans notre Édition Royale.",
     readBook: "Lire le livre",
     browseBooks: "Voir la collection First Reads",
     authorTitle: "Votre manuscrit est déjà terminé ?",
@@ -37,7 +36,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
       ["2", "Importer le manuscrit", "Dans l’Espace Livre, importez votre fichier Word (.docx), vérifiez les chapitres et enregistrez en privé."],
       ["3", "Vérifier le livre", "Relisez le manuscrit complet, les couvertures, la mise en page et vos droits de publication."],
       ["4", "Autoriser le chapitre 1", "Dans Review, prévisualisez le chapitre entier, confirmez le texte, puis autorisez sa publication."],
-      ["5", "Publier un feuilleton à la fois", "Utilisez Preview Next Serial : normalement 2 à 3 épisodes par chapitre, autour de 1 200 mots (de préférence 1 000 à 1 500). Autorisez-les séparément."],
+      ["5", "Publier un feuilleton à la fois", "Normalement 2 à 3 épisodes par chapitre, autour de 1 200 mots (de préférence 1 000 à 1 500). Prévisualisez chaque épisode et autorisez-le séparément."],
       ["6", "Partager et suivre les réactions", "Partagez le lien public. Le chapitre 1 reste visible ; seuls les cinq derniers épisodes restent accessibles. Arrêtez-vous vers les deux tiers du livre."],
     ],
     rights: "Participation volontaire et non rémunérée, sans vote ni proposition de scène. Le manuscrit reste privé ; seuls les éléments expressément autorisés sont publics. L'auteur garde ses droits.",
@@ -56,7 +55,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
     home: "Back to homepage",
     shelf: "Books to discover",
     bookStatus: "CHAPTER ONE AVAILABLE",
-    bookSummary: "By Kola King. Discover her story in the Royal Reader.",
+    bookSummary: "By Kola King. Read this historical novel in the Royal Reader.",
     readBook: "Read the Book",
     browseBooks: "View First Reads Collection",
     authorTitle: "Already completed your manuscript?",
@@ -66,7 +65,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
       ["2", "Import your manuscript", "In Book Workspace, import your complete Word (.docx) file, check its chapters and save privately."],
       ["3", "Check your book", "Review the full manuscript, covers, formatting and your publication rights."],
       ["4", "Authorize Chapter One", "In Review, preview the entire chapter, confirm the text, then authorize its publication."],
-      ["5", "Release one serial at a time", "Use Preview Next Serial: normally 2–3 per chapter, around 1,200 words (preferably 1,000–1,500). Authorize each separately."],
+      ["5", "Release one serial at a time", "Normally 2–3 per chapter, around 1,200 words (preferably 1,000–1,500). Use Preview Next Serial and authorize each separately."],
       ["6", "Share and follow feedback", "Share the public link. Chapter One stays available; only the latest five authorized serials remain visible. Stop around two thirds of the book."],
     ],
     rights: "Participation is voluntary and unpaid, with no voting or scene proposals. The full manuscript remains private. Only authorized reading is public. Covers, About the Author and every release require approval.",
@@ -149,11 +148,8 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
             color:"#0c4b37",margin:"0 0 7px"}}>{t.authorTitle}</h2>
           <p style={{fontSize:15,lineHeight:1.5,color:"#445e51",
             margin:"0 0 17px"}}>{t.authorIntro}</p>
-          <p role="status" style={{margin:"0 0 17px",background:"#f1f7f2",
-            border:"1px solid #d6e9db",borderRadius:10,padding:"11px 13px",
-            color:"#315b45",fontSize:13,lineHeight:1.5}}>{t.status}</p>
           <h3 id="how-first-reads-works" style={{font:"600 clamp(20px,2.2vw,24px)/1.25 Georgia,serif",color:"#124936",margin:"10px 0 14px",scrollMarginTop:110}}>{t.help}</h3>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,215px),1fr))",
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,285px),1fr))",
             gap:10}}>
             {t.steps.map(([number,title,description])=>(
               <div key={number} style={{border:"1px solid #d5e7db",
@@ -179,9 +175,7 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
             flexWrap:"wrap",marginTop:10}}>
             <a href={register} style={textLink}>{t.create}</a>
             <a href={login} style={textLink}>{t.signin}</a>
-            <a href={help} style={textLink}>{fr ? "Voir les étapes" : "View the steps"}</a>
           </div>
-          <p style={{fontSize:12,lineHeight:1.55,color:"#587061",margin:"13px 0 0"}}>{t.accountNote}</p>
         </section>
       </section>
     </main>
