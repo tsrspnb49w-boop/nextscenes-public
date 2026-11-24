@@ -15,7 +15,7 @@ export default function PrivacyPage() {
 
       <section className="ns-section ns-paper" style={{ marginTop: 18 }}>
         <p className="ns-p">
-          <strong>Last updated:</strong> February 2026
+          <strong>Last updated:</strong> November 2026
         </p>
 
         <h2 className="ns-h2">1. Overview</h2>
@@ -55,6 +55,17 @@ export default function PrivacyPage() {
         <p className="ns-p">
           NextScenes uses session cookies to maintain login status and secure
           authentication. We do not use advertising trackers.
+        </p>
+
+        <h2 className="ns-h2">6a. Reading analytics</h2>
+        <p className="ns-p">
+          When reading analytics is enabled, NextScenes measures public book openings, estimated visible reading time, section endings and return visits solely for internal statistics and to improve publications and the service. This information is not sold or used for advertising, commercial profiling or tracking across other websites.
+        </p>
+        <p className="ns-p">
+          For this pilot, we ask for your permission. A random browser identifier, valid for at most 30 days without extension on subsequent visits, or a pseudonymous account identifier helps distinguish visits. Session records are retained for at most 90 days in the current configuration. Reports accessible to authorized administrators contain aggregate statistics only. Technical hosting and storage providers act on behalf of NextScenes.
+        </p>
+        <p className="ns-p">
+          You can change your choice free of charge on the <a href="https://app.nextscenes.org/privacy">application privacy page</a>. Refusing or withdrawing permission does not restrict access to books. Withdrawal stops new collection; existing records follow the stated retention period.
         </p>
 
         <h2 className="ns-h2">7. Data deletion</h2>
