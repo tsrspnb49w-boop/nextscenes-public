@@ -41,6 +41,8 @@ const routes = [
   { path: "/fr/conditions-simples", priority: 0.55, changeFrequency: "yearly" },
   { path: "/faq", priority: 0.6, changeFrequency: "monthly" },
   { path: "/fr/faq", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/publishing-services", priority: 0.75, changeFrequency: "monthly" },
+  { path: "/fr/services-edition", priority: 0.75, changeFrequency: "monthly" },
   { path: "/contact", priority: 0.55, changeFrequency: "monthly" },
   { path: "/fr/contact", priority: 0.55, changeFrequency: "monthly" },
   { path: "/privacy", priority: 0.35, changeFrequency: "yearly" },

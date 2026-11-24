@@ -65,6 +65,9 @@ export default function SiteFooter() {
             <Link href={isFR ? "/fr/books" : "/books"} className="ns-footer-link">
               {isFR ? "Livres publiés" : "Published books"}
             </Link>
+            <Link href={isFR ? "/fr/services-edition" : "/publishing-services"} className="ns-footer-link">
+              {isFR ? "Services d’édition" : "Publishing Services"}
+            </Link>
             <Link href={writersHref} className="ns-footer-link">
               {isFR ? "Pour les auteurs" : "For Writers"}
             </Link>

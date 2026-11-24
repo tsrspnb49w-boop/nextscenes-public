@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -48,6 +48,12 @@ export default function FrContactPage() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState("");
+  const [subject, setSubject] = useState("");
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("topic") === "publishing") {
+      setSubject(current => current || "Services d’édition");
+    }
+  }, []);
 
   const labelStyle: React.CSSProperties = {
     display: "block",
@@ -256,6 +262,8 @@ export default function FrContactPage() {
                   <label style={labelStyle}>Sujet</label>
                   <input
                     name="subject"
+                    value={subject}
+                    onChange={e => setSubject(e.target.value)}
                     required
                     className="ns-input"
                     placeholder="De quoi s’agit-il ?"
