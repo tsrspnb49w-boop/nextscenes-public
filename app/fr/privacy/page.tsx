@@ -15,7 +15,7 @@ export default function PrivacyFrPage() {
 
       <section className="ns-section ns-paper" style={{ marginTop: 18 }}>
         <p className="ns-p">
-          <strong>Dernière mise à jour :</strong> Février 2026
+          <strong>Dernière mise à jour :</strong> Novembre 2026
         </p>
 
         <h2 className="ns-h2">1. Présentation</h2>
@@ -58,6 +58,17 @@ export default function PrivacyFrPage() {
         <p className="ns-p">
           NextScenes utilise des cookies de session pour maintenir la connexion et
           sécuriser l’authentification. Aucun suivi publicitaire n’est utilisé.
+        </p>
+
+        <h2 className="ns-h2">6 bis. Statistiques de lecture</h2>
+        <p className="ns-p">
+          Lorsque les statistiques de lecture sont activées, NextScenes mesure les ouvertures des livres publics, le temps estimé de lecture visible, les fins de sections et les retours, uniquement pour ses statistiques internes et pour améliorer les publications et le service. Ces données ne sont ni vendues ni utilisées pour la publicité, le profilage commercial ou le suivi sur d’autres sites.
+        </p>
+        <p className="ns-p">
+          Pour cette fonction pilote, nous demandons votre accord. Un identifiant aléatoire de navigateur, valable au maximum 30 jours sans prolongation lors des visites, ou un identifiant de compte pseudonymisé permet de distinguer les visites. Les enregistrements de session sont conservés au maximum 90 jours dans la configuration actuelle. Les rapports accessibles aux administrateurs autorisés présentent uniquement des statistiques agrégées. Les prestataires techniques d’hébergement et de stockage interviennent pour le compte de NextScenes.
+        </p>
+        <p className="ns-p">
+          Vous pouvez modifier gratuitement votre choix sur la <a href="https://app.nextscenes.org/privacy">page de confidentialité de l’application</a>. Le refus ou le retrait de votre accord ne limite pas l’accès aux livres. Le retrait arrête les nouvelles collectes ; les enregistrements existants suivent la durée de conservation indiquée.
         </p>
 
         <h2 className="ns-h2">7. Suppression</h2>
