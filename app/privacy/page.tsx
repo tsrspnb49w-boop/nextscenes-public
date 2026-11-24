@@ -62,7 +62,7 @@ export default function PrivacyPage() {
           When reading analytics is enabled, NextScenes measures public book openings, estimated visible reading time, section endings and return visits solely for internal statistics and to improve publications and the service. This information is not sold or used for advertising, commercial profiling or tracking across other websites.
         </p>
         <p className="ns-p">
-          For this pilot, we ask for your permission. A random browser identifier, valid for at most 30 days without extension on subsequent visits, or a pseudonymous account identifier helps distinguish visits. Session records are retained for at most 90 days in the current configuration. Reports accessible to authorized administrators contain aggregate statistics only. Technical hosting and storage providers act on behalf of NextScenes.
+          For this pilot, we ask for your permission. A random browser identifier, valid for at most 30 days without extension on subsequent visits, or a pseudonymous account identifier helps distinguish visits. In the production pilot, individual session records are retained for at most seven days; daily aggregate statistics are retained for at most 91 days. Reports accessible to authorized administrators contain aggregate statistics only. Technical hosting and storage providers act on behalf of NextScenes.
         </p>
         <p className="ns-p">
           You can change your choice free of charge on the <a href="https://app.nextscenes.org/privacy">application privacy page</a>. Refusing or withdrawing permission does not restrict access to books. Withdrawal stops new collection; existing records follow the stated retention period.
