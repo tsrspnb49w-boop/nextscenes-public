@@ -533,6 +533,12 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
             <p className={styles.journeyLine}>{t.journeyLine}</p>
             <p>{t.journeyParagraph}</p>
             <strong>{t.journeyClosing}</strong>
+            <p>
+              {language === "fr" ? "Votre manuscrit est terminé ? " : "Have a completed manuscript? "}
+              <Link className={styles.textLink} href={language === "fr" ? "/fr/services-edition" : "/publishing-services"}>
+                {language === "fr" ? "Services d’édition" : "Publishing Services"} →
+              </Link>
+            </p>
           </div>
           <div className={styles.stepsCard}>
             <div className={styles.eyebrow}>{t.stepsTitle}</div>
