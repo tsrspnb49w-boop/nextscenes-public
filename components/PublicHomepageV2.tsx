@@ -1,3 +1,4 @@
+import FirstReadsNewReleaseIcon from "./FirstReadsNewReleaseIcon";
 import Image from "next/image";
 import Link from "next/link";
 import type { EditorialSpotlight } from "@/app/lib/publicEditorialSpotlight";
@@ -370,8 +371,9 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               {language === "fr" ? "Découvrir le roman" : "Explore the novel"} →
             </Link>
           </aside>
-          <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
+          <aside style={{position:"relative"}} className={styles.didieFeature + " " + styles.firstReadsFeature}
             aria-label={language === "fr" ? "First Reads : Queen Amina" : "First Reads: Queen Amina"}>
+            <FirstReadsNewReleaseIcon storyId={QUEEN_AMINA_FIRST_READS.id} href={queenAminaPublicReadingUrl(appUrl)} language={language}/>
             <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
               aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
