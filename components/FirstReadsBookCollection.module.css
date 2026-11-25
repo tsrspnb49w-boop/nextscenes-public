@@ -128,3 +128,6 @@
 .realCoverLink:focus-visible { outline:3px solid #d6a734; outline-offset:4px; border-radius:7px; }
 .realCoverLink:hover .realCover { box-shadow:5px 15px 30px rgba(20,54,39,.25); }
 @media(max-width:480px){.realCoverLink{width:114px}}
+
+.firstReadsCoverAnchor{position:relative;flex:0 0 auto;width:160px;max-width:100%;line-height:0}
+@media(max-width:480px){.firstReadsCoverAnchor{width:114px}}
