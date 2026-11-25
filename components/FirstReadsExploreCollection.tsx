@@ -1,3 +1,4 @@
+import FirstReadsNewReleaseIcon from "./FirstReadsNewReleaseIcon";
 import Image from "next/image";
 import Link from "next/link";
 import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
@@ -121,7 +122,8 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
           <div data-first-reads-featured-book="queen-amina" style={{
             display:"flex",alignItems:"center",flexWrap:"wrap",gap:"clamp(16px,3vw,26px)",
             border:"1px solid #b7d5c0",background:"#f3f9f4",
-            borderRadius:15,padding:"clamp(16px,3vw,24px)"}}>
+            position:"relative",borderRadius:15,padding:"clamp(16px,3vw,24px)"}}>
+            <FirstReadsNewReleaseIcon storyId={QUEEN_AMINA_FIRST_READS.id} href={readingUrl} language={language}/>
             <a href={readingUrl} aria-label={t.readBook} style={{display:"block",lineHeight:0}}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover}
                 alt="Queen Amina: Soldier on Horseback book cover"
