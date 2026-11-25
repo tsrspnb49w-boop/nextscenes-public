@@ -1,7 +1,7 @@
 import FirstReadsNewReleaseIcon from "./FirstReadsNewReleaseIcon";
 import Image from "next/image";
 import Link from "next/link";
-import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl, queenAminaPublicStoryId } from "@/app/lib/firstReadsApprovedBooks";
 import styles from "./FirstReadsBookCollection.module.css";
 
 /**
@@ -54,7 +54,7 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
         <p className={styles.description}>{text.description}</p>
         <div className={styles.previewShelf} aria-label={text.heading}>
           <article style={{position:"relative"}} className={styles.placeholderCard} data-first-reads-approved-book="queen-amina">
-            <FirstReadsNewReleaseIcon storyId={QUEEN_AMINA_FIRST_READS.id} href={readHref} language={language}/>
+            <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={readHref} language={language}/>
             <a href={readHref} className={styles.realCoverLink} aria-label={text.action}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback book cover"
                 width={160} height={240} unoptimized className={styles.realCover} />

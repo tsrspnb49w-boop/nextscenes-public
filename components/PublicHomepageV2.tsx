@@ -8,7 +8,7 @@ import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import ResolvedPublicStoryLink from "./ResolvedPublicStoryLink";
 import EditorialSpotlightImage from "./EditorialSpotlightImage";
 import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
-import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl, queenAminaPublicStoryId } from "@/app/lib/firstReadsApprovedBooks";
 import styles from "./PublicHomepageV2.module.css";
 
 // Next.js can safely resize local assets and the two configured external image hosts.
@@ -373,7 +373,7 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           </aside>
           <aside style={{position:"relative"}} className={styles.didieFeature + " " + styles.firstReadsFeature}
             aria-label={language === "fr" ? "First Reads : Queen Amina" : "First Reads: Queen Amina"}>
-            <FirstReadsNewReleaseIcon storyId={QUEEN_AMINA_FIRST_READS.id} href={queenAminaPublicReadingUrl(appUrl)} language={language}/>
+            <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={queenAminaPublicReadingUrl(appUrl)} language={language}/>
             <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
               aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
               <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
