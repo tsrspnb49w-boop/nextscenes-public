@@ -3,7 +3,7 @@ import styles from "./HelpOnDemand.module.css";
 
 type Language = "en" | "fr";
 type Question = { question: string; answer: string };
-type Topic = { title: string; questions: Question[] };
+type Topic = { title: string; id?: string; questions: Question[] };
 type Guide = { eyebrow: string; title: string; lead: string; app: string; privacy: string; topics: Topic[] };
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
 const guides: Record<Language, Guide> = {
@@ -29,6 +29,15 @@ const guides: Record<Language, Guide> = {
         { question: "What is Project Hub?", answer: "Your home for existing projects and new books." },
         { question: "Where are chapters and book pages?", answer: "Book Workspace holds Book Setup, chapters, Front Matter, Back Matter, and review. Writer Studio supports drafting and editing." },
         { question: "Can I publish immediately?", answer: "Book preparation and publication approval are separate stages. Approval is controlled and may be unavailable while features are under review." },
+      ]},
+      { title: "Publishing Services", id: "publishing-services", questions: [
+        { question: "How do I begin?", answer: "Send a brief enquiry with your name, email and what you need. A book title, genre and manuscript status are helpful if known. You do not need to complete a long questionnaire or send your manuscript initially." },
+        { question: "Can I ask for help if this is my first book?", answer: "Yes. We welcome first-time authors. We will guide you through the information needed at each stage. If you cannot legally contract independently, the appropriate parent or guardian arrangements must be confirmed before any agreement." },
+        { question: "What happens after my enquiry?", answer: "We discuss your needs, arrange private manuscript submission if appropriate, assess the work and prepare a proposal describing the services, deliverables, fees and estimated timing. Essential terms are presented directly before any binding commitment." },
+        { question: "What does NextScenes do?", answer: "We help authors prepare and publish their own books through suitable third-party platforms, including Amazon. We do not acquire publishing rights through this service. Platform acceptance, sales and release timing are not guaranteed." },
+        { question: "What about copyright and permissions?", answer: "Your work remains yours. Tell us about previous publication, co-authors, third-party material or existing rights restrictions when requested. We will help clarify outstanding permissions. An enquiry does not transfer rights or authorize publication." },
+        { question: "When will my book be published?", answer: "Only after the necessary rights and agreement checks and your explicit approval of the final edition and authorized action. First Reads is a separate optional pathway with its own approval requirements." },
+        { question: "How much does it cost?", answer: "We agree any applicable costs, payment arrangements and delivery terms for your project before work begins. An initial enquiry does not commit you to paid work. Do not send confidential rights records, manuscripts or financial details with your first message." },
       ]},
       { title: "Collaboration", questions: [
         { question: "How does collaboration work?", answer: "Eligible project owners invite contributors, review proposals and decide what becomes part of the official story." },
@@ -63,6 +72,15 @@ const guides: Record<Language, Guide> = {
         { question: "À quoi sert le Centre de projets ?", answer: "À retrouver vos projets et à commencer un nouveau livre." },
         { question: "Où sont les chapitres et les pages ?", answer: "L’Espace Livre contient la préparation, les chapitres, les pages liminaires et finales ainsi que la relecture. Writer Studio sert à rédiger et modifier." },
         { question: "Puis-je publier immédiatement ?", answer: "La préparation et la validation finale sont distinctes. L’approbation peut être indisponible pendant les vérifications." },
+      ]},
+      { title: "Services d’édition", id: "publishing-services", questions: [
+        { question: "Comment commencer ?", answer: "Envoyez une courte demande avec votre nom, votre adresse e-mail et vos besoins. Le titre, le genre et l’état du manuscrit sont utiles si vous les connaissez. Aucun long questionnaire ni envoi de manuscrit n’est nécessaire au départ." },
+        { question: "Puis-je demander de l’aide pour mon premier livre ?", answer: "Oui. Les auteurs débutants sont les bienvenus. Nous vous guiderons à chaque étape. Si vous ne pouvez pas contracter seul légalement, les dispositions appropriées avec un parent ou un représentant légal devront être confirmées avant tout accord." },
+        { question: "Que se passe-t-il après ma demande ?", answer: "Nous discutons de vos besoins, organisons un envoi privé du manuscrit si nécessaire, évaluons le travail et préparons une proposition précisant les prestations, les livrables, les coûts et les délais estimatifs. Les conditions essentielles vous sont présentées directement avant tout engagement contractuel." },
+        { question: "Quel est le rôle de NextScenes ?", answer: "Nous aidons les auteurs à préparer et à publier leurs propres livres sur des plateformes tierces adaptées, notamment Amazon. Ce service n’acquiert aucun droit d’édition. L’acceptation par les plateformes, les ventes et la date de diffusion ne sont pas garanties." },
+        { question: "Qu’en est-il des droits d’auteur et des autorisations ?", answer: "Votre œuvre reste la vôtre. Signalez les publications antérieures, les coauteurs, les éléments de tiers et les restrictions de droits lorsque cela vous est demandé. Nous vous aiderons à clarifier les autorisations manquantes. Une demande ne cède aucun droit et n’autorise aucune publication." },
+        { question: "Quand mon livre sera-t-il publié ?", answer: "Après les vérifications des droits et de l’accord nécessaires, et votre autorisation expresse de l’édition définitive et de l’action prévue. Premières lectures est un parcours distinct et facultatif, soumis à ses propres autorisations." },
+        { question: "Combien cela coûte-t-il ?", answer: "Les éventuels coûts, modalités de paiement et délais sont convenus avant le début des prestations. Une première demande ne vous engage pas à payer. N’envoyez ni manuscrit, ni documents confidentiels relatifs aux droits, ni informations financières dans votre premier message." },
       ]},
       { title: "Collaboration", questions: [
         { question: "Comment collaborer ?", answer: "Les propriétaires de projets admissibles invitent des contributeurs, examinent les propositions et décident du contenu officiel." },
@@ -151,7 +169,8 @@ export default function HelpOnDemand({language}: {language: Language}) {
       <div className={styles.topics}>
         {t.topics.map(topic => <details className={styles.topic} key={topic.title}>
           <summary>{topic.title}</summary>
-          <div className={styles.questions}>
+          <div className={styles.questions} id={topic.id}>
+            {topic.id === "publishing-services" && <Link href={language === "fr" ? "/fr/contact?topic=publishing#contact-form" : "/contact?topic=publishing#contact-form"}>{language === "fr" ? "Parlez-nous de votre livre" : "Tell us about your book"} →</Link>}
             {topic.questions.map(item => <div className={styles.answer} key={item.question}>
               <h2>{item.question}</h2><p>{item.answer}</p>
             </div>)}

@@ -3,64 +3,52 @@ import Link from "next/link";
 const content = {
   en: {
     kicker: "NextScenes Publishing Services",
-    title: "From manuscript to published book",
-    intro: "A finished manuscript deserves careful preparation. NextScenes works with authors to prepare books for publication while respecting the author’s voice, rights and final decisions.",
-    cta: "Discuss your book",
-    books: "Explore published books",
+    title: "Your book. Your publishing journey.",
+    intro: "Written a book? We can help you prepare it and publish it through Amazon and other suitable platforms. First-time authors are welcome.",
+    cta: "Tell us about your book",
+    help: "Publishing Services Help",
     servicesTitle: "How we can help",
     services: [
-      ["Editorial preparation", "Manuscript review, proofreading and agreed editorial improvements."],
-      ["Book design and formatting", "Preparation of the interior, cover and publication-ready files for the agreed formats."],
-      ["Publication assistance", "Support with book descriptions, publication details, platform setup and submission to agreed distribution channels."],
-      ["After publication", "Assistance with book listings, corrections and agreed publicity activities."]
+      ["Editing and proofreading", "Make your manuscript ready for readers."],
+      ["Cover and book design", "Create a cover and professionally formatted pages."],
+      ["Publication assistance", "Prepare files and guide you through your chosen publishing platform."]
     ],
-    processTitle: "A straightforward publishing journey",
+    processTitle: "Three simple steps",
     steps: [
-      ["Tell us about your book", "Send a brief enquiry describing the manuscript and the assistance you need."],
-      ["Review and agreement", "We discuss the scope, rights, costs if applicable, formats and publication arrangements before work begins."],
-      ["Prepare and approve", "The author reviews the final manuscript, cover and publication particulars."],
-      ["Publish", "Submission takes place only after written authorization. Retail platforms make their own acceptance decisions."]
+      ["Tell us about your book", "Send a short enquiry."],
+      ["Agree on the services", "We discuss your needs, costs and timing."],
+      ["Prepare and publish", "Review your book and approve it before submission."]
     ],
-    rightsTitle: "Your work remains yours",
-    rights: "An enquiry does not transfer copyright or authorize publication. Previously published works require confirmation of available publication rights. Collaborative works require the applicable contributor arrangements. Fees, royalties, distribution rights and any licence are agreed in writing for each project.",
-    firstReadsTitle: "Not ready for commercial publication?",
-    firstReads: "First Reads is a separate, optional pathway for sharing authorized extracts of a completed manuscript with readers.",
+    rights: "Your work remains yours. An enquiry is not a commitment.",
+    firstReads: "Not ready for commercial publication?",
     firstReadsLink: "Explore First Reads",
-    contactTitle: "Let us discuss your manuscript",
-    contact: "Tell us your book title, genre, manuscript language, approximate length, whether it has been published before, and the assistance you need. Please do not send the manuscript or confidential rights documents with your initial enquiry.",
     contactHref: "/contact?topic=publishing#contact-form",
-    booksHref: "/books",
+    helpHref: "/help#publishing-services",
     firstReadsHref: "/first-reads"
   },
   fr: {
     kicker: "Services d’édition NextScenes",
-    title: "Du manuscrit au livre publié",
-    intro: "Un manuscrit achevé mérite une préparation soignée. NextScenes accompagne les auteurs dans la préparation de leurs livres en respectant leur voix, leurs droits et leurs décisions finales.",
-    cta: "Parlons de votre livre",
-    books: "Découvrir les livres publiés",
-    servicesTitle: "Comment nous pouvons vous accompagner",
+    title: "Votre livre. Votre parcours de publication.",
+    intro: "Vous avez écrit un livre ? Nous vous aidons à le préparer et à le publier sur Amazon et d’autres plateformes adaptées. Les auteurs débutants sont les bienvenus.",
+    cta: "Parlez-nous de votre livre",
+    help: "Aide à la publication",
+    servicesTitle: "Comment nous pouvons vous aider",
     services: [
-      ["Préparation éditoriale", "Relecture du manuscrit, correction et améliorations éditoriales convenues."],
-      ["Conception et mise en page", "Préparation de l’intérieur du livre, de la couverture et des fichiers prêts à publier dans les formats convenus."],
-      ["Accompagnement à la publication", "Aide à la rédaction du descriptif, aux informations bibliographiques, à la configuration et à la soumission auprès des canaux de diffusion convenus."],
-      ["Après la publication", "Aide au suivi des fiches des livres, aux corrections et aux actions de promotion convenues."]
+      ["Révision et correction", "Préparez votre manuscrit pour vos lecteurs."],
+      ["Couverture et mise en page", "Créez une couverture et une mise en page professionnelle."],
+      ["Accompagnement à la publication", "Préparez vos fichiers et bénéficiez de notre aide sur la plateforme de votre choix."]
     ],
-    processTitle: "Un parcours de publication simple",
+    processTitle: "Trois étapes simples",
     steps: [
-      ["Présentez votre livre", "Envoyez une brève demande décrivant le manuscrit et l’accompagnement souhaité."],
-      ["Examen et accord", "Nous définissons les prestations, les droits, les éventuels frais, les formats et les modalités de publication avant le début des travaux."],
-      ["Préparation et validation", "L’auteur valide le manuscrit final, la couverture et les informations de publication."],
-      ["Publication", "La soumission intervient uniquement après autorisation écrite. Les plateformes de vente décident elles-mêmes de l’acceptation."]
+      ["Présentez votre livre", "Envoyez-nous une courte demande."],
+      ["Convenons des prestations", "Nous discutons de vos besoins, des coûts et des délais."],
+      ["Préparez et publiez", "Relisez et approuvez votre livre avant sa soumission."]
     ],
-    rightsTitle: "Votre œuvre reste la vôtre",
-    rights: "Une demande de renseignements ne vaut ni cession de droits d’auteur ni autorisation de publication. Pour une œuvre déjà publiée, la disponibilité des droits de publication doit être confirmée. Pour une œuvre collaborative, les accords applicables aux contributeurs sont nécessaires. Les frais, redevances, droits de diffusion et éventuelles licences sont convenus par écrit pour chaque projet.",
-    firstReadsTitle: "Pas encore prêt pour une publication commerciale ?",
-    firstReads: "Premières lectures est un parcours distinct et facultatif permettant de partager avec les lecteurs des extraits autorisés d’un manuscrit achevé.",
+    rights: "Votre œuvre reste la vôtre. Une demande ne vous engage pas.",
+    firstReads: "Pas encore prêt pour une publication commerciale ?",
     firstReadsLink: "Découvrir Premières lectures",
-    contactTitle: "Parlons de votre manuscrit",
-    contact: "Indiquez le titre, le genre, la langue, la longueur approximative du manuscrit, s’il a déjà été publié et l’accompagnement souhaité. N’envoyez pas le manuscrit ni de documents confidentiels relatifs aux droits lors de votre première demande.",
     contactHref: "/fr/contact?topic=publishing#contact-form",
-    booksHref: "/fr/books",
+    helpHref: "/fr/help#publishing-services",
     firstReadsHref: "/fr/first-reads"
   }
 };
@@ -74,28 +62,27 @@ export default function PublishingServicesV1({lang="en"}: {lang?: "en" | "fr"}) 
       <p className="ns-subtitle" style={{maxWidth:800}}>{t.intro}</p>
       <div className="ns-hero-cta">
         <Link className="ns-btn ns-btn-primary" href={t.contactHref}>{t.cta}</Link>
-        <Link className="ns-btn ns-btn-ghost" href={t.booksHref}>{t.books}</Link>
+        <Link className="ns-btn ns-btn-ghost" href={t.helpHref}>{t.help}</Link>
       </div>
+      <p className="ns-p" style={{marginTop:12}}>{t.rights}</p>
     </section>
     <section className="ns-writers-section">
       <h2 className="ns-h2">{t.servicesTitle}</h2>
-      <div className="ns-writers-grid-4">
+      <div className="ns-grid-3">
         {t.services.map(([title,body])=><article className="ns-writers-mode-card" key={title}><h3>{title}</h3><p>{body}</p></article>)}
       </div>
     </section>
     <section className="ns-writers-section">
       <h2 className="ns-h2">{t.processTitle}</h2>
-      <div className="ns-writers-grid-4">
+      <div className="ns-grid-3">
         {t.steps.map(([title,body],i)=><article className="ns-writers-mode-card" key={title}><div className="ns-writers-kicker">{String(i+1).padStart(2,"0")}</div><h3>{title}</h3><p>{body}</p></article>)}
       </div>
+      <div className="ns-hero-cta" style={{marginTop:18}}>
+        <Link className="ns-btn ns-btn-primary" href={t.contactHref}>{t.cta}</Link>
+      </div>
     </section>
-    <section className="ns-writers-section ns-writers-two-col">
-      <article className="ns-writers-panel"><h2>{t.rightsTitle}</h2><p>{t.rights}</p></article>
-      <article className="ns-writers-panel is-warm"><h2>{t.firstReadsTitle}</h2><p>{t.firstReads}</p><Link className="ns-btn ns-btn-ghost" href={t.firstReadsHref}>{t.firstReadsLink}</Link></article>
-    </section>
-    <section className="ns-writers-section ns-writers-panel">
-      <h2>{t.contactTitle}</h2><p>{t.contact}</p>
-      <Link className="ns-btn ns-btn-primary" href={t.contactHref}>{t.cta}</Link>
+    <section className="ns-writers-section">
+      <p className="ns-p">{t.firstReads} <Link href={t.firstReadsHref}>{t.firstReadsLink}</Link></p>
     </section>
   </main>;
 }
