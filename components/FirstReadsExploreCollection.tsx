@@ -1,6 +1,7 @@
+import FirstReadsNewReleaseIcon from "./FirstReadsNewReleaseIcon";
 import Image from "next/image";
 import Link from "next/link";
-import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl, queenAminaPublicStoryId } from "@/app/lib/firstReadsApprovedBooks";
 import type { CSSProperties } from "react";
 
 // One bilingual First Reads destination for readers and prospective authors.
@@ -122,12 +123,15 @@ export default function FirstReadsExploreCollection({ language }: { language: "e
             display:"flex",alignItems:"center",flexWrap:"wrap",gap:"clamp(16px,3vw,26px)",
             border:"1px solid #b7d5c0",background:"#f3f9f4",
             borderRadius:15,padding:"clamp(16px,3vw,24px)"}}>
-            <a href={readingUrl} aria-label={t.readBook} style={{display:"block",lineHeight:0}}>
-              <Image src={QUEEN_AMINA_FIRST_READS.cover}
-                alt="Queen Amina: Soldier on Horseback book cover"
-                width={125} height={188} unoptimized
-                style={{width:125,height:"auto",borderRadius:6,boxShadow:"4px 9px 20px rgba(17,66,45,.18)"}}/>
-            </a>
+            <div style={{position:"relative",flex:"0 0 auto",width:125,lineHeight:0}} data-first-reads-cover-anchor="true">
+              <a href={readingUrl} aria-label={t.readBook} style={{display:"block",lineHeight:0}}>
+                <Image src={QUEEN_AMINA_FIRST_READS.cover}
+                  alt="Queen Amina: Soldier on Horseback book cover"
+                  width={125} height={188} unoptimized
+                  style={{width:125,height:"auto",borderRadius:6,boxShadow:"4px 9px 20px rgba(17,66,45,.18)"}}/>
+              </a>
+              <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={readingUrl} language={language}/>
+            </div>
             <div style={{flex:"1 1 230px",minWidth:0}}>
               <strong style={{fontSize:11,letterSpacing:".09em",color:"#146746"}}>{t.bookStatus}</strong>
               <h3 style={{font:"600 22px/1.25 Georgia,serif",color:"#0a4937",margin:"8px 0"}}>

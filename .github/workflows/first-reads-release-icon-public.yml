@@ -1,0 +1,30 @@
+name: First Reads release icon public build (no deploy)
+on:
+  pull_request:
+    branches:
+      - feature/publishing-services-v1-20261124
+      - main
+    paths:
+      - 'components/FirstReadsNewReleaseIcon.tsx'
+      - 'components/FirstReadsBookCollection.tsx'
+      - 'components/FirstReadsExploreCollection.tsx'
+      - 'components/PublicHomepageV2.tsx'
+      - 'app/lib/firstReadsReleaseIndicatorV1.ts'
+      - 'app/api/first-reads-release-status/**'
+      - 'scripts/test-first-reads-release-icon-v1.mjs'
+      - '.github/workflows/first-reads-release-icon-public.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node --experimental-strip-types --test scripts/test-first-reads-release-icon-v1.mjs
+      - run: npx tsc --noEmit
+      - run: npm run build

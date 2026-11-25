@@ -1,3 +1,4 @@
+import FirstReadsNewReleaseIcon from "./FirstReadsNewReleaseIcon";
 import Image from "next/image";
 import Link from "next/link";
 import type { EditorialSpotlight } from "@/app/lib/publicEditorialSpotlight";
@@ -7,7 +8,7 @@ import DevelopingStoriesV1 from "./DevelopingStoriesV1";
 import ResolvedPublicStoryLink from "./ResolvedPublicStoryLink";
 import EditorialSpotlightImage from "./EditorialSpotlightImage";
 import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
-import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl, queenAminaPublicStoryId } from "@/app/lib/firstReadsApprovedBooks";
 import styles from "./PublicHomepageV2.module.css";
 
 // Next.js can safely resize local assets and the two configured external image hosts.
@@ -372,11 +373,14 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
           </aside>
           <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
             aria-label={language === "fr" ? "First Reads : Queen Amina" : "First Reads: Queen Amina"}>
-            <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
-              aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
-              <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
-                width={135} height={203} unoptimized className={styles.didieCover} />
-            </a>
+            <div className={styles.firstReadsCoverAnchor}>
+              <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
+                aria-label={language === "fr" ? "Lire Queen Amina" : "Read Queen Amina"}>
+                <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
+                  width={135} height={203} unoptimized className={styles.didieCover} />
+              </a>
+              <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={queenAminaPublicReadingUrl(appUrl)} language={language}/>
+            </div>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
                 {language === "fr" ? "FIRST READS · PREMIER CHAPITRE DISPONIBLE" : "FIRST READS · CHAPTER ONE AVAILABLE"}
