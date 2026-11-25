@@ -1,13 +1,7 @@
 "use client";
 import {useEffect,useState} from "react";
-type Release={serialNumber:number;authorizedAt:string};
-const HOURS=36*3600000;
+import {isRecentFirstReadsRelease as recent,FIRST_READS_ICON_WINDOW,type FirstReadsRelease as Release} from "@/app/lib/firstReadsReleaseIndicatorV1";
 const APP_ORIGINS=new Set(["https://app.nextscenes.org","https://staging.nextscenes.org","https://nextscenes-staging-frontend.onrender.com","https://nextscenes-frontend-web.onrender.com"]);
-function recent(r:Release|null,now:number) {
-  if(!r||!Number.isSafeInteger(r.serialNumber)||r.serialNumber<1)return false;
-  const at=Date.parse(r.authorizedAt);
-  return Number.isFinite(at)&&at<=now&&now<at+HOURS;
-}
 export default function FirstReadsNewReleaseIcon({storyId,href,language}:{storyId:string;href:string;language:"en"|"fr"}) {
   const [release,setRelease]=useState<Release|null>(null);
   const [read,setRead]=useState(false);
@@ -47,7 +41,7 @@ export default function FirstReadsNewReleaseIcon({storyId,href,language}:{storyI
     frame.hidden=true;frame.title="First Reads local read state";frame.referrerPolicy="no-referrer";
     frame.setAttribute("sandbox","allow-scripts allow-same-origin");
     const requestId=String(Date.now())+":"+Math.random().toString(36).slice(2);
-    function check(){frame.contentWindow?.postMessage({type:"ns:firstReads:check:v1",requestId,storyId,serialNumber:number},origin);}
+    function check(){if(!recent({serialNumber:number!,authorizedAt:authorizedAt!},Date.now()))return;frame.contentWindow?.postMessage({type:"ns:firstReads:check:v1",requestId,storyId,serialNumber:number},origin);}
     function receive(e:MessageEvent){
       if(!active||e.origin!==origin||e.source!==frame.contentWindow||e.data?.type!=="ns:firstReads:result:v1"||e.data?.requestId!==requestId||typeof e.data.read!=="boolean")return;
       setRead(e.data.read);setReady(true);
@@ -57,7 +51,8 @@ export default function FirstReadsNewReleaseIcon({storyId,href,language}:{storyI
     frame.addEventListener("load",check);frame.src=origin+"/first-reads-release-state.html";document.body.appendChild(frame);
     const timer=window.setTimeout(()=>{if(active)setReady(true);},2500);
     const poll=window.setInterval(check,10000);
-    return()=>{active=false;clearTimeout(timer);clearInterval(poll);window.removeEventListener("message",receive);window.removeEventListener("pageshow",check);window.removeEventListener("focus",check);document.removeEventListener("visibilitychange",onVisible);frame.remove();};
+    const expiry=window.setTimeout(()=>{clearInterval(poll);frame.remove();},Math.max(0,Date.parse(authorizedAt)+FIRST_READS_ICON_WINDOW-Date.now()));
+    return()=>{active=false;clearTimeout(timer);clearTimeout(expiry);clearInterval(poll);window.removeEventListener("message",receive);window.removeEventListener("pageshow",check);window.removeEventListener("focus",check);document.removeEventListener("visibilitychange",onVisible);frame.remove();};
   },[storyId,href,number,authorizedAt]);
   if(!ready||read||!recent(release,now))return null;
   const label=language==="fr"?"Nouvel épisode à lire":"New serial available";
