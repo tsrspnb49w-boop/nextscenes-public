@@ -73,7 +73,7 @@ test("First Reads has a bilingual homepage entry and does not alter published bo
   assert.equal(homepage.includes("Staging pilot"), false);
 });
 
-test("First Reads collection features only approved Queen Amina Chapter One, not private manuscripts", () => {
+test("First Reads collection features only authorized Queen Amina readings, not private manuscripts", () => {
   const firstReadsBooks = read("components/FirstReadsBookCollection.tsx");
   const english = read("app/first-reads/books/page.tsx");
   const french = read("app/fr/first-reads/books/page.tsx");
@@ -86,7 +86,11 @@ test("First Reads collection features only approved Queen Amina Chapter One, not
   assert.ok(firstReadsBooks.includes("QUEEN_AMINA_FIRST_READS"));
   assert.ok(firstReadsBooks.includes("distincte du catalogue des éditions commerciales de NextScenes"));
   assert.ok(firstReadsBooks.includes("separate from the NextScenes catalogue of commercially available editions"));
-  assert.ok(firstReadsBooks.includes("Only Chapter One has been approved for public reading."));
+  assert.ok(firstReadsBooks.includes("Chapter One remains available for public reading."));
+  assert.ok(firstReadsBooks.includes("The complete manuscript remains private, and each serial requires separate authorization."));
+  assert.ok(firstReadsBooks.includes("Le manuscrit complet reste privé, et chaque épisode doit être autorisé séparément."));
+  assert.ok(firstReadsBooks.includes("storyId={queenAminaPublicStoryId()} href={readHref}"));
+  assert.equal(firstReadsBooks.includes("/my-projects"), false);
   assert.equal(firstReadsBooks.includes('href="/books"'), false);
   assert.ok(firstReadsBooks.includes("queenAminaPublicReadingUrl"));
   assert.ok(css.includes(".realCover"));
