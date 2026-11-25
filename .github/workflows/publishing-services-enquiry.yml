@@ -1,0 +1,28 @@
+name: Publishing services enquiry build (no deploy)
+on:
+  pull_request:
+    branches:
+      - feature/publishing-services-v1-20261124
+      - main
+    paths:
+      - 'components/PublishingServicesV1.tsx'
+      - 'components/HelpOnDemand.tsx'
+      - 'app/contact/page.tsx'
+      - 'app/fr/contact/page.tsx'
+      - 'test/publishingServicesEnquiryV1.test.js'
+      - '.github/workflows/publishing-services-enquiry.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node --test test/publishingServicesEnquiryV1.test.js
+      - run: npx tsc --noEmit
+      - run: npm run build

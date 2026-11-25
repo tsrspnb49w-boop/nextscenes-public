@@ -49,8 +49,10 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [err, setErr] = useState("");
   const [subject, setSubject] = useState("");
+  const [publishingEnquiry, setPublishingEnquiry] = useState(false);
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get("topic") === "publishing") {
+      setPublishingEnquiry(true);
       setSubject(current => current || "Publishing Services");
     }
   }, []);
@@ -175,6 +177,7 @@ export default function ContactPage() {
 
   return (
     <div className="ns-page">
+      {!publishingEnquiry && <>
       <section style={{ padding: "10px 0 8px" }}>
         <h1 className="ns-h1">Contact</h1>
         <p className="ns-subtitle" style={{ maxWidth: 980 }}>
@@ -212,8 +215,13 @@ export default function ContactPage() {
         </div>
       </section>
 
+      </>}
       <section className="ns-section ns-section-alt" id="contact-form">
-        <h2 className="ns-h2">Send a message</h2>
+        {publishingEnquiry ? <>
+          <h1 className="ns-h1">Tell us about your book</h1>
+          <p className="ns-p">Briefly tell us about your book and how we can help. A book title is optional.</p>
+          <p className="ns-p">Please do not send your manuscript or confidential documents yet. <Link href="/help#publishing-services">Publishing Services Help</Link></p>
+        </> : <h2 className="ns-h2">Send a message</h2>}
 
         <div className="ns-card" style={{ maxWidth: 980 }}>
           {sent ? (
@@ -280,7 +288,7 @@ export default function ContactPage() {
                   name="message"
                   required
                   className="ns-input"
-                  placeholder="Write your message with context…"
+                  placeholder={publishingEnquiry ? "Book title (if known), a little about your book and the help you need…" : "Write your message with context…"}
                   rows={6}
                   style={textAreaStyle}
                   onFocus={(e) => (e.currentTarget.style.borderColor = "#0f172a")}
@@ -311,11 +319,11 @@ export default function ContactPage() {
 
               <div style={{ marginTop: 12, display: "flex", gap: 10, alignItems: "center" }}>
                 <button type="submit" className="ns-btn ns-btn-primary" disabled={loading}>
-                  {loading ? "Sending…" : "Send message"}
+                  {loading ? "Sending…" : publishingEnquiry ? "Send my enquiry" : "Send message"}
                 </button>
 
                 <span className="ns-p" style={{ marginBottom: 0, opacity: 0.9 }}>
-                  Messages are read by humans. Please write clearly and respectfully.
+                  {publishingEnquiry ? "Your enquiry does not commit you to anything." : "Messages are read by humans. Please write clearly and respectfully."}
                 </span>
               </div>
             </form>
@@ -323,6 +331,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {publishingEnquiry ? <div className="ns-section-cta"><Link className="ns-btn ns-btn-ghost" href="/publishing-services">Back to Publishing Services</Link></div> : <>
       <section className="ns-section ns-section-alt">
         <h2 className="ns-h2">Who should contact us?</h2>
 
@@ -412,6 +421,7 @@ export default function ContactPage() {
           </p>
         </div>
       </section>
+      </>}
     </div>
   );
 }
