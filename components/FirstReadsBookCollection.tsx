@@ -1,6 +1,7 @@
+import FirstReadsNewReleaseIcon from "./FirstReadsNewReleaseIcon";
 import Image from "next/image";
 import Link from "next/link";
-import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl } from "@/app/lib/firstReadsApprovedBooks";
+import { QUEEN_AMINA_FIRST_READS, queenAminaPublicReadingUrl, queenAminaPublicStoryId } from "@/app/lib/firstReadsApprovedBooks";
 import styles from "./FirstReadsBookCollection.module.css";
 
 /**
@@ -23,7 +24,7 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
     status: "CHAPITRE 1 DISPONIBLE",
     synopsis: "Découvrez Queen Amina: Soldier on Horseback de Kola King. Découvrez cette œuvre en anglais dans notre Édition Royale.",
     action: "Lire le livre",
-    note: "Seul le premier chapitre a été autorisé pour la lecture publique. Le manuscrit complet reste privé, et chaque nouvel épisode doit être autorisé séparément.",
+    note: "Le premier chapitre reste accessible au public. Le manuscrit complet reste privé, et chaque épisode doit être autorisé séparément.",
   } : {
     eyebrow: "NEXTSCENES · FIRST READS",
     title: "First Reads Collection",
@@ -35,7 +36,7 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
     status: "CHAPTER ONE AVAILABLE",
     synopsis: "Discover Queen Amina: Soldier on Horseback by Kola King. Begin reading in our Royal Reader.",
     action: "Read the Book",
-    note: "Only Chapter One has been approved for public reading. The complete manuscript remains private, and each later serial requires separate authorization.",
+    note: "Chapter One remains available for public reading. The complete manuscript remains private, and each serial requires separate authorization.",
   };
 
   return (
@@ -53,10 +54,13 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
         <p className={styles.description}>{text.description}</p>
         <div className={styles.previewShelf} aria-label={text.heading}>
           <article className={styles.placeholderCard} data-first-reads-approved-book="queen-amina">
-            <a href={readHref} className={styles.realCoverLink} aria-label={text.action}>
-              <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback book cover"
-                width={160} height={240} unoptimized className={styles.realCover} />
-            </a>
+            <div className={styles.firstReadsCoverAnchor}>
+              <a href={readHref} className={styles.realCoverLink} aria-label={text.action}>
+                <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback book cover"
+                  width={160} height={240} unoptimized className={styles.realCover} />
+              </a>
+              <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={readHref} language={language}/>
+            </div>
             <div className={styles.cardCopy}>
               <span className={styles.status}>{text.status}</span>
               <h3>{QUEEN_AMINA_FIRST_READS.title}</h3>
