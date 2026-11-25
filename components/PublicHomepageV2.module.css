@@ -314,3 +314,8 @@
   .artStage .middleCover { width: 124px; height: 176px; }
   .artStage { min-height: 220px; }
 }
+
+/* First Reads alert belongs to the actual cover, not the whole card. */
+.firstReadsCoverAnchor{position:relative;justify-self:center;width:135px;line-height:0}
+@media(max-width:900px){.firstReadsCoverAnchor{width:110px}}
+@media(max-width:500px){.firstReadsCoverAnchor{width:86px}}

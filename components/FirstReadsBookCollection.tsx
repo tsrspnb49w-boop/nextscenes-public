@@ -53,12 +53,14 @@ export default function FirstReadsBookCollection({ language }: { language: "en" 
         <h2>{text.heading}</h2>
         <p className={styles.description}>{text.description}</p>
         <div className={styles.previewShelf} aria-label={text.heading}>
-          <article style={{position:"relative"}} className={styles.placeholderCard} data-first-reads-approved-book="queen-amina">
-            <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={readHref} language={language}/>
-            <a href={readHref} className={styles.realCoverLink} aria-label={text.action}>
-              <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback book cover"
-                width={160} height={240} unoptimized className={styles.realCover} />
-            </a>
+          <article className={styles.placeholderCard} data-first-reads-approved-book="queen-amina">
+            <div className={styles.firstReadsCoverAnchor}>
+              <a href={readHref} className={styles.realCoverLink} aria-label={text.action}>
+                <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback book cover"
+                  width={160} height={240} unoptimized className={styles.realCover} />
+              </a>
+              <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={readHref} language={language}/>
+            </div>
             <div className={styles.cardCopy}>
               <span className={styles.status}>{text.status}</span>
               <h3>{QUEEN_AMINA_FIRST_READS.title}</h3>

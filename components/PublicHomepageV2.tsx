@@ -371,14 +371,16 @@ export default function PublicHomepageV2({language, stories, mystery, mysteryHre
               {language === "fr" ? "Découvrir le roman" : "Explore the novel"} →
             </Link>
           </aside>
-          <aside style={{position:"relative"}} className={styles.didieFeature + " " + styles.firstReadsFeature}
+          <aside className={styles.didieFeature + " " + styles.firstReadsFeature}
             aria-label={language === "fr" ? "First Reads : Queen Amina" : "First Reads: Queen Amina"}>
-            <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={queenAminaPublicReadingUrl(appUrl)} language={language}/>
-            <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
-              aria-label={language === "fr" ? "Lire le premier chapitre de Queen Amina" : "Read Queen Amina Chapter One"}>
-              <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
-                width={135} height={203} unoptimized className={styles.didieCover} />
-            </a>
+            <div className={styles.firstReadsCoverAnchor}>
+              <a className={styles.didieArt} href={queenAminaPublicReadingUrl(appUrl)}
+                aria-label={language === "fr" ? "Lire Queen Amina" : "Read Queen Amina"}>
+                <Image src={QUEEN_AMINA_FIRST_READS.cover} alt="Queen Amina: Soldier on Horseback, approved book cover"
+                  width={135} height={203} unoptimized className={styles.didieCover} />
+              </a>
+              <FirstReadsNewReleaseIcon storyId={queenAminaPublicStoryId()} href={queenAminaPublicReadingUrl(appUrl)} language={language}/>
+            </div>
             <div className={styles.didieDetails}>
               <div className={styles.eyebrow}>
                 {language === "fr" ? "FIRST READS · PREMIER CHAPITRE DISPONIBLE" : "FIRST READS · CHAPTER ONE AVAILABLE"}
