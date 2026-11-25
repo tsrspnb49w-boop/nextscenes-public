@@ -1,5 +1,6 @@
 "use client";
 import {useEffect,useState} from "react";
+import styles from "./FirstReadsNewReleaseIcon.module.css";
 import {isRecentFirstReadsRelease as recent,FIRST_READS_ICON_WINDOW,type FirstReadsRelease as Release} from "@/app/lib/firstReadsReleaseIndicatorV1";
 const APP_ORIGINS=new Set(["https://app.nextscenes.org","https://staging.nextscenes.org","https://nextscenes-staging-frontend.onrender.com","https://nextscenes-frontend-web.onrender.com"]);
 export default function FirstReadsNewReleaseIcon({storyId,href,language}:{storyId:string;href:string;language:"en"|"fr"}) {
@@ -56,5 +57,5 @@ export default function FirstReadsNewReleaseIcon({storyId,href,language}:{storyI
   },[storyId,href,number,authorizedAt]);
   if(!ready||read||!recent(release,now))return null;
   const label=language==="fr"?"Nouvel épisode à lire":"New serial available";
-  return <a href={href} aria-label={label} style={{position:"absolute",top:7,right:7,zIndex:2,display:"inline-flex",alignItems:"center",justifyContent:"center",width:44,height:44,borderRadius:"50%",background:"#fff2c6",border:"1px solid #bd8e29",boxShadow:"0 0 10px rgba(190,139,31,.35)",textDecoration:"none"}}><svg aria-hidden="true" viewBox="0 0 40 40" width="32" height="32" fill="none" stroke="#94650c" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 16Q13 11 6 13v16q8-1 14 4 6-5 14-4V13q-7-2-14 3v17"/><path d="m32 2 1.6 5.4L39 9l-5.4 1.6L32 16l-1.6-5.4L25 9l5.4-1.6Z" fill="#d6a13a" stroke="none"/></svg></a>;
+  return <a href={href} aria-label={label} className={styles.hitArea} data-first-reads-new-release="true"><span className={styles.badge}><svg aria-hidden="true" viewBox="0 0 40 40" width="20" height="20" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M20 16Q13 11 6 13v16q8-1 14 4 6-5 14-4V13q-7-2-14 3v17"/><path d="m32 2 1.6 5.4L39 9l-5.4 1.6L32 16l-1.6-5.4L25 9l5.4-1.6Z" fill="#fff" stroke="none"/></svg></span></a>;
 }
