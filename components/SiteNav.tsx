@@ -117,23 +117,6 @@ function toFrenchPath(pathname: string) {
    Component
    =============================== */
 
-type AuthHint = "unknown" | "authed" | "guest";
-
-function isLikelyAuthedPayload(data: any) {
-  if (!data || typeof data !== "object") return false;
-  if (data.ok === true) return true;
-
-  if (data.user && typeof data.user === "object") {
-    if (data.user._id || data.user.id || data.user.email || data.user.username) return true;
-  }
-
-  if (data.me && typeof data.me === "object") {
-    if (data.me._id || data.me.id || data.me.email || data.me.username) return true;
-  }
-
-  return false;
-}
-
 export default function SiteNav() {
   const pathname = usePathname() || "/";
   const cleanPathname = normalizePath(pathname);
@@ -257,79 +240,11 @@ export default function SiteNav() {
     };
   }, [moreOpen, langOpen, closeAllMenus]);
 
-  const [authHint, setAuthHint] = useState<AuthHint>("unknown");
-
-  const checkAuth = useCallback(async () => {
-    const ctrl = new AbortController();
-    const t = window.setTimeout(() => ctrl.abort(), 2500);
-
-    try {
-      const res = await fetch(`${APP_URL}/api/auth/me`, {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store",
-        signal: ctrl.signal,
-        headers: { Accept: "application/json" },
-      });
-
-      if (res.status === 401 || res.status === 403) {
-        setAuthHint("guest");
-        return;
-      }
-
-      const ct = (res.headers.get("content-type") || "").toLowerCase();
-      if (!ct.includes("application/json")) {
-        setAuthHint("guest");
-        return;
-      }
-
-      const data = await res.json().catch(() => null);
-      setAuthHint(isLikelyAuthedPayload(data) ? "authed" : "guest");
-    } catch {
-      setAuthHint("guest");
-    } finally {
-      window.clearTimeout(t);
-      ctrl.abort();
-    }
-  }, []);
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
-
-  useEffect(() => {
-    function onFocus() {
-      checkAuth();
-    }
-
-    function onVis() {
-      if (document.visibilityState === "visible") checkAuth();
-    }
-
-    window.addEventListener("focus", onFocus);
-    document.addEventListener("visibilitychange", onVis);
-
-    return () => {
-      window.removeEventListener("focus", onFocus);
-      document.removeEventListener("visibilitychange", onVis);
-    };
-  }, [checkAuth]);
-
-  const appCtaText = useMemo(() => {
-    if (authHint === "unknown") return isFR ? "Vérification…" : "Checking…";
-    if (authHint !== "authed") return isFR ? "Entrer dans l’App" : "Enter the App";
-    return isFR ? "Continuer dans l’App" : "Continue in the App";
-  }, [authHint, isFR]);
-
-  const appCtaAria = useMemo(() => {
-    if (authHint === "unknown") return isFR ? "Vérification de session" : "Checking session";
-    if (authHint !== "authed") return isFR ? "Entrer dans l’application" : "Enter the application";
-    return isFR ? "Continuer dans l’application" : "Continue in the application";
-  }, [authHint, isFR]);
-
-  const appCtaHref = useMemo(() => {
-    return `${APP_URL}/?lang=${isFR ? "fr" : "en"}`;
-  }, [authHint, isFR]);
+  // Public navigation is not an authorization boundary. The application
+  // restores and validates its own session after navigation.
+  const appCtaText = isFR ? "Entrer dans l’App" : "Enter the App";
+  const appCtaAria = isFR ? "Entrer dans l’application" : "Enter the application";
+  const appCtaHref = `${APP_URL}/?lang=${isFR ? "fr" : "en"}`;
 
   const languageSwitchLabel = isFR ? "🇫🇷 Français" : "🇬🇧 English";
   const languageSwitchAria = isFR ? "Changer de langue" : "Switch language";
