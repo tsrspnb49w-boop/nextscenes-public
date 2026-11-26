@@ -37,3 +37,5 @@ test("reject unknown, duplicated and personal campaign labels; staging sends not
   const w=browser(host);w.location.search="?utm_source=facebook&utm_medium=social&utm_campaign=book_spotlight";saveChoice(w,"yes");assert.equal(syncAnalytics(w,"/"),false);assert.equal(w.dataLayer,undefined);assert.equal(w.scripts.length,0);
  }
 });
+
+test("public navigation does not probe sessions; bilingual app destination is unchanged",()=>{const nav=readFileSync("components/SiteNav.tsx","utf8");assert.doesNotMatch(nav,/\/api\/auth\/me|checkAuth|authHint|isLikelyAuthedPayload/);assert.match(nav,/Entrer dans l’App/);assert.match(nav,/Enter the App/);assert.ok(nav.includes('const appCtaHref = `${APP_URL}/?lang=${isFR ? "fr" : "en"}`;'));assert.match(nav,/href=\{appCtaHref\}/);});
