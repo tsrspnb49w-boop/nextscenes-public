@@ -1,0 +1,28 @@
+name: Analytics privacy hardening (no deploy)
+on:
+  pull_request:
+    branches:
+      - feature/publishing-services-v1-20261124
+      - main
+    paths:
+      - 'app/layout.tsx'
+      - 'app/**/privacy/page.tsx'
+      - 'components/AnalyticsPrivacyV1.tsx'
+      - 'lib/analyticsConsentV1.mjs'
+      - 'test/analyticsPrivacyV1.test.mjs'
+      - '.github/workflows/analytics-privacy-v1.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node --test test/analyticsPrivacyV1.test.mjs
+      - run: npx tsc --noEmit
+      - run: npm run build
