@@ -21,10 +21,12 @@ export default function AnalyticsPrivacyV1() {
     };
     const onStorage = (event: StorageEvent) => { if (event.key === KEY || event.key === null) update(); };
     update();
+    const timer = window.setInterval(update,60000);
     window.addEventListener("storage",onStorage);
     window.addEventListener("pageshow",update);
     document.addEventListener("visibilitychange",update);
     return () => {
+      window.clearInterval(timer);
       window.removeEventListener("storage",onStorage);
       window.removeEventListener("pageshow",update);
       document.removeEventListener("visibilitychange",update);
@@ -49,7 +51,7 @@ export default function AnalyticsPrivacyV1() {
         : "With your permission, Google Analytics measures visits to our public website. Declining does not affect access. Change your choice here at any time."}{" "}
         <a href={fr ? "/fr/privacy" : "/privacy"} style={{textDecoration:"underline"}}>{fr ? "Politique de confidentialité" : "Privacy Policy"}</a>
       </p>
-      {!production && <p>{fr ? "Environnement de test : aucune donnée envoyée à Google." : "Test environment: no data sent to Google."}</p>}
+      {!production && <p>{fr ? "Environnement de test : aucune mesure Google Analytics envoyée." : "Test environment: no Google Analytics measurement sent."}</p>}
       <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
         <button type="button" className="ns-btn ns-btn-ghost" onClick={()=>choose("yes")}>{fr ? "Autoriser" : "Allow analytics"}</button>
         <button type="button" className="ns-btn ns-btn-ghost" onClick={()=>choose("no")}>{fr ? "Refuser" : "Decline analytics"}</button>
