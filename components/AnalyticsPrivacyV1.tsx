@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import { KEY, isProduction, readChoice, saveChoice, stop, syncAnalytics } from "../lib/analyticsConsentV1.mjs";
 
@@ -43,22 +44,29 @@ export default function AnalyticsPrivacyV1() {
 
   if (!ready) return null;
   const open = settings || choice === null;
-  return <section aria-label={fr ? "Confidentialité et statistiques" : "Privacy and analytics"} style={{maxWidth:1100,margin:"0 auto",padding:"12px 16px",fontSize:"0.875rem",lineHeight:1.5}}>
-    {open ? <div style={{border:"1px solid currentColor",borderRadius:8,padding:12}}>
-      <strong>{fr ? "Statistiques facultatives" : "Optional analytics"}</strong>
-      <p style={{margin:"6px 0"}}>{fr
-        ? "Avec votre accord, Google Analytics mesure la fréquentation du site public. Refuser ne change pas votre accès. Vous pouvez modifier votre choix ici à tout moment."
-        : "With your permission, Google Analytics measures visits to our public website. Declining does not affect access. Change your choice here at any time."}{" "}
-        <a href={fr ? "/fr/privacy" : "/privacy"} style={{textDecoration:"underline"}}>{fr ? "Politique de confidentialité" : "Privacy Policy"}</a>
-      </p>
-      {!production && <p>{fr ? "Environnement de test : aucune mesure Google Analytics envoyée." : "Test environment: no Google Analytics measurement sent."}</p>}
-      <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-        <button type="button" className="ns-btn ns-btn-ghost" onClick={()=>choose("yes")}>{fr ? "Autoriser" : "Allow analytics"}</button>
-        <button type="button" className="ns-btn ns-btn-ghost" onClick={()=>choose("no")}>{fr ? "Refuser" : "Decline analytics"}</button>
-      </div>
-      {error && <p role="alert">{fr ? "Préférence non enregistrée. Les statistiques restent désactivées." : "Preference could not be saved. Analytics remain off."}</p>}
-    </div> : <button type="button" className="ns-btn ns-btn-ghost" onClick={()=>setSettings(true)}>
-      {fr ? "Préférences de confidentialité" : "Privacy preferences"}{" · "}{choice === "yes" ? (fr ? "Statistiques autorisées" : "Analytics allowed") : (fr ? "Statistiques refusées" : "Analytics declined")}
-    </button>}
-  </section>;
+  return <>
+    <button type="button" className="ns-footer-link" style={{background:"none",border:0,padding:0,textAlign:"left",cursor:"pointer",font:"inherit",color:"inherit"}} onClick={()=>setSettings(true)}>
+      {fr ? "Préférences de confidentialité" : "Privacy preferences"}
+    </button>
+    {open && createPortal(
+      <section aria-label={fr ? "Préférences de cookies" : "Cookie preferences"} style={{
+        position:"fixed",bottom:"max(12px, env(safe-area-inset-bottom))",left:"max(12px, env(safe-area-inset-left))",
+        width:"min(340px, calc(100% - 24px))",boxSizing:"border-box",maxHeight:"calc(100dvh - 32px)",overflowY:"auto",
+        zIndex:1000,background:"#fffdf8",color:"#173d32",border:"1px solid #c6d9d1",borderRadius:12,
+        padding:14,boxShadow:"0 5px 24px rgba(15,60,45,.15)",fontSize:"0.85rem",lineHeight:1.45
+      }}>
+        <strong>{fr ? "Cookies" : "Cookies"}</strong>
+        <p style={{margin:"6px 0 10px"}}>{fr
+          ? "Avec votre accord, Google Analytics utilise des cookies facultatifs pour nous aider à comprendre la fréquentation du site. Votre accès reste inchangé."
+          : "With your permission, Google Analytics uses optional cookies to help us understand visits to our site. Your access stays the same."}{" "}
+          <a href={fr ? "/fr/privacy" : "/privacy"} style={{color:"#175b43",textDecoration:"underline"}}>{fr ? "En savoir plus" : "Learn more"}</a>
+        </p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(2,minmax(0,1fr))",gap:8}}>
+          <button type="button" className="ns-btn ns-btn-ghost" style={{width:"100%",minHeight:42,padding:"6px 8px",whiteSpace:"normal"}} onClick={()=>choose("yes")}>{fr ? "Accepter" : "Accept"}</button>
+          <button type="button" className="ns-btn ns-btn-ghost" style={{width:"100%",minHeight:42,padding:"6px 8px",whiteSpace:"normal"}} onClick={()=>choose("no")}>{fr ? "Refuser" : "Decline"}</button>
+        </div>
+        {!production && <p style={{margin:"6px 0 0",fontSize:"0.72rem"}}>{fr ? "Mode test : aucune mesure envoyée." : "Test mode: no analytics sent."}</p>}
+        {error && <p role="alert">{fr ? "Préférence non enregistrée. Les statistiques restent désactivées." : "Preference could not be saved. Analytics remain off."}</p>}
+      </section>,document.body)}
+  </>;
 }
