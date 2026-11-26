@@ -5,7 +5,6 @@
 // NEXTSCENES_FAVICON_CACHE_VERSION: 20260702164323
 import "./globals.css";
 import type { ReactNode } from "react";
-import AnalyticsPrivacyV1 from "../components/AnalyticsPrivacyV1";
 import SiteNav from "../components/SiteNav";
 import SiteFooter from "../components/SiteFooter";
 import { DEFAULT_SEO_DESCRIPTION, DEFAULT_SEO_TITLE, buildMetadata } from "@/app/seo";
@@ -29,7 +28,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SiteNav />
           <main>{children}</main>
           <SiteFooter />
-          <AnalyticsPrivacyV1 />
         </div>
       </body>
     </html>
