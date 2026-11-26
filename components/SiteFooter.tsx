@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AnalyticsPrivacyV1 from "./AnalyticsPrivacyV1";
 import SocialPlatformIcon, { SOCIAL_CHANNELS } from "./SocialPlatformIcon";
 
 const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "https://app.nextscenes.org").replace(/\/+$/, "");
@@ -100,6 +101,7 @@ export default function SiteFooter() {
             <Link href={`${base}/privacy`} className="ns-footer-link">
               {isFR ? "Politique de confidentialité" : "Privacy Policy"}
             </Link>
+            <AnalyticsPrivacyV1 />
             <Link href={writerRightsHref} className="ns-footer-link">
               {isFR ? "Droits des auteurs" : "Writer Rights"}
             </Link>
