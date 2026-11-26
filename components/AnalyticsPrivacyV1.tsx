@@ -52,7 +52,7 @@ export default function AnalyticsPrivacyV1() {
       <section aria-label={fr ? "Préférences de cookies" : "Cookie preferences"} style={{
         position:"fixed",bottom:"max(12px, env(safe-area-inset-bottom))",left:"max(12px, env(safe-area-inset-left))",
         width:"min(340px, calc(100% - 24px))",boxSizing:"border-box",maxHeight:"calc(100dvh - 32px)",overflowY:"auto",
-        zIndex:1000,background:"#fffdf8",color:"#173d32",border:"1px solid #c6d9d1",borderRadius:12,
+        zIndex:1000,background:"#F5F0E4",color:"#173d32",border:"1px solid #C9D8CC",borderRadius:12,
         padding:14,boxShadow:"0 5px 24px rgba(15,60,45,.15)",fontSize:"0.85rem",lineHeight:1.45
       }}>
         <strong>{fr ? "Cookies" : "Cookies"}</strong>
