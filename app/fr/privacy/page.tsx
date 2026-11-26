@@ -15,7 +15,7 @@ export default function PrivacyFrPage() {
 
       <section className="ns-section ns-paper" style={{ marginTop: 18 }}>
         <p className="ns-p">
-          <strong>Dernière mise à jour :</strong> Février 2026
+          <strong>Dernière mise à jour :</strong> 26 novembre 2026
         </p>
 
         <h2 className="ns-h2">1. Présentation</h2>
@@ -57,7 +57,7 @@ export default function PrivacyFrPage() {
         <h2 className="ns-h2">6. Cookies et sessions</h2>
         <p className="ns-p">
           NextScenes utilise des cookies de session pour maintenir la connexion et
-          sécuriser l’authentification. Aucun suivi publicitaire n’est utilisé.
+          sécuriser l’authentification. Sur le site public, Google Analytics mesure de manière facultative les visites, la région géographique approximative, les appareils, les navigateurs et les sources de trafic uniquement après votre accord explicite. Des cookies statistiques sont utilisés et des données de mesure sont transmises à Google, qui peut les traiter hors de votre pays. La personnalisation publicitaire et Google Signals ne sont pas activés. Le refus ne limite pas l’accès. Vous pouvez modifier votre choix dans les Préférences de confidentialité en bas du site public ; votre choix est conservé dans le navigateur pendant 180 jours au maximum. Le retrait arrête les mesures futures sans effacer les données déjà collectées. Les statistiques de l’application sont suspendues ; les statistiques de lecture, distinctes, restent désactivées. Voir la <a href="https://policies.google.com/privacy?hl=fr" target="_blank" rel="noopener noreferrer">politique de confidentialité de Google</a>.
         </p>
 
         <h2 className="ns-h2">7. Suppression</h2>
