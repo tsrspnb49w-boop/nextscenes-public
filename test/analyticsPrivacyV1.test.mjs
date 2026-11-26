@@ -15,3 +15,25 @@ test("withdrawal stops later events; expired or inaccessible storage fails close
 test("root uses consent-gated footer loader; bilingual policy present",()=>{const layout=readFileSync("app/layout.tsx","utf8");assert.match(layout,/<SiteFooter/);assert.match(readFileSync("components/SiteFooter.tsx","utf8"),/<AnalyticsPrivacyV1\s*\/>/);assert.doesNotMatch(layout,/googletagmanager|gtag\(/);for(const file of ["app/privacy/page.tsx","app/fr/privacy/page.tsx"]){assert.match(readFileSync(file,"utf8"),/Google Analytics/);}});
 test("failed preference write cannot re-enable tracking in this page",()=>{const w=browser();saveChoice(w,"yes");syncAnalytics(w,"/");w.localStorage.setItem=()=>{throw Error("blocked")};assert.equal(saveChoice(w,"no"),false);assert.equal(syncAnalytics(w,"/books"),false);assert.equal(w["ga-disable-"+ID],true);});
 test("cookie notice uses non-modal overlay and retains equal consent controls",()=>{const ui=readFileSync("components/AnalyticsPrivacyV1.tsx","utf8");assert.match(ui,/createPortal\(/);assert.match(ui,/position:"fixed"/);assert.match(ui,/choose\("yes"\)/);assert.match(ui,/choose\("no"\)/);assert.match(ui,/Privacy preferences/);assert.doesNotMatch(ui,/aria-modal|showModal/);});
+
+test("only known public campaign labels are explicitly configured after consent",()=>{
+ for(const source of ["facebook","instagram","tiktok"]){
+  const w=browser();w.location.search="?utm_source="+source+"&utm_medium=social&utm_campaign=book_spotlight&email=private@example.com&token=secret&utm_content=private";
+  assert.equal(syncAnalytics(w,"/books/didie"),false);assert.equal(w.scripts.length,0);assert.equal(w.dataLayer,undefined);
+  saveChoice(w,"yes");syncAnalytics(w,"/books/didie");syncAnalytics(w,"/books");
+  const calls=w.dataLayer.map(x=>Array.from(x)),configs=calls.filter(x=>x[0]==="config");
+  assert.equal(configs.length,1);assert.equal(configs[0][2].campaign_source,source);assert.equal(configs[0][2].campaign_medium,"social");assert.equal(configs[0][2].campaign_name,"book_spotlight");assert.equal(configs[0][2].page_location,"https://www.nextscenes.org/books/didie");
+  assert.doesNotMatch(JSON.stringify(calls),/private@example|secret|utm_content|utm_source=/);
+ }
+});
+test("reject unknown, duplicated and personal campaign labels; staging sends nothing",()=>{
+ for(const q of ["?utm_source=private%40example.com&utm_medium=social","?utm_source=facebook&utm_source=tiktok&utm_medium=social","?utm_source=facebook&utm_medium=unknown","?utm_source=facebook&utm_medium=social&utm_campaign=private%40example.com"]){
+  const w=browser();w.location.search=q;saveChoice(w,"yes");syncAnalytics(w,"/");
+  const config=w.dataLayer.map(x=>Array.from(x)).find(x=>x[0]==="config")[2];
+  assert.equal(config.campaign_name,undefined);assert.doesNotMatch(JSON.stringify(w.dataLayer),/private@example|unknown/);
+  if(!q.includes("utm_campaign="))assert.equal(config.campaign_source,undefined);
+ }
+ for(const host of ["public-staging.nextscenes.org","nextscenes-public-staging.onrender.com"]){
+  const w=browser(host);w.location.search="?utm_source=facebook&utm_medium=social&utm_campaign=book_spotlight";saveChoice(w,"yes");assert.equal(syncAnalytics(w,"/"),false);assert.equal(w.dataLayer,undefined);assert.equal(w.scripts.length,0);
+ }
+});
