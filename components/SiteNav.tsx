@@ -139,6 +139,7 @@ export default function SiteNav() {
   const MORE = useMemo(
     () => [
       { href: "/books", frHref: "/books", en: "Published books", fr: "Livres publiés" },
+      { href: "/reader-view", appRoute: true, en: "Reader View", fr: "Espace de lecture" },
       { href: "/about", frHref: "/about", en: "About", fr: "À propos" },
       { href: "/safety", frHref: "/safety", en: "Safety", fr: "Sécurité" },
       { href: "/mystery250", frHref: "/mystery250", en: "Mystery250", fr: "Mystery250" },
@@ -153,7 +154,8 @@ export default function SiteNav() {
     []
   );
 
-  function localizedHref(link: { href: string; frHref?: string }) {
+  function localizedHref(link: { href: string; frHref?: string; appRoute?: boolean }) {
+    if (link.appRoute) return `${APP_URL}${link.href}?lang=${isFR ? "fr" : "en"}`;
     if (!isFR) return link.href;
     return `${base}${link.frHref || link.href}`;
   }
