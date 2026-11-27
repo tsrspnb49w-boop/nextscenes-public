@@ -39,3 +39,12 @@ test("reject unknown, duplicated and personal campaign labels; staging sends not
 });
 
 test("public navigation does not probe sessions; bilingual app destination is unchanged",()=>{const nav=readFileSync("components/SiteNav.tsx","utf8");assert.doesNotMatch(nav,/\/api\/auth\/me|checkAuth|authHint|isLikelyAuthedPayload/);assert.match(nav,/Entrer dans l’App/);assert.match(nav,/Enter the App/);assert.ok(nav.includes('const appCtaHref = `${APP_URL}/?lang=${isFR ? "fr" : "en"}`;'));assert.match(nav,/href=\{appCtaHref\}/);});
+
+
+test("public More menu links directly to the existing bilingual Reader View",()=>{
+  const nav=readFileSync("components/SiteNav.tsx","utf8");
+  assert.ok(nav.includes('{ href: "/reader-view", appRoute: true, en: "Reader View", fr: "Espace de lecture" }'));
+  assert.ok(nav.includes('if (link.appRoute) return `${APP_URL}${link.href}?lang=${isFR ? "fr" : "en"}`;'));
+  assert.match(nav,/MORE\.map\(\(l\) => \{\s*const href = localizedHref\(l\)/);
+  assert.doesNotMatch(nav,/\/api\/auth\/me/);
+});
